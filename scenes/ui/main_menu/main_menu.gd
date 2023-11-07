@@ -51,10 +51,10 @@ func _on_join_button_down():
 
 @rpc("any_peer", "call_local")
 func start_game():
-	var scene = load("res://maps/university/university.tscn").instantiate()
+	var scene = load("res://scenes/map/map.tscn").instantiate()
 	get_tree().root.add_child(scene)
 	self.hide()
 
 func _on_start_game_button_down():
 	start_game.rpc()
-	pass
+	

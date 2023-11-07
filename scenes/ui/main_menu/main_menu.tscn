@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c7y41hnr6wn74"]
 
-[ext_resource type="Script" path="res://gui/MainMenu/MainMenu.gd" id="1_t4vab"]
+[ext_resource type="Script" path="res://scenes/ui/main_menu/main_menu.gd" id="1_rlrf4"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_acpii"]
 
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_t4vab")
+script = ExtResource("1_rlrf4")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -29,6 +29,7 @@ text = "Host"
 icon = SubResource("ViewportTexture_acpii")
 
 [node name="Join" type="Button" parent="."]
+layout_mode = 0
 offset_left = 427.0
 offset_top = 292.0
 offset_right = 723.0
@@ -37,6 +38,7 @@ text = "Join
 "
 
 [node name="StartGame" type="Button" parent="."]
+layout_mode = 0
 offset_left = 427.0
 offset_top = 400.0
 offset_right = 723.0
