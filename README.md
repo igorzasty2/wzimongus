@@ -102,10 +102,6 @@ Każde nowe funkcje twórz w oddzielnych branchach, trzymając się odpowiednich
 - bugfix/issue#243fr - naprawianie buga
 - test/... - eksperymentowanie z czymś
 
-lub
-
-Możesz także sforkować główne repozytorium i kontynuować pracę dalej, łatwiej będzie ocenić kto ile przyczynił się do rozwoju projektu. Jeżeli z kimś pracujesz nad daną funkcją to niech jedna z was sforkuje główne repo i pracujcie dalej wspólnie na forku.
-
 ### Pull Requests
 
 Jak już przygotujesz funkcję wykonaj pull request do **main** brancha, gdzie musisz opisać wszystko co przygotowałeś (z kim pracowałeś etc.). Kod musi przejść przygotowane testy jednostkowe i pozytywny code review.
