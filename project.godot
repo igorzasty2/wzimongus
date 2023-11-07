@@ -14,6 +14,10 @@ config/name="WZiMongus"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameManager="*res://globals/game_manager/game_manager.gd"
+
 [dotnet]
 
 project/assembly_name="WZiMongus"

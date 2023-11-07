@@ -22,10 +22,23 @@ func peer_disconnected(id):
 	
 func connected_to_server():
 	print("Connected to server")
+	send_player_information.rpc_id(1, $UsernameField.text, multiplayer.get_unique_id())
 
 func connection_failed():
 	print("Connection failed")
 
+@rpc("any_peer")
+func send_player_information(name, id):
+	if !GameManager.Players.has(id):
+		GameManager.Players[id] = {
+			"id": id,
+			"name": name,
+		}
+	
+	if multiplayer.is_server():
+		for i in GameManager.Players:
+			send_player_information.rpc(GameManager.Players[i].name, i)
+	
 func _on_host_button_down():
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, 10)
@@ -36,9 +49,9 @@ func _on_host_button_down():
 	
 	# Might be useful for game optimization
 	# peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	
 	multiplayer.set_multiplayer_peer(peer)
 	print("Waiting for players...")
+	send_player_information($UsernameField.text, multiplayer.get_unique_id())
 
 func _on_join_button_down():
 	var peer = ENetMultiplayerPeer.new()

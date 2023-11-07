@@ -22,28 +22,37 @@ color = Color(0.533333, 0.521569, 0.427451, 0.980392)
 [node name="Host" type="Button" parent="."]
 layout_mode = 0
 offset_left = 430.0
-offset_top = 185.0
+offset_top = 297.0
 offset_right = 726.0
-offset_bottom = 265.0
+offset_bottom = 377.0
 text = "Host"
 icon = SubResource("ViewportTexture_acpii")
 
 [node name="Join" type="Button" parent="."]
 layout_mode = 0
 offset_left = 427.0
-offset_top = 292.0
+offset_top = 404.0
 offset_right = 723.0
-offset_bottom = 372.0
+offset_bottom = 484.0
 text = "Join
 "
 
 [node name="StartGame" type="Button" parent="."]
 layout_mode = 0
 offset_left = 427.0
-offset_top = 400.0
+offset_top = 512.0
 offset_right = 723.0
-offset_bottom = 480.0
+offset_bottom = 592.0
 text = "Start Game"
+
+[node name="UsernameField" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 189.0
+offset_right = 773.0
+offset_bottom = 243.0
+placeholder_text = "Username"
+alignment = 1
 
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
