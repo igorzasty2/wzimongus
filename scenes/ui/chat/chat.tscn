@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3gg0yvyuogxn"]
+
+[ext_resource type="Script" path="res://scenes/ui/chat/chat.gd" id="1_q7pdo"]
+
+[node name="Chat" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -631.0
+offset_bottom = -423.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q7pdo")
+
+[node name="ChatContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChatLog" type="RichTextLabel" parent="ChatContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_active = false
+scroll_following = true
+
+[node name="ChatDisappearTimer" type="Timer" parent="ChatContainer/ChatLog"]
+unique_name_in_owner = true
+wait_time = 3.464
+one_shot = true
+
+[node name="InputContainer" type="HBoxContainer" parent="ChatContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="InputGroup" type="Label" parent="ChatContainer/InputContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[group]"
+
+[node name="InputNickname" type="Label" parent="ChatContainer/InputContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
+text = "Player"
+
+[node name="InputText" type="LineEdit" parent="ChatContainer/InputContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+flat = true
+
+[connection signal="timeout" from="ChatContainer/ChatLog/ChatDisappearTimer" to="." method="_on_timer_timeout"]
+[connection signal="text_submitted" from="ChatContainer/InputContainer/InputText" to="." method="_on_input_text_text_submitted"]
