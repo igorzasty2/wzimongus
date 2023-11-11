@@ -15,6 +15,7 @@ properties/0/watch = false
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(-1, -77)
+motion_mode = 1
 script = ExtResource("1_rovco")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
