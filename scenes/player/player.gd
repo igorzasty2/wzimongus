@@ -1,13 +1,15 @@
 extends CharacterBody2D
 
-
+@export var authority_id : int
+@export var nickname : String 
 const SPEED = 300.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
-	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	$MultiplayerSynchronizer.set_multiplayer_authority(str(authority_id).to_int())
+	$NicknameLabel.text = nickname
 
 func _physics_process(delta):
 	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():

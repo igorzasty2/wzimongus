@@ -28,3 +28,11 @@ shape = SubResource("CapsuleShape2D_st64e")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_0xjwi")
+
+[node name="NicknameLabel" type="Label" parent="."]
+offset_left = -19.0
+offset_top = -108.0
+offset_right = 21.0
+offset_bottom = -85.0
+horizontal_alignment = 1
+vertical_alignment = 1

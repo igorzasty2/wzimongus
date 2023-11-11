@@ -8,7 +8,8 @@ func _ready():
 	var index = 0
 	for i in GameManager.Players:
 		var currentPlayer = PlayerScene.instantiate()
-		currentPlayer.name = str(GameManager.Players[i].id)
+		currentPlayer.authority_id = str(GameManager.Players[i].id)
+		currentPlayer.nickname = str(GameManager.Players[i].name)
 		add_child(currentPlayer)
 		print(spawnPoints[index])
 		currentPlayer.global_position = spawnPoints[index].global_position
