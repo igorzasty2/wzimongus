@@ -5,39 +5,80 @@ extends Node
 ## has done, chat information can be stored here too in further development
 ## of the game. 
 
-@export var Address = "127.0.0.1"
-@export var Port = 8998
-
-var username = ""
+const PORT = 8998
+const DEFAULT_SERVER_IP = "127.0.0.1"
+const MAX_CONNECTIONS = 20
 
 ## Stores all players info who are connected to the server at the moment. 
 var players = {}
 
+# This is the local player info. This should be modified locally
+# before the connection is made. It will be passed to every other peer.
+# For example, the value of "name" can be set to something the player
+# entered in a UI scene.
+var player_info = {"username": ""}
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	multiplayer.peer_connected.connect(peer_connected)
-	multiplayer.peer_disconnected.connect(peer_disconnected)
-	multiplayer.connected_to_server.connect(connected_to_server)
-	multiplayer.connection_failed.connect(connection_failed)
+	multiplayer.peer_connected.connect(_on_player_connected)
+	multiplayer.peer_disconnected.connect(_on_player_disconnected)
+	multiplayer.connected_to_server.connect(_on_connected_ok)
+	multiplayer.connection_failed.connect(_on_connected_fail)
+	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
-func peer_connected(id):
+## Joins the game as a client.
+func join_game(address = ""):
+	if address.is_empty():
+		address = DEFAULT_SERVER_IP
+	var peer = ENetMultiplayerPeer.new()
+	var error = peer.create_client(address, PORT)
+	if error:
+		return error
+	multiplayer.multiplayer_peer = peer
+
+
+## Hosts the game as a server.
+func create_game():
+	var peer = ENetMultiplayerPeer.new()
+	var error = peer.create_server(PORT, MAX_CONNECTIONS)
+	if error:
+		return error
+	multiplayer.multiplayer_peer = peer
+	
+	send_player_information(player_info["username"], multiplayer.get_unique_id())
+
+
+func set_username(username):
+	player_info["username"] = username
+
+
+## Called when a new player connects to the server.
+func _on_player_connected(id):
 	print("player connected " + str(id))
 
-func peer_disconnected(id):
+
+## Called when a player disconnects from the server.
+func _on_player_disconnected(id):
 	print("player disconnected " + str(id))
-	
+
+
 ## Sends player information to the host peer.
-func connected_to_server():
+func _on_connected_ok():
 	print("Connected to server")
-	send_player_information.rpc_id(1, username, multiplayer.get_unique_id())
+	send_player_information.rpc_id(1, player_info["username"], multiplayer.get_unique_id())
+
 
 ## Called on failing connecting to the server.
-func connection_failed():
+func _on_connected_fail():
 	print("Connection failed")
+
+
+## Called when the server disconnects.
+func _on_server_disconnected():
+	print("Server disconnected")
+
 
 ## Manages recording new player's information if necessary
 ## to localy stored GameManager on every peer. If peer
@@ -55,33 +96,6 @@ func send_player_information(name, id):
 		for i in players:
 			send_player_information.rpc(players[i].name, i)
 
-func join_game(username = ""):
-	self.username = username
-
-	var peer = ENetMultiplayerPeer.new()
-	peer.create_client(Address, Port)
-	
-	# Might be useful for game optimization	
-	# peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	
-	multiplayer.set_multiplayer_peer(peer)
-
-
-func create_game(username = ""):
-	self.username = username
-
-	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(Port, 10)
-	
-	if error != OK:
-		print("cannot host: " + error)
-		return
-	
-	# Might be useful for game optimization
-	# peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	multiplayer.set_multiplayer_peer(peer)
-	print("Waiting for players...")
-	send_player_information(username, multiplayer.get_unique_id())
 
 ## Starts game for every player who is connected to a given server
 @rpc("any_peer", "call_local")
