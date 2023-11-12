@@ -19,6 +19,7 @@ var nickname
 var isImpostor
 var tween
 
+
 func _ready():
 	# TODO: Get nickname from server
 	nickname = "Valcast"
@@ -31,8 +32,6 @@ func _ready():
 
 	inputContainer.hide()
 
-	
-	
 
 func _process(_delta):
 	if Input.is_action_just_pressed("chat_open"):
@@ -54,6 +53,7 @@ func _process(_delta):
 			currentGroup = 0
 
 
+@rpc("any_peer", "call_local")
 func send_message(message, group):
 	if group < 0 or group >= len(chatGroups):
 		return
@@ -66,18 +66,15 @@ func send_message(message, group):
 		chatLogs.text += "%s \n" % message
 		timer.start()
 
-		# TODO: Add with rpc_id when server is implemented
-		# send_message.rpc_id(1, message, group)
 	else:
 		chatLogs.text += "[color=%s]%s:[/color] %s \n" % [chatGroups[currentGroup]["color"], nickname, message]
 		chatLogs.modulate = Color(1, 1, 1, 1)
 		timer.start()
 
-		# TODO: Add with rpc_id when server is implemented
-		# send_message.rpc_id(1, message, group)
 
 func send_system_message(message):
-	send_message(message, 2)
+	send_message.rpc(message, 2)
+
 
 func _on_input_text_text_submitted(new_text):
 	new_text = new_text.strip_edges()
@@ -85,10 +82,12 @@ func _on_input_text_text_submitted(new_text):
 	if new_text == "":
 		return
 
-	# TODO: Replace with RpcId when server is implemented
+	# TODO: Replace with rpc when server is implemented
 	send_message(new_text, currentGroup)
+	# send_message.rpc(new_text, currentGroup)
 
 	inputText.text = ""
+
 
 func _on_timer_timeout():
 	if inputText.has_focus():
