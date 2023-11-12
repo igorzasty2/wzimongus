@@ -1,27 +1,19 @@
+# Ten skrypt definiuje węzeł GameManager, który obsługuje połączenia wieloosobowe i informacje o graczach.
 extends Node
-## GameManager is more of a local database which stores
-## information about current server and its peers. GameManager
-## can be extended further to store the amount of tasks every player
-## has done, chat information can be stored here too in further development
-## of the game. 
 
 const PORT = 8998
 const DEFAULT_SERVER_IP = "127.0.0.1"
 const MAX_CONNECTIONS = 20
 
-## Stores all players info who are connected to the server at the moment. 
+# Słownik przechowujący informacje o połączonych graczach.
 var players = {}
 
-# This is the local player info. This should be modified locally
-# before the connection is made. It will be passed to every other peer.
-# For example, the value of "name" can be set to something the player
-# entered in a UI scene.
+# Słownik przechowujący informacje o bieżącym graczu.
 var player_info = {
 	"username": ""
 }
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	multiplayer.peer_connected.connect(_on_player_connected)
 	multiplayer.peer_disconnected.connect(_on_player_disconnected)
@@ -30,7 +22,20 @@ func _ready():
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 
-## Joins the game as a client.
+# Funkcja pozwalająca na stworzenie nowego serwera.
+func create_game():
+	var peer = ENetMultiplayerPeer.new()
+	var error = peer.create_server(PORT, MAX_CONNECTIONS)
+	if error:
+		return error
+	multiplayer.multiplayer_peer = peer
+
+	# Dodaje obecnego gracza do listy połączonych graczy.
+	# W tym momencie nie ma żadnych połączonych graczy, więc nie potrzeba wysyłać go do połączonych klientów.
+	_add_new_player(1, player_info)
+
+
+# Funkcja pozwalaja na dołączenie do istniejącej gry.
 func join_game(address = ""):
 	if address.is_empty():
 		address = DEFAULT_SERVER_IP
@@ -41,63 +46,68 @@ func join_game(address = ""):
 	multiplayer.multiplayer_peer = peer
 
 
-## Hosts the game as a server.
-func create_game():
-	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(PORT, MAX_CONNECTIONS)
-	if error:
-		return error
-	multiplayer.multiplayer_peer = peer
-	
-	send_player_information(player_info, 1)
-
-
-# When the server decides to start the game from a UI scene,
-# do Lobby.load_game.rpc(filepath)
+# Funkcja wczytująca odpowiednią scenę po rozpoczęciu gry przez hosta.
 @rpc("call_local", "reliable")
 func load_game(game_scene_path):
 	get_tree().change_scene_to_file(game_scene_path)
 
 
+# Funkcja pozwalająca na zmianę nazwy gracza.
 func set_username(username):
 	player_info["username"] = username
 
 
-## Called when a new player connects to the server.
+# Funkcja wywoływana na serwerze po dołączeniu nowego gracza.
 func _on_player_connected(id):
-	print("player connected " + str(id))
+	pass
 
 
-## Called when a player disconnects from the server.
+# Funkcja wywoływana na serwerze po rozłączeniu gracza.
 func _on_player_disconnected(id):
-	print("player disconnected " + str(id))
+	players.erase(id)
+	# Powiadamia wszystkich graczy o rozłączeniu gracza.
+	_delete_player.rpc(id)
 
 
-## Sends player information to the host peer.
+# Funkcja wywoływana u klienta po połączeniu z serwerem.
+# Wysyła informacje o graczu do serwera.
 func _on_connected_ok():
-	print("Connected to server")
-	send_player_information.rpc_id(1, player_info, multiplayer.get_unique_id())
+	_register_player.rpc_id(1, player_info)
 
 
-## Called on failing connecting to the server.
+# Funkcja wywoływana u klienta po nieudanym połączeniu z serwerem.
 func _on_connected_fail():
-	print("Connection failed")
+	multiplayer.multiplayer_peer = null
 
 
-## Called when the server disconnects.
+# Funkcja wywoływana u klienta po rozłączeniu z serwerem.
 func _on_server_disconnected():
-	print("Server disconnected")
+	multiplayer.multiplayer_peer = null
+	players.clear()
 
 
-## Manages recording new player's information if necessary
-## to localy stored GameManager on every peer. If peer
-## happens to be a host peer then it also sends full list
-## of players to every peer.
-@rpc("any_peer")
-func send_player_information(player, id):
-	if !players.has(id):
-		players[id] = player
-	
-	if multiplayer.is_server():
-		for i in players:
-			send_player_information.rpc(players[i], i)
+# Funkcja wywoływanana na serwerze po otrzymaniu informacji o graczu.
+@rpc("any_peer", "reliable")
+func _register_player(player_info):
+	# Dodaje nowego gracza do listy połączonych graczy.
+	var id = multiplayer.get_remote_sender_id()
+	players[id] = player_info
+
+	# Wysyłanie do nowego gracza informacji o wszystkich połączonych graczach.
+	for i in players:
+		_add_new_player.rpc_id(id, i, players[i])
+
+	# Wysyłanie do wszystkich połączonych graczy informacji o nowym graczu.
+	_add_new_player.rpc(id, player_info)
+
+
+# Funkcja pozwalająca na dodanie nowego gracza do listy połączonych graczy.
+@rpc("reliable")
+func _add_new_player(id, player):
+	players[id] = player
+
+
+# Funkcja pozwalająca na usunięcie gracza z listy połączonych graczy.
+@rpc("reliable")
+func _delete_player(id):
+	players.erase(id)
