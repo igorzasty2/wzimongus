@@ -6,15 +6,3 @@
 [node name="Map" type="Node2D"]
 script = ExtResource("1_xvngj")
 PlayerScene = ExtResource("2_0ktid")
-
-[node name="SpawnPoints" type="Node2D" parent="."]
-position = Vector2(577, 317)
-
-[node name="0" type="Node2D" parent="SpawnPoints"]
-position = Vector2(-50, -188)
-
-[node name="1" type="Node2D" parent="SpawnPoints"]
-position = Vector2(-401, 209)
-
-[node name="2" type="Node2D" parent="SpawnPoints"]
-position = Vector2(397, 191)
