@@ -1,4 +1,4 @@
-# Ten skrypt definiuje węzeł GameManager, który obsługuje połączenia wieloosobowe i informacje o graczach.
+# Ten skrypt definiuje węzeł MultiplayerManager, który obsługuje połączenia wieloosobowe i informacje o graczach.
 extends Node
 
 const PORT = 8998

@@ -12,10 +12,10 @@ extends Node2D
 func _ready():
 	var spawnPoints = $SpawnPoints.get_children()
 	var index = 0
-	for i in GameManager.players:
+	for i in MultiplayerManager.players:
 		var currentPlayer = PlayerScene.instantiate()
 		currentPlayer.authority_id = str(i)
-		currentPlayer.nickname = str(GameManager.players[i].username)
+		currentPlayer.nickname = str(MultiplayerManager.players[i].username)
 		add_child(currentPlayer)
 		print(spawnPoints[index])
 		currentPlayer.global_position = spawnPoints[index].global_position
