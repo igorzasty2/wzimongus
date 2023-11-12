@@ -26,4 +26,4 @@ func _on_join_button_down():
 ## StartGame button function which can be pressed by anyone
 ## who's connected to the server. Button starts the game 
 func _on_start_game_button_down():
-	GameManager.start_game.rpc()
+	GameManager.load_game.rpc("res://scenes/map/map.tscn")

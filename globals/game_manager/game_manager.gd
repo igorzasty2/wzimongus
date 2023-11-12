@@ -16,7 +16,9 @@ var players = {}
 # before the connection is made. It will be passed to every other peer.
 # For example, the value of "name" can be set to something the player
 # entered in a UI scene.
-var player_info = {"username": ""}
+var player_info = {
+	"username": ""
+}
 
 
 # Called when the node enters the scene tree for the first time.
@@ -47,7 +49,14 @@ func create_game():
 		return error
 	multiplayer.multiplayer_peer = peer
 	
-	send_player_information(player_info["username"], multiplayer.get_unique_id())
+	send_player_information(player_info, 1)
+
+
+# When the server decides to start the game from a UI scene,
+# do Lobby.load_game.rpc(filepath)
+@rpc("call_local", "reliable")
+func load_game(game_scene_path):
+	get_tree().change_scene_to_file(game_scene_path)
 
 
 func set_username(username):
@@ -67,7 +76,7 @@ func _on_player_disconnected(id):
 ## Sends player information to the host peer.
 func _on_connected_ok():
 	print("Connected to server")
-	send_player_information.rpc_id(1, player_info["username"], multiplayer.get_unique_id())
+	send_player_information.rpc_id(1, player_info, multiplayer.get_unique_id())
 
 
 ## Called on failing connecting to the server.
@@ -85,19 +94,10 @@ func _on_server_disconnected():
 ## happens to be a host peer then it also sends full list
 ## of players to every peer.
 @rpc("any_peer")
-func send_player_information(name, id):
+func send_player_information(player, id):
 	if !players.has(id):
-		players[id] = {
-			"id": id,
-			"name": name,
-		}
+		players[id] = player
 	
 	if multiplayer.is_server():
 		for i in players:
-			send_player_information.rpc(players[i].name, i)
-
-
-## Starts game for every player who is connected to a given server
-@rpc("any_peer", "call_local")
-func start_game():
-	get_tree().change_scene_to_file("res://scenes/map/map.tscn")
+			send_player_information.rpc(players[i], i)
