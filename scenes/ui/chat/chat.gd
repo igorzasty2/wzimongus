@@ -8,6 +8,9 @@ extends Control
 @onready var inputContainer = get_node("%InputContainer")
 @onready var timer = get_node("%ChatDisappearTimer")
 
+#* send_message - Wysyła wiadomość do wszystkich graczy
+#* send_system_message - Wysyła systemową wiadomość do wszystkich graczy
+
 
 var chatGroups = [
 	{"name": "Global", "color": "blue"},
