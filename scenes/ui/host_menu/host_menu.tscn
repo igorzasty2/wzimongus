@@ -1,0 +1,113 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy2ypfn8ixuqx"]
+
+[ext_resource type="Script" path="res://scenes/ui/host_menu/host_menu.gd" id="1_fm6y5"]
+
+[node name="host_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fm6y5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.533333, 0.521569, 0.427451, 0.980392)
+
+[node name="UsernameLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_top = 200.0
+offset_right = -86.0
+offset_bottom = 226.0
+grow_horizontal = 2
+pivot_offset = Vector2(401, 292)
+text = "Login"
+
+[node name="UsernameInput" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_top = 226.0
+offset_right = 128.0
+offset_bottom = 257.0
+grow_horizontal = 2
+pivot_offset = Vector2(402, 265)
+
+[node name="MaxConnectionsLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_top = 272.0
+offset_right = -29.0
+offset_bottom = 324.0
+grow_horizontal = 2
+pivot_offset = Vector2(401.5, 220)
+text = "Maksymalna
+liczba graczy"
+
+[node name="MaxConnectionsInput" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 78.0
+offset_top = 288.0
+offset_right = 121.0
+offset_bottom = 308.0
+grow_horizontal = 2
+pivot_offset = Vector2(205.5, 206)
+
+[node name="PortLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_top = 336.0
+offset_right = -88.0
+offset_bottom = 362.0
+grow_horizontal = 2
+pivot_offset = Vector2(401, 151)
+text = "Port"
+
+[node name="PortInput" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 64.0
+offset_top = 336.0
+offset_right = 131.062
+offset_bottom = 367.0
+grow_horizontal = 2
+pivot_offset = Vector2(218.531, 154)
+text = "8998"
+
+[node name="HostButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_top = 384.0
+offset_right = 128.0
+offset_bottom = 434.0
+grow_horizontal = 2
+pivot_offset = Vector2(402, 108)
+text = "Stwórz grę"
+
+[connection signal="button_down" from="HostButton" to="." method="_on_host_button_button_down"]

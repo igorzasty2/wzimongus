@@ -9,7 +9,7 @@ func _ready():
 		var currentPlayer = PlayerScene.instantiate()
 		currentPlayer.id = i
 		currentPlayer.nickname = str(MultiplayerManager.players[i].username)
-		add_child(currentPlayer)
+		add_child(currentPlayer, true)
 
 		# Losowo pozycjonuj postać gracza na mapie.
 		currentPlayer.global_position = Vector2(randi_range(0, 1152), randi_range(0, 648))

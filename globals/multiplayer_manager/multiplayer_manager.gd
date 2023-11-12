@@ -1,10 +1,6 @@
 # Ten skrypt definiuje węzeł MultiplayerManager, który obsługuje połączenia wieloosobowe i informacje o graczach.
 extends Node
 
-const PORT = 8998
-const DEFAULT_SERVER_IP = "127.0.0.1"
-const MAX_CONNECTIONS = 20
-
 # Słownik przechowujący informacje o połączonych graczach.
 var players = {}
 
@@ -23,9 +19,9 @@ func _ready():
 
 
 # Funkcja pozwalająca na stworzenie nowego serwera.
-func create_game():
+func create_game(port, max_connections):
 	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(PORT, MAX_CONNECTIONS)
+	var error = peer.create_server(port, max_connections)
 	if error:
 		return error
 	multiplayer.multiplayer_peer = peer
@@ -36,11 +32,9 @@ func create_game():
 
 
 # Funkcja pozwalaja na dołączenie do istniejącej gry.
-func join_game(address = ""):
-	if address.is_empty():
-		address = DEFAULT_SERVER_IP
+func join_game(address, port):
 	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_client(address, PORT)
+	var error = peer.create_client(address, port)
 	if error:
 		return error
 	multiplayer.multiplayer_peer = peer

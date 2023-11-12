@@ -6,16 +6,18 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 
+@onready var synchronizer = $MultiplayerSynchronizer
+
 func _ready():
 	# Ustawia autorytet gracza na jego id w celu jego identyfikacji w systemie multiplayer.
-	set_multiplayer_authority(id)
+	synchronizer.set_multiplayer_authority(id)
 	# Ustawia etykietę pseudonimu gracza.
 	$NicknameLabel.text = nickname
 
 
 func _physics_process(delta):
 	# Sprawdza, czy gracz jest autoryzowany w systemie multiplayer.
-	if is_multiplayer_authority():
+	if synchronizer.is_multiplayer_authority():
 		# Pobiera pionowe wejście gracza i odpowiednio ustawia pionową prędkość.
 		var direction_y = Input.get_axis("ui_up", "ui_down")
 		if direction_y:
