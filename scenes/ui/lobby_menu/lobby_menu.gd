@@ -1,5 +1,9 @@
 extends Control
 
+func _ready() -> void:
+	# Ukrywa przycisk, jeśli użytkownik nie jest hostem
+	if !multiplayer.is_server():
+		$LobbyUI/StartGameButton.hide()
 
 func _on_start_game_button_button_down():
 	# Tylko host jest w stanie rozpocząć grę
