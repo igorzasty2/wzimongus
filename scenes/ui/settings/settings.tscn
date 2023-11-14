@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://01iag5x618my"]
+
+[ext_resource type="Script" path="res://scenes/ui/settings/settings.gd" id="1_cq5p7"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cq5p7")
+
+[node name="SettingsList" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -147.0
+offset_top = -20.0
+offset_right = 147.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Labels" type="VBoxContainer" parent="SettingsList"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="SoundVolume" type="Label" parent="SettingsList/Labels"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Głośność"
+
+[node name="FullScreen" type="Label" parent="SettingsList/Labels"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Pełny ekran"
+
+[node name="Sliders" type="VBoxContainer" parent="SettingsList"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SoundVolumeSlider" type="HSlider" parent="SettingsList/Sliders"]
+layout_mode = 2
+
+[node name="FullScreenCheckbox" type="CheckBox" parent="SettingsList/Sliders"]
+layout_mode = 2
+focus_mode = 0
+
+[connection signal="value_changed" from="SettingsList/Sliders/SoundVolumeSlider" to="." method="_on_sound_volume_slider_value_changed"]
+[connection signal="toggled" from="SettingsList/Sliders/FullScreenCheckbox" to="." method="_on_full_screen_checkbox_toggled"]

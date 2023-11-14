@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 MultiplayerManager="*res://globals/multiplayer_manager/multiplayer_manager.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [dotnet]
 
 project/assembly_name="WZiMongus"

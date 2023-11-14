@@ -1,0 +1,129 @@
+[gd_scene load_steps=3 format=3 uid="uid://bha1146nfvg6s"]
+
+[ext_resource type="Script" path="res://scenes/ui/start_menu/start_menu.gd" id="1_kh2k6"]
+[ext_resource type="PackedScene" uid="uid://01iag5x618my" path="res://scenes/ui/settings/settings.tscn" id="3_j535k"]
+
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kh2k6")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.5
+offset_top = -324.0
+offset_right = 576.5
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.352941, 0.352941, 0.443137, 1)
+
+[node name="Menu" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="TitleContainer" type="VBoxContainer" parent="Menu/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 65
+
+[node name="Title" type="Label" parent="Menu/MarginContainer/TitleContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 110
+text = "WZIMong us"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="Menu/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 20
+
+[node name="PlayButton" type="Button" parent="Menu/MarginContainer/ButtonsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "Graj"
+
+[node name="SettingsButton" type="Button" parent="Menu/MarginContainer/ButtonsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "Ustawienia"
+
+[node name="ExitButton" type="Button" parent="Menu/MarginContainer/ButtonsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "Wyjdź"
+
+[node name="Separator2" type="Control" parent="Menu/MarginContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Separator3" type="Control" parent="Menu/MarginContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Separator4" type="Control" parent="Menu/MarginContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Settings" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -85.0
+offset_right = 104.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 35
+
+[node name="BackButton" type="Button" parent="Settings/VBoxContainer"]
+custom_minimum_size = Vector2(208, 85)
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "Powrót"
+
+[node name="Separator" type="Control" parent="Settings/VBoxContainer"]
+layout_mode = 2
+
+[node name="Settings" parent="Settings" instance=ExtResource("3_j535k")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[connection signal="pressed" from="Menu/MarginContainer/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Menu/MarginContainer/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Menu/MarginContainer/ButtonsContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Settings/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
