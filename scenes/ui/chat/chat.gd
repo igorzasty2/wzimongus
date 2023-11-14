@@ -1,12 +1,16 @@
 extends Control
 
 
-@onready var chatLogs = get_node("%ChatLog")
 @onready var inputNickname = get_node("%InputNickname")
 @onready var inputGroup = get_node("%InputGroup")
 @onready var inputText = get_node("%InputText")
 @onready var inputContainer = get_node("%InputContainer")
 @onready var timer = get_node("%ChatDisappearTimer")
+@onready var chatLogsScrollContainer = get_node("%ChatLogsScrollbar")
+@onready var chatLogsContainer = get_node("%ChatLogsContainer")
+
+var chatLogsScrollbar
+var max_scroll_length = 0
 
 #* send_message - Wysyła wiadomość do wszystkich graczy
 #* send_system_message - Wysyła systemową wiadomość do wszystkich graczy
@@ -20,10 +24,17 @@ var chatGroups = [
 var currentGroup = 0
 var nickname
 var isImpostor
-var tween
+
+var messageScene = preload("res://scenes/ui/chat/message/message.tscn")
 
 
 func _ready():
+
+	chatLogsScrollbar = chatLogsScrollContainer.get_v_scroll_bar()
+	chatLogsScrollbar.changed.connect(_handle_scrollbar_changed)
+
+
+
 	# TODO: Get nickname from server
 	nickname = "Valcast"
 
@@ -40,7 +51,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("chat_open"):
 		inputText.grab_focus()
 		inputContainer.show()
-		chatLogs.modulate = Color(1, 1, 1, 1)
+		
 
 	if Input.is_action_just_pressed("chat_close"):
 		inputText.release_focus()
@@ -65,18 +76,24 @@ func send_message(message, group):
 		return
 
 	if group == 2:
-		chatLogs.modulate = Color(1, 1, 1, 1)
-		chatLogs.text += "%s \n" % message
+		_create_message(message, nickname)
+		
 		timer.start()
 
 	else:
-		chatLogs.text += "[color=%s]%s:[/color] %s \n" % [chatGroups[currentGroup]["color"], nickname, message]
-		chatLogs.modulate = Color(1, 1, 1, 1)
+		_create_message(message, nickname)
+
 		timer.start()
 
 
 func send_system_message(message):
 	send_message.rpc(message, 2)
+
+
+func _create_message(message, username):
+	var messageInstance = messageScene.instantiate()
+	chatLogsContainer.add_child(messageInstance)
+	messageInstance.init(username, message)
 
 
 func _on_input_text_text_submitted(new_text):
@@ -96,8 +113,7 @@ func _on_timer_timeout():
 	if inputText.has_focus():
 		return
 
-	tween = create_tween()
-	
-	tween.tween_property(chatLogs, "modulate:a", 0, 0.25).set_trans(Tween.TRANS_SINE)
-
-
+func _handle_scrollbar_changed():
+	if max_scroll_length != chatLogsScrollbar.max_value:
+		max_scroll_length = chatLogsScrollbar.get_max()
+		chatLogsScrollContainer.scroll_vertical = max_scroll_length

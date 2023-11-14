@@ -21,15 +21,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ChatLog" type="RichTextLabel" parent="ChatContainer"]
+[node name="ChatLogsScrollbar" type="ScrollContainer" parent="ChatContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-bbcode_enabled = true
-scroll_active = false
-scroll_following = true
+follow_focus = true
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
 
-[node name="ChatDisappearTimer" type="Timer" parent="ChatContainer/ChatLog"]
+[node name="ChatLogsContainer" type="VBoxContainer" parent="ChatContainer/ChatLogsScrollbar"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ChatDisappearTimer" type="Timer" parent="ChatContainer/ChatLogsScrollbar/ChatLogsContainer"]
 unique_name_in_owner = true
 wait_time = 3.464
 one_shot = true
@@ -56,5 +63,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 flat = true
 
-[connection signal="timeout" from="ChatContainer/ChatLog/ChatDisappearTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="ChatContainer/ChatLogsScrollbar/ChatLogsContainer/ChatDisappearTimer" to="." method="_on_timer_timeout"]
 [connection signal="text_submitted" from="ChatContainer/InputContainer/InputText" to="." method="_on_input_text_text_submitted"]
