@@ -45,12 +45,6 @@ func join_game(address, port):
 	multiplayer.multiplayer_peer = peer
 
 
-# Funkcja wczytująca odpowiednią scenę po rozpoczęciu gry przez hosta.
-@rpc("call_local", "reliable")
-func load_game(game_scene_path):
-	get_tree().change_scene_to_file(game_scene_path)
-
-
 # Funkcja pozwalająca na zmianę nazwy gracza.
 func set_username(username):
 	player_info["username"] = username

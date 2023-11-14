@@ -63,4 +63,5 @@ func update_display_player_list(id, player_info):
 		players_display += "\n"
 		idx += 1
 	
+	# Wyświetlanie całości
 	$LobbyUI/PlayerList.text = players_display
