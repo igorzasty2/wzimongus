@@ -5,45 +5,29 @@ extends Node2D
 
 func _ready():
 	if multiplayer.is_server():
-		# multiplayer.peer_connected.connect()
-		# multiplayer.peer_disconnected.connect()
+		# Sprawia, że gracz jest usuwany z mapy po opuszczeniu gry. 
+		multiplayer.peer_disconnected.connect(remove_player)
 
-		# for i in multiplayer.get_peers():
-			# add_player(i)
-			# print(i)
-		
-		# add_player(1)
-		
-		# for i in MultiplayerManager.players:
-			# print(i)
-
-		# for i in MultiplayerManager.players:
-			# add_player(i)
-
+		# Odradza wszystkich graczy jeden po drugim.
 		for i in MultiplayerManager.players:
 			add_player(i)
 
-
+# Odradza gracza w losowej pozycji na mapie.
 func add_player(id: int):
 	var player = preload("res://scenes/player/player.tscn").instantiate()
-	player.id = id
-	# player.player = id
-	player.position = Vector2(randi_range(0, 1152), randi_range(0, 648))
+	# To jest nazwa Node'a.
 	player.name = str(id)
+	player.id = id
+	player.position = Vector2(randi_range(0, 1152), randi_range(0, 648))
 	player.nickname = MultiplayerManager.players[id].username
+	# Dodaje Node na mape.
 	$Players.add_child(player, true)
 
 
-	# Stwórz instancję postaci gracza dla każdego podłączonego gracza.
-	# for i in MultiplayerManager.players:
-	# 	var currentPlayer = PlayerScene.instantiate()
-	# 	currentPlayer.id = i
-	# 	currentPlayer.nickname = str(MultiplayerManager.players[i].username)
-	# 	add_child(currentPlayer, true)
-
-	# 	# Losowo pozycjonuj postać gracza na mapie.
-	# 	currentPlayer.global_position = Vector2(randi_range(0, 1152), randi_range(0, 648))
-
-
-func _process(delta):
-	pass
+# Usuwa postać gracza, gdy ten opuszcza grę.
+func remove_player(id: int):
+	if not $Players.has_node(str(id)):
+		return 
+	
+	# Usuwa odpowiednią postać z mapy.
+	$Players.get_node(str(id)).queue_free()

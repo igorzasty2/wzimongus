@@ -18,8 +18,8 @@ func _ready():
 
 
 func _physics_process(delta):
-	# Sprawdza, czy gracz jest autoryzowany w systemie multiplayer.
-	# Pobiera pionowe wejście gracza i odpowiednio ustawia pionową prędkość.
+	# Pobiera pionowe wejście gracza i odpowiednio ustawia pionową prędkość
+	# oraz pobiera poziome wejście gracza i odpowiednio ustawia poziomą prędkość
 	var direction = Vector2(input.direction.x, input.direction.y)
 	if direction:
 		velocity.x = direction.x * SPEED
