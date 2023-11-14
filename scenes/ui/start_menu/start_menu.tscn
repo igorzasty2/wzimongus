@@ -88,6 +88,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="Settings" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
