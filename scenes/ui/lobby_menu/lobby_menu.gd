@@ -48,7 +48,7 @@ func change_map(scene: PackedScene):
 	map.add_child(scene.instantiate())
 
 # Wyświetla listę graczy na ekranie
-func update_display_player_list(id, player_info):
+func update_display_player_list(id, player_info = null):
 	var players = MultiplayerManager.players
 	var players_display = "Lista graczy:\n"
 	var idx = 1
@@ -56,8 +56,8 @@ func update_display_player_list(id, player_info):
 		# Numerowanie graczy
 		players_display += str(idx) + '. '
 		
-		# Wyświetlanie nazwisko gracza
-		players_display += (players[i].username)
+		# Wyświetlanie nazwiska gracza
+		players_display += players[i].username
 		
 		# Newline symbol
 		players_display += "\n"
