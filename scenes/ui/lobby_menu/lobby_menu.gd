@@ -4,6 +4,9 @@ func _ready() -> void:
 	# Ukrywa przycisk, jeśli użytkownik nie jest hostem
 	if !multiplayer.is_server():
 		$LobbyUI/StartGameButton.hide()
+	
+	update_display_player_list(multiplayer.get_unique_id(), MultiplayerManager.player_info)
+	MultiplayerManager.player_connected.connect(update_display_player_list)
 
 func _on_start_game_button_button_down():
 	# Tylko host jest w stanie rozpocząć grę
@@ -34,3 +37,15 @@ func change_map(scene: PackedScene):
 	
 	# Wyświetlamy nową mapę
 	map.add_child(scene.instantiate())
+
+# 
+func update_display_player_list(id, player_info):
+	var players = MultiplayerManager.players
+	var players_display = "lista graczy:\n"
+	for i in players:
+		
+		players_display += (players[i].username)
+		players_display += "\n"
+	
+	$LobbyUI/PlayerList.text = players_display
+		
