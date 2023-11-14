@@ -5,8 +5,13 @@ func _ready() -> void:
 	if !multiplayer.is_server():
 		$LobbyUI/StartGameButton.hide()
 	
+	# Początkowe wyświetlenie listy graczy
 	update_display_player_list(multiplayer.get_unique_id(), MultiplayerManager.player_info)
+	
+	# Sprawienie, aby za każdym razem, gdy gracz dołącza lub
+	# opuszcza listę graczy, była ona wyświetlana ponownie
 	MultiplayerManager.player_connected.connect(update_display_player_list)
+	MultiplayerManager.player_disconnected.connect(update_display_player_list)
 
 func _on_start_game_button_button_down():
 	# Tylko host jest w stanie rozpocząć grę
@@ -20,6 +25,10 @@ func _on_start_game_button_button_down():
 func start_game():
 	# Chowamy lobby
 	$LobbyUI.hide()
+	
+	# Robie, żeby wyświetlanie listy graczy nie będzie już aktualizowane.
+	MultiplayerManager.player_connected.disconnect(update_display_player_list)
+	MultiplayerManager.player_disconnected.disconnect(update_display_player_list)
 
 	# Ładujemy mapę na serwerze, zostanie ona zsynchronizowana z klientami przez MapSpawner
 	if multiplayer.is_server():
@@ -38,14 +47,20 @@ func change_map(scene: PackedScene):
 	# Wyświetlamy nową mapę
 	map.add_child(scene.instantiate())
 
-# 
+# Wyświetla listę graczy na ekranie
 func update_display_player_list(id, player_info):
 	var players = MultiplayerManager.players
-	var players_display = "lista graczy:\n"
+	var players_display = "Lista graczy:\n"
+	var idx = 1
 	for i in players:
+		# Numerowanie graczy
+		players_display += str(idx) + '. '
 		
+		# Wyświetlanie nazwisko gracza
 		players_display += (players[i].username)
+		
+		# Newline symbol
 		players_display += "\n"
+		idx += 1
 	
 	$LobbyUI/PlayerList.text = players_display
-		
