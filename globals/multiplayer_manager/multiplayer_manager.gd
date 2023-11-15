@@ -1,4 +1,5 @@
 # Ten skrypt definiuje węzeł MultiplayerManager, który obsługuje połączenia wieloosobowe i informacje o graczach.
+
 extends Node
 
 # Sygnał, który jest emitowany, gdy gracz dołącza do gry.
@@ -85,7 +86,6 @@ func _on_server_disconnected():
 func _register_player(player_info):
 	# Dodaje nowego gracza do listy połączonych graczy.
 	var id = multiplayer.get_remote_sender_id()
-	_add_new_player(id, player_info)
 
 	# Wysyłanie do nowego gracza informacji o wszystkich połączonych graczach.
 	for i in players:
@@ -96,7 +96,7 @@ func _register_player(player_info):
 
 
 # Funkcja pozwalająca na dodanie nowego gracza do listy połączonych graczy.
-@rpc("reliable")
+@rpc("call_local", "reliable")
 func _add_new_player(id, player):
 	players[id] = player
 	player_connected.emit(id, player)

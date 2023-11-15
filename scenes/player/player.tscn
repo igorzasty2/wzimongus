@@ -9,7 +9,7 @@ properties/0/path = NodePath(".:id")
 properties/0/spawn = true
 properties/0/sync = false
 properties/0/watch = false
-properties/1/path = NodePath(".:nickname")
+properties/1/path = NodePath(".:username")
 properties/1/spawn = true
 properties/1/sync = false
 properties/1/watch = false
@@ -49,7 +49,7 @@ texture = ExtResource("1_8w5ck")
 position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_st64e")
 
-[node name="NicknameLabel" type="Label" parent="."]
+[node name="usernameLabel" type="Label" parent="."]
 offset_left = -19.0
 offset_top = -108.0
 offset_right = 21.0

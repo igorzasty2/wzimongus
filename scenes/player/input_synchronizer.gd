@@ -1,7 +1,8 @@
-# Rozszerzenie istniejącego MultiplayerSyncronizer.
+# Ten skrypt odpowiada za synchronizację wejścia gracza w sieci.
+
 extends MultiplayerSynchronizer
 
-# Kierunek gracza dla bieżącego frame'u. 
+# Kierunek gracza dla bieżącego frame'u.
 @export var direction = Vector2()
 
 # Aktualizuje kierunek ruchu gracza dla beżącego frame'u.
