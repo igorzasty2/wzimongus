@@ -1,15 +1,13 @@
 extends Control
 
 
-@onready var inputNickname = get_node("%InputNickname")
-@onready var inputGroup = get_node("%InputGroup")
 @onready var inputText = get_node("%InputText")
-@onready var inputContainer = get_node("%InputContainer")
 @onready var timer = get_node("%ChatDisappearTimer")
 @onready var chatLogsScrollContainer = get_node("%ChatLogsScrollbar")
 @onready var chatLogsContainer = get_node("%ChatLogsContainer")
+@onready var chatLogsScrollbar = chatLogsScrollContainer.get_v_scroll_bar()
 
-var chatLogsScrollbar
+
 var max_scroll_length = 0
 
 #* send_message - Wysyła wiadomość do wszystkich graczy
@@ -17,83 +15,89 @@ var max_scroll_length = 0
 
 
 var chatGroups = [
-	{"name": "Global", "color": "blue"},
+	{"name": "Global", "color": "white"},
 	{"name": "Impostor", "color": "red"},
-	{"name": "System", "color": "FF0000"},
+	{"name": "Dead", "color": "gray"},
+	{"name": "System", "color": "yellow"},
 ]
+
+@onready var username = MultiplayerManager.player_info.username
+
 var currentGroup = 0
-var nickname
-var isImpostor
-
 var messageScene = preload("res://scenes/ui/chat/message/message.tscn")
-
+var systemMessageScene = preload("res://scenes/ui/chat/system_message/system_message.tscn")
+var tween 
 
 func _ready():
 
-	chatLogsScrollbar = chatLogsScrollContainer.get_v_scroll_bar()
 	chatLogsScrollbar.changed.connect(_handle_scrollbar_changed)
 
 
+	# TODO: Get impostor status from game manager
+	# if isImpostor:
+	#   currentGroup = 1
 
-	# TODO: Get nickname from server
-	nickname = "Valcast"
+	inputText.hide()
 
-	# TODO: Get impostor status from server
-	isImpostor = true
+	# TODO: If dead, change group to 2
+	# currentGroup = 2
 
-	inputNickname.text = nickname
-	inputGroup.text = "[%s]" % chatGroups[currentGroup]["name"]
 
-	inputContainer.hide()
-
+	
 
 func _process(_delta):
 	if Input.is_action_just_pressed("chat_open"):
 		inputText.grab_focus()
-		inputContainer.show()
+		inputText.show()
+		chatLogsScrollContainer.modulate.a = 1
 		
 
 	if Input.is_action_just_pressed("chat_close"):
 		inputText.release_focus()
-		inputContainer.hide()
+		inputText.hide()
 		timer.start()
 		inputText.text = ""
 
-	if Input.is_action_just_pressed("chat_change_group"):
-		if isImpostor:
-			currentGroup = 0 if currentGroup == 1 else 1
-			inputGroup.text = "[%s]" % chatGroups[currentGroup]["name"]
-		else:
-			currentGroup = 0
-
 
 @rpc("any_peer", "call_local")
-func send_message(message, group):
-	if group < 0 or group >= len(chatGroups):
-		return
-
-	if group == 1 and not isImpostor:
-		return
+func send_message(message, group, id):
 
 	if group == 2:
-		_create_message(message, nickname)
-		
-		timer.start()
+		if currentGroup == 2:
+			_create_message(MultiplayerManager.players[id].username, message, 2)
+			return
+		return
+	
+	if group == 1:
+		if currentGroup == 1:
+			_create_message(MultiplayerManager.players[id].username, message, 1)
+			return
+		else:
+			_create_message(MultiplayerManager.players[id].username, message, 0)
+			return
+	
+	if group == 3:
+		var systemMessageInstance = systemMessageScene.instantiate()
+		chatLogsContainer.add_child(systemMessageInstance)
+		systemMessageInstance.init(message)
+		return
 
-	else:
-		_create_message(message, nickname)
 
-		timer.start()
+	_create_message(MultiplayerManager.players[id].username, message, currentGroup)
+	
 
-
+@rpc("authority", "call_local")
 func send_system_message(message):
-	send_message.rpc(message, 2)
+	send_message.rpc(message, 3, 1)
 
 
-func _create_message(message, username):
+func _create_message(username, message, group):
+	chatLogsScrollContainer.modulate.a = 1
 	var messageInstance = messageScene.instantiate()
 	chatLogsContainer.add_child(messageInstance)
-	messageInstance.init(username, message)
+	messageInstance.init(username, message, chatGroups[group]["color"])
+
+	timer.start()
 
 
 func _on_input_text_text_submitted(new_text):
@@ -102,9 +106,7 @@ func _on_input_text_text_submitted(new_text):
 	if new_text == "":
 		return
 
-	# TODO: Replace with rpc when server is implemented
-	send_message(new_text, currentGroup)
-	# send_message.rpc(new_text, currentGroup)
+	send_message.rpc(new_text, currentGroup, multiplayer.get_unique_id())
 
 	inputText.text = ""
 
@@ -112,6 +114,9 @@ func _on_input_text_text_submitted(new_text):
 func _on_timer_timeout():
 	if inputText.has_focus():
 		return
+	tween = get_tree().create_tween()
+	tween.tween_property(chatLogsScrollContainer, "modulate:a", 0, 0.25)
+
 
 func _handle_scrollbar_changed():
 	if max_scroll_length != chatLogsScrollbar.max_value:

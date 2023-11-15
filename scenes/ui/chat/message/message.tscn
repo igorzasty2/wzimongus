@@ -1,18 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://delr2y3pedulb"]
+[gd_scene load_steps=4 format=3 uid="uid://delr2y3pedulb"]
 
 [ext_resource type="Script" path="res://scenes/ui/chat/message/message.gd" id="1_0n54r"]
+[ext_resource type="Texture2D" uid="uid://bnnhtfmw00s5y" path="res://scenes/ui/chat/assets/man.png" id="2_vh1mn"]
+
+[sub_resource type="Theme" id="Theme_bghm4"]
 
 [node name="MessageContainer" type="HBoxContainer"]
 offset_right = 367.0
 offset_bottom = 73.0
 size_flags_horizontal = 3
+theme = SubResource("Theme_bghm4")
 script = ExtResource("1_0n54r")
 
 [node name="Avatar" type="TextureRect" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.3
+texture = ExtResource("2_vh1mn")
+expand_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -23,6 +27,7 @@ unique_name_in_owner = true
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
+bbcode_enabled = true
 text = "[username]"
 fit_content = true
 scroll_active = false

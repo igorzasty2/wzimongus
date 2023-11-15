@@ -10,8 +10,8 @@ func _ready():
 
 
 
-func init(usernameText: String, messageText: String):
+func init(usernameText: String, messageText: String, color: Color):
 
-	username.text = usernameText
+	username.text = "[color=#" + color.to_html(false) + "]" + usernameText + "[/color]"
 	message.text = messageText
 
