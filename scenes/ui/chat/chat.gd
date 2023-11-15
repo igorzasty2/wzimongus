@@ -94,9 +94,6 @@ func _on_timer_timeout():
 	if input_text.has_focus():
 		return
 
-	if fade_out_tween and fade_out_tween.is_active():
-		fade_out_tween.stop_all()
-
 	fade_out_tween = get_tree().create_tween()
 	fade_out_tween.tween_property(chat_logs_scroll_container, "modulate:a", 0, FADE_OUT_TIME)
 
