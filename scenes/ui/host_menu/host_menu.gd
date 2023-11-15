@@ -2,6 +2,8 @@ extends Control
 
 
 func _ready():
+	# Dodaje elementy do menu rozwijanego MaxConnectionsInput w scenie Host Menu.
+	# Elementy to liczby całkowite od 10 do 2 w kolejności malejącej.
 	for i in range(10, 1, -1):
 		$MaxConnectionsInput.add_item("{i}".format({"i": i}))
 

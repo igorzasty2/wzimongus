@@ -11,7 +11,22 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b20el")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Map" type="Node" parent="."]
+
+[node name="MapSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/map/map.tscn")
+spawn_path = NodePath("../Map")
+spawn_limit = 1
+
+[node name="LobbyUI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="LobbyUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,24 +35,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.533333, 0.521569, 0.427451, 0.980392)
 
-[node name="StartGameLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -248.0
-offset_top = -60.0
-offset_right = 248.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Uwaga! Funkcja rozpoczynania gry jest zarezerowana dla hosta.
-TODO: Ukryć przycisk graczom, dodać w tym miejscu listę graczy"
-horizontal_alignment = 1
-
-[node name="StartGameButton" type="Button" parent="."]
+[node name="StartGameButton" type="Button" parent="LobbyUI"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -45,11 +43,18 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -128.0
-offset_top = 4.0
+offset_top = 194.0
 offset_right = 128.0
-offset_bottom = 54.0
+offset_bottom = 244.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Rozpocznij grę"
 
-[connection signal="button_down" from="StartGameButton" to="." method="_on_start_game_button_button_down"]
+[node name="PlayerList" type="Label" parent="LobbyUI"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 106.0
+offset_right = 701.0
+offset_bottom = 490.0
+
+[connection signal="button_down" from="LobbyUI/StartGameButton" to="." method="_on_start_game_button_button_down"]
