@@ -57,6 +57,10 @@ func send_message(message, group, id):
 		_:
 			_create_message(MultiplayerManager.players[id].username, message, current_group)
 	
+	if multiplayer.is_server():
+		for peer_id in MultiplayerManager.players.keys():
+			if peer_id != 1:
+				send_message.rpc_id(peer_id, message, group, id)
 
 @rpc("authority", "call_local")
 func send_system_message(message):
@@ -81,7 +85,7 @@ func _on_input_text_text_submitted(submitted_text):
 	if submitted_text == "":
 		return
 
-	send_message.rpc(submitted_text, current_group, multiplayer.get_unique_id())	
+	send_message.rpc_id(1, submitted_text, current_group, multiplayer.get_unique_id())	
 
 	input_text.text = ""
 
