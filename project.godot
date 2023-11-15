@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="WZiMongus"
+run/main_scene="res://scenes/ui/play_menu/play_menu.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+MultiplayerManager="*res://globals/multiplayer_manager/multiplayer_manager.gd"
 
 [dotnet]
 

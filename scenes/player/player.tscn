@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://sx7ejcssw0xi"]
+
+[ext_resource type="Texture2D" uid="uid://boakkfqgwgxro" path="res://scenes/player/assets/1.png" id="1_8w5ck"]
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
+[ext_resource type="Script" path="res://scenes/player/input_synchronizer.gd" id="3_3x5pw"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_aer0t"]
+properties/0/path = NodePath(".:id")
+properties/0/spawn = true
+properties/0/sync = false
+properties/0/watch = false
+properties/1/path = NodePath(".:username")
+properties/1/spawn = true
+properties/1/sync = false
+properties/1/watch = false
+properties/2/path = NodePath(".:position")
+properties/2/spawn = true
+properties/2/sync = true
+properties/2/watch = false
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gggcu"]
+properties/0/path = NodePath(".:direction")
+properties/0/spawn = false
+properties/0/sync = true
+properties/0/watch = false
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_st64e"]
+radius = 54.0
+height = 148.0
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(-1, -77)
+motion_mode = 1
+script = ExtResource("1_rovco")
+
+[node name="ServerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_aer0t")
+
+[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_gggcu")
+script = ExtResource("3_3x5pw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.317789, 0.317789)
+texture = ExtResource("1_8w5ck")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_st64e")
+
+[node name="usernameLabel" type="Label" parent="."]
+offset_left = -19.0
+offset_top = -108.0
+offset_right = 21.0
+offset_bottom = -85.0
+horizontal_alignment = 1
+vertical_alignment = 1
