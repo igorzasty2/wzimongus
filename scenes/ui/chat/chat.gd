@@ -1,112 +1,87 @@
 extends Control
 
+enum Group { GLOBAL, IMPOSTOR, DEAD, SYSTEM }
 
-@onready var input_text = get_node("%InputText")
-@onready var timer = get_node("%ChatDisappearTimer")
-@onready var chat_logs_scroll_container = get_node("%ChatLogsScrollbar")
-@onready var chat_logs_container = get_node("%ChatLogsContainer")
+const GROUP_COLORS = {
+	Group.GLOBAL: "white",
+	Group.IMPOSTOR: "red",
+	Group.DEAD: "gray",
+	Group.SYSTEM: "yellow"
+}
+
+const FADE_OUT_TIME = 0.25
+
+@onready var input_text = $%InputText
+@onready var timer = $%ChatDisappearTimer
+@onready var chat_logs_scroll_container = $%ChatLogsScrollbar
+@onready var chat_logs_container = $%ChatLogsContainer
 @onready var chat_logs_scrollbar = chat_logs_scroll_container.get_v_scroll_bar()
-
-
-var max_scroll_length = 0
-
-#* send_message - Wysyła wiadomość do wszystkich graczy
-#* send_system_message - Wysyła systemową wiadomość do wszystkich graczy
-
-
-var chatGroups = [
-	{"name": "Global", "color": "white"},
-	{"name": "Impostor", "color": "red"},
-	{"name": "Dead", "color": "gray"},
-	{"name": "System", "color": "yellow"},
-]
-
 @onready var username = MultiplayerManager.player_info.username
 
-var current_group = 0
 var message_scene = preload("res://scenes/ui/chat/message/message.tscn")
 var system_message_scene = preload("res://scenes/ui/chat/system_message/system_message.tscn")
-var tween 
+
+
+var last_known_scroll_max = 0
+var current_group = Group.IMPOSTOR
+var fade_out_tween 
 
 func _ready():
 
-	chat_logs_scrollbar.changed.connect(_handle_scrollbar_changed)
-
-
-	# TODO: Get impostor status from game manager
-	# if isImpostor:
-	#   current_group = 1
-
+	chat_logs_scrollbar.changed.connect(_update_scrollbar_position)
 	input_text.hide()
 
-	# TODO: If dead, change group to 2
-	# current_group = 2
-
-
-	
 
 func _process(_delta):
 	if Input.is_action_just_pressed("chat_open"):
-		input_text.grab_focus()
-		input_text.show()
-		chat_logs_scroll_container.modulate.a = 1
-		
-
+		_open_chat()
 	if Input.is_action_just_pressed("chat_close"):
-		input_text.release_focus()
-		input_text.hide()
-		timer.start()
-		input_text.text = ""
+		_close_chat()
 
 
 @rpc("any_peer", "call_local")
 func send_message(message, group, id):
-
-	if group == 2:
-		if current_group == 2:
-			_create_message(MultiplayerManager.players[id].username, message, 2)
-			return
-		return
-	
-	if group == 1:
-		if current_group == 1:
-			_create_message(MultiplayerManager.players[id].username, message, 1)
-			return
-		else:
-			_create_message(MultiplayerManager.players[id].username, message, 0)
-			return
-	
-	if group == 3:
-		var system_message_instane = system_message_scene.instantiate()
-		chat_logs_container.add_child(system_message_instane)
-		system_message_instane.init(message)
-		return
-
-
-	_create_message(MultiplayerManager.players[id].username, message, current_group)
+	match group:
+		Group.DEAD:
+			if current_group == Group.DEAD:
+				_create_message(MultiplayerManager.players[id].username, message, Group.DEAD)
+		Group.IMPOSTOR:
+			if current_group == Group.IMPOSTOR:
+				_create_message(MultiplayerManager.players[id].username, message, Group.IMPOSTOR)
+			else:
+				_create_message(MultiplayerManager.players[id].username, message, Group.GLOBAL)
+		Group.SYSTEM:
+			var system_message_instance = system_message_scene.instantiate()
+			chat_logs_container.add_child(system_message_instance)
+			system_message_instance.init(message)
+		_:
+			_create_message(MultiplayerManager.players[id].username, message, current_group)
 	
 
 @rpc("authority", "call_local")
 func send_system_message(message):
-	send_message.rpc(message, 3, 1)
+	const SYSTEM_MESSAGE_ID = 1
+	send_message.rpc(message, Group.SYSTEM, SYSTEM_MESSAGE_ID)
 
 
 func _create_message(username, message, group):
 	chat_logs_scroll_container.modulate.a = 1
-	var message_instance = message_scene.instantiate()
-	chat_logs_container.add_child(message_instance)
-	message_instance.init(username, message, chatGroups[group]["color"])
+
+	var new_message = message_scene.instantiate()
+	chat_logs_container.add_child(new_message)
+
+	new_message.init(username, message, GROUP_COLORS[group])
 
 	timer.start()
 
 
-func _on_input_text_text_submitted(new_text):
-	new_text = new_text.strip_edges()
+func _on_input_text_text_submitted(submitted_text):
+	submitted_text = submitted_text.strip_edges()
 
-	if new_text == "":
+	if submitted_text == "":
 		return
 
-	send_message.rpc(new_text, current_group, multiplayer.get_unique_id())
+	send_message.rpc(submitted_text, current_group, multiplayer.get_unique_id())	
 
 	input_text.text = ""
 
@@ -114,11 +89,26 @@ func _on_input_text_text_submitted(new_text):
 func _on_timer_timeout():
 	if input_text.has_focus():
 		return
-	tween = get_tree().create_tween()
-	tween.tween_property(chat_logs_scroll_container, "modulate:a", 0, 0.25)
+
+	if fade_out_tween and fade_out_tween.is_active():
+		fade_out_tween.stop_all()
+
+	fade_out_tween = get_tree().create_tween()
+	fade_out_tween.tween_property(chat_logs_scroll_container, "modulate:a", 0, FADE_OUT_TIME)
 
 
-func _handle_scrollbar_changed():
-	if max_scroll_length != chat_logs_scrollbar.max_value:
-		max_scroll_length = chat_logs_scrollbar.get_max()
-		chat_logs_scroll_container.scroll_vertical = max_scroll_length
+func _update_scrollbar_position():
+	if last_known_scroll_max != chat_logs_scrollbar.max_value:
+		last_known_scroll_max = chat_logs_scrollbar.max_value
+		chat_logs_scroll_container.scroll_vertical = last_known_scroll_max
+
+func _open_chat():
+	input_text.grab_focus()
+	input_text.show()
+	chat_logs_scroll_container.modulate.a = 1
+
+func _close_chat():
+	input_text.release_focus()
+	input_text.hide()
+	timer.start()
+	input_text.text = ""
