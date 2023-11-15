@@ -12,53 +12,41 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -271.5
-offset_top = -160.5
-offset_right = 271.5
-offset_bottom = 160.5
+offset_left = -285.0
+offset_top = -184.5
+offset_right = 285.0
+offset_bottom = 184.5
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.313726, 0.313726, 0.313726, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Settings" parent="." instance=ExtResource("2_buvgv")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -220.0
-offset_top = -20.0
-offset_right = 220.0
-offset_bottom = 20.0
+offset_left = -225.0
+offset_top = 275.0
+offset_right = 225.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 60
-
-[node name="Separator" type="Control" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Settings" parent="VBoxContainer" instance=ExtResource("2_buvgv")]
-layout_mode = 2
-
-[node name="Separator2" type="Control" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 190
+theme_override_constants/separation = 250
 
-[node name="LeaveGameButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="LeaveGameButton" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(130, 40)
 layout_mode = 2
 text = "Opuść grę"
 
-[node name="BackToGameButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="BackToGameButton" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(130, 40)
 layout_mode = 2
 theme_override_constants/outline_size = 0
 text = "Powrót do gry"
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/BackToGameButton" to="." method="_on_back_to_game_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/BackToGameButton" to="." method="_on_back_to_game_button_pressed"]
