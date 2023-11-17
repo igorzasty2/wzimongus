@@ -3,6 +3,9 @@ extends Node2D
 const formulas = {0: "F=m*v", 1: "v=s/t", 2:"a=v/t"}
 var innertext:RichTextLabel
 var letters = []
+var isMoving = false
+var isMovingId = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var r = randi_range(0, formulas.size()-1)
