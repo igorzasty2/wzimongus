@@ -7,18 +7,12 @@
 script = ExtResource("1_xdxlx")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -285.0
-offset_top = -184.5
-offset_right = 285.0
-offset_bottom = 184.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.313726, 0.313726, 0.313726, 1)
+color = Color(0, 0, 0, 0.25098)
 
 [node name="Settings" parent="." instance=ExtResource("2_buvgv")]
 
@@ -28,14 +22,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -225.0
-offset_top = 275.0
-offset_right = 225.0
+offset_left = -230.0
+offset_top = 330.0
+offset_right = 230.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 250
+theme_override_constants/separation = 200
 
 [node name="LeaveGameButton" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(130, 40)

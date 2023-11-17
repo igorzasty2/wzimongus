@@ -14,13 +14,15 @@ script = ExtResource("1_cq5p7")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 300.0
-offset_top = 150.0
-offset_right = -300.0
-offset_bottom = -150.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -249.0
+offset_top = -204.0
+offset_right = 249.0
+offset_bottom = 204.0
 grow_horizontal = 2
 grow_vertical = 2
 tab_alignment = 1
@@ -39,52 +41,65 @@ grow_vertical = 2
 theme_override_constants/margin_left = 60
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 60
-theme_override_constants/margin_bottom = 40
+theme_override_constants/margin_bottom = 0
 
-[node name="SettingsList" type="HBoxContainer" parent="TabContainer/SoundAndGraphics/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="TabContainer/SoundAndGraphics/MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 20
+columns = 3
 
-[node name="Labels" type="VBoxContainer" parent="TabContainer/SoundAndGraphics/MarginContainer/SettingsList"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-
-[node name="Volume" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Labels"]
+[node name="Volume" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Głośność"
 
-[node name="FullScreen" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Labels"]
+[node name="VolumeSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+
+[node name="VolumeOutput" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "00"
+
+[node name="Resolution" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Rozdzielczość"
+
+[node name="ResolutionSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+layout_mode = 2
+max_value = 62.0
+
+[node name="ResolutionOutput" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+text = "0000x0000"
+
+[node name="FullScreen" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Pełny ekran"
 
-[node name="VSync" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Labels"]
-layout_mode = 2
-text = "V-Sync"
-
-[node name="Resolution" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Labels"]
-layout_mode = 2
-text = "Rozdzielczość"
-
-[node name="Options" type="VBoxContainer" parent="TabContainer/SoundAndGraphics/MarginContainer/SettingsList"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VolumeSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Options"]
-layout_mode = 2
-size_flags_vertical = 4
-value = 100.0
-
-[node name="FullScreenCheckBox" type="CheckBox" parent="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Options"]
+[node name="FullScreenCheckBox" type="CheckBox" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 focus_mode = 0
 
-[node name="VSyncCheckBox" type="CheckBox" parent="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Options"]
+[node name="Filler" type="Control" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="VSync" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "V-Sync"
+
+[node name="VSyncCheckBox" type="CheckBox" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
 focus_mode = 0
+
+[node name="Filler2" type="Control" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+layout_mode = 2
 
 [node name="Controls" type="TabBar" parent="TabContainer"]
 visible = false
@@ -114,6 +129,23 @@ size_flags_vertical = 0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Options/VolumeSlider" to="." method="_on_sound_volume_slider_value_changed"]
-[connection signal="toggled" from="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Options/FullScreenCheckBox" to="." method="_on_full_screen_checkbox_toggled"]
-[connection signal="toggled" from="TabContainer/SoundAndGraphics/MarginContainer/SettingsList/Options/VSyncCheckBox" to="." method="_on_v_sync_check_box_toggled"]
+[node name="SaveButton" type="Button" parent="."]
+custom_minimum_size = Vector2(130, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.5
+offset_top = 230.0
+offset_right = 72.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Zapisz ustawienia"
+
+[connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/ResolutionSlider" to="." method="_on_resolution_slider_value_changed"]
+[connection signal="toggled" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/FullScreenCheckBox" to="." method="_on_full_screen_checkbox_toggled"]
+[connection signal="toggled" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VSyncCheckBox" to="." method="_on_v_sync_check_box_toggled"]
+[connection signal="pressed" from="SaveButton" to="." method="_on_save_button_pressed"]

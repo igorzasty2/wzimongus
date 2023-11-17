@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=6 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Texture2D" uid="uid://boakkfqgwgxro" path="res://scenes/player/assets/1.png" id="1_8w5ck"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
+[ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="3_tbjki"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_st64e"]
 radius = 54.0
@@ -36,3 +37,6 @@ offset_right = 21.0
 offset_bottom = -85.0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_tbjki")]
+visible = false
