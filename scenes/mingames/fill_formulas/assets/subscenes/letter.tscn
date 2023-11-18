@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://baufr16iq3322" path="res://scenes/mingames/fill_formulas/assets/guiElements/letter.png" id="2_2ff2l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_othcc"]
-size = Vector2(100, 100)
+size = Vector2(118, 118)
 
 [node name="Letter" type="StaticBody2D"]
 input_pickable = true
@@ -14,6 +14,7 @@ script = ExtResource("1_iv0tn")
 texture = ExtResource("2_2ff2l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_othcc")
 
 [node name="LetterInBox" type="RichTextLabel" parent="."]

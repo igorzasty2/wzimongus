@@ -3,6 +3,7 @@ extends StaticBody2D
 var mouse_on_object = false
 var original_position = position
 var id = ""
+var placed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,7 +13,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#print(mouse_on_object)
-	if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && mouse_on_object):
+	if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && mouse_on_object && placed == false):
 		position = 	get_viewport().get_mouse_position()
 
 
@@ -20,10 +21,11 @@ func return_to_orig_pos():
 	position = original_position
 
 func _on_mouse_entered():
-	if (!get_parent().isMoving):
+	if (!get_parent().isMoving && placed == false):
 		mouse_on_object = true
 		get_parent().isMoving = true
 		get_parent().isMovingId = id
+		get_parent().moving = self
 
 
 func _on_mouse_exited():
