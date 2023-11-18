@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctojv5s5r4v3"]
+
+[ext_resource type="Script" path="res://scenes/ui/pop_up_window/pop_up_window.gd" id="1_nodgq"]
+
+[node name="PopUpWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nodgq")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -223.0
+offset_top = -108.0
+offset_right = 223.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "text here"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 155
+
+[node name="LeftButton" type="Button" parent="Panel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "left"
+
+[node name="RightButton" type="Button" parent="Panel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+text = "right"
+
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/LeftButton" to="." method="_on_yes_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/RightButton" to="." method="_on_no_button_2_pressed"]

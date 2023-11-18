@@ -69,7 +69,7 @@ text = "Rozdzielczość"
 
 [node name="ResolutionSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
-max_value = 62.0
+max_value = 71.0
 
 [node name="ResolutionOutput" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(85, 0)
@@ -112,22 +112,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 0
 
-[node name="SettingsList" type="HBoxContainer" parent="TabContainer/Controls/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="TabContainer/Controls/MarginContainer"]
 layout_mode = 2
-
-[node name="Labels" type="VBoxContainer" parent="TabContainer/Controls/MarginContainer/SettingsList"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-
-[node name="Sliders" type="VBoxContainer" parent="TabContainer/Controls/MarginContainer/SettingsList"]
-layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 20
+columns = 3
 
 [node name="SaveButton" type="Button" parent="."]
 custom_minimum_size = Vector2(130, 40)
@@ -144,6 +139,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Zapisz ustawienia"
 
+[connection signal="hidden" from="." to="." method="_on_hidden"]
 [connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/ResolutionSlider" to="." method="_on_resolution_slider_value_changed"]
 [connection signal="toggled" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/FullScreenCheckBox" to="." method="_on_full_screen_checkbox_toggled"]
