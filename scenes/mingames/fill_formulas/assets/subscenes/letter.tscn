@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cl7p411qvsgv"]
 
-[ext_resource type="Script" path="res://scenes/mingames/fill_formulas/assets/subscenes/Letter.gd" id="1_iv0tn"]
+[ext_resource type="Script" path="res://scenes/mingames/fill_formulas/assets/subscenes/letter.gd" id="1_ooer1"]
 [ext_resource type="Texture2D" uid="uid://baufr16iq3322" path="res://scenes/mingames/fill_formulas/assets/guiElements/letter.png" id="2_2ff2l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_othcc"]
@@ -8,7 +8,7 @@ size = Vector2(118, 118)
 
 [node name="Letter" type="StaticBody2D"]
 input_pickable = true
-script = ExtResource("1_iv0tn")
+script = ExtResource("1_ooer1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_2ff2l")

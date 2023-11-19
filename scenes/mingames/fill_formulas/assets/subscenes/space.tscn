@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_utoeq"]
 size = Vector2(100, 100)
 
-[node name="space" type="Area2D"]
+[node name="Space" type="Area2D"]
 script = ExtResource("1_8hdcv")
 metadata/_edit_group_ = true
 
