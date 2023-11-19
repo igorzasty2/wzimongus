@@ -1,6 +1,6 @@
 extends Node2D
 
-const formulas = {0: "F=m*v", 1: "v=s/t", 2:"a=v/t", 3:"P=a*a", 4:"P=a*h", 5:"P=2πr"}
+const formulas = {0: "F=m*v", 1: "v=s/t", 2:"a=v/t", 3:"P=a*a", 4:"P=a*h", 5:"P=2πr", 6:"P=a*h/2"}
 var innertext:RichTextLabel
 var letters = []
 var isMoving = false
@@ -9,11 +9,18 @@ var moving
 var generated = []
 var times_generated = 0
 var point = 0
+var wanted_points = 0
+var finished = false
+@export
+var how_many_formulas = 3
+@export
+var white_gui = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	random_generate()
-	
+	if(white_gui):
+		$MinigameGui.texture = preload("res://scenes/mingames/fill_formulas/assets/guiElements/minigameGui2.png")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -30,29 +37,32 @@ func _process(delta):
 					point += 1
 			else: if !Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && l.placed != true:
 				l.return_to_orig_pos()
-	if((point == 3 || point == 6) && point/3 == times_generated):
+	if(point == wanted_points && times_generated != how_many_formulas):
+		wanted_points = 0
+		point = 0
 		random_generate()
-	if(point == 9):
-		$finish.visible = true
-		for l in get_children():
-			if(l.name != "finish"):
-				l.queue_free()
+	if(point == wanted_points && times_generated == how_many_formulas):
+		if(finished == false):
+			finish_game()
+			finished = true
 
 func _generate_letters(formula:String):
-	var r = ["024", "204", "240", "042", "402", "420"]
-	var c = randi_range(0,5)
-	c = r[c]
-	for i in range(3):
+	var r = ceil(formula.length()/2.0)
+	var sequence = []
+	while sequence.size() < r:
+		var rand = randi_range(0, r-1) * 2
+		if !sequence.has(rand):
+			sequence.append(rand)
+	for i in range(sequence.size()):
 		var letter = preload("res://scenes/mingames/fill_formulas/assets/subscenes/letter.tscn").instantiate()
 		var shift = Vector2(130, 0)
 		letter.position = $firstLetter.position + i * shift
 		innertext = letter.get_node("./LetterInBox")
 		innertext.text = "[center][font_size={55}][color=black]"
-		innertext.text += formula[int(c[i])] + "[/color][/font_size][/center]"
+		innertext.text += formula[int(sequence[i])] + "[/color][/font_size][/center]"
 		letter.original_position = letter.position
-		letter.id = formula[int(c[i])]
+		letter.id = formula[int(sequence[i])]
 		add_child(letter)
-	$Hint.text += formula + "\n"
 	
 func _generate_formula(formula:String):
 	var x_shift = Vector2(80, 0)
@@ -64,6 +74,7 @@ func _generate_formula(formula:String):
 			space.wanted_letter = formula[i]
 			add_child(space)
 			space._set_area()
+			wanted_points += 1
 		else:
 			var text:RichTextLabel = RichTextLabel.new()
 			text.position = ($startOfFormula.position - Vector2(40, 40)) + x_shift * i + y_shift * times_generated
@@ -71,6 +82,7 @@ func _generate_formula(formula:String):
 			text.bbcode_enabled = true
 			text.text = "[center][font_size={55}][color=black]" + formula[i] + "[/color][/font_size][/center]"
 			add_child(text)
+	$Hint.text += "[center][font_size={23}][color=black]" + formula + "[/color][/font_size][/center]\n"
 			
 func _get_letters():
 	var children = [] 
@@ -96,3 +108,13 @@ func random_generate():
 		_generate_letters(formulas[r])
 		generated.append(formulas[r])
 		times_generated += 1
+		
+func finish_game():
+	$Hint.text = "[center][font_size={70}][color=green]√[/color][/font_size][/center]"
+	$FinishTimer.start()
+
+func _on_finish_timer_timeout():
+	$finish.visible = true
+	for l in get_children():
+		if(l.name != "finish"):
+			l.queue_free()

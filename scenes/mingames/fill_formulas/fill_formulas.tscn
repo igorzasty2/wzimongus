@@ -12,19 +12,25 @@ position = Vector2(562, 323)
 texture = ExtResource("1_s1dx8")
 
 [node name="Hint" type="RichTextLabel" parent="."]
-offset_left = 720.0
-offset_top = 351.0
-offset_right = 889.0
-offset_bottom = 448.0
+offset_left = 822.0
+offset_top = 354.0
+offset_right = 991.0
+offset_bottom = 451.0
 bbcode_enabled = true
 
 [node name="firstLetter" type="Marker2D" parent="."]
-position = Vector2(291, 540)
+position = Vector2(208, 540)
 
 [node name="startOfFormula" type="Marker2D" parent="."]
-position = Vector2(308, 114)
+position = Vector2(217, 115)
 
 [node name="finish" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(575, 325)
 texture = ExtResource("3_oyuu4")
+
+[node name="FinishTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="FinishTimer" to="." method="_on_finish_timer_timeout"]
