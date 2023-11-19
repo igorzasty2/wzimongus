@@ -1,106 +1,168 @@
 extends Node2D
 
-const FORMULAS = {0: "F=m*v", 1: "v=s/t", 2:"a=v/t", 3:"P=a*a", 4:"P=a*h", 5:"P=2πr", 6:"P=a*h/2"}
+# Scena ta przechowuje główną logikę minigry oraz główne jej skrypty wymagane
+# do jej działania
+
+# FORMULAS przechowuje listę możliwych do wylosowania wzorów do uzupełnienia
+const FORMULAS = {
+	0: "F=m*v", 
+	1: "v=s/t", 
+	2:"a=v/t", 
+	3:"P=a*a", 
+	4:"P=a*h", 
+	5:"P=2πr", 
+	6:"P=a*h/2",
+	}
+# Zmianna how_many_formulas decyduje o tym ile razy losowany ma być wzró 
+# max = 3 min = 1
 @export
 var how_many_formulas = 3
+# Daje możliwość włączenia alternatywnej tekstury gui, nie byłem pewien które
+# zostawić, oba są brzydkie
 @export
 var white_gui = false
+# Zmienna mówi o tym, czy przesuwane jest obecnie pole z literą
 var is_moving = false
-var is_moving_id = 0
+# moving przechowuje referencję do obecnie przesuwanego pola
 var moving
+# generated jest tablicą przechowującą wcześniej wylosowane wzory aby się nie
+# powtarzały
 var generated = []
+# times_generated służy do przesunięcia nowo wygenerowanych wzorów w osi y oraz
+# do zakończenia minigry
 var times_generated = 0
+# point przechowuje liczbę już uzupełnionych luk we wzorze
 var point = 0
+# wanted_points przechowuje liczbę luk w obecnie uzupełnianym wzorze
 var wanted_points = 0
+# Informuje czy uzupełniono już wszystkie wymagane wzory
 var finished = false
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	_random_generate()
-	if(white_gui):
-		$MinigameGui.texture = preload("res://scenes/mingames/fill_formulas/assets/guiElements/minigame_gui2.png")
+	if white_gui:
+		$MinigameGui.texture = preload("assets/guiElements/minigame_gui2.png")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	var letters = _get_letters()
 	var spaces = _get_spaces()
+	var mouse_clicked = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
+	# Pętla na bieżąco kontrolująca położenie pól z literami
 	for l in letters:
 		if moving != null && moving.placed == false:
 			var correct_space = _get_correct_space(moving.id, spaces)
-			if(correct_space.correct_area.has_point(moving.position)):
-				if(!Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
+			if correct_space.correct_area.has_point(moving.position):
+				if !mouse_clicked:
 					moving.position = correct_space.position
 					moving.placed = true
 					correct_space.queue_free()
 					point += 1
-			else: if !Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && l.placed != true:
+			elif l != moving || !mouse_clicked && !l.placed && l.position != l.original_position:
+				# Przywraca do originalnej pozycji pole które jest na nieprawidłowym
+				# miejscu, nie jest to poruszane pole
 				l.return_to_orig_pos()
-	if(point == wanted_points && times_generated != how_many_formulas):
+	if point == wanted_points && times_generated != how_many_formulas:
 		wanted_points = 0
 		point = 0
 		_random_generate()
-	if(point == wanted_points && times_generated == how_many_formulas):
-		if(finished == false):
+	if point == wanted_points && times_generated == how_many_formulas:
+		if !finished:
 			_finish_game()
 			finished = true
 
+
+# Funkcja generująca pola z literami w przyborniku u dołu ekranu
 func _generate_letters(formula:String):
-	var r = ceil(formula.length()/2.0)
+	# number_of_letters przechowuje liczbę liter które muszą zostać wygenerowane
+	var number_of_letters = ceil(formula.length()/2.0)
+	# Tabela definiujące w jakiej losowej sekwencji wygenerowane mają być litery
 	var sequence = []
+	# inner_text jest to pole tekstowe wygenerowanego objektu Letter potrzebne
+	# do tego aby pole wyświetlało odpowiednią literę
 	var inner_text:RichTextLabel
-	while sequence.size() < r:
-		var rand = randi_range(0, r-1) * 2
+	# Pętla generująca losową sekwencję liczb według której generowane będą
+	# elementy wzoru
+	while sequence.size() < number_of_letters:
+		var rand = randi_range(0, number_of_letters-1) * 2
 		if !sequence.has(rand):
 			sequence.append(rand)
 	for i in range(sequence.size()):
-		var Letter = preload("res://scenes/mingames/fill_formulas/assets/subscenes/letter.tscn").instantiate()
-		var shift = Vector2(130, 0)
-		Letter.position = $FirstLetter.position + i * shift
+		var Letter = preload("assets/subscenes/letter.tscn").instantiate()
+		# Przesunięcie w osi x pozycji wygenerowanych pól z literami
+		const SHIFT = Vector2(130, 0)
+		Letter.position = $FirstLetter.position + i * SHIFT
 		inner_text = Letter.get_node("./LetterInBox")
 		inner_text.text = "[center][font_size={55}][color=black]"
-		inner_text.text += formula[int(sequence[i])] + "[/color][/font_size][/center]"
+		inner_text.text += formula[int(sequence[i])]
+		inner_text.text += "[/color][/font_size][/center]"
 		Letter.original_position = Letter.position
 		Letter.id = formula[int(sequence[i])]
 		add_child(Letter)
-	
+
+
+# Funkcja generująca puste pola na litery oraz tekst przedstawiający uzupełnione
+# elementy równania np. P=a*h, pustymi polami będą 'P' 'a' 'h' a '=' oraz '*'
+# będą wyświetlone w postaci tekstu
 func _generate_formula(formula:String):
-	var x_shift = Vector2(80, 0)
-	var y_shift = Vector2(0, 120)
+	# X_SHIFT odpowiada za stałe przesunięcie w osi x przy generowaniu kolejnych
+	# elementów wzoru, Y_SHIFT odpowiada za przesunięcie w osi y przy generowaniu
+	# kolejnych równań
+	const X_SHIFT = Vector2(80, 0)
+	const Y_SHIFT = Vector2(0, 120)
 	for i in range(0, formula.length()):
-		if(i % 2 == 0):
-			var Space = preload("res://scenes/mingames/fill_formulas/assets/subscenes/space.tscn").instantiate()
-			Space.position = $StartOfFormula.position + x_shift * i + y_shift * times_generated
+		if i % 2 == 0:
+			# W tym fragmencie kodu tworzone jest puste pole reprezentujące
+			# miejsce w którym umieścić należy odpowiednią literę
+			var Space = preload("assets/subscenes/space.tscn").instantiate()
+			Space.position = $StartOfFormula.position + X_SHIFT * i + Y_SHIFT * times_generated
 			Space.wanted_letter = formula[i]
 			add_child(Space)
+			# Definiowane jest położenie instancji obiektu
 			Space.set_area()
 			wanted_points += 1
 		else:
+			# W tym fragmencie kodu tworzony jest TextBox który reprezentował
+			# będzie uzupełniony fragment wzoru
 			var text:RichTextLabel = RichTextLabel.new()
-			text.position = ($StartOfFormula.position - Vector2(40, 40)) + x_shift * i + y_shift * times_generated
+			text.position = ($StartOfFormula.position - Vector2(40, 40)) + X_SHIFT * i + Y_SHIFT * times_generated
 			text.size = Vector2(80, 80)
 			text.bbcode_enabled = true
 			text.text = "[center][font_size={55}][color=black]" + formula[i] + "[/color][/font_size][/center]"
 			add_child(text)
+	# TextBox uzupełniany jest o podpowiedź do obecnie uzupełnianego wzoru
 	$Hint.text += "[center][font_size={23}][color=black]" + formula + "[/color][/font_size][/center]\n"
-			
+
+
+# Funkcja zwraca tablicę zawierającą wszystkie instancje klasy Letter w tej scenie
 func _get_letters():
 	var children = [] 
 	for child in get_children():
 		if child is StaticBody2D:
 			children.append(child)
 	return children
+
+
+# Funkcja zwraca tablicę zawierającą wszystkie instancje klasy Space w tej scenie
 func _get_spaces():
 	var spaces = []
 	for child in get_children():
 		if child is Area2D:
 			spaces.append(child)
 	return spaces
+
+
+# Funkcja zwraca referencję do objektu space z danej tabeli spaces wymagającego
+# danej litery letter
 func _get_correct_space(letter, spaces):
 	for space in spaces:
 		if space.wanted_letter == letter:
 			return space
-			
+
+
+# Jest to funkcja losująca wcześniej nie wylosowany wzór i wywołująca funkcje
+# odpowiedzialne za generowanie pól pustych i pól z literami
 func _random_generate():
 	var r = randi_range(0, FORMULAS.size()-1)
 	if !generated.has(FORMULAS[r]):
@@ -108,13 +170,19 @@ func _random_generate():
 		_generate_letters(FORMULAS[r])
 		generated.append(FORMULAS[r])
 		times_generated += 1
-		
+
+
+# Funkcja uruchamiana w chwili ukończenia gry, zmienia ona tekst podpowiedzi
+# na zielony znak √ oraz uruchamia timer FinishTimer
 func _finish_game():
 	$Hint.text = "[center][font_size={70}][color=green]√[/color][/font_size][/center]"
 	$FinishTimer.start()
 
+
+# Funkcja uruchamiany w chwili zakończenia FinishTimer, czyni ona widocznym ekran
+# ukończenia minigry oraz zabija wszystkie elementy sceny z wyjątkiem ekranu ukończenia
 func _on_finish_timer_timeout():
 	$Finish.visible = true
 	for l in get_children():
-		if(l.name != "Finish"):
+		if l.name != "Finish":
 			l.queue_free()

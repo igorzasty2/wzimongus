@@ -8,7 +8,7 @@ extends StaticBody2D
 var mouse_on_object = false
 # original_position przetrzymuje informacje o początkowym położeniu pola, daje
 # możliwość przywrócenia tej pozycji po nieprawidłowym przesunięciu pola
-var original_position = position
+var original_position
 # id służy do przetrzymania litery która znajduje się wewnątrz pola,
 # wykorzystywane przede wszystkim przez główny skrypt minigry
 var id = ""
@@ -39,12 +39,11 @@ func _on_mouse_entered():
 	if (!get_parent().is_moving && placed == false):
 		mouse_on_object = true
 		get_parent().is_moving = true
-		get_parent().is_moving_id = id
 		get_parent().moving = self
 
 
 func _on_mouse_exited():
 	# Przywraca możliwość podnoszenia innych pól z literami
-	if (get_parent().is_moving && get_parent().is_moving_id == id):
+	if (get_parent().is_moving && get_parent().moving == self):
 		mouse_on_object = false
 		get_parent().is_moving = false

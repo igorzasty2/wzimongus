@@ -15,6 +15,7 @@ var correct_area:Rect2
 func _ready():
 	base_area = $Sprite2D.get_rect()
 
+
 # Funkcja służy do uzyskania dokładnego położenia stworzonej już instancji
 func set_area():
 	correct_area = Rect2(position - base_area.size/2, base_area.size)
