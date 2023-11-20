@@ -91,7 +91,7 @@ func _on_resolution_slider_value_changed(value):
 func _on_save_button_pressed():
 	# setting the settings
 	if full_screen_value== true:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)		
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	

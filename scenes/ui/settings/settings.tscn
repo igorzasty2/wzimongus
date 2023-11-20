@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://01iag5x618my"]
+[gd_scene load_steps=5 format=3 uid="uid://01iag5x618my"]
 
 [ext_resource type="Script" path="res://scenes/ui/settings/settings.gd" id="1_cq5p7"]
 [ext_resource type="Script" path="res://scenes/ui/settings/set_tab_names.gd" id="2_ihltu"]
+[ext_resource type="PackedScene" uid="uid://b0i27gmisf1oh" path="res://scenes/ui/settings/key_rebind/key_rebind.tscn" id="3_qfvcr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xriee"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -112,17 +115,80 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 60
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 60
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 55
+theme_override_constants/margin_bottom = 110
 
-[node name="GridContainer" type="GridContainer" parent="TabContainer/Controls/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Controls/MarginContainer"]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/h_separation = 32
-theme_override_constants/v_separation = 20
-columns = 3
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/MarginContainer/ScrollContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_xriee")
+
+[node name="KeyRebind" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "Sabotaż"
+action_project_name = "sabotage"
+
+[node name="KeyRebind2" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "Vent"
+action_project_name = "use_vent"
+
+[node name="KeyRebind3" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "Interakcja"
+action_project_name = "interact"
+
+[node name="KeyRebind4" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "Oblanie"
+action_project_name = "fail"
+
+[node name="KeyRebind5" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "Reportowanie"
+action_project_name = "report"
+
+[node name="KeyRebind10" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "Menu pauzy"
+action_project_name = "pause_menu"
+
+[node name="KeyRebind6" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "W lewo"
+action_project_name = "move_left"
+
+[node name="KeyRebind7" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "W prawo"
+action_project_name = "move_right"
+
+[node name="KeyRebind8" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "W dół"
+action_project_name = "move_down"
+
+[node name="KeyRebind9" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "W górę"
+action_project_name = "move_up"
+
+[node name="HSeparator2" type="HSeparator" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_xriee")
 
 [node name="SaveButton" type="Button" parent="."]
 custom_minimum_size = Vector2(130, 40)
@@ -133,7 +199,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -72.5
-offset_top = 230.0
+offset_top = 280.0
 offset_right = 72.5
 grow_horizontal = 2
 grow_vertical = 2
