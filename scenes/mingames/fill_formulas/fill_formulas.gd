@@ -8,10 +8,10 @@ const FORMULAS = {
 	0: "F=m*v", 
 	1: "v=s/t", 
 	2:"a=v/t", 
-	3:"P=a*a", 
+	3:"P=a²", 
 	4:"P=a*h", 
 	5:"P=2πr", 
-	6:"P=a*h/2",
+	6:"P=a*h½",
 	}
 # Zmianna how_many_formulas decyduje o tym ile razy losowany ma być wzró 
 # max = 3 min = 1
@@ -53,15 +53,25 @@ func _process(delta):
 	for l in letters:
 		if moving != null && moving.placed == false:
 			var correct_space = _get_correct_space(moving.id, spaces)
+			# Umieszcza literę w pustym polu jeżeli litera zostanie "upuszczona"
+			# nad odpowiednim polem
 			if correct_space.correct_area.has_point(moving.position):
 				if !mouse_clicked:
 					moving.position = correct_space.position
 					moving.placed = true
+					# Po umieszczeniu litery na odpowiednim polu pole to jest
+					# usuwane aby niemożliwym było umieszczenie tam kolejnej
+					# litery
 					correct_space.queue_free()
 					point += 1
-			elif l != moving || !mouse_clicked && !l.placed && l.position != l.original_position:
+			elif (
+					(l != moving || !mouse_clicked) 
+					&& !l.placed 
+					&& l.position != l.original_position
+				):
 				# Przywraca do originalnej pozycji pole które jest na nieprawidłowym
-				# miejscu, nie jest to poruszane pole
+				# miejscu, nie jest to poruszane obecnie pole lub myszka nie jest wciśnięta,
+				# i nie jest na oryginalniej pozycji
 				l.return_to_orig_pos()
 	if point == wanted_points && times_generated != how_many_formulas:
 		wanted_points = 0
@@ -126,13 +136,21 @@ func _generate_formula(formula:String):
 			# W tym fragmencie kodu tworzony jest TextBox który reprezentował
 			# będzie uzupełniony fragment wzoru
 			var text:RichTextLabel = RichTextLabel.new()
-			text.position = ($StartOfFormula.position - Vector2(40, 40)) + X_SHIFT * i + Y_SHIFT * times_generated
+			text.position =\
+				($StartOfFormula.position - Vector2(40, 40)) + X_SHIFT *\
+				i + Y_SHIFT * times_generated
 			text.size = Vector2(80, 80)
 			text.bbcode_enabled = true
-			text.text = "[center][font_size={55}][color=black]" + formula[i] + "[/color][/font_size][/center]"
+			# Dostosowywanie koloru tekstu zależnie od wybranego gui
+			if white_gui:
+				text.text = "[center][font_size={55}][color=black]" +\
+					formula[i] + "[/color][/font_size][/center]"
+			else:
+				text.text = "[center][font_size={55}][color=light_gray]" +\
+					formula[i] + "[/color][/font_size][/center]"
 			add_child(text)
 	# TextBox uzupełniany jest o podpowiedź do obecnie uzupełnianego wzoru
-	$Hint.text += "[center][font_size={23}][color=black]" + formula + "[/color][/font_size][/center]\n"
+	$Hint.text += "[center][font_size={23}][color=white]" + formula + "[/color][/font_size][/center]\n"
 
 
 # Funkcja zwraca tablicę zawierającą wszystkie instancje klasy Letter w tej scenie
