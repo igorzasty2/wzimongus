@@ -10,7 +10,7 @@ const FORMULAS = {
 	2:"a=v/t", 
 	3:"P=a²", 
 	4:"P=a*h", 
-	5:"P=2πr", 
+	5:"P=πr²", 
 	6:"P=a*h½",
 	}
 # Zmianna how_many_formulas decyduje o tym ile razy losowany ma być wzró 
