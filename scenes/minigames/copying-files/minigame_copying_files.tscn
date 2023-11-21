@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://br73d5fyt6ecp"]
+
+[ext_resource type="Script" path="res://minigame_copying_files.gd" id="2_bjtx1"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fgdas"]
+load_path = "res://.godot/imported/czyChceszSkopiowac.png-2eeb47c33a10332c204b0b5211bc5581.ctex"
+
+[node name="minigame-copying-files" type="Node2D"]
+position = Vector2(1, 2)
+
+[node name="CzyChceszSkopiowac" type="Sprite2D" parent="."]
+position = Vector2(556, 310)
+texture = SubResource("CompressedTexture2D_fgdas")
+
+[node name="Kontrola" type="Control" parent="CzyChceszSkopiowac"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -556.0
+offset_top = -310.0
+offset_right = -516.0
+offset_bottom = -270.0
+
+[node name="confirm" type="Button" parent="CzyChceszSkopiowac/Kontrola"]
+offset_left = 479.0
+offset_top = 378.0
+offset_right = 614.0
+offset_bottom = 425.0
+text = "SKOPIUJ"
+script = ExtResource("2_bjtx1")
+
+[connection signal="button_down" from="CzyChceszSkopiowac/Kontrola/confirm" to="CzyChceszSkopiowac/Kontrola/confirm" method="_on_confirm_button_down"]
