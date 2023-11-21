@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ch2les17dltt6"
-path="res://.godot/imported/kopiowanieZAKONCZONE.png-89a856b3874e713562413d5211ca9cdf.ctex"
+path="res://.godot/imported/kopiowanieZAKONCZONE.png-1e8606a3c9fabda850581ef0e2f57983.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/kopiowanieZAKONCZONE.png"
-dest_files=["res://.godot/imported/kopiowanieZAKONCZONE.png-89a856b3874e713562413d5211ca9cdf.ctex"]
+source_file="res://scenes/minigames/copying-files/assets/kopiowanieZAKONCZONE.png"
+dest_files=["res://.godot/imported/kopiowanieZAKONCZONE.png-1e8606a3c9fabda850581ef0e2f57983.ctex"]
 
 [params]
 

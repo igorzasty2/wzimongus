@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scenes/minigames/copying-files/minigame_copying_files.gd" id="2_bjtx1"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fgdas"]
-load_path = "res://.godot/imported/czyChceszSkopiowac.png-dbd070c7ed067d107aff330f6e742093.ctex"
 
 [node name="minigame-copying-files" type="Node2D"]
 position = Vector2(1, 2)

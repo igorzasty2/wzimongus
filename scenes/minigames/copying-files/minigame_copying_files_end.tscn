@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://b0l33b6wgauil"]
 
-[ext_resource type="Script" path="res://minigame_copying_files_end.gd" id="1_dlwm2"]
+[ext_resource type="Script" path="res://scenes/minigames/copying-files/minigame_copying_files_end.gd" id="1_dlwm2"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ad44g"]
-load_path = "res://.godot/imported/kopiowanieZAKONCZONE.png-52ce51b951720704ab127ebab51b45de.ctex"
+load_path = "res://.godot/imported/kopiowanieZAKONCZONE.png-1e8606a3c9fabda850581ef0e2f57983.ctex"
 
 [node name="minigame-copying-files-end" type="Node2D"]
 script = ExtResource("1_dlwm2")

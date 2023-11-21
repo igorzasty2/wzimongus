@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bb5bhv1gmlrag"
-path="res://.godot/imported/czyChceszSkopiowac.png-2eeb47c33a10332c204b0b5211bc5581.ctex"
+path="res://.godot/imported/czyChceszSkopiowac.png-dbd070c7ed067d107aff330f6e742093.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/czyChceszSkopiowac.png"
-dest_files=["res://.godot/imported/czyChceszSkopiowac.png-2eeb47c33a10332c204b0b5211bc5581.ctex"]
+source_file="res://scenes/minigames/copying-files/assets/czyChceszSkopiowac.png"
+dest_files=["res://.godot/imported/czyChceszSkopiowac.png-dbd070c7ed067d107aff330f6e742093.ctex"]
 
 [params]
 

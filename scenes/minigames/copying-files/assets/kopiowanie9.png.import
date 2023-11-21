@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cvu3j32bqf12n"
-path="res://.godot/imported/kopiowanie9.png-3878edc04d9529ac6d0243349641ba79.ctex"
+path="res://.godot/imported/kopiowanie9.png-fa575279c173623bd3c4689d6068f228.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/kopiowanie9.png"
-dest_files=["res://.godot/imported/kopiowanie9.png-3878edc04d9529ac6d0243349641ba79.ctex"]
+source_file="res://scenes/minigames/copying-files/assets/kopiowanie9.png"
+dest_files=["res://.godot/imported/kopiowanie9.png-fa575279c173623bd3c4689d6068f228.ctex"]
 
 [params]
 
