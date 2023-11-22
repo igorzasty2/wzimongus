@@ -5,4 +5,5 @@
 [node name="korytarz_aula_sala_1" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 2
 texture = ExtResource("1_8sojs")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cpj06qwqaen2k" path="res://scenes/map/assets/corridors/korytarz_chillroom_aula.png" id="1_lpp5y"]
 
-[node name="dziekanat" type="Node2D"]
+[node name="korytarz_chillroom_aula" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_lpp5y")
