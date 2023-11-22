@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://gk1uab4ii8k1"]
+
+[ext_resource type="Texture2D" uid="uid://qi0k20xerdyv" path="res://scenes/map/assets/pielegniarka.png" id="1_0s44i"]
+
+[node name="pielegniarka" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0s44i")

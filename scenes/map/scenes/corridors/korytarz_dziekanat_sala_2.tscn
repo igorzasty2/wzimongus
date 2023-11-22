@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwrknp56vi64y"]
+
+[ext_resource type="Texture2D" uid="uid://b8ixebb4xv814" path="res://scenes/map/assets/corridors/korytarz_dziekanat_sala_2.png" id="1_5bhes"]
+
+[node name="korytarz_dziekanat_sala_2" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5bhes")

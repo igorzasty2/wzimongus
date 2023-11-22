@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dk3g05gq43kad"]
+
+[ext_resource type="Texture2D" uid="uid://bg8u0pe63q3aa" path="res://scenes/map/assets/chillroom.png" id="1_yrl5o"]
+
+[node name="chillroom" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_yrl5o")

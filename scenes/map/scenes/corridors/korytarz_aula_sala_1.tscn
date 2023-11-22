@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://qbug4lt0ce46"]
+
+[ext_resource type="Texture2D" uid="uid://cr13urdcx3qns" path="res://scenes/map/assets/corridors/korytarz_aula_sala_1.png" id="1_8sojs"]
+
+[node name="korytarz_aula_sala_1" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8sojs")

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtjxbe3w5aln6"]
+
+[ext_resource type="Texture2D" uid="uid://jl8w7pclpg6s" path="res://scenes/map/assets/samorzad.png" id="1_jvvmb"]
+
+[node name="samorzad" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jvvmb")

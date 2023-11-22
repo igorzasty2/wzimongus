@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfh2yf2biknok"]
+
+[ext_resource type="Texture2D" uid="uid://bu1qf1ogeypgx" path="res://scenes/map/assets/corridors/korytarz_pielegniarka_willy.png" id="1_d8bkn"]
+
+[node name="korytarz_pielegniarka_willy" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_d8bkn")

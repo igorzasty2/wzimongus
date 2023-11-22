@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bs65lqtdkpqkd"]
+
+[ext_resource type="Texture2D" uid="uid://claowhxhac0dq" path="res://scenes/map/assets/corridors/korytarz_chillroom_wc.png" id="1_s4nba"]
+
+[node name="korytarz_chillroom_wc" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_s4nba")

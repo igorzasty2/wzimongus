@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://1nb6uwps5542"]
+
+[ext_resource type="Texture2D" uid="uid://tbgku3ra8705" path="res://scenes/map/assets/corridors/korytarz_willy_sala_1_bufet_pokoj_wykladowcow.png" id="1_87y23"]
+
+[node name="korytarz_willy_sala_1_bufet_pokoj_wykladowcow" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_87y23")

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://q56d4alpaarl"]
+
+[ext_resource type="Texture2D" uid="uid://bvu82f0v7s34y" path="res://scenes/map/assets/xero.png" id="1_oijt1"]
+
+[node name="xero" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_oijt1")
