@@ -75,7 +75,7 @@ func assign_tasks_server(task_amount):
 				assign_tasks_player.rpc_id(MultiplayerManager.players[i].id, tasks_dict)
 				
 
-# Dodaje przesłane przez serwer taski w lokalną liste tasków.
+# Dodaje przesłane przez serwer taski w lokalną listę tasków.
 @rpc("authority", "call_remote")
 func assign_tasks_player(tasks):
-	tasks_player.append_array(tasks)
+	tasks_player = tasks
