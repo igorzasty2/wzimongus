@@ -30,6 +30,7 @@ height = 148.0
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(-1, -77)
+collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_rovco")
 

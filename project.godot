@@ -23,6 +23,11 @@ MultiplayerManager="*res://globals/multiplayer_manager/multiplayer_manager.gd"
 
 project/assembly_name="WZiMongus"
 
+[layer_names]
+
+2d_physics/layer_1="static_objects"
+2d_physics/layer_2="players"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
