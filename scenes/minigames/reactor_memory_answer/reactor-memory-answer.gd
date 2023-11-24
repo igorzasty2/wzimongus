@@ -65,6 +65,8 @@ func player_pressed(name):
 		
 		# Sprawdzenie, czy gracz rozwiązał 3 sekwencje (numerowane od 0 do 3)
 		if (current_solved == 3 and player_button_count == 4):
+			# TODO: zabić scene i zrobić sygnał że task ukończony # Ilya
+			
 			$Emergency.visible = true
 			$Emergency/AnimatedSprite2D.frame = 0
 			print("task completed")
