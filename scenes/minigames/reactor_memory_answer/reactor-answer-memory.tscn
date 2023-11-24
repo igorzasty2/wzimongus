@@ -1,0 +1,217 @@
+[gd_scene load_steps=9 format=3 uid="uid://cqjrgcofdp21m"]
+
+[ext_resource type="Script" path="res://scenes/minigames/reactor_memory_answer/reactor-memory-answer.gd" id="1_sk1a7"]
+[ext_resource type="Texture2D" uid="uid://bjhypejcsi3ji" path="res://scenes/minigames/reactor_memory_answer/assets/background.png" id="2_n7vpl"]
+[ext_resource type="PackedScene" uid="uid://d10w530fs7vtr" path="res://scenes/minigames/reactor_memory_answer/button.tscn" id="3_lvsqn"]
+[ext_resource type="PackedScene" uid="uid://cgexmsp7251so" path="res://scenes/minigames/reactor_memory_answer/flash.tscn" id="4_wdxkn"]
+[ext_resource type="PackedScene" uid="uid://cc3kuyaqojlob" path="res://scenes/minigames/reactor_memory_answer/indicator.tscn" id="5_mmqq7"]
+[ext_resource type="Texture2D" uid="uid://dwwnfjujftwmx" path="res://scenes/minigames/reactor_memory_answer/assets/grid.png" id="6_o7hxt"]
+[ext_resource type="Texture2D" uid="uid://cffcgawydffgj" path="res://scenes/minigames/reactor_memory_answer/assets/completed.png" id="7_rh2xj"]
+
+[sub_resource type="SpriteFrames" id="3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_rh2xj")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="minigra_reaktor" type="Node2D"]
+scale = Vector2(1.0105, 1.01303)
+script = ExtResource("1_sk1a7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_n7vpl")
+offset = Vector2(570, 320)
+
+[node name="PlayerButtons" type="GridContainer" parent="."]
+offset_left = 567.375
+offset_top = 234.25
+offset_right = 742.375
+offset_bottom = 409.25
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 4
+
+[node name="Button1" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button2" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button3" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button4" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button5" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button6" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button7" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button8" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button9" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button10" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button11" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button12" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button13" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button14" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button15" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Button16" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
+layout_mode = 2
+
+[node name="Console" type="GridContainer" parent="."]
+offset_left = 348.0
+offset_top = 234.0
+offset_right = 524.0
+offset_bottom = 409.0
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 4
+
+[node name="Flash1" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash2" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash3" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash4" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash8" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash9" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash10" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash11" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash12" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash13" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash14" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash15" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash16" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash17" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash18" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="Flash19" parent="Console" instance=ExtResource("4_wdxkn")]
+layout_mode = 2
+
+[node name="ConsoleIndicators" type="GridContainer" parent="."]
+offset_left = 370.29
+offset_top = 199.364
+offset_right = 498.29
+offset_bottom = 228.364
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 4
+
+[node name="Indicator" parent="ConsoleIndicators" instance=ExtResource("5_mmqq7")]
+layout_mode = 2
+
+[node name="Indicator2" parent="ConsoleIndicators" instance=ExtResource("5_mmqq7")]
+layout_mode = 2
+
+[node name="Indicator3" parent="ConsoleIndicators" instance=ExtResource("5_mmqq7")]
+layout_mode = 2
+
+[node name="Indicator4" parent="ConsoleIndicators" instance=ExtResource("5_mmqq7")]
+layout_mode = 2
+
+[node name="ButtonIndicators" type="GridContainer" parent="."]
+offset_left = 575.72
+offset_top = 195.602
+offset_right = 703.72
+offset_bottom = 224.602
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 4
+
+[node name="Indicator" parent="ButtonIndicators" instance=ExtResource("5_mmqq7")]
+layout_mode = 2
+
+[node name="Indicator2" parent="ButtonIndicators" instance=ExtResource("5_mmqq7")]
+layout_mode = 2
+
+[node name="Indicator3" parent="ButtonIndicators" instance=ExtResource("5_mmqq7")]
+layout_mode = 2
+
+[node name="Indicator4" parent="ButtonIndicators" instance=ExtResource("5_mmqq7")]
+layout_mode = 2
+
+[node name="FlashTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="PauseTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ClearIndicatorsTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FailureTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Grid" type="Sprite2D" parent="."]
+visible = false
+rotation = -1.77675
+texture = ExtResource("6_o7hxt")
+
+[node name="Emergency" type="Node2D" parent="."]
+visible = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Emergency"]
+sprite_frames = SubResource("3")
+centered = false
+
+[connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]
+[connection signal="timeout" from="PauseTimer" to="." method="_on_PauseTimer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
+[connection signal="timeout" from="ClearIndicatorsTimer" to="." method="_on_ClearIndicatorsTimer_timeout"]
+[connection signal="timeout" from="FailureTimer" to="." method="_on_FailureTimer_timeout"]
