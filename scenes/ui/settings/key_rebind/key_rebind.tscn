@@ -41,6 +41,5 @@ custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 text = "key2"
 
-[connection signal="hidden" from="." to="." method="_on_hidden"]
 [connection signal="pressed" from="HBoxContainer/LeftButton" to="." method="_on_left_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/RightButton" to="." method="_on_right_button_pressed"]

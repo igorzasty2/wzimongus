@@ -31,3 +31,7 @@ func _on_pop_up_window_right_pressed():
 	pop_up_window.visible = false
 	visible = false
 	settings_container.visible = true
+
+# prevents from closing pause menu when rebinding controls
+func _on_settings_button_rebind(is_rebinded):
+	set_process_input(!is_rebinded)

@@ -34,23 +34,23 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -230.0
-offset_top = 320.0
-offset_right = 230.0
+offset_left = -225.0
+offset_top = 310.0
+offset_right = 225.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 200
+theme_override_constants/separation = 120
 
 [node name="LeaveGameButton" type="Button" parent="SettingsContainer/HBoxContainer"]
-custom_minimum_size = Vector2(130, 40)
+custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 text = "Opuść grę"
 
 [node name="BackToGameButton" type="Button" parent="SettingsContainer/HBoxContainer"]
-custom_minimum_size = Vector2(130, 40)
+custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 theme_override_constants/outline_size = 0
 text = "Powrót do gry"
@@ -61,6 +61,7 @@ information = "Czy na pewno chcesz opuścić rozgrywkę?"
 left_button_text = "Tak"
 right_button_text = "Nie"
 
+[connection signal="button_rebind" from="SettingsContainer/Settings" to="." method="_on_settings_button_rebind"]
 [connection signal="pressed" from="SettingsContainer/HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
 [connection signal="pressed" from="SettingsContainer/HBoxContainer/BackToGameButton" to="." method="_on_back_to_game_button_pressed"]
 [connection signal="left_pressed" from="PopUpWindow" to="." method="_on_pop_up_window_left_pressed"]

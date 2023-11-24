@@ -32,60 +32,52 @@ anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="MarginContainer" type="MarginContainer" parent="Menu"]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="TitleContainer" type="VBoxContainer" parent="Menu/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 65
-
-[node name="Title" type="Label" parent="Menu/MarginContainer/TitleContainer"]
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 25
+[node name="Title" type="Label" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -333.0
+offset_top = 40.0
+offset_right = 333.0
+offset_bottom = 154.0
+grow_horizontal = 2
 theme_override_font_sizes/font_size = 110
-text = "WZIMong us"
+text = "WZIMong Us"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="Menu/MarginContainer"]
-layout_mode = 2
+[node name="ButtonsContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = -45.0
+offset_right = 116.0
+offset_bottom = 163.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
-size_flags_vertical = 8
-theme_override_constants/separation = 20
+size_flags_vertical = 4
+theme_override_constants/separation = 25
 
-[node name="PlayButton" type="Button" parent="Menu/MarginContainer/ButtonsContainer"]
+[node name="PlayButton" type="Button" parent="Menu/ButtonsContainer"]
+custom_minimum_size = Vector2(247.5, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
 text = "Graj"
 
-[node name="SettingsButton" type="Button" parent="Menu/MarginContainer/ButtonsContainer"]
+[node name="SettingsButton" type="Button" parent="Menu/ButtonsContainer"]
+custom_minimum_size = Vector2(247.5, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
 text = "Ustawienia"
 
-[node name="ExitButton" type="Button" parent="Menu/MarginContainer/ButtonsContainer"]
+[node name="ExitButton" type="Button" parent="Menu/ButtonsContainer"]
+custom_minimum_size = Vector2(247.5, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
 text = "Wyjdź"
-
-[node name="Separator2" type="Control" parent="Menu/MarginContainer/ButtonsContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Separator3" type="Control" parent="Menu/MarginContainer/ButtonsContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Separator4" type="Control" parent="Menu/MarginContainer/ButtonsContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
 
 [node name="Settings" type="Control" parent="."]
 visible = false
@@ -96,30 +88,23 @@ offset_bottom = 648.0
 [node name="Settings" parent="Settings" instance=ExtResource("3_j535k")]
 layout_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Settings"]
+[node name="BackButton" type="Button" parent="Settings"]
+custom_minimum_size = Vector2(165, 40)
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -104.0
-offset_top = -85.0
-offset_right = 104.0
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = 310.0
+offset_right = 82.5
+offset_bottom = 20.0
 grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 35
-
-[node name="BackButton" type="Button" parent="Settings/VBoxContainer"]
-custom_minimum_size = Vector2(208, 85)
-layout_mode = 2
-theme_override_font_sizes/font_size = 56
+grow_vertical = 2
 text = "Powrót"
 
-[node name="Separator" type="Control" parent="Settings/VBoxContainer"]
-layout_mode = 2
-
-[connection signal="pressed" from="Menu/MarginContainer/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="Menu/MarginContainer/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="Menu/MarginContainer/ButtonsContainer/ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="pressed" from="Settings/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Menu/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Menu/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Menu/ButtonsContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Settings/BackButton" to="." method="_on_back_button_pressed"]
