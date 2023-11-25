@@ -34,3 +34,7 @@ func _physics_process(delta):
 		
 		# Porusza graczem i obsługuje kolizje.
 		move_and_slide()
+
+# Wyłącza ruch gracza gdy jest pauza, włącza gdy nie ma pauzy
+func _on_pause_menu_paused(is_paused):
+	set_physics_process(!is_paused)

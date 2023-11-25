@@ -75,7 +75,7 @@ text = "Rozdzielczość"
 
 [node name="ResolutionSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
-max_value = 71.0
+max_value = 1.0
 
 [node name="ResolutionOutput" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(85, 0)

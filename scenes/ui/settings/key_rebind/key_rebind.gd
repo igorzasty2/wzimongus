@@ -7,7 +7,6 @@ extends Control
 @export var action_label_name : String = "action name"
 @export var action_project_name : String
 
-const LISTENING : String = "Słuchanie..."
 enum Side {LEFT, RIGHT}
 
 var pressed_button
@@ -19,13 +18,13 @@ var user_sett: SaveUserSettings
 func _ready():
 	# loading user control settings
 	user_sett = SaveUserSettings.load_or_create()
+
 	InputMap.action_erase_events(action_project_name)
 	if user_sett.controls_dictionary[action_project_name][0] != null:
 		InputMap.action_add_event(action_project_name, user_sett.controls_dictionary[action_project_name][0])
 	if user_sett.controls_dictionary[action_project_name][1] != null:
 		InputMap.action_add_event(action_project_name, user_sett.controls_dictionary[action_project_name][1])
-	#print(InputMap.action_get_events(action_project_name),"\n")
-	
+
 	# setting label names
 	action.text = action_label_name
 	

@@ -5,7 +5,7 @@ extends Resource
 @export_range(0,100) var volume: int = 20
 @export var full_screen: bool = false
 @export var v_sync: bool = true
-@export_range(0,71) var resolution: int = 2*3 # 1152x648
+@export var resolution: Vector2i = Vector2i(1152, 648)
 
 @export var controls_dictionary = {
 	"sabotage" : [InputMap.action_get_events("sabotage")[0], null], 
@@ -20,9 +20,11 @@ extends Resource
 	"move_up" : [InputMap.action_get_events("move_up")[0], InputMap.action_get_events("move_up")[1]]
 }
 
+# saves settings
 func save():
 	ResourceSaver.save(self, "user://user_settings.tres")
-	
+
+# loads saved/default settings
 static func load_or_create():
 	var res: SaveUserSettings = load("user://user_settings.tres") as SaveUserSettings
 	if res==null:
