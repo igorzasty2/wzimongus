@@ -9,7 +9,7 @@ radius = 170.238
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xwbu7"]
 shader = ExtResource("2_o3jvt")
 shader_parameter/line_color = Color(1, 1, 1, 1)
-shader_parameter/line_thickness = 1.0
+shader_parameter/line_thickness = 0.0
 
 [node name="TaskButton" type="Area2D"]
 monitorable = false

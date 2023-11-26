@@ -4,6 +4,12 @@ extends Area2D
 @export var sprite : Texture2D
 @export var scale_factor : float = 1
 
+# Task ID przekazany przez serwer 
+@export var task_id : int
+
+# czy gracz wylosował tego taska
+@export var disabled = true
+
 # minigra która będzie włączona przez ten przecisk
 @export var minigame_scene : PackedScene
 
@@ -13,9 +19,13 @@ func _ready():
 	$Sprite2D.texture = sprite
 	$Sprite2D.scale = Vector2(scale_factor, scale_factor)
 	
-	# Ustawia domyślny outline dla miejscu taska 
-	$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
-	$Sprite2D.material.set_shader_parameter('line_thickness', 10.0)
+	if not disabled:
+		# Ustawia domyślny outline dla miejscu taska 
+		$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
+		$Sprite2D.material.set_shader_parameter('line_thickness', 10.0)
+	else:
+		body_entered.disconnect(_on_body_entered)
+		body_exited.disconnect(_on_body_exited)
 
 
 func _on_body_entered(body):
