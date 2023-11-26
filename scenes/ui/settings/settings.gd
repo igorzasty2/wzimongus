@@ -225,8 +225,10 @@ func _on_save_button_pressed():
 	# setting the settings
 	if full_screen_value== true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		DisplayServer.window_set_min_size(DisplayServer.screen_get_size())
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		DisplayServer.window_set_min_size(Vector2i(800,600))
 	
 	AudioServer.set_bus_volume_db(0,linear_to_db(volume_value))
 	

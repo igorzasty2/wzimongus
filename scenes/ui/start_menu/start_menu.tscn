@@ -28,9 +28,18 @@ grow_vertical = 2
 color = Color(0.352941, 0.352941, 0.443137, 1)
 
 [node name="Menu" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Title" type="Label" parent="Menu"]
 layout_mode = 1
@@ -81,9 +90,18 @@ text = "Wyjdź"
 
 [node name="Settings" type="Control" parent="."]
 visible = false
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Settings" parent="Settings" instance=ExtResource("3_j535k")]
 layout_mode = 1
