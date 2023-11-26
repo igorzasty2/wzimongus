@@ -5,9 +5,12 @@ extends CharacterBody2D
 @export var id : int
 @export var username : String
 
+var direction : Vector2 = Vector2.ZERO
+
 const SPEED = 300.0
 
 @onready var input = $InputSynchronizer
+@onready var animation_tree = $Skins/AnimationTree
 
 
 func _ready():
@@ -17,17 +20,33 @@ func _ready():
 	input.set_process(input.get_multiplayer_authority() == multiplayer.get_unique_id())
 	# Ustawia etykietę pseudonimu gracza.
 	$usernameLabel.text = username
+	animation_tree.active = true
+
+func  _process(_delta):
+	update_animation_parameters()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Pobiera pionowe i poziome wejście gracza, i odpowiednio ustawia pionową oraz poziomą prędkość.
-	var direction = Vector2(input.direction.x, input.direction.y)
+	direction = Vector2(input.direction.x, input.direction.y)
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.y = direction.y * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.y = move_toward(velocity.y, 0, SPEED)
-	
+		
 	# Porusza graczem i obsługuje kolizje.
 	move_and_slide()
+	
+func update_animation_parameters():
+	if(velocity == Vector2.ZERO):
+		animation_tree["parameters/conditions/idle"] = true
+		animation_tree["parameters/conditions/is_moving"] = false
+	else:
+		animation_tree["parameters/conditions/idle"] = false
+		animation_tree["parameters/conditions/is_moving"] = true
+		
+	if(direction != Vector2.ZERO):
+		animation_tree["parameters/idle/blend_position"] = direction
+		animation_tree["parameters/walk/blend_position"] = direction
