@@ -5,7 +5,7 @@ extends Node
 var minigames = {}
 
 # Task ID bieżącego zadania.
-var current_task_id = 0
+var current_task_id = null
 
 
 # Przechowuje wszystkie zadania w słowniku specyficznej dla serwera.
@@ -13,20 +13,22 @@ var tasks_server = {}
 # Przechowuje zadania bieżącego gracza.
 var tasks_player = {}
 
+func complete_task():
+	mark_task_as_complete_player()
 
 # Usuwa task z lokalnego słownika tasków.
 @rpc("any_peer", "call_local")
-func mark_task_as_done_player():
+func mark_task_as_complete_player():
 	# Usuwa zadanie z listy zadań bieżącego gracza.
 	var player_id = multiplayer.get_unique_id()
 	tasks_player.erase(current_task_id)
 
-	mark_task_as_done_server.rpc_id(1, player_id, current_task_id)
+	mark_task_as_complete_server.rpc_id(1, player_id, current_task_id)
 
 
 # Usuwa task z serwerowego słownika tasków.
 @rpc("any_peer", "call_remote")
-func mark_task_as_done_server(player_id, task_id):
+func mark_task_as_complete_server(player_id, task_id):
 	# Usuwa zadanie z listy tasków na serwerze.
 	tasks_server[player_id].erase(task_id)
 	
