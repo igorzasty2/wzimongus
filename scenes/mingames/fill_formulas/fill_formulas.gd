@@ -5,12 +5,12 @@ extends Node2D
 
 # FORMULAS przechowuje listę możliwych do wylosowania wzorów do uzupełnienia
 const FORMULAS = {
-	0: "F=m*v", 
-	1: "v=s/t", 
+	0:"F=m*v", 
+	1:"v=s/t", 
 	2:"a=v/t", 
 	3:"P=a²", 
 	4:"P=a*h", 
-	5:"P=πr²", 
+	5:"P=π*r²", 
 	6:"P=a*h½",
 	}
 # Zmianna how_many_formulas decyduje o tym ile razy losowany ma być wzró 
