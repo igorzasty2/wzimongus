@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 # Klasa funkcjonuje jako przesuwalne myszką pole z literą które umieścić należy
-# w odpowiednim polu
+# w odpowiednim polu we wzorze
 
 # original_position przetrzymuje informacje o początkowym położeniu pola, daje
 # możliwość przywrócenia tej pozycji po nieprawidłowym przesunięciu pola
@@ -35,12 +35,40 @@ func _process(delta):
 		&& placed == false
 		&& (position != original_position || get_parent().is_moving)
 	):
-		position = get_viewport().get_mouse_position()
+		# Instrukcja warunkowa pozwala na swobodne pousanie się litery tylko w
+		# obrębie pola minigry
+		if Rect2(
+			Vector2(112, 23), 
+			Vector2(900, 600)
+		).has_point(get_viewport().get_mouse_position()):
+			position = get_viewport().get_mouse_position()
+		# Instrukcja pozwala na poruszanie literą wzdłuż granic prostopadłych
+		# do osi x
+		if(position.x >= 990 || position.x <= 120):
+			position.y = get_viewport().get_mouse_position().y
+			# Instrukcja uniemożliwia opuszczenie górnej i dolnej krawędzi
+			# pola minigry
+			if(position.y < 30 || position.y > 620):
+				if position.y < 30:
+					position.y = 30
+				else:
+					position.y = 620
+		# Instrukcja pozwala na poruszanie literą wzdłuż granic prostopadłych
+		# do osi y
+		if position.y <= 30 || position.y >= 620:
+			position.x = get_viewport().get_mouse_position().x
+			# Instrukcja uniemożliwia opuszczenie lewej i prawej krawędzi
+			# pola minigry
+			if position.x > 990 || position.x < 120:
+				if position.x < 120:
+					position.x = 120
+				else:
+					position.x = 990
 	# Służy do poprawnej zmiany wybranego pola z literą
 	if(
 		rect.has_point(get_viewport().get_mouse_position()) 
 		&& get_parent().is_moving == false
-		):
+	):
 		_on_mouse_entered()
 		
 
