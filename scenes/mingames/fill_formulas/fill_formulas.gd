@@ -204,3 +204,4 @@ func _on_finish_timer_timeout():
 	for l in get_children():
 		if l.name != "Finish":
 			l.queue_free()
+	print("minigame complete")
