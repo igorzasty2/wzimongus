@@ -44,35 +44,27 @@ func mark_task_as_done_server(player_id, task_id):
 @rpc("authority", "call_local")
 func assign_tasks_server(task_amount):
 	# TODO: żeby ten kod działał do końca trzeba stworzyć słownik minigier.
-	if multiplayer.is_server():
-		if tasks_server.is_empty():
+	if multiplayer.is_server() and tasks_server.is_empty():
+		# Unikalny id dla każdego tasku.
+		var id_counter = 0
 
-			# Unikalny id dla każdego tasku.
-			var id_counter = 0
+		for i in MultiplayerManager.players:
+			# true w duplicate oznacza że kopia tego będzie głęboka
+			var available_tasks = minigames.duplicate(true)
+			var tasks_dict = {}
 
-			for i in MultiplayerManager.players:
-				var tasks_dict = {}
-				var random_minigame_indexes = []
+			# Tworzy słownik task_amount ilości losowych tasków.
+			for task_number in range(task_amount):
 				
-				# Tworzy słownik task_amount ilości losowych tasków.
-				for task_number in range(task_amount):
-					var minigame_index
-					
-					# Losuje minigame_index dopóki nie będzie unikalna minigra.
-					while true:
-						minigame_index = randi() % minigames.size()
-						if minigame_index not in random_minigame_indexes:
-							break
-					
-					
-					tasks_dict[id_counter] = minigames[minigame_index]
-					random_minigame_indexes.append(minigame_index)
-					
-					id_counter += 1
+				var random_key = available_tasks.keys()[randi() % available_tasks.size()]
+				tasks_dict[id_counter] = available_tasks[random_key]
+				available_tasks.erase(random_key)
 				
-				# Zapisywania słownika tasków odpowiednemu graczowi w słownik serwerowy.
-				tasks_server[i] = tasks_dict
-				assign_tasks_player.rpc_id(MultiplayerManager.players[i].id, tasks_dict)
+				id_counter += 1
+			
+			# Zapisywania słownika tasków odpowiednemu graczowi w słownik serwerowy.
+			tasks_server[i] = tasks_dict
+			assign_tasks_player.rpc_id(MultiplayerManager.players[i].id, tasks_dict)
 				
 
 # Dodaje przesłane przez serwer taski w lokalną listę tasków.

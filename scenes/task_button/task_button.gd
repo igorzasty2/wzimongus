@@ -18,20 +18,14 @@ func _ready():
 	$Sprite2D.material.set_shader_parameter('line_thickness', 10.0)
 
 
-func _process(delta):
-	pass
-
-
 func _on_body_entered(body):
 	print(body.get_name())
-	if "id" in body:
-		if body.id == multiplayer.get_unique_id():
+	if "id" in body and body.id == multiplayer.get_unique_id():
 			$Sprite2D.material.set_shader_parameter('line_color', [0.3, 0.9, 0,5, 1])
 			_is_player_inside = true
 
 
 func _on_body_exited(body):
-	if "id" in body:
-		if body.id == multiplayer.get_unique_id():
+	if "id" in body and body.id == multiplayer.get_unique_id():
 			$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
 			_is_player_inside = false
