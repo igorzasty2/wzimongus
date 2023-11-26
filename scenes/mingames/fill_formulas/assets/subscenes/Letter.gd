@@ -115,6 +115,6 @@ func _on_mouse_entered():
 
 func _on_mouse_exited():
 	# Przywraca możliwość podnoszenia innych pól z literami
-	if (get_parent().is_moving && get_parent().moving == self):
+	if (get_parent().is_moving && get_parent().moving == self && !Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
 		get_parent().is_moving = false
 		z_index = orig_z_index
