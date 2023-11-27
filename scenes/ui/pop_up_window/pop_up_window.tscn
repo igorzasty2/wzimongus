@@ -33,12 +33,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
+theme_override_constants/margin_top = 70
 theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_bottom = 15
 
 [node name="Label" type="Label" parent="Panel/MarginContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 theme_override_font_sizes/font_size = 19
 text = "text here"
 horizontal_alignment = 1
@@ -48,15 +49,15 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
-theme_override_constants/separation = 155
+theme_override_constants/separation = 80
 
 [node name="LeftButton" type="Button" parent="Panel/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 text = "left"
 
 [node name="RightButton" type="Button" parent="Panel/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 text = "right"
 

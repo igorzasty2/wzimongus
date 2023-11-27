@@ -18,7 +18,7 @@ var user_sett: SaveUserSettings
 func _ready():
 	# loading user control settings
 	user_sett = SaveUserSettings.load_or_create()
-
+	
 	InputMap.action_erase_events(action_project_name)
 	if user_sett.controls_dictionary[action_project_name][0] != null:
 		InputMap.action_add_event(action_project_name, user_sett.controls_dictionary[action_project_name][0])

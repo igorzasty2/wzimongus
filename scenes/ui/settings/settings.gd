@@ -42,6 +42,12 @@ var right_button : Button
 var primary_event_storage : InputEventKey
 var secondary_event_storage : InputEventKey
 
+# action events before assigning new actions
+var primary_event_backup : InputEventKey
+var secondary_event_backup : InputEventKey
+
+var is_canceled : bool = false
+
 signal button_rebind(is_rebinded:bool)
 
 func _ready():
@@ -105,10 +111,50 @@ func _on_resolution_slider_value_changed(value):
 # handles keyboard input when rebinding
 func _unhandled_key_input(event):
 	rebind_key(event, button_side)
+	if is_canceled != true:
+		save_control_settings(action_project_name, primary_event_storage, secondary_event_storage)
+	is_canceled = false
+	emit_signal("button_rebind", false)
 	set_process_unhandled_key_input(false)
+
+# handles canceling key rebinding
+func _on_cancel_button_pressed():
+	is_canceled = true
+	if is_processing_unhandled_key_input():
+		_unhandled_key_input(null)
+	key_rebind_window.visible = false
 	
+
+# handles deleting key bindings
+func _on_delete_button_pressed():
+	is_canceled = true
+	if is_processing_unhandled_key_input():
+		_unhandled_key_input(null)
+		
+	# doesnt allow empty key bindings
+	if button_side == Side.LEFT && secondary_event_backup != null:
+		save_control_settings(action_project_name, secondary_event_backup, null)
+	elif button_side == Side.RIGHT && primary_event_backup != null:
+		save_control_settings(action_project_name, primary_event_backup, null)
+
+	key_rebind_window.visible = false
+
+# handles key rebininding when user picks yes when repeated bindings
+func _on_yes_button_pressed():
+	key_used_window.visible = false
+
+# handles key rebininding when user picks no when repeated bindings
+func _on_no_button_pressed():
+	save_control_settings(action_project_name, primary_event_backup, secondary_event_backup)
+	key_used_window.visible = false
+	
+
 # rebinds action key
 func rebind_key(event, button):
+	if event == null:
+		return
+	if is_canceled:
+		return
 	if InputMap.has_action(action_project_name):
 		var input_actions = InputMap.action_get_events(action_project_name)
 		var event_key : String = OS.get_keycode_string(event.physical_keycode)
@@ -134,24 +180,24 @@ func rebind_key(event, button):
 				primary_event = event
 				secondary_event = null
 
-		if is_already_used(event) :
+		primary_event_storage = primary_event
+		secondary_event_storage = secondary_event
+
+		# checks if event is already used with another action
+		if is_already_used(event):
 			key_rebind_window.visible = false
 			key_used_window.visible = true
-			primary_event_storage = primary_event
-			secondary_event_storage = secondary_event
 			emit_signal("button_rebind", false)
 			return
-		InputMap.action_erase_events(action_project_name)
-		InputMap.action_add_event(action_project_name, primary_event)
-		InputMap.action_add_event(action_project_name, secondary_event)
-		
-		save_control_settings(action_project_name, primary_event, secondary_event)
-		set_buttons_names()
-		emit_signal("button_rebind", false)
+
 		key_rebind_window.visible = false
 
 # saves control settings
-func save_control_settings(action_name, primary_butt, secondary_butt):
+func save_control_settings(action_name : String, primary_butt : InputEventKey, secondary_butt : InputEventKey):
+	InputMap.action_erase_events(action_project_name)
+	InputMap.action_add_event(action_project_name, primary_butt)
+	InputMap.action_add_event(action_project_name, secondary_butt)
+	set_buttons_names()
 	user_sett.controls_dictionary[action_name][0] = primary_butt
 	user_sett.controls_dictionary[action_name][1] = secondary_butt
 	user_sett.save()
@@ -181,20 +227,6 @@ func set_buttons_names():
 		else:
 			right_button.text = ""
 
-func _on_cancel_button_pressed():
-	key_rebind_window.visible = false
-
-func _on_yes_button_pressed():
-	InputMap.action_erase_events(action_project_name)
-	InputMap.action_add_event(action_project_name, primary_event_storage)
-	InputMap.action_add_event(action_project_name, secondary_event_storage)
-	save_control_settings(action_project_name, primary_event_storage, secondary_event_storage)
-	set_buttons_names()
-	key_used_window.visible = false
-
-func _on_no_button_pressed():
-	key_used_window.visible = false
-
 # sets local values needed for binding keys
 func assign(action_label_name, action_project_name, side, left_button, right_button):
 	self.action_label_name = action_label_name
@@ -202,6 +234,16 @@ func assign(action_label_name, action_project_name, side, left_button, right_but
 	self.button_side = side
 	self.left_button = left_button
 	self.right_button = right_button
+	
+	if InputMap.has_action(action_project_name):
+		var input_actions = InputMap.action_get_events(action_project_name)
+		primary_event_backup = null
+		secondary_event_backup = null
+		if input_actions.size()>0:
+			primary_event_backup = input_actions[0]
+		if input_actions.size()>1:
+			secondary_event_backup = input_actions[1]
+	
 	action_name.text = action_label_name
 	key_rebind_window.visible = true
 	emit_signal("button_rebind", true)
@@ -237,7 +279,13 @@ func _on_save_button_pressed():
 	else:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	
+	#if get_window() != null:
+		# base resolution
+		#get_viewport().content_scale_size = resolution_value
+		# stretch scale
+		#get_viewport().content_scale_factor = float(resolution_value.x)/resolution_value.y
 	DisplayServer.window_set_size(resolution_value)
+	
 	# prevents buggy button
 	save_button.release_focus()
 	# saving
