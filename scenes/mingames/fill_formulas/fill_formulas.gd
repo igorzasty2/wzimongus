@@ -85,7 +85,7 @@ func _process(delta):
 	if point == wanted_points && times_generated != how_many_formulas:
 		wanted_points = 0
 		point = 0
-		# Deletes old noise letters
+		# Usuwa stary hałas
 		for i in letters:
 			if i.placed != true:
 				i.queue_free()
@@ -114,8 +114,8 @@ func _generate_letters(formula:String):
 	sequence = _add_noise(sequence)
 	for i in range(sequence.size()):
 		var Letter = preload("assets/subscenes/letter.tscn").instantiate()
-		# Random char between 'A' and 'z' that will be used as noise if this
-		# place in sequence is meant to be used as noise
+		# Losowy znak między 'A' i 'z' wykorzystywany jeśli w tym miejscu
+		# sekwencji pojawić ma się hałas
 		var rand_letter = char(randi_range(65, 122))
 		# Przesunięcie w osi x pozycji wygenerowanych pól z literami
 		const SHIFT = Vector2(130, 0)
@@ -135,8 +135,8 @@ func _generate_letters(formula:String):
 		add_child(Letter)
 
 
-# Adds additional places to sequence used later to create additional 'noise' for
-# the player
+# Dodaje do sekwencji kolejności wygenerowanych liter dodatkowe miejsca w których
+# umieszczone zostaną litery pełniące rolę hałasu
 func _add_noise(sequence:Array):
 	var count_of_noise = 6 - sequence.size()
 	var noise_indexes = []
