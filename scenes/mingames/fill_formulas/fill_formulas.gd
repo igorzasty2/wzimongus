@@ -53,29 +53,42 @@ func _process(delta):
 	for l in letters:
 		if moving != null && moving.placed == false:
 			var correct_space = _get_correct_space(moving.id, spaces)
-			# Umieszcza literę w pustym polu jeżeli litera zostanie "upuszczona"
-			# nad odpowiednim polem
-			if correct_space.correct_area.has_point(moving.position):
-				if !mouse_clicked:
-					moving.position = correct_space.position
-					moving.placed = true
-					# Po umieszczeniu litery na odpowiednim polu pole to jest
-					# usuwane aby niemożliwym było umieszczenie tam kolejnej
-					# litery
-					correct_space.queue_free()
-					point += 1
+			if correct_space != null:
+				# Umieszcza literę w pustym polu jeżeli litera zostanie "upuszczona"
+				# nad odpowiednim polem
+				if correct_space.correct_area.has_point(moving.position):
+					if !mouse_clicked:
+						moving.position = correct_space.position
+						moving.placed = true
+						# Po umieszczeniu litery na odpowiednim polu pole to jest
+						# usuwane aby niemożliwym było umieszczenie tam kolejnej
+						# litery
+						correct_space.queue_free()
+						point += 1
+				elif (
+						(l != moving || !mouse_clicked) 
+						&& !l.placed 
+						&& l.position != l.original_position
+					):
+					# Przywraca do originalnej pozycji pole które jest na nieprawidłowym
+					# miejscu, nie jest to poruszane obecnie pole lub myszka nie jest wciśnięta,
+					# i nie jest na oryginalniej pozycji
+					l.return_to_orig_pos()
 			elif (
-					(l != moving || !mouse_clicked) 
-					&& !l.placed 
-					&& l.position != l.original_position
-				):
-				# Przywraca do originalnej pozycji pole które jest na nieprawidłowym
-				# miejscu, nie jest to poruszane obecnie pole lub myszka nie jest wciśnięta,
-				# i nie jest na oryginalniej pozycji
-				l.return_to_orig_pos()
+						(l != moving || !mouse_clicked) 
+						&& !l.placed 
+						&& l.position != l.original_position
+					):
+					# Przywraca do originalnej pozycji pole które nie posiada
+					# odpowiadającego pustego pola
+					l.return_to_orig_pos()
 	if point == wanted_points && times_generated != how_many_formulas:
 		wanted_points = 0
 		point = 0
+		# Deletes old noise letters
+		for i in letters:
+			if i.placed != true:
+				i.queue_free()
 		_random_generate()
 	if point == wanted_points && times_generated == how_many_formulas:
 		if !finished:
@@ -98,18 +111,50 @@ func _generate_letters(formula:String):
 		var rand = randi_range(0, number_of_letters-1) * 2
 		if !sequence.has(rand):
 			sequence.append(rand)
+	sequence = _add_noise(sequence)
 	for i in range(sequence.size()):
 		var Letter = preload("assets/subscenes/letter.tscn").instantiate()
+		# Random char between 'A' and 'z' that will be used as noise if this
+		# place in sequence is meant to be used as noise
+		var rand_letter = char(randi_range(65, 122))
 		# Przesunięcie w osi x pozycji wygenerowanych pól z literami
 		const SHIFT = Vector2(130, 0)
 		Letter.position = $FirstLetter.position + i * SHIFT
 		inner_text = Letter.get_node("./LetterInBox")
 		inner_text.text = "[center][font_size={55}][color=black]"
-		inner_text.text += formula[int(sequence[i])]
+		if(sequence[i] == 20):
+			inner_text.text += rand_letter
+		else:
+			inner_text.text += formula[int(sequence[i])]
 		inner_text.text += "[/color][/font_size][/center]"
 		Letter.original_position = Letter.position
-		Letter.id = formula[int(sequence[i])]
+		if(sequence[i] == 20):
+			Letter.id = rand_letter
+		else:
+			Letter.id = formula[int(sequence[i])]
 		add_child(Letter)
+
+
+# Adds additional places to sequence used later to create additional 'noise' for
+# the player
+func _add_noise(sequence:Array):
+	var count_of_noise = 6 - sequence.size()
+	var noise_indexes = []
+	while noise_indexes.size() < count_of_noise:
+		var rand = randi_range(0, sequence.size()+count_of_noise-1)
+		if !noise_indexes.has(rand):
+			noise_indexes.append(rand)
+	var new_sequence = []
+	for i in range(sequence.size()+count_of_noise):
+		new_sequence.append(-1)
+	for i in range(noise_indexes.size()):
+		new_sequence[noise_indexes[i]] = 20
+	for i in range(sequence.size()):
+		var j = 0
+		while new_sequence[j] != -1:
+			j += 1
+		new_sequence[j] = sequence[i]
+	return new_sequence
 
 
 # Funkcja generująca puste pola na litery oraz tekst przedstawiający uzupełnione
