@@ -15,6 +15,9 @@ var player_info = {
 	"username": ""
 }
 
+# Maksymalna liczba graczy.
+var max_players = 10
+
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_player_connected)
@@ -25,9 +28,9 @@ func _ready():
 
 
 # Funkcja pozwalająca na stworzenie nowego serwera.
-func create_game(port, max_connections):
+func create_game(port):
 	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(port, max_connections)
+	var error = peer.create_server(port)
 	if error:
 		return error
 	multiplayer.multiplayer_peer = peer
@@ -35,6 +38,11 @@ func create_game(port, max_connections):
 	# Dodaje obecnego gracza do listy połączonych graczy.
 	# W tym momencie nie ma żadnych połączonych graczy, więc nie potrzeba wysyłać go do połączonych klientów.
 	_add_new_player(1, player_info)
+
+
+# Funkcja pozwalająca na zmianę maksymalnej liczby graczy.
+func set_max_players(max):
+	max_players = max
 
 
 # Funkcja pozwalaja na dołączenie do istniejącej gry.
@@ -80,12 +88,18 @@ func _on_server_disconnected():
 	multiplayer.multiplayer_peer = null
 	players.clear()
 
+	get_tree().change_scene_to_file("res://scenes/ui/play_menu/play_menu.tscn")
+
 
 # Funkcja wywoływanana na serwerze po otrzymaniu informacji o graczu.
 @rpc("any_peer", "reliable")
 func _register_player(player_info):
-	# Dodaje nowego gracza do listy połączonych graczy.
 	var id = multiplayer.get_remote_sender_id()
+
+	# Jeśli liczba graczy jest większa niż maksymalna liczba graczy, to rozłącza nowego gracza.
+	if players.size() >= max_players:
+		multiplayer.disconnect_peer(id)
+		return
 
 	# Wysyłanie do nowego gracza informacji o wszystkich połączonych graczach.
 	for i in players:
@@ -93,6 +107,15 @@ func _register_player(player_info):
 
 	# Wysyłanie do wszystkich połączonych graczy informacji o nowym graczu.
 	_add_new_player.rpc(id, player_info)
+
+	# Wysyłanie do nowego gracza informacji o rejestracji na serwerze.
+	_on_register_player.rpc_id(id)
+
+
+# Funkcja wywoływana u klienta po zarejestrowaniu go na serwerze.
+@rpc("reliable")
+func _on_register_player():
+	get_tree().change_scene_to_file("res://scenes/ui/lobby_menu/lobby_menu.tscn")
 
 
 # Funkcja pozwalająca na dodanie nowego gracza do listy połączonych graczy.
