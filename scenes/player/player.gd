@@ -6,11 +6,11 @@ extends CharacterBody2D
 @export var username : String
 
 var direction : Vector2 = Vector2.ZERO
-
+var last_direction_x : float
 const SPEED = 300.0
 
 @onready var input = $InputSynchronizer
-@onready var animation_tree = $Skins/AnimationTree
+@onready var animation_tree = $Skins/AltAnimationTree
 
 
 func _ready():
@@ -21,32 +21,37 @@ func _ready():
 	# Ustawia etykietę pseudonimu gracza.
 	$usernameLabel.text = username
 	animation_tree.active = true
+	last_direction_x = 1
 
 func  _process(_delta):
 	update_animation_parameters()
 
-
 func _physics_process(_delta):
 	# Pobiera pionowe i poziome wejście gracza, i odpowiednio ustawia pionową oraz poziomą prędkość.
 	direction = Vector2(input.direction.x, input.direction.y)
+	direction = direction.normalized()
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.y = direction.y * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.y = move_toward(velocity.y, 0, SPEED)
-		
+	# Zapamiętuje ostatni kierunek wzroku postaci
+	if direction.x != 0:
+		last_direction_x = direction.x
 	# Porusza graczem i obsługuje kolizje.
 	move_and_slide()
 	
 func update_animation_parameters():
-	if(velocity == Vector2.ZERO):
+	if velocity == Vector2.ZERO:
 		animation_tree["parameters/conditions/idle"] = true
 		animation_tree["parameters/conditions/is_moving"] = false
 	else:
 		animation_tree["parameters/conditions/idle"] = false
 		animation_tree["parameters/conditions/is_moving"] = true
-		
-	if(direction != Vector2.ZERO):
-		animation_tree["parameters/idle/blend_position"] = direction
-		animation_tree["parameters/walk/blend_position"] = direction
+		if direction.x != 0:
+			animation_tree["parameters/idle/blend_position"] = direction
+			animation_tree["parameters/walk/blend_position"] = direction
+		if direction.x == 0:
+			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x ,direction.y)
+			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x ,direction.y)
