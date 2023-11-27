@@ -30,14 +30,18 @@ func _ready():
 # Funkcja pozwalająca na stworzenie nowego serwera.
 func create_game(port):
 	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(port)
-	if error:
-		return error
-	multiplayer.multiplayer_peer = peer
+	var status = peer.create_server(port)
 
-	# Dodaje obecnego gracza do listy połączonych graczy.
-	# W tym momencie nie ma żadnych połączonych graczy, więc nie potrzeba wysyłać go do połączonych klientów.
-	_add_new_player(1, player_info)
+	if status != OK:
+		_handle_error()
+	else:
+		multiplayer.multiplayer_peer = peer
+
+		# Dodaje obecnego gracza do listy połączonych graczy.
+		# W tym momencie nie ma żadnych połączonych graczy, więc nie potrzeba wysyłać go do połączonych klientów.
+		_add_new_player(1, player_info)
+
+		_enter_lobby()
 
 
 # Funkcja pozwalająca na zmianę maksymalnej liczby graczy.
@@ -48,10 +52,12 @@ func set_max_players(max):
 # Funkcja pozwalaja na dołączenie do istniejącej gry.
 func join_game(address, port):
 	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_client(address, port)
-	if error:
-		return error
-	multiplayer.multiplayer_peer = peer
+	var status = peer.create_client(address, port)
+
+	if status != OK:
+		_handle_error()
+	else:
+		multiplayer.multiplayer_peer = peer
 
 
 # Funkcja pozwalająca na zmianę nazwy gracza.
@@ -69,7 +75,7 @@ func _on_player_disconnected(id):
 	players.erase(id)
 	# Powiadamia wszystkich graczy o rozłączeniu gracza.
 	_delete_player.rpc(id)
-	player_disconnected.emit(id)	
+	player_disconnected.emit(id)
 
 
 # Funkcja wywoływana u klienta po połączeniu z serwerem.
@@ -88,7 +94,17 @@ func _on_server_disconnected():
 	multiplayer.multiplayer_peer = null
 	players.clear()
 
+	_handle_error()
+
+
+# TODO: Zaimplementować obsługę błędów.
+func _handle_error():
 	get_tree().change_scene_to_file("res://scenes/ui/play_menu/play_menu.tscn")
+
+
+# Przechodzi do sceny menu lobby.
+func _enter_lobby():
+	get_tree().change_scene_to_file("res://scenes/ui/lobby_menu/lobby_menu.tscn")
 
 
 # Funkcja wywoływanana na serwerze po otrzymaniu informacji o graczu.
@@ -115,7 +131,7 @@ func _register_player(player_info):
 # Funkcja wywoływana u klienta po zarejestrowaniu go na serwerze.
 @rpc("reliable")
 func _on_register_player():
-	get_tree().change_scene_to_file("res://scenes/ui/lobby_menu/lobby_menu.tscn")
+	_enter_lobby()
 
 
 # Funkcja pozwalająca na dodanie nowego gracza do listy połączonych graczy.

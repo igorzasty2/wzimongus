@@ -15,5 +15,3 @@ func _on_host_button_button_down():
 
 	# Tworzy grę o określonym porcie i maksymalnej liczbie połączeń w MultiplayerManager.
 	MultiplayerManager.create_game($PortInput.text.to_int())
-
-	get_tree().change_scene_to_file("res://scenes/ui/lobby_menu/lobby_menu.tscn")
