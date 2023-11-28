@@ -17,10 +17,6 @@ const FORMULAS = {
 # max = 3 min = 1
 @export
 var how_many_formulas = 3
-# Daje możliwość włączenia alternatywnej tekstury gui, nie byłem pewien które
-# zostawić, oba są brzydkie
-@export
-var white_gui = false
 # Zmienna mówi o tym, czy przesuwane jest obecnie pole z literą
 var is_moving = false
 # moving przechowuje referencję do obecnie przesuwanego pola
@@ -41,8 +37,6 @@ var finished = false
 
 func _ready():
 	_random_generate()
-	if white_gui:
-		$MinigameGui.texture = preload("assets/guiElements/minigame_gui2.png")
 
 
 func _process(delta):
@@ -92,7 +86,7 @@ func _process(delta):
 		_random_generate()
 	if point == wanted_points && times_generated == how_many_formulas:
 		if !finished:
-			_finish_game()
+			print("minigame complete")
 			finished = true
 
 
@@ -187,12 +181,8 @@ func _generate_formula(formula:String):
 			text.size = Vector2(80, 80)
 			text.bbcode_enabled = true
 			# Dostosowywanie koloru tekstu zależnie od wybranego gui
-			if white_gui:
-				text.text = "[center][font_size={55}][color=black]" +\
-					formula[i] + "[/color][/font_size][/center]"
-			else:
-				text.text = "[center][font_size={55}][color=light_gray]" +\
-					formula[i] + "[/color][/font_size][/center]"
+			text.text = "[center][font_size={55}][color=black]" +\
+			formula[i] + "[/color][/font_size][/center]"
 			add_child(text)
 	# TextBox uzupełniany jest o podpowiedź do obecnie uzupełnianego wzoru
 	$Hint.text += "[center][font_size={23}][color=white]" + formula + "[/color][/font_size][/center]\n"
@@ -235,18 +225,4 @@ func _random_generate():
 		times_generated += 1
 
 
-# Funkcja uruchamiana w chwili ukończenia gry, zmienia ona tekst podpowiedzi
-# na zielony znak √ oraz uruchamia timer FinishTimer
-func _finish_game():
-	$Hint.text = "[center][font_size={70}][color=green]√[/color][/font_size][/center]"
-	$FinishTimer.start()
 
-
-# Funkcja uruchamiany w chwili zakończenia FinishTimer, czyni ona widocznym ekran
-# ukończenia minigry oraz zabija wszystkie elementy sceny z wyjątkiem ekranu ukończenia
-func _on_finish_timer_timeout():
-	$Finish.visible = true
-	for l in get_children():
-		if l.name != "Finish":
-			l.queue_free()
-	print("minigame complete")

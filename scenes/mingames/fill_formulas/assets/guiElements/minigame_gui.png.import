@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dh8gao0ctsou1"
-path="res://.godot/imported/minigame_gui.png-f0de64a7a20ff443a917442c1eda2492.ctex"
+uid="uid://dk4rshu1db061"
+path="res://.godot/imported/minigame_gui2.png-70b2f3b66ecff2caf588f235e9591582.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/mingames/fill_formulas/assets/guiElements/minigame_gui.png"
-dest_files=["res://.godot/imported/minigame_gui.png-f0de64a7a20ff443a917442c1eda2492.ctex"]
+source_file="res://scenes/mingames/fill_formulas/assets/guiElements/minigame_gui2.png"
+dest_files=["res://.godot/imported/minigame_gui2.png-70b2f3b66ecff2caf588f235e9591582.ctex"]
 
 [params]
 
