@@ -8,12 +8,12 @@ func _ready():
 		$LobbyUI/StartGameButton.hide()
 	
 	# Początkowe wyświetlenie listy graczy
-	_update_display_player_list(multiplayer.get_unique_id(), MultiplayerManager.player_info)
+	_update_display_player_list(multiplayer.get_unique_id(), MultiplayerManager.current_player)
 	
 	# Sprawienie, aby za każdym razem, gdy gracz dołącza lub
 	# opuszcza listę graczy, była ona wyświetlana ponownie
-	MultiplayerManager.player_connected.connect(_update_display_player_list)
-	MultiplayerManager.player_disconnected.connect(_update_display_player_list)
+	MultiplayerManager.player_registered.connect(_update_display_player_list)
+	MultiplayerManager.player_deregistered.connect(_update_display_player_list)
 
 
 func _on_start_game_button_button_down():
@@ -30,8 +30,10 @@ func start_game():
 	$LobbyUI.hide()
 	
 	# Wyświetlanie listy graczy nie będzie już aktualizowane.
-	MultiplayerManager.player_connected.disconnect(_update_display_player_list)
-	MultiplayerManager.player_disconnected.disconnect(_update_display_player_list)
+	MultiplayerManager.player_registered.disconnect(_update_display_player_list)
+	MultiplayerManager.player_deregistered.disconnect(_update_display_player_list)
+
+	MultiplayerManager.current_game["started"] = true
 
 	# Ładujemy mapę na serwerze, zostanie ona zsynchronizowana z klientami przez MapSpawner
 	if multiplayer.is_server():
@@ -52,20 +54,19 @@ func _change_map(scene: PackedScene):
 
 
 # Wyświetla listę graczy na ekranie
-func _update_display_player_list(id, player_info = null):
-	var players = MultiplayerManager.players
-	var players_display = "Lista graczy:\n"
+func _update_display_player_list(id, player = null):
+	var player_list_text = "Lista graczy:\n"
 	var idx = 1
-	for i in players:
+	for i in MultiplayerManager.current_game["registered_players"]:
 		# Numerowanie graczy
-		players_display += str(idx) + '. '
-		
+		player_list_text += str(idx) + '. '
+
 		# Wyświetlanie nazwiska gracza
-		players_display += players[i].username
-		
+		player_list_text += MultiplayerManager.current_game["registered_players"][i].username
+
 		# Newline symbol
-		players_display += "\n"
+		player_list_text += "\n"
 		idx += 1
-	
+
 	# Wyświetlanie całości
-	$LobbyUI/PlayerList.text = players_display
+	$LobbyUI/PlayerList.text = player_list_text

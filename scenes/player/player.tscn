@@ -50,7 +50,7 @@ texture = ExtResource("1_8w5ck")
 position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_st64e")
 
-[node name="usernameLabel" type="Label" parent="."]
+[node name="UsernameLabel" type="Label" parent="."]
 offset_left = -19.0
 offset_top = -108.0
 offset_right = 21.0
