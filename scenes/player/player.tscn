@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://boakkfqgwgxro" path="res://scenes/player/assets/1.png" id="1_8w5ck"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://scenes/player/input_synchronizer.gd" id="3_3x5pw"]
+[ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="3_tbjki"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_aer0t"]
 properties/0/path = NodePath(".:id")
@@ -56,3 +57,8 @@ offset_right = 21.0
 offset_bottom = -85.0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_tbjki")]
+visible = false
+
+[connection signal="paused" from="PauseMenu" to="." method="_on_pause_menu_paused"]

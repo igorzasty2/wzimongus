@@ -1,0 +1,122 @@
+[gd_scene load_steps=3 format=3 uid="uid://bha1146nfvg6s"]
+
+[ext_resource type="Script" path="res://scenes/ui/start_menu/start_menu.gd" id="1_kh2k6"]
+[ext_resource type="PackedScene" uid="uid://01iag5x618my" path="res://scenes/ui/settings/settings.tscn" id="3_j535k"]
+
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kh2k6")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.5
+offset_top = -324.0
+offset_right = 576.5
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.352941, 0.352941, 0.443137, 1)
+
+[node name="Menu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -333.0
+offset_top = 40.0
+offset_right = 333.0
+offset_bottom = 154.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 110
+text = "WZIMong Us"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = -45.0
+offset_right = 116.0
+offset_bottom = 163.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 25
+
+[node name="PlayButton" type="Button" parent="Menu/ButtonsContainer"]
+custom_minimum_size = Vector2(247.5, 60)
+layout_mode = 2
+text = "Graj"
+
+[node name="SettingsButton" type="Button" parent="Menu/ButtonsContainer"]
+custom_minimum_size = Vector2(247.5, 60)
+layout_mode = 2
+text = "Ustawienia"
+
+[node name="ExitButton" type="Button" parent="Menu/ButtonsContainer"]
+custom_minimum_size = Vector2(247.5, 60)
+layout_mode = 2
+text = "Wyjdź"
+
+[node name="Settings" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Settings" parent="Settings" instance=ExtResource("3_j535k")]
+layout_mode = 1
+
+[node name="BackButton" type="Button" parent="Settings"]
+custom_minimum_size = Vector2(165, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = 310.0
+offset_right = 82.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Powrót"
+
+[connection signal="pressed" from="Menu/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Menu/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Menu/ButtonsContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Settings/BackButton" to="." method="_on_back_button_pressed"]
