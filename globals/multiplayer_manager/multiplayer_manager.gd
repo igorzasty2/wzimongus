@@ -1,5 +1,11 @@
 # Ten skrypt definiuje węzeł MultiplayerManager, który obsługuje połączenia wieloosobowe i informacje o graczach.
+
 extends Node
+
+# Sygnał, który jest emitowany, gdy gracz dołącza do gry.
+signal player_connected(peer_id, player_info)
+# Sygnał, który jest emitowany, gdy gracz się rozłącza.
+signal player_disconnected(peer_id)
 
 # Słownik przechowujący informacje o połączonych graczach.
 var players = {}
@@ -40,12 +46,6 @@ func join_game(address, port):
 	multiplayer.multiplayer_peer = peer
 
 
-# Funkcja wczytująca odpowiednią scenę po rozpoczęciu gry przez hosta.
-@rpc("call_local", "reliable")
-func load_game(game_scene_path):
-	get_tree().change_scene_to_file(game_scene_path)
-
-
 # Funkcja pozwalająca na zmianę nazwy gracza.
 func set_username(username):
 	player_info["username"] = username
@@ -61,6 +61,7 @@ func _on_player_disconnected(id):
 	players.erase(id)
 	# Powiadamia wszystkich graczy o rozłączeniu gracza.
 	_delete_player.rpc(id)
+	player_disconnected.emit(id)	
 
 
 # Funkcja wywoływana u klienta po połączeniu z serwerem.
@@ -85,7 +86,6 @@ func _on_server_disconnected():
 func _register_player(player_info):
 	# Dodaje nowego gracza do listy połączonych graczy.
 	var id = multiplayer.get_remote_sender_id()
-	players[id] = player_info
 
 	# Wysyłanie do nowego gracza informacji o wszystkich połączonych graczach.
 	for i in players:
@@ -96,12 +96,14 @@ func _register_player(player_info):
 
 
 # Funkcja pozwalająca na dodanie nowego gracza do listy połączonych graczy.
-@rpc("reliable")
+@rpc("call_local", "reliable")
 func _add_new_player(id, player):
 	players[id] = player
+	player_connected.emit(id, player)
 
 
 # Funkcja pozwalająca na usunięcie gracza z listy połączonych graczy.
 @rpc("reliable")
 func _delete_player(id):
 	players.erase(id)
+	player_disconnected.emit(id)

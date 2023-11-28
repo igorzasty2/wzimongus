@@ -1,19 +1,36 @@
 # Definiuje mapę gry.
+
 extends Node2D
 
 @export var PlayerScene : PackedScene
 
 func _ready():
-	# Stwórz instancję postaci gracza dla każdego podłączonego gracza.
-	for i in MultiplayerManager.players:
-		var currentPlayer = PlayerScene.instantiate()
-		currentPlayer.id = i
-		currentPlayer.nickname = str(MultiplayerManager.players[i].username)
-		add_child(currentPlayer, true)
+	# Tworzy graczy na serwerze, a następnie MultiplayerSpawner synchronizuje je z klientami.
+	if multiplayer.is_server():
+		# Sprawia, że gracz jest usuwany z mapy po opuszczeniu gry.
+		multiplayer.peer_disconnected.connect(_remove_player)
 
-		# Losowo pozycjonuj postać gracza na mapie.
-		currentPlayer.global_position = Vector2(randi_range(0, 1152), randi_range(0, 648))
+		# Tworzy wszystkich graczy jeden po drugim.
+		for i in MultiplayerManager.players:
+			_add_player(i)
 
 
-func _process(delta):
-	pass
+# Tworzy gracza w losowej pozycji na mapie.
+func _add_player(id: int):
+	var player = preload("res://scenes/player/player.tscn").instantiate()
+	# To jest nazwa Node'a.
+	player.name = str(id)
+
+	player.id = id
+	player.username = MultiplayerManager.players[id].username
+
+	player.position = Vector2(randi_range(0, 1152), randi_range(0, 648))
+	
+	# Dodaje Node na mape.
+	$Players.add_child(player, true)
+
+
+# Usuwa postać gracza, gdy ten opuszcza grę.
+func _remove_player(id: int):
+	if $Players.has_node(str(id)):
+		$Players.get_node(str(id)).queue_free()

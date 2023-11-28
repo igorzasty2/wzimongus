@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://buspc3xb5jkoq"]
+
+[ext_resource type="Script" path="res://scenes/mingames/fill_formulas/fill_formulas.gd" id="1_d3uug"]
+[ext_resource type="Texture2D" uid="uid://dh8gao0ctsou1" path="res://scenes/mingames/fill_formulas/assets/guiElements/minigame_gui.png" id="2_mk0br"]
+
+[node name="FillFormulas" type="Node2D"]
+script = ExtResource("1_d3uug")
+
+[node name="MinigameGui" type="Sprite2D" parent="."]
+position = Vector2(562, 323)
+texture = ExtResource("2_mk0br")
+
+[node name="Hint" type="RichTextLabel" parent="."]
+offset_left = 822.0
+offset_top = 354.0
+offset_right = 991.0
+offset_bottom = 451.0
+bbcode_enabled = true
+
+[node name="FirstLetter" type="Marker2D" parent="."]
+position = Vector2(208, 540)
+
+[node name="StartOfFormula" type="Marker2D" parent="."]
+position = Vector2(217, 115)

@@ -1,18 +1,22 @@
 # Definiuje postać gracza.
+
 extends CharacterBody2D
 
 @export var id : int
-@export var nickname : String
+@export var username : String
 
 const SPEED = 300.0
 
-@onready var synchronizer = $MultiplayerSynchronizer
+@onready var input = $InputSynchronizer
+
 
 func _ready():
 	# Ustawia autorytet gracza na jego id w celu jego identyfikacji w systemie multiplayer.
-	synchronizer.set_multiplayer_authority(id)
+	input.set_multiplayer_authority(id)
+	# Wyłącza synchronizację wejścia gracza, jeśli nie jest on obecnym graczem.
+	input.set_process(input.get_multiplayer_authority() == multiplayer.get_unique_id())
 	# Ustawia etykietę pseudonimu gracza.
-	$NicknameLabel.text = nickname
+	$usernameLabel.text = username
 
 
 func _physics_process(delta):
