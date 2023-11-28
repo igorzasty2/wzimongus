@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://diygmehqoir5o"
-path="res://.godot/imported/kopiowanie1.png-3951c8124aefaacb1f82b1da437395c0.ctex"
+uid="uid://gahxhrpy7gdc"
+path="res://.godot/imported/man.png-e6e8c9ac04899129d7193cc995117c51.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/minigames/copying-files/assets/kopiowanie1.png"
-dest_files=["res://.godot/imported/kopiowanie1.png-3951c8124aefaacb1f82b1da437395c0.ctex"]
+source_file="res://scenes/ui/chat/assets/man.png"
+dest_files=["res://.godot/imported/man.png-e6e8c9ac04899129d7193cc995117c51.ctex"]
 
 [params]
 

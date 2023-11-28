@@ -2,6 +2,9 @@ extends Button
 
 
 func _on_confirm_button_down():
+	# Zablokowanie możliwości kliknięcie po naciśnięciu przycisku ( bugowało wyświetlanie kolejnych grafik)
+	self.disabled = true
+	
 	# Załaduj grafikę
 	var texture = preload("res://scenes/minigames/copying-files/assets/kopiowanie1.png")
 
