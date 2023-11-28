@@ -15,15 +15,22 @@ signal rebind_button_pressed(action_label_name, action_project_name, side, left_
 
 var user_sett: SaveUserSettings
 
+var saved_event : InputEventKey
+
 func _ready():
 	# loading user control settings
 	user_sett = SaveUserSettings.load_or_create()
-	
+
 	InputMap.action_erase_events(action_project_name)
 	if user_sett.controls_dictionary[action_project_name][0] != null:
-		InputMap.action_add_event(action_project_name, user_sett.controls_dictionary[action_project_name][0])
+		saved_event = InputEventKey.new()
+		saved_event.physical_keycode = user_sett.controls_dictionary[action_project_name][0]
+		InputMap.action_add_event(action_project_name, saved_event)
 	if user_sett.controls_dictionary[action_project_name][1] != null:
-		InputMap.action_add_event(action_project_name, user_sett.controls_dictionary[action_project_name][1])
+		saved_event = InputEventKey.new()
+		saved_event.physical_keycode = user_sett.controls_dictionary[action_project_name][1]
+		InputMap.action_add_event(action_project_name, saved_event)
+	var xx : InputEventKey = InputMap.action_get_events("ui_accept")[0] as InputEventKey
 
 	# setting label names
 	action.text = action_label_name

@@ -9,16 +9,16 @@ extends Resource
 @export var resolution: Vector2i = Vector2i(1152, 648)
 
 @export var controls_dictionary = {
-	"sabotage" : [null, null],#[InputMap.action_get_events("sabotage")[0], null], 
-	"use_vent" : [null, null],#[InputMap.action_get_events("use_vent")[0], null], 
-	"interact" : [null, null],#[InputMap.action_get_events("interact")[0], InputMap.action_get_events("interact")[1]], 
-	"fail" : [null, null],#[InputMap.action_get_events("fail")[0], null],
-	"report" : [null, null],#[InputMap.action_get_events("report")[0], null],
-	"pause_menu" : [null, null],#[InputMap.action_get_events("pause_menu")[0], null],
-	"move_left" : [null, null],#[InputMap.action_get_events("move_left")[0], InputMap.action_get_events("move_left")[1]],
-	"move_right" : [null, null],#[InputMap.action_get_events("move_right")[0], InputMap.action_get_events("move_right")[1]],
-	"move_down" : [null, null],#[InputMap.action_get_events("move_down")[0], InputMap.action_get_events("move_down")[1]],
-	"move_up" : [null, null]#[InputMap.action_get_events("move_up")[0], InputMap.action_get_events("move_up")[1]]
+	"sabotage" : [KEY_TAB, null],
+	"use_vent" : [KEY_V, null],
+	"interact" : [KEY_E, KEY_SPACE],
+	"fail" : [KEY_Q, null],
+	"report" : [KEY_R, null],
+	"pause_menu" : [KEY_ESCAPE, null],
+	"move_left" : [KEY_A, KEY_LEFT],
+	"move_right" : [KEY_D, KEY_RIGHT],
+	"move_down" : [KEY_S, KEY_DOWN],
+	"move_up" : [KEY_W, KEY_UP]
 }
 
 # saves settings

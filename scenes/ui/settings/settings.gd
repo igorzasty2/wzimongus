@@ -195,11 +195,19 @@ func rebind_key(event, button):
 # saves control settings
 func save_control_settings(action_name : String, primary_butt : InputEventKey, secondary_butt : InputEventKey):
 	InputMap.action_erase_events(action_project_name)
-	InputMap.action_add_event(action_project_name, primary_butt)
-	InputMap.action_add_event(action_project_name, secondary_butt)
+	if primary_butt!= null:
+		InputMap.action_add_event(action_project_name, primary_butt)
+	if secondary_butt!= null:
+		InputMap.action_add_event(action_project_name, secondary_butt)
 	set_buttons_names()
-	user_sett.controls_dictionary[action_name][0] = primary_butt
-	user_sett.controls_dictionary[action_name][1] = secondary_butt
+	if primary_butt != null:
+		user_sett.controls_dictionary[action_name][0] = primary_butt.physical_keycode
+	else:
+		user_sett.controls_dictionary[action_name][0] = null
+	if secondary_butt != null:
+		user_sett.controls_dictionary[action_name][1] = secondary_butt.physical_keycode
+	else:
+		user_sett.controls_dictionary[action_name][1] = null
 	user_sett.save()
 
 # handles repeated key bindings
@@ -287,7 +295,8 @@ func _on_save_button_pressed():
 	DisplayServer.window_set_size(resolution_value)
 	
 	# prevents buggy button
-	save_button.release_focus()
+	if save_button.is_inside_tree():
+		save_button.release_focus()
 	# saving
 	if user_sett != null:
 		user_sett.full_screen = full_screen_value
