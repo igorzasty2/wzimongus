@@ -108,7 +108,7 @@ func return_to_orig_pos():
 func _on_mouse_entered():
 	# instrukcja warunkowa konieczna aby niemożliwe było podniesienie 
 	# jednocześnie więcej niż jednego pola
-	if (!get_parent().is_moving && placed == false):
+	if (!get_parent().is_moving && placed == false && !Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
 		get_parent().is_moving = true
 		get_parent().moving = self
 		z_index = 20
