@@ -65,11 +65,7 @@ func player_pressed(name):
 		
 		# Sprawdzenie, czy gracz rozwiązał 3 sekwencje (numerowane od 0 do 3)
 		if (current_solved == 3 and player_button_count == 4):
-			$Emergency.visible = true
-			$Emergency/AnimatedSprite2D.frame = 0
 			print("task completed")
-			for b in $PlayerButtons.get_children():
-				b.disabled = true
 		
 		# Sprawdzenie, czy gracz rozwiązał całą sekwencję
 		if (player_button_count > current_solved):
@@ -136,8 +132,6 @@ func _on_ClearIndicatorsTimer_timeout():
 
 # Obsługa zdarzenia timeout dla timera informującego o niepowodzeniu
 func _on_FailureTimer_timeout():
-	$Emergency.visible = false
-	$Emergency/AnimatedSprite2D.frame = 3
 	
 	for i in $ButtonIndicators.get_children():
 		i.texture = unlit

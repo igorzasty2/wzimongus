@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqjrgcofdp21m"]
+[gd_scene load_steps=7 format=3 uid="uid://cqjrgcofdp21m"]
 
 [ext_resource type="Script" path="res://scenes/minigames/reactor_memory_answer/reactor-memory-answer.gd" id="1_sk1a7"]
 [ext_resource type="Texture2D" uid="uid://bjhypejcsi3ji" path="res://scenes/minigames/reactor_memory_answer/assets/background.png" id="2_n7vpl"]
@@ -6,18 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cgexmsp7251so" path="res://scenes/minigames/reactor_memory_answer/flash.tscn" id="4_wdxkn"]
 [ext_resource type="PackedScene" uid="uid://cc3kuyaqojlob" path="res://scenes/minigames/reactor_memory_answer/indicator.tscn" id="5_mmqq7"]
 [ext_resource type="Texture2D" uid="uid://dwwnfjujftwmx" path="res://scenes/minigames/reactor_memory_answer/assets/grid.png" id="6_o7hxt"]
-[ext_resource type="Texture2D" uid="uid://cffcgawydffgj" path="res://scenes/minigames/reactor_memory_answer/assets/completed.png" id="7_rh2xj"]
-
-[sub_resource type="SpriteFrames" id="3"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_rh2xj")
-}],
-"loop": false,
-"name": &"default",
-"speed": 5.0
-}]
 
 [node name="minigra_reaktor" type="Node2D"]
 scale = Vector2(1.0105, 1.01303)
@@ -202,13 +190,6 @@ one_shot = true
 visible = false
 rotation = -1.77675
 texture = ExtResource("6_o7hxt")
-
-[node name="Emergency" type="Node2D" parent="."]
-visible = false
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Emergency"]
-sprite_frames = SubResource("3")
-centered = false
 
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]
 [connection signal="timeout" from="PauseTimer" to="." method="_on_PauseTimer_timeout"]
