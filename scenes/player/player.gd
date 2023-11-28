@@ -19,7 +19,7 @@ func _ready():
 	# Wyłącza synchronizację wejścia gracza, jeśli nie jest on obecnym graczem.
 	input.set_process(input.get_multiplayer_authority() == multiplayer.get_unique_id())
 	# Ustawia etykietę pseudonimu gracza.
-	$usernameLabel.text = username
+	$UsernameLabel.text = username
 	animation_tree.active = true
 	last_direction_x = 1
 
@@ -55,3 +55,7 @@ func update_animation_parameters():
 		if direction.x == 0:
 			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x ,direction.y)
 			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x ,direction.y)
+
+# Wyłącza ruch gracza gdy jest pauza, włącza gdy nie ma pauzy
+func _on_pause_menu_paused(is_paused):
+	set_physics_process(!is_paused)

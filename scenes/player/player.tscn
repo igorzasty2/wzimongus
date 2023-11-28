@@ -1,8 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=28 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://scenes/player/input_synchronizer.gd" id="3_3x5pw"]
 [ext_resource type="Texture2D" uid="uid://bau8m0wvrashk" path="res://scenes/player/assets/alternatywka/alt_spritesheet.png" id="4_lkot5"]
+[ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="3_tbjki"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_aer0t"]
 properties/0/path = NodePath(".:id")
@@ -195,7 +196,7 @@ position = Vector2(0, 3)
 scale = Vector2(0.682897, 1)
 shape = SubResource("CapsuleShape2D_st64e")
 
-[node name="usernameLabel" type="Label" parent="."]
+[node name="UsernameLabel" type="Label" parent="."]
 offset_left = -19.0
 offset_top = -108.0
 offset_right = 21.0
@@ -226,3 +227,8 @@ parameters/conditions/idle = false
 parameters/conditions/is_moving = false
 parameters/idle/blend_position = Vector2(-0.992939, 0.982759)
 parameters/walk/blend_position = Vector2(0, 0)
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_tbjki")]
+visible = false
+
+[connection signal="paused" from="PauseMenu" to="." method="_on_pause_menu_paused"]

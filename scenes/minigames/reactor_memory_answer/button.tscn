@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://d10w530fs7vtr"]
+
+[ext_resource type="Texture2D" uid="uid://b7vpl3eakrjb3" path="res://scenes/minigames/reactor_memory_answer/assets/input-key.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bir2dc1c7dw4p" path="res://scenes/minigames/reactor_memory_answer/assets/input-key-pressed.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://b5va01qa7xcsx" path="res://scenes/minigames/reactor_memory_answer/assets/input-key-disabled.png" id="4"]
+[ext_resource type="Script" path="res://scenes/minigames/reactor_memory_answer/button.gd" id="4_2m21x"]
+
+[node name="Button" type="TextureButton"]
+texture_normal = ExtResource("1")
+texture_pressed = ExtResource("3")
+texture_disabled = ExtResource("4")
+script = ExtResource("4_2m21x")
+
+[connection signal="pressed" from="." to="." method="_on_Button_pressed"]
