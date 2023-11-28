@@ -11,7 +11,7 @@ func _ready():
 		MultiplayerManager.player_deregistered.connect(_remove_player)
 
 		# Tworzy wszystkich graczy jeden po drugim.
-		for i in MultiplayerManager.registered_players:
+		for i in MultiplayerManager.current_game["registered_players"]:
 			_add_player(i)
 
 
@@ -22,7 +22,7 @@ func _add_player(id):
 	player.name = str(id)
 
 	player.id = id
-	player.username = MultiplayerManager.registered_players[id].username
+	player.username = MultiplayerManager.current_game["registered_players"][id].username
 
 	player.position = Vector2(randi_range(0, 1152), randi_range(0, 648))
 

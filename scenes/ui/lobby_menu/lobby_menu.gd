@@ -33,6 +33,8 @@ func start_game():
 	MultiplayerManager.player_registered.disconnect(_update_display_player_list)
 	MultiplayerManager.player_deregistered.disconnect(_update_display_player_list)
 
+	MultiplayerManager.current_game["started"] = true
+
 	# Ładujemy mapę na serwerze, zostanie ona zsynchronizowana z klientami przez MapSpawner
 	if multiplayer.is_server():
 		_change_map.call_deferred(load("res://scenes/map/map.tscn"))
@@ -53,15 +55,14 @@ func _change_map(scene: PackedScene):
 
 # Wyświetla listę graczy na ekranie
 func _update_display_player_list(id, player = null):
-	var players = MultiplayerManager.registered_players
 	var player_list_text = "Lista graczy:\n"
 	var idx = 1
-	for i in players:
+	for i in MultiplayerManager.current_game["registered_players"]:
 		# Numerowanie graczy
 		player_list_text += str(idx) + '. '
 
 		# Wyświetlanie nazwiska gracza
-		player_list_text += players[i].username
+		player_list_text += MultiplayerManager.current_game["registered_players"][i].username
 
 		# Newline symbol
 		player_list_text += "\n"

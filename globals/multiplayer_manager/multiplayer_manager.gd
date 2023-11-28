@@ -7,18 +7,22 @@ signal player_registered(id, player)
 # Sygnał emitowany, gdy gracz jest wyrejestrowywany.
 signal player_deregistered(id)
 
-# Słownik przechowujący informacje o zarejestrowanych graczach.
-var registered_players = {}
 
 # Słownik przechowujący informacje o obecnym graczu.
 var current_player = {
 	"username": ""
 }
 
-# Ustawienia serwera.
+# Słownik dla serwera, przechowujący jego ustawienia.
 var server_settings = {
 	"port": 9001,
 	"max_players": 10
+}
+
+# Słownik przechowujący informacje o obecnym stanie gry.
+var current_game = {
+	"started": false,
+	"registered_players": {}
 }
 
 
@@ -92,7 +96,7 @@ func _on_connection_failed():
 # Funkcja wywoływana u klienta po rozłączeniu z serwerem.
 func _on_server_disconnected():
 	multiplayer.multiplayer_peer = null
-	registered_players.clear()
+	current_game["registered_players"].clear()
 
 	_handle_error()
 
@@ -113,13 +117,18 @@ func _register_player(player):
 	var id = multiplayer.get_remote_sender_id()
 
 	# Jeśli liczba graczy jest większa niż maksymalna liczba graczy, to rozłącza nowego gracza.
-	if registered_players.size() >= server_settings["max_players"]:
+	if current_game["registered_players"].size() >= server_settings["max_players"]:
+		multiplayer.disconnect_peer(id)
+		return
+
+	# Jeśli gra została już rozpoczęta, to rozłącza nowego gracza.
+	if current_game["started"]:
 		multiplayer.disconnect_peer(id)
 		return
 
 	# Wysyłanie do nowego gracza informacji o wszystkich połączonych już graczach.
-	for p in registered_players:
-		_add_registered_player.rpc_id(id, p, registered_players[p])
+	for i in current_game["registered_players"]:
+		_add_registered_player.rpc_id(id, i, current_game["registered_players"][i])
 
 	# Wysyłanie do wszystkich połączonych graczy informacji o nowym graczu.
 	_add_registered_player.rpc(id, player)
@@ -137,12 +146,12 @@ func _on_player_registered():
 # Funkcja dodająca nowego zarejestrowanego gracza do listy graczy.
 @rpc("call_local", "reliable")
 func _add_registered_player(id, player):
-	registered_players[id] = player
+	current_game["registered_players"][id] = player
 	player_registered.emit(id, player)
 
 
 # Funkcja pozwalająca na usunięcie zderejestrowanego gracza z listy graczy.
 @rpc("call_local", "reliable")
 func _delete_deregistered_player(id):
-	registered_players.erase(id)
+	current_game["registered_players"].erase(id)
 	player_deregistered.emit(id)
