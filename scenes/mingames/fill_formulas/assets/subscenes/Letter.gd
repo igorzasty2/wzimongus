@@ -49,10 +49,11 @@ func _process(delta):
 			position = mouse_position
 		# Przypisanie często wykorzystywanych zmiennych w celu skrócenia dalszego
 		# kodu i uodpornienia kodu na zmiany wymiarów gui minigry
-		var right = gui_rect.position.x + gui_rect.size.x - 30
-		var left = gui_rect.position.x + 30
-		var top = gui_rect.position.y + 30
-		var bottom = gui_rect.position.y + gui_rect.size.y - 30
+		var letter_boundry_shift = $Sprite2D.get_rect().size.x
+		var right = gui_rect.position.x + gui_rect.size.x - letter_boundry_shift/3
+		var left = gui_rect.position.x + letter_boundry_shift/3
+		var top = gui_rect.position.y + letter_boundry_shift/3
+		var bottom = gui_rect.position.y + gui_rect.size.y - letter_boundry_shift/3
 		# Instrukcja pozwala na poruszanie literą wzdłuż granic prostopadłych
 		# do osi x
 		if(mouse_position.x >= right || mouse_position.x <= left):
