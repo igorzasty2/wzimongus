@@ -90,7 +90,7 @@ offset_top = 337.0
 offset_right = 131.062
 offset_bottom = 368.0
 grow_horizontal = 2
-text = "8998"
+text = "9001"
 
 [node name="JoinButton" type="Button" parent="."]
 layout_mode = 1

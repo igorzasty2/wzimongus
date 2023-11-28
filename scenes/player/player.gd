@@ -16,7 +16,7 @@ func _ready():
 	# Wyłącza synchronizację wejścia gracza, jeśli nie jest on obecnym graczem.
 	input.set_process(input.get_multiplayer_authority() == multiplayer.get_unique_id())
 	# Ustawia etykietę pseudonimu gracza.
-	$usernameLabel.text = username
+	$UsernameLabel.text = username
 
 
 func _physics_process(delta):
