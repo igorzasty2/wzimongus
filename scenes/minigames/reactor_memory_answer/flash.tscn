@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cgexmsp7251so"]
 
-[ext_resource type="Texture2D" uid="uid://mx7efqiacd8e" path="res://scenes/minigames/reactor_memory_answer/assets/transparent-flash.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://mx7efqiacd8e" path="res://scenes/minigames/reactor_memory_answer/assets/transparent_flash.png" id="1"]
 
 [node name="TextureRect" type="TextureRect"]
 offset_right = 40.0

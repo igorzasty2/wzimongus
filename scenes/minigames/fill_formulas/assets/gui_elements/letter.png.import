@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bir2dc1c7dw4p"
-path="res://.godot/imported/input-key-pressed.png-80f3b49c98697ef0d3c27348b53bbb37.ctex"
+uid="uid://baufr16iq3322"
+path="res://.godot/imported/letter.png-9a912e5e2fec8843c68250c42cb38f8a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/minigames/reactor_memory_answer/assets/input-key-pressed.png"
-dest_files=["res://.godot/imported/input-key-pressed.png-80f3b49c98697ef0d3c27348b53bbb37.ctex"]
+source_file="res://scenes/minigames/fill_formulas/assets/gui_elements/letter.png"
+dest_files=["res://.godot/imported/letter.png-9a912e5e2fec8843c68250c42cb38f8a.ctex"]
 
 [params]
 

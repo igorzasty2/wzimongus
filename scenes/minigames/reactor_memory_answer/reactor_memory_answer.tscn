@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cqjrgcofdp21m"]
 
-[ext_resource type="Script" path="res://scenes/minigames/reactor_memory_answer/reactor-memory-answer.gd" id="1_sk1a7"]
+[ext_resource type="Script" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.gd" id="1_sk1a7"]
 [ext_resource type="Texture2D" uid="uid://bjhypejcsi3ji" path="res://scenes/minigames/reactor_memory_answer/assets/background.png" id="2_n7vpl"]
 [ext_resource type="PackedScene" uid="uid://d10w530fs7vtr" path="res://scenes/minigames/reactor_memory_answer/button.tscn" id="3_lvsqn"]
 [ext_resource type="PackedScene" uid="uid://cgexmsp7251so" path="res://scenes/minigames/reactor_memory_answer/flash.tscn" id="4_wdxkn"]

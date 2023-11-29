@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mx7efqiacd8e"
-path="res://.godot/imported/transparent-flash.png-b650f466edccb3c6633039e988bc1206.ctex"
+uid="uid://dk4rshu1db061"
+path="res://.godot/imported/minigame_gui.png-dc0b0bc70e2cad4151a8699c15d76352.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/minigames/reactor_memory_answer/assets/transparent-flash.png"
-dest_files=["res://.godot/imported/transparent-flash.png-b650f466edccb3c6633039e988bc1206.ctex"]
+source_file="res://scenes/minigames/fill_formulas/assets/gui_elements/minigame_gui.png"
+dest_files=["res://.godot/imported/minigame_gui.png-dc0b0bc70e2cad4151a8699c15d76352.ctex"]
 
 [params]
 

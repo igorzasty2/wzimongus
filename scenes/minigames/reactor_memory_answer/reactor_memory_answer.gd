@@ -18,10 +18,10 @@ var flash_pause = .1
 
 # Tekstury używane w grze
 var flash_texture = preload("res://scenes/minigames/reactor_memory_answer/assets/flash.png")
-var blank_texture = preload("res://scenes/minigames/reactor_memory_answer/assets/transparent-flash.png")
-var unlit = preload("res://scenes/minigames/reactor_memory_answer/assets/unlit-indicator.png")
-var lit = preload("res://scenes/minigames/reactor_memory_answer/assets/lit-indicator.png")
-var failed = preload("res://scenes/minigames/reactor_memory_answer/assets/failed-indicator.png")
+var blank_texture = preload("res://scenes/minigames/reactor_memory_answer/assets/transparent_flash.png")
+var unlit = preload("res://scenes/minigames/reactor_memory_answer/assets/unlit_indicator.png")
+var lit = preload("res://scenes/minigames/reactor_memory_answer/assets/lit_indicator.png")
+var failed = preload("res://scenes/minigames/reactor_memory_answer/assets/failed_indicator.png")
 
 # Funkcja wywoływana przy dołączeniu węzła do drzewa sceny
 func _ready():
