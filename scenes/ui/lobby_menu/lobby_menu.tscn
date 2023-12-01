@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cwogo8if36ix7"]
 
 [ext_resource type="Script" path="res://scenes/ui/lobby_menu/lobby_menu.gd" id="1_b20el"]
-[ext_resource type="PackedScene" uid="uid://c3gg0yvyuogxn" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
+[ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
 
 [node name="lobby_menu" type="Control"]
 layout_mode = 3
