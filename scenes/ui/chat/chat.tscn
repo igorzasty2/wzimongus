@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3gg0yvyuogxn"]
+[gd_scene load_steps=2 format=3 uid="uid://c243bu478e0su"]
 
 [ext_resource type="Script" path="res://scenes/ui/chat/chat.gd" id="1_q7pdo"]
 
