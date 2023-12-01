@@ -36,84 +36,82 @@ PlayerScene = ExtResource("2_0ktid")
 [node name="Background" type="Node2D" parent="."]
 
 [node name="wc" parent="Background" instance=ExtResource("3_nbyec")]
-position = Vector2(-152, 530)
+position = Vector2(-182, 1992)
 
 [node name="sala_1" parent="Background" instance=ExtResource("4_dojmv")]
-position = Vector2(991, -1131)
+position = Vector2(1807, -1112)
 
 [node name="sala_2" parent="Background" instance=ExtResource("5_ehcuo")]
-position = Vector2(-1856, -1336)
+position = Vector2(-2727, -1356)
 
 [node name="sala_3" parent="Background" instance=ExtResource("6_j2fhe")]
-position = Vector2(-1732, -2191)
+position = Vector2(-2568, -2712)
 
 [node name="xero" parent="Background" instance=ExtResource("7_htmn5")]
-position = Vector2(-1050, -527)
+position = Vector2(-1428, -325)
 
 [node name="aula" parent="Background" instance=ExtResource("8_ckisu")]
-position = Vector2(-147, -1142)
+position = Vector2(10, -1072)
 
 [node name="willy" parent="Background" instance=ExtResource("9_r6nh5")]
-position = Vector2(1334, -1855)
-
-[node name="bufet" parent="Background" instance=ExtResource("10_dswbv")]
-position = Vector2(1773, -730)
+position = Vector2(2399, -2368)
 
 [node name="samorzad" parent="Background" instance=ExtResource("11_g3ofr")]
-position = Vector2(954, -216)
+position = Vector2(1752, 324)
 
 [node name="serwerownia" parent="Background" instance=ExtResource("12_6nmdt")]
-position = Vector2(-926, -2011)
+position = Vector2(-1298, -2554)
 
 [node name="dziekanat" parent="Background" instance=ExtResource("13_jctr6")]
-position = Vector2(-2010, 2)
+position = Vector2(-2906, 790)
 
 [node name="chillroom" parent="Background" instance=ExtResource("14_8x6md")]
-position = Vector2(-139, -146)
+position = Vector2(-16, 561)
 
 [node name="pielegniarka" parent="Background" instance=ExtResource("15_giha0")]
-position = Vector2(90, -2055)
+position = Vector2(531, -2557)
 
 [node name="pokoj_wykladowcow" parent="Background" instance=ExtResource("16_e83ls")]
-position = Vector2(2341, -1537)
-
-[node name="corridors" type="Node" parent="Background"]
+position = Vector2(4024, -1720)
 
 [node name="korytarz_aula_sala_1" parent="Background" instance=ExtResource("17_2k61j")]
-position = Vector2(509, -1087)
+position = Vector2(1046, -1061)
 
 [node name="korytarz_samorzad_bufet" parent="Background" instance=ExtResource("18_lljii")]
-position = Vector2(1686, -308)
+position = Vector2(2928, 281)
 
 [node name="korytarz_chillroom_wc" parent="Background" instance=ExtResource("19_48mvo")]
-position = Vector2(-125, 184)
+position = Vector2(-130, 1456)
 
 [node name="korytarz_sala_2_sala_3" parent="Background" instance=ExtResource("20_oj1hn")]
-position = Vector2(-1844, -1796)
+position = Vector2(-2707, -2088)
 
 [node name="korytarz_chillroom_aula" parent="Background" instance=ExtResource("21_5jspd")]
-position = Vector2(-125, -503)
+position = Vector2(-17, -47)
 
 [node name="korytarz_xero_chillroom" parent="Background" instance=ExtResource("22_85x4g")]
-position = Vector2(-869, -63)
+position = Vector2(-1119, 466)
 
 [node name="korytarz_chillroom_samorzad" parent="Background" instance=ExtResource("23_us6c6")]
-position = Vector2(467, -132)
+position = Vector2(964, 410)
 
 [node name="korytarz_dziekanat_sala_2" parent="Background" instance=ExtResource("24_cj2rh")]
-position = Vector2(-1829, -650)
+position = Vector2(-2608, -258)
 
 [node name="korytarz_pielegniarka_willy" parent="Background" instance=ExtResource("25_qppn4")]
-position = Vector2(654, -1990)
+position = Vector2(1488, -2516)
 
 [node name="korytarz_sala_2_serwerownia_aula" parent="Background" instance=ExtResource("26_tqpop")]
-position = Vector2(-1057, -1484)
+position = Vector2(-1448, -1634)
 
 [node name="korytarz_serwerownia_pielegniarka" parent="Background" instance=ExtResource("27_71qtx")]
-position = Vector2(-415, -2088)
+position = Vector2(-472, -2643)
 
 [node name="korytarz_willy_sala_1_bufet_pokoj_wykladowcow" parent="Background" instance=ExtResource("28_00vjh")]
-position = Vector2(1755, -1264)
+position = Vector2(3067, -1347)
+
+[node name="bufet" parent="Background" instance=ExtResource("10_dswbv")]
+position = Vector2(3038, -441)
 
 [node name="Players" type="Node2D" parent="."]
 
