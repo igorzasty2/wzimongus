@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://scenes/player/input_synchronizer.gd" id="3_3x5pw"]
-[ext_resource type="Texture2D" uid="uid://bau8m0wvrashk" path="res://scenes/player/assets/alternatywka/alt_spritesheet.png" id="4_lkot5"]
 [ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="3_tbjki"]
+[ext_resource type="Texture2D" uid="uid://bau8m0wvrashk" path="res://scenes/player/assets/alternatywka/alt_spritesheet.png" id="4_lkot5"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_aer0t"]
 properties/0/path = NodePath(".:id")

@@ -36,6 +36,8 @@ func _on_body_entered(body):
 
 
 func _on_body_exited(body):
+	print(body.get_name())
+	
 	if "id" in body and body.id == multiplayer.get_unique_id():
 		$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
 		_is_player_inside = false

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/task_button/task_button.tscn" id="3_e0rk4"]
 [ext_resource type="Texture2D" uid="uid://dj1dqmbh77gan" path="res://scenes/task_button/assets/wifi.png" id="4_wgy3w"]
-[ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor-answer-memory.tscn" id="5_u6l5w"]
+[ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_u6l5w"]
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
@@ -20,6 +20,7 @@ spawn_path = NodePath("../Players")
 spawn_limit = 10
 
 [node name="TaskButton" parent="." instance=ExtResource("3_e0rk4")]
-position = Vector2(163, 118)
+position = Vector2(214, 208)
 sprite = ExtResource("4_wgy3w")
+disabled = false
 minigame_scene = ExtResource("5_u6l5w")
