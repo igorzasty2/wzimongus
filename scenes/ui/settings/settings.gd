@@ -14,6 +14,9 @@ extends Control
 @onready var action_name = $KeyRebindWindow/Panel/VBoxContainer/ActionName
 @onready var key_used_window = $KeyUsedWindow
 
+@onready var default_sound_graphics_button = $TabContainer/Default/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton
+@onready var default_controls_button = $TabContainer/Default/VBoxContainer/VBoxContainer2/DefaultControlsButton
+
 # resolutions array
 const RESOLUTIONS = [Vector2i(800,600), Vector2i(1024,768), Vector2i(1152,648), Vector2i(1152,864), Vector2i(1280,720),
 Vector2i(1280,800),Vector2i(1280,960), Vector2i(1360,768), Vector2i(1366,768), Vector2i(1400,1050), Vector2i(1440,900), Vector2i(1600,900),
@@ -339,3 +342,21 @@ func _on_move_down_key_rebind_rebind_button_pressed(action_label_name, action_pr
 
 func _on_move_up_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
 	assign(action_label_name, action_project_name, side, left_button, right_button)
+
+# handles restore default sound and graphics button
+func _on_default_sound_graphics_button_pressed():
+	default_sound_graphics_button.release_focus()
+	user_sett.restore_default_sound_and_graphics()
+	_ready()
+
+# handles restore default controls button
+func _on_default_controls_button_pressed():
+	default_controls_button.release_focus()
+	user_sett.restore_default_controls()
+
+	# apply restored values for every action
+	var parent = find_child("Controls").find_child("MarginContainer").find_child("VBoxContainer")
+	for child in parent.get_children():
+		if !(child is HSeparator):
+			if child.has_method("_ready"):
+				child._ready()

@@ -20,7 +20,7 @@ var saved_event : InputEventKey
 func _ready():
 	# loading user control settings
 	user_sett = SaveUserSettings.load_or_create()
-
+	
 	InputMap.action_erase_events(action_project_name)
 	if user_sett.controls_dictionary[action_project_name][0] != null:
 		saved_event = InputEventKey.new()
