@@ -14,12 +14,12 @@ func _ready():
 
 	# Jeśli gracz może sterować swoją postacią, to ustawia jego wejście na aktywne.
 	if input.get_multiplayer_authority() == multiplayer.get_unique_id():
-		MultiplayerManager.input_state_changed.connect(_on_input_state_changed)
+		GameManager.input_state_changed.connect(_on_input_state_changed)
 	else:
 		input.set_process(false)
 
 	# Ustawia etykietę z nazwą gracza.
-	$UsernameLabel.text = MultiplayerManager.get_registered_player_info(name.to_int(), "username")
+	$UsernameLabel.text = GameManager.get_registered_player_info(name.to_int(), "username")
 
 	# Ustawia animację gracza.
 	animation_tree.active = true

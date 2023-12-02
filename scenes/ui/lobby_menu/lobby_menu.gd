@@ -12,8 +12,8 @@ func _ready():
 	
 	# Sprawienie, aby za każdym razem, gdy gracz dołącza lub
 	# opuszcza listę graczy, była ona wyświetlana ponownie
-	MultiplayerManager.player_registered.connect(_update_display_player_list)
-	MultiplayerManager.player_deregistered.connect(_update_display_player_list)
+	GameManager.player_registered.connect(_update_display_player_list)
+	GameManager.player_deregistered.connect(_update_display_player_list)
 
 
 func _on_start_game_button_button_down():
@@ -30,10 +30,10 @@ func start_game():
 	$LobbyUI.hide()
 	
 	# Wyświetlanie listy graczy nie będzie już aktualizowane.
-	MultiplayerManager.player_registered.disconnect(_update_display_player_list)
-	MultiplayerManager.player_deregistered.disconnect(_update_display_player_list)
+	GameManager.player_registered.disconnect(_update_display_player_list)
+	GameManager.player_deregistered.disconnect(_update_display_player_list)
 
-	MultiplayerManager.start_game()
+	GameManager.start_game()
 
 	# Ładujemy mapę na serwerze, zostanie ona zsynchronizowana z klientami przez MapSpawner
 	if multiplayer.is_server():
@@ -57,12 +57,12 @@ func _change_map(scene: PackedScene):
 func _update_display_player_list(id = null, player = null):
 	var player_list_text = "Lista graczy:\n"
 	var idx = 1
-	for i in MultiplayerManager.get_registered_players():
+	for i in GameManager.get_registered_players():
 		# Numerowanie graczy
 		player_list_text += str(idx) + '. '
 
 		# Wyświetlanie nazwiska gracza
-		player_list_text += MultiplayerManager.get_registered_player_info(i, "username")
+		player_list_text += GameManager.get_registered_player_info(i, "username")
 
 		# Newline symbol
 		player_list_text += "\n"

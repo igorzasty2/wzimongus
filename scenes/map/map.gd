@@ -6,10 +6,10 @@ extends Node2D
 func _ready():
 	if multiplayer.is_server():
 		# Sprawia, że gracz jest usuwany z mapy po opuszczeniu gry.
-		MultiplayerManager.player_deregistered.connect(_remove_player)
+		GameManager.player_deregistered.connect(_remove_player)
 
 		# Tworzy wszystkich graczy jeden po drugim.
-		for i in MultiplayerManager.get_registered_players():
+		for i in GameManager.get_registered_players():
 			_add_player(i)
 
 

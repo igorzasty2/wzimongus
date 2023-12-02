@@ -1,4 +1,4 @@
-# Ten skrypt definiuje węzeł MultiplayerManager, który obsługuje połączenia wieloosobowe i informacje o graczach.
+# Odpowiada za zarządzanie stanem gry i gracza.
 
 extends Node
 
