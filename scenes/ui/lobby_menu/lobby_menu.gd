@@ -70,6 +70,3 @@ func _update_display_player_list(id, player = null):
 
 	# Wyświetlanie całości
 	$LobbyUI/PlayerList.text = player_list_text
-
-func _on_pause_menu_pause_state_changed(paused:bool):
-	MultiplayerManager.set_pause_state(paused)

@@ -18,7 +18,7 @@ func _ready():
 	input.set_multiplayer_authority(id)
 	# Wyłącza synchronizację wejścia gracza, jeśli nie jest on obecnym graczem.
 	if input.get_multiplayer_authority() == multiplayer.get_unique_id():
-		MultiplayerManager.pause_state_changed.connect(_on_pause_state_changed)
+		MultiplayerManager.input_state_changed.connect(_on_input_state_changed)
 	else:
 		input.set_process(false)
 
@@ -65,6 +65,6 @@ func update_animation_parameters():
 
 
 # Wyłącza ruch gracza gdy jest pauza, włącza gdy nie ma pauzy
-func _on_pause_state_changed(paused: bool):
-	input.set_process(!paused)
+func _on_input_state_changed(state: bool):
+	input.set_process(state)
 	input.direction = Vector2.ZERO

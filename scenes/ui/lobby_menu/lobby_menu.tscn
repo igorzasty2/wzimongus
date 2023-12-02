@@ -71,4 +71,3 @@ offset_bottom = -354.0
 visible = false
 
 [connection signal="button_down" from="LobbyUI/StartGameButton" to="." method="_on_start_game_button_button_down"]
-[connection signal="pause_state_changed" from="PauseMenu" to="." method="_on_pause_menu_pause_state_changed"]
