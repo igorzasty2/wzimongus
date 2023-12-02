@@ -11,6 +11,8 @@ func _ready():
 		# Tworzy wszystkich graczy jeden po drugim.
 		for i in GameManager.get_registered_players():
 			_add_player(i)
+	
+	$TypeLabel.text = "Impostor" if GameManager.get_current_player_info("impostor") else "Crewmate"
 
 
 # Dodaje nowego gracza do mapy.

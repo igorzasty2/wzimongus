@@ -22,13 +22,15 @@ var _current_game = {
 
 # Słownik przechowujący informacje o obecnym graczu.
 var _current_player = {
-	"username": ""
+	"username": "",
+	"impostor": false
 }
 
 # Słownik dla serwera, przechowujący jego ustawienia.
 var _server_settings = {
 	"port": 9001,
-	"max_players": 10
+	"max_players": 10,
+	"impostors": 1
 }
 
 
@@ -74,8 +76,28 @@ func join_game(address:String, port:int):
 
 # Funkcja pozwalająca na rozpoczęcie gry.
 func start_game():
+	if multiplayer.is_server():
+		var available_players = get_registered_players().keys()
+		var impostors = []
+
+		# Wybiera losowo graczy, którzy będą mordercami.
+		for i in range(_server_settings["impostors"]):
+			var id = available_players[randi() % available_players.size()]
+
+			impostors.append(id)
+			available_players.erase(id)
+		
+		print(impostors)
+
+		for i in impostors:
+			_current_game["registered_players"][i]["impostor"] = true
+			_send_impostor_info.rpc_id(i)
+
 	_current_game["started"] = true
 
+@rpc("reliable")
+func _send_impostor_info():
+	_current_player["impostor"] = true
 
 # Funkcja pozwalająca na zakończenie gry.
 func end_game():
@@ -86,6 +108,9 @@ func end_game():
 	_current_game["paused"] = false
 	_current_game["input_disabled"] = false
 	_current_game["registered_players"].clear()
+
+	_current_player["username"] = ""
+	_current_player["impostor"] = false
 
 	_handle_error()
 
