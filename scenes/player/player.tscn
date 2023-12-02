@@ -5,18 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://bau8m0wvrashk" path="res://scenes/player/assets/alternatywka/alt_spritesheet.png" id="4_lkot5"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_aer0t"]
-properties/0/path = NodePath(".:id")
+properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/sync = false
+properties/0/sync = true
 properties/0/watch = false
-properties/1/path = NodePath(".:username")
-properties/1/spawn = true
-properties/1/sync = false
-properties/1/watch = false
-properties/2/path = NodePath(".:position")
-properties/2/spawn = true
-properties/2/sync = true
-properties/2/watch = false
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gggcu"]
 properties/0/path = NodePath(".:direction")
