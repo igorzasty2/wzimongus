@@ -1,6 +1,6 @@
-# WZiMongus
+# WZiMong Us
 
-WZiMongus to unikalna adaptacja popularnej gry "Among Us", osadzona w środowisku akademickim. Projekt przenosi kontekst oryginalnej gry na kampus Szkoły Głównej Gospodarstwa Wiejskiego w Warszawie.
+WZiMong Us to unikalna adaptacja popularnej gry "Among Us", osadzona w środowisku akademickim. Projekt przenosi kontekst oryginalnej gry na kampus Szkoły Głównej Gospodarstwa Wiejskiego w Warszawie.
 
 
 ## 👨‍💻 Organizacja pracy
