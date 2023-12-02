@@ -8,6 +8,7 @@ extends CharacterBody2D
 var direction : Vector2 = Vector2.ZERO
 var last_direction_x : float
 const SPEED = 300.0
+var minigame: PackedScene
 
 @onready var input = $InputSynchronizer
 @onready var animation_tree = $Skins/AltAnimationTree
@@ -68,3 +69,35 @@ func update_animation_parameters():
 func _on_input_state_changed(state: bool):
 	input.set_process(state)
 	input.direction = Vector2.ZERO
+
+func show_use_button(id, minigame):
+	if id == multiplayer.get_unique_id():
+		self.minigame = minigame
+		$UseButton.visible = true
+		$UseButton.disabled = false
+
+
+func hide_use_button(id):
+	if id == multiplayer.get_unique_id():
+		minigame = null
+		$UseButton.visible = false
+		$UseButton.disabled = true
+
+
+func _on_use_button_pressed():
+	summon_window()
+
+
+func _input(event):
+	if event.is_action_pressed("interact") && minigame != null:
+		summon_window()
+
+func summon_window():
+	$MinigameContainer.visible = true
+	$MinigameContainer/MinigameViewport.add_child(minigame.instantiate())
+	var minigame_instance:Node2D = $MinigameContainer/MinigameViewport.get_child(0)
+	var x_scale = $MinigameContainer/MinigameViewport.size.x / get_viewport_rect().size.x
+	var y_scale = $MinigameContainer/MinigameViewport.size.y / get_viewport_rect().size.y
+	minigame_instance.scale = Vector2(x_scale, y_scale)
+	$UseButton.visible = false
+	$UseButton.disabled = true
