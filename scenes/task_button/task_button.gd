@@ -29,15 +29,16 @@ func _ready():
 
 
 func _on_body_entered(body):
-	print(body.get_name())
 	if "id" in body and body.id == multiplayer.get_unique_id():
-		$Sprite2D.material.set_shader_parameter('line_color', [0.3, 0.9, 0,5, 1])
 		_is_player_inside = true
+		$Sprite2D.material.set_shader_parameter('line_color', [0.3, 0.9, 0,5, 1])
+		TaskManager.current_task_id = task_id
 
 
 func _on_body_exited(body):
 	print(body.get_name())
 	
 	if "id" in body and body.id == multiplayer.get_unique_id():
-		$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
 		_is_player_inside = false
+		$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
+		TaskManager.current_task_id = null

@@ -73,3 +73,9 @@ func assign_tasks_server(task_amount):
 @rpc("authority", "call_remote")
 func assign_tasks_player(tasks):
 	tasks_player = tasks
+
+
+func _input(event):
+	if event.is_action_pressed("interact"):
+		if TaskManager.current_task_id != null:
+			get_tree().change_scene_to_file("res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn")
