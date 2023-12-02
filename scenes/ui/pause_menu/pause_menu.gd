@@ -35,6 +35,7 @@ func _on_back_to_game_button_pressed():
 func _on_pop_up_window_left_pressed():
 	emit_signal("leave_game")
 	emit_signal("pause_state_changed", true)
+	MultiplayerManager.end_game()
 	get_tree().change_scene_to_file("res://scenes/ui/start_menu/start_menu.tscn")
 
 

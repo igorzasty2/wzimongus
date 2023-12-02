@@ -72,6 +72,16 @@ func join_game(address, port):
 		multiplayer.multiplayer_peer = peer
 
 
+# Funkcja pozwalająca na zakończenie gry.
+func end_game():
+	multiplayer.multiplayer_peer = null
+
+	# Resetuje stan gry.
+	current_game["started"] = false
+	current_game["paused"] = false
+	current_game["registered_players"].clear()
+
+
 # Funkcja pozwalająca na zmianę danych obecnego gracza.
 func set_player_property(name, value):
 	if current_player.has(name):
@@ -118,7 +128,7 @@ func _enter_lobby():
 
 # TODO: Zaimplementować obsługę błędów.
 func _handle_error():
-	get_tree().change_scene_to_file("res://scenes/ui/play_menu/play_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/start_menu/start_menu.tscn")
 
 
 # Funkcja wywoływana na serwerze w celu zarejestrowania nowego gracza.
