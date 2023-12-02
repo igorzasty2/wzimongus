@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7vpl3eakrjb3"
-path="res://.godot/imported/input-key.png-c4c79b6f039b5e3f2896e53547389ab7.ctex"
+uid="uid://bc3xn3psgfanb"
+path="res://.godot/imported/failed_indicator.png-ef085002dc1a63814914d6be0d5f6b55.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/minigames/reactor_memory_answer/assets/input-key.png"
-dest_files=["res://.godot/imported/input-key.png-c4c79b6f039b5e3f2896e53547389ab7.ctex"]
+source_file="res://scenes/minigames/reactor_memory_answer/assets/failed_indicator.png"
+dest_files=["res://.godot/imported/failed_indicator.png-ef085002dc1a63814914d6be0d5f6b55.ctex"]
 
 [params]
 

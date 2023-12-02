@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwogo8if36ix7"]
+[gd_scene load_steps=3 format=3 uid="uid://cwogo8if36ix7"]
 
 [ext_resource type="Script" path="res://scenes/ui/lobby_menu/lobby_menu.gd" id="1_b20el"]
+[ext_resource type="PackedScene" uid="uid://c3gg0yvyuogxn" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
 
 [node name="lobby_menu" type="Control"]
 layout_mode = 3
@@ -52,9 +53,17 @@ text = "Rozpocznij grę"
 
 [node name="PlayerList" type="Label" parent="LobbyUI"]
 layout_mode = 0
-offset_left = 448.0
-offset_top = 106.0
-offset_right = 701.0
-offset_bottom = 490.0
+offset_left = 808.0
+offset_top = 77.0
+offset_right = 1061.0
+offset_bottom = 461.0
+
+[node name="Chat" parent="LobbyUI" instance=ExtResource("2_kl6mk")]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 18.0
+offset_top = 14.0
+offset_right = -634.0
+offset_bottom = -354.0
 
 [connection signal="button_down" from="LobbyUI/StartGameButton" to="." method="_on_start_game_button_button_down"]

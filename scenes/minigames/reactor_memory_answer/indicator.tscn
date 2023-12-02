@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cc3kuyaqojlob"]
 
-[ext_resource type="Texture2D" uid="uid://b440xy4qo7x23" path="res://scenes/minigames/reactor_memory_answer/assets/unlit-indicator.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://b440xy4qo7x23" path="res://scenes/minigames/reactor_memory_answer/assets/unlit_indicator.png" id="1"]
 
 [node name="Indicator" type="TextureRect"]
 offset_right = 40.0

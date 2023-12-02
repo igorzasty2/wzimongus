@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3gg0yvyuogxn"]
+
+[ext_resource type="Script" path="res://scenes/ui/chat/chat.gd" id="1_q7pdo"]
+
+[node name="Chat" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -652.0
+offset_bottom = -368.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q7pdo")
+
+[node name="ChatContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(-0.16, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChatLogsScrollbar" type="ScrollContainer" parent="ChatContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+
+[node name="ChatLogsContainer" type="VBoxContainer" parent="ChatContainer/ChatLogsScrollbar"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="ChatDisappearTimer" type="Timer" parent="ChatContainer/ChatLogsScrollbar/ChatLogsContainer"]
+unique_name_in_owner = true
+wait_time = 3.464
+one_shot = true
+
+[node name="InputText" type="LineEdit" parent="ChatContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Text your message..."
+flat = true
+
+[connection signal="timeout" from="ChatContainer/ChatLogsScrollbar/ChatLogsContainer/ChatDisappearTimer" to="." method="_on_timer_timeout"]
+[connection signal="text_submitted" from="ChatContainer/InputText" to="." method="_on_input_text_text_submitted"]

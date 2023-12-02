@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cl7p411qvsgv"]
+
+[ext_resource type="Script" path="res://scenes/minigames/fill_formulas/assets/subscenes/letter.gd" id="1_ooer1"]
+[ext_resource type="Texture2D" uid="uid://baufr16iq3322" path="res://scenes/minigames/fill_formulas/assets/gui_elements/letter.png" id="2_2ff2l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_othcc"]
+size = Vector2(118, 118)
+
+[node name="Letter" type="StaticBody2D"]
+input_pickable = true
+script = ExtResource("1_ooer1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2ff2l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -1)
+shape = SubResource("RectangleShape2D_othcc")
+
+[node name="LetterInBox" type="RichTextLabel" parent="."]
+offset_left = -42.0
+offset_top = -37.0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+bbcode_enabled = true
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

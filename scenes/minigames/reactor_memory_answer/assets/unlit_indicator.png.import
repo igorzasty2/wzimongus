@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://boakkfqgwgxro"
-path="res://.godot/imported/1.png-9750c4f4854467cdd5c95367c6806bad.ctex"
+uid="uid://b440xy4qo7x23"
+path="res://.godot/imported/unlit_indicator.png-62090df2e9eb69520bd5510e63c6935b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/1.png"
-dest_files=["res://.godot/imported/1.png-9750c4f4854467cdd5c95367c6806bad.ctex"]
+source_file="res://scenes/minigames/reactor_memory_answer/assets/unlit_indicator.png"
+dest_files=["res://.godot/imported/unlit_indicator.png-62090df2e9eb69520bd5510e63c6935b.ctex"]
 
 [params]
 

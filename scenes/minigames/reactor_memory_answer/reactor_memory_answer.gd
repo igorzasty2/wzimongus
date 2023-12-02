@@ -18,10 +18,10 @@ var flash_pause = .1
 
 # Tekstury używane w grze
 var flash_texture = preload("res://scenes/minigames/reactor_memory_answer/assets/flash.png")
-var blank_texture = preload("res://scenes/minigames/reactor_memory_answer/assets/transparent-flash.png")
-var unlit = preload("res://scenes/minigames/reactor_memory_answer/assets/unlit-indicator.png")
-var lit = preload("res://scenes/minigames/reactor_memory_answer/assets/lit-indicator.png")
-var failed = preload("res://scenes/minigames/reactor_memory_answer/assets/failed-indicator.png")
+var blank_texture = preload("res://scenes/minigames/reactor_memory_answer/assets/transparent_flash.png")
+var unlit = preload("res://scenes/minigames/reactor_memory_answer/assets/unlit_indicator.png")
+var lit = preload("res://scenes/minigames/reactor_memory_answer/assets/lit_indicator.png")
+var failed = preload("res://scenes/minigames/reactor_memory_answer/assets/failed_indicator.png")
 
 # Funkcja wywoływana przy dołączeniu węzła do drzewa sceny
 func _ready():
@@ -65,13 +65,7 @@ func player_pressed(name):
 		
 		# Sprawdzenie, czy gracz rozwiązał 3 sekwencje (numerowane od 0 do 3)
 		if (current_solved == 3 and player_button_count == 4):
-			# TODO: zabić scene i zrobić sygnał że task ukończony # Ilya
-			
-			$Emergency.visible = true
-			$Emergency/AnimatedSprite2D.frame = 0
 			print("task completed")
-			for b in $PlayerButtons.get_children():
-				b.disabled = true
 		
 		# Sprawdzenie, czy gracz rozwiązał całą sekwencję
 		if (player_button_count > current_solved):
@@ -138,8 +132,6 @@ func _on_ClearIndicatorsTimer_timeout():
 
 # Obsługa zdarzenia timeout dla timera informującego o niepowodzeniu
 func _on_FailureTimer_timeout():
-	$Emergency.visible = false
-	$Emergency/AnimatedSprite2D.frame = 3
 	
 	for i in $ButtonIndicators.get_children():
 		i.texture = unlit
