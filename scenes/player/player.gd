@@ -58,4 +58,8 @@ func update_animation_parameters():
 
 # Wyłącza ruch gracza gdy jest pauza, włącza gdy nie ma pauzy
 func _on_pause_menu_paused(is_paused):
-	set_physics_process(!is_paused)
+	toggle_movement(!is_paused)
+
+# Włącza/wyłącza ruch gracza
+func toggle_movement(can_move:bool):
+	set_physics_process(can_move)

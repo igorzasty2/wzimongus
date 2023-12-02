@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=4 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
+[ext_resource type="PackedScene" uid="uid://cwapulye6fjyc" path="res://scenes/sabotages/vent/vent.tscn" id="3_s1ybi"]
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
@@ -15,3 +16,31 @@ y_sort_enabled = true
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
 spawn_limit = 10
+
+[node name="VentSystem" type="Node2D" parent="."]
+
+[node name="Vent" parent="VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("3_s1ybi")]
+position = Vector2(459, 506)
+vent_target_list = [NodePath("../Vent2"), NodePath("../Vent3"), NodePath("../Vent4")]
+
+[node name="Vent2" parent="VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("3_s1ybi")]
+position = Vector2(154, 170)
+vent_target_list = [NodePath("../Vent"), NodePath("../Vent3"), NodePath("../Vent4")]
+
+[node name="Vent3" parent="VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("3_s1ybi")]
+position = Vector2(992, 536)
+vent_target_list = [NodePath("../Vent"), NodePath("../Vent2"), NodePath("../Vent4")]
+
+[node name="Vent4" parent="VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("3_s1ybi")]
+position = Vector2(1039, 104)
+vent_target_list = [NodePath("../Vent"), NodePath("../Vent2"), NodePath("../Vent3")]
+
+[node name="VentSystem2" type="Node2D" parent="."]
+
+[node name="Vent" parent="VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("3_s1ybi")]
+position = Vector2(92, 557)
+vent_target_list = [NodePath("../Vent2")]
+
+[node name="Vent2" parent="VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("3_s1ybi")]
+position = Vector2(660, 180)
+vent_target_list = [NodePath("../Vent")]
