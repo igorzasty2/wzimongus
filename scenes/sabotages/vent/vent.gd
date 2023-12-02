@@ -18,7 +18,7 @@ func _ready():
 	var dir_id = 0
 	# instantiate button for every vent
 	for target_vent in vent_target_list:
-		# point button towards every target_vent
+		# calculate direction of button
 		var direction_button_pos : Vector2 = (target_vent.position - position).normalized()
 		instantiante_direction_button(direction_button_pos * DIRECTION_BUTTON_DISTANCE_MULTIPLIER)
 		vent_direction_button_list[-1].id = dir_id
@@ -43,7 +43,10 @@ func instantiante_direction_button(pos : Vector2):
 	# connect direction button instance
 	vent_dir_bttn_instance.direction_button_pressed.connect(_on_direction_button_pressed)
 	
+	# set position of button
 	vent_dir_bttn_instance.position = pos
+	# set button rotation towards target
+	vent_dir_bttn_instance.rotation = pos.angle()
 	
 	add_child(vent_dir_bttn_instance)
 	vent_direction_button_list.append(vent_dir_bttn_instance)
@@ -90,7 +93,7 @@ func change_dir_bttns_visibility(visibility:bool):
 
 # handles player entering venting area
 func _on_area_2d_body_entered(body):
-	# to do: check if player is impostor
+	# to do: check if player is impostor, put everything inside if
 	set_process_input(true)
 	player_body = body
 	can_be_used = true

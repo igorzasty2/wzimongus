@@ -8,9 +8,9 @@ script = ExtResource("1_dml2b")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(2.38419e-07, 1.3113e-06)
+rotation = 1.5708
 scale = Vector2(0.15625, 0.15625)
 texture = ExtResource("2_jkicn")
-flip_v = true
 
 [node name="Button" type="Button" parent="."]
 self_modulate = Color(1, 1, 1, 0)
