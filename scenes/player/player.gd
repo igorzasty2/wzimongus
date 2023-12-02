@@ -58,4 +58,7 @@ func update_animation_parameters():
 
 # Wyłącza ruch gracza gdy jest pauza, włącza gdy nie ma pauzy
 func _on_pause_menu_paused(is_paused):
-	set_physics_process(!is_paused)
+	if input.get_multiplayer_authority() == multiplayer.get_unique_id():
+		input.set_process(!is_paused)
+
+	input.direction = Vector2.ZERO
