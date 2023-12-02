@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwogo8if36ix7"]
+[gd_scene load_steps=4 format=3 uid="uid://cwogo8if36ix7"]
 
 [ext_resource type="Script" path="res://scenes/ui/lobby_menu/lobby_menu.gd" id="1_b20el"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
+[ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="3_knil8"]
 
 [node name="lobby_menu" type="Control"]
 layout_mode = 3
@@ -66,4 +67,8 @@ offset_top = 14.0
 offset_right = -634.0
 offset_bottom = -354.0
 
+[node name="PauseMenu" parent="." instance=ExtResource("3_knil8")]
+visible = false
+
 [connection signal="button_down" from="LobbyUI/StartGameButton" to="." method="_on_start_game_button_button_down"]
+[connection signal="pause_state_changed" from="PauseMenu" to="." method="_on_pause_menu_pause_state_changed"]

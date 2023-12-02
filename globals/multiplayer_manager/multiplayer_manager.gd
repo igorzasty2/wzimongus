@@ -4,9 +4,12 @@ extends Node
 
 # Sygnał emitowany, gdy gracz zostaje zarejestrowany.
 signal player_registered(id, player)
+
 # Sygnał emitowany, gdy gracz jest wyrejestrowywany.
 signal player_deregistered(id)
 
+# Sygnał emitowany, gdy stan gry zostaje zmieniony.
+signal pause_state_changed(paused:bool)
 
 # Słownik przechowujący informacje o obecnym graczu.
 var current_player = {
@@ -22,6 +25,7 @@ var server_settings = {
 # Słownik przechowujący informacje o obecnym stanie gry.
 var current_game = {
 	"started": false,
+	"paused": false,
 	"registered_players": {}
 }
 
@@ -72,6 +76,12 @@ func join_game(address, port):
 func set_player_property(name, value):
 	if current_player.has(name):
 		current_player[name] = value
+
+
+# Funkcja pozwalająca na zapauzowanie gry.
+func set_pause_state(paused:bool):
+	current_game["paused"] = paused
+	pause_state_changed.emit(paused)
 
 
 # Funkcja wywoływana na serwerze po rozłączeniu gracza.
