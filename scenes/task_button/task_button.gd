@@ -27,6 +27,8 @@ var _is_player_inside : bool = false
 func _ready():
 	sprite_node.texture = sprite
 	sprite_node.scale = Vector2(scale_factor, scale_factor)
+	sprite_node.material = sprite_node.material.duplicate()
+	
 	
 	if not disabled:
 		# Ustawia domyślny outline dla miejscu taska 

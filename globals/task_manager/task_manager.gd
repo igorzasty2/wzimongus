@@ -80,7 +80,6 @@ func assign_tasks_player(tasks):
 		var task = get_node(tasks[i].get_path())
 		task.enable_task(i)
 		tasks_player[i] = task
-		print("task id is ", i)
 
 
 func _input(event):
