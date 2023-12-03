@@ -53,6 +53,9 @@ func instantiante_direction_button(pos : Vector2):
 
 # handles direction button press
 func _on_direction_button_pressed(id):
+	# prevents moving to another vent and exiting at the same time
+	set_process_input(false)
+	
 	move_to_vent(id)
 
 # handles moving player from one vent to another
