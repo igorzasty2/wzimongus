@@ -76,11 +76,10 @@ func assign_tasks_server(task_amount):
 # Dodaje przesłane przez serwer taski w lokalną listę tasków.
 @rpc("authority", "call_local")
 func assign_tasks_player(tasks):
-	tasks_player = tasks
-
-	for i in tasks_player:
-		var task = get_node(tasks_player[i].get_path())
+	for i in tasks:
+		var task = get_node(tasks[i].get_path())
 		task.enable_task(i)
+		tasks_player[i] = task
 
 
 func _input(event):

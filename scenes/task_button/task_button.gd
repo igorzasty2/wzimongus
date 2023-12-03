@@ -13,6 +13,13 @@ extends Area2D
 # minigra która będzie włączona przez ten przecisk
 @export var minigame_scene : PackedScene
 
+var _in_range_task_color = [0.3, 0.9, 0.5, 1]
+var _out_of_range_task_color = [0.5, 0.5, 0.5, 1]
+var _disabled_task_color = [0, 0, 0, 0]
+
+var _enabled_line_thickness = 10.0
+var _disabled_line_thickness = 0.0
+
 var _is_player_inside : bool = false
 
 func _ready():
@@ -21,8 +28,8 @@ func _ready():
 	
 	if not disabled:
 		# Ustawia domyślny outline dla miejscu taska 
-		$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
-		$Sprite2D.material.set_shader_parameter('line_thickness', 10.0)
+		$Sprite2D.material.set_shader_parameter('line_color', _out_of_range_task_color)
+		$Sprite2D.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
 	else:
 		body_entered.disconnect(_on_body_entered)
 		body_exited.disconnect(_on_body_exited)
@@ -31,7 +38,7 @@ func _ready():
 func _on_body_entered(body):
 	if "id" in body and body.id == multiplayer.get_unique_id():
 		_is_player_inside = true
-		$Sprite2D.material.set_shader_parameter('line_color', [0.3, 0.9, 0,5, 1])
+		$Sprite2D.material.set_shader_parameter('line_color', _in_range_task_color)
 		TaskManager.current_task_id = task_id
 
 
@@ -40,13 +47,20 @@ func _on_body_exited(body):
 	
 	if "id" in body and body.id == multiplayer.get_unique_id():
 		_is_player_inside = false
-		$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
+		$Sprite2D.material.set_shader_parameter('line_color', _out_of_range_task_color)
 		TaskManager.current_task_id = null
 
 
-func enable_task(task_id):
-	$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
-	$Sprite2D.material.set_shader_parameter('line_thickness', 10.0)
+func enable_task(server_task_id):
+	$Sprite2D.material.set_shader_parameter('line_color', _out_of_range_task_color)
+	$Sprite2D.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	task_id = server_task_id
 	disabled = false
+
+func disable_task():
+	body_entered.disconnect(_on_body_entered)
+	body_exited.disconnect(_on_body_exited)
+	$Sprite2D.material.set_shader_parameter('line_color', _out_of_range_task_color)
+	$Sprite2D.material.set_shader_parameter('line_thickness', _disabled_line_thickness)
