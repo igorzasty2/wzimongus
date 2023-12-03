@@ -1,5 +1,7 @@
 extends Node2D
 
+
+
 # Tablica przechowująca sekwencję
 var sequence = []
 
@@ -28,11 +30,13 @@ func _ready():
 	create_sequence()
 	for b in $PlayerButtons.get_children():
 		b.disabled = true
-
+		
+		
 # Funkcja wywoływana co klatkę
 func _process(delta):
-	if (Input.is_action_just_pressed("ui_accept")):
+	if (Input.is_action_just_pressed("ui_left")):
 		$Grid.visible = !$Grid.visible
+		
 
 # Funkcja generująca sekwencję na początku gry
 func create_sequence():
@@ -93,6 +97,8 @@ func player_pressed(name):
 func clear_player_indicators():
 	for i in $ButtonIndicators.get_children():
 		i.texture = unlit
+		
+		
 
 # Funkcja zwiększająca liczbę rozwiązanych sekwencji
 func increase_solved():
