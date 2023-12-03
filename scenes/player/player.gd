@@ -36,6 +36,7 @@ func _process(_delta):
 	# Aktualizuje parametry animacji.
 	_update_animation_parameters()
 	
+	# Aktualizuje pozycję kamery
 	if name.to_int() == GameManager.get_current_player_id():
 		camera.position = position
 	
