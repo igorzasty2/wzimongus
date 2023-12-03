@@ -44,9 +44,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 60
+theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 60
+theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 90
 
 [node name="GridContainer" type="GridContainer" parent="TabContainer/SoundAndGraphics/MarginContainer"]
@@ -125,9 +125,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 60
+theme_override_constants/margin_left = 44
 theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 60
+theme_override_constants/margin_right = 44
 theme_override_constants/margin_bottom = 80
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Controls/MarginContainer"]
@@ -204,48 +204,53 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_xriee")
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Default"]
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Default"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -164.5
-offset_top = -110.0
-offset_right = 164.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 65
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 65
+theme_override_constants/margin_bottom = 90
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Default/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Default/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Default/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="TabContainer/Default/VBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Przywróć domyślne ustawienia dźwięku i grafiki"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DefaultSoundGraphicsButton" type="Button" parent="TabContainer/Default/VBoxContainer/VBoxContainer"]
+[node name="DefaultSoundGraphicsButton" type="Button" parent="TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Przywróć
 "
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Default/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Default/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 10
 
-[node name="Label2" type="Label" parent="TabContainer/Default/VBoxContainer/VBoxContainer2"]
+[node name="Label2" type="Label" parent="TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2"]
 layout_mode = 2
 text = "Przywróć domyślne ustawienia sterowania"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DefaultControlsButton" type="Button" parent="TabContainer/Default/VBoxContainer/VBoxContainer2"]
+[node name="DefaultControlsButton" type="Button" parent="TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -412,8 +417,8 @@ text = "Nie"
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveRightKeyRebind" to="." method="_on_move_right_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveDownKeyRebind" to="." method="_on_move_down_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveUpKeyRebind" to="." method="_on_move_up_key_rebind_rebind_button_pressed"]
-[connection signal="pressed" from="TabContainer/Default/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton" to="." method="_on_default_sound_graphics_button_pressed"]
-[connection signal="pressed" from="TabContainer/Default/VBoxContainer/VBoxContainer2/DefaultControlsButton" to="." method="_on_default_controls_button_pressed"]
+[connection signal="pressed" from="TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton" to="." method="_on_default_sound_graphics_button_pressed"]
+[connection signal="pressed" from="TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2/DefaultControlsButton" to="." method="_on_default_controls_button_pressed"]
 [connection signal="pressed" from="KeyRebindWindow/Panel/VBoxContainer2/DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="pressed" from="KeyRebindWindow/Panel/VBoxContainer2/CancelButton" to="." method="_on_cancel_button_pressed"]
 [connection signal="pressed" from="KeyUsedWindow/Panel/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]

@@ -14,8 +14,8 @@ extends Control
 @onready var action_name = $KeyRebindWindow/Panel/VBoxContainer/ActionName
 @onready var key_used_window = $KeyUsedWindow
 
-@onready var default_sound_graphics_button = $TabContainer/Default/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton
-@onready var default_controls_button = $TabContainer/Default/VBoxContainer/VBoxContainer2/DefaultControlsButton
+@onready var default_sound_graphics_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton
+@onready var default_controls_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2/DefaultControlsButton
 
 # resolutions array
 const RESOLUTIONS = [Vector2i(800,600), Vector2i(1024,768), Vector2i(1152,648), Vector2i(1152,864), Vector2i(1280,720),
@@ -27,7 +27,7 @@ var resolutions_dynamic = RESOLUTIONS.duplicate(true)
 
 const ACTIONS = ["pause_menu", "sabotage", "use_vent", "interact", "fail", "report", "move_left", "move_right", "move_up", "move_down"]
 
-var user_sett: SaveUserSettings
+var user_sett: UserSettingsManager
 
 var full_screen_value : bool
 var v_sync_value : bool
@@ -54,7 +54,7 @@ var is_canceled : bool = false
 signal button_rebind(is_rebinded:bool)
 
 func _ready():
-	user_sett = SaveUserSettings.load_or_create()
+	user_sett = UserSettingsManager.load_or_create()
 	set_process_unhandled_key_input(false)
 
 	# handling highest resolution
