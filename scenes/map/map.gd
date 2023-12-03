@@ -1,36 +1,36 @@
-# Definiuje mapę gry.
-
 extends Node2D
 
 @export var PlayerScene : PackedScene
 
-func _ready():
-	# Tworzy graczy na serwerze, a następnie MultiplayerSpawner synchronizuje je z klientami.
-	if multiplayer.is_server():
-		# Sprawia, że gracz jest usuwany z mapy po opuszczeniu gry.
-		MultiplayerManager.player_deregistered.connect(_remove_player)
 
-		# Tworzy wszystkich graczy jeden po drugim.
-		for i in MultiplayerManager.current_game["registered_players"]:
+func _ready():
+	if multiplayer.is_server():
+		# Usuwa gracza z mapy po jego wyrejestrowaniu.
+		GameManager.player_deregistered.connect(_remove_player)
+
+		# Inicjuje graczy zarejestrowanych w GameManager.
+		for i in GameManager.get_registered_players():
 			_add_player(i)
 
+	# Ustawia etykietę typu na "Impostor" lub "Crewmate".
+	$TypeLabel.text = "Impostor" if GameManager.get_current_player_key("impostor") else "Crewmate"
 
-# Tworzy gracza w losowej pozycji na mapie.
-func _add_player(id):
+
+# Dodaje nowego gracza na mapę.
+func _add_player(id: int):
+	# Ładuje i tworzy instancję gracza.
 	var player = preload("res://scenes/player/player.tscn").instantiate()
-	# To jest nazwa Node'a.
+
+	# Nadaje graczowi id i losową pozycję.
 	player.name = str(id)
-
-	player.id = id
-	player.username = MultiplayerManager.current_game["registered_players"][id].username
-
 	player.position = Vector2(randi_range(0, 1152), randi_range(0, 648))
 
-	# Dodaje Node na mape.
+	# Dodaje gracza do drzewa sceny.
 	$Players.add_child(player, true)
 
 
-# Usuwa postać gracza, gdy ten opuszcza grę.
-func _remove_player(id):
+# Usuwa gracza z mapy.
+func _remove_player(id: int):
+	# Sprawdza, czy gracz istnieje w drzewie sceny i usuwa go.
 	if $Players.has_node(str(id)):
 		$Players.get_node(str(id)).queue_free()

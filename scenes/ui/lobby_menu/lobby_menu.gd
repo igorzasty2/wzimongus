@@ -1,72 +1,70 @@
-# Odpowiada za logikę lobby
-
+# Zarządza logiką lobby
 extends Control
 
 func _ready():
-	# Ukrywa przycisk, jeśli użytkownik nie jest hostem
+	# Ukrywa przycisk "Start Game", jeśli użytkownik nie jest hostem
 	if !multiplayer.is_server():
 		$LobbyUI/StartGameButton.hide()
 	
-	# Początkowe wyświetlenie listy graczy
-	_update_display_player_list(multiplayer.get_unique_id(), MultiplayerManager.current_player)
+	# Aktualizuje listę graczy na starcie
+	_update_display_player_list()
 	
-	# Sprawienie, aby za każdym razem, gdy gracz dołącza lub
-	# opuszcza listę graczy, była ona wyświetlana ponownie
-	MultiplayerManager.player_registered.connect(_update_display_player_list)
-	MultiplayerManager.player_deregistered.connect(_update_display_player_list)
+	# Aktualizuje listę graczy, gdy nowy gracz dołącza lub opuszcza grę
+	GameManager.player_registered.connect(_update_display_player_list)
+	GameManager.player_deregistered.connect(_update_display_player_list)
 
 
 func _on_start_game_button_button_down():
-	# Tylko host jest w stanie rozpocząć grę
+	# Umożliwia hostowi rozpoczęcie gry
 	if multiplayer.is_server():
-		# Wysyłamy do klientów informację o rozpoczęciu gry
+		# Informuje klientów o rozpoczęciu gry
 		start_game.rpc()
 
 
-# Funkcja odpowiadająca za rozpoczęcie gry
+# Rozpoczyna grę
 @rpc("call_local", "reliable")
 func start_game():
-	# Chowamy lobby
+	# Ukrywa interfejs lobby
 	$LobbyUI.hide()
 	
-	# Wyświetlanie listy graczy nie będzie już aktualizowane.
-	MultiplayerManager.player_registered.disconnect(_update_display_player_list)
-	MultiplayerManager.player_deregistered.disconnect(_update_display_player_list)
+	# Przestaje aktualizować listę graczy
+	GameManager.player_registered.disconnect(_update_display_player_list)
+	GameManager.player_deregistered.disconnect(_update_display_player_list)
 
-	MultiplayerManager.current_game["started"] = true
+	GameManager.start_game()
 
-	# Ładujemy mapę na serwerze, zostanie ona zsynchronizowana z klientami przez MapSpawner
+	# Ładuje mapę na serwerze, synchronizując ją z klientami
 	if multiplayer.is_server():
 		_change_map.call_deferred(load("res://scenes/map/map.tscn"))
 
 
-# Funkcja dla serwera odpowiadająca za zmianę mapy
+# Zmienia mapę na serwerze
 func _change_map(scene: PackedScene):
 	var map = $Map
 
-	# Usuwamy obecną mapę
+	# Usuwa obecną mapę
 	for i in map.get_children():
 		map.remove_child(i)
 		i.queue_free()
 	
-	# Wyświetlamy nową mapę
+	# Dodaje nową mapę
 	map.add_child(scene.instantiate())
 
 
-# Wyświetla listę graczy na ekranie
-func _update_display_player_list(id, player = null):
+# Aktualizuje wyświetlaną listę graczy
+func _update_display_player_list(id = null, player = null):
 	var player_list_text = "Lista graczy:\n"
 	var idx = 1
-	for i in MultiplayerManager.current_game["registered_players"]:
-		# Numerowanie graczy
+	for i in GameManager.get_registered_players():
+		# Dodaje numeracje graczy
 		player_list_text += str(idx) + '. '
 
-		# Wyświetlanie nazwiska gracza
-		player_list_text += MultiplayerManager.current_game["registered_players"][i].username
+		# Dodaje nazwę użytkownika gracza
+		player_list_text += GameManager.get_registered_player_key(i, "username")
 
-		# Newline symbol
+		# Dodaje symbol nowej linii
 		player_list_text += "\n"
 		idx += 1
 
-	# Wyświetlanie całości
+	# Wyświetla zaktualizowaną listę graczy
 	$LobbyUI/PlayerList.text = player_list_text
