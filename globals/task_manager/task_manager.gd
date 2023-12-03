@@ -63,13 +63,13 @@ func assign_tasks_server(task_amount):
 				var random_key = randi() % available_tasks.size()
 				
 				tasks_dict[id_counter] = available_tasks[random_key]
-				available_tasks.erase(random_key)
+				available_tasks.remove_at(random_key)
+				
 				
 				id_counter += 1
 			
 			# Zapisywania słownika tasków odpowiednemu graczowi w słownik serwerowy.
 			tasks_server[i] = tasks_dict
-			print("I'm assigning")
 			assign_tasks_player.rpc_id(i, tasks_dict)
 				
 
@@ -80,9 +80,11 @@ func assign_tasks_player(tasks):
 		var task = get_node(tasks[i].get_path())
 		task.enable_task(i)
 		tasks_player[i] = task
+		print("task id is ", i)
 
 
 func _input(event):
 	if event.is_action_pressed("interact"):
 		if TaskManager.current_task_id != null:
-			get_tree().change_scene_to_file("res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn")
+			get_tree().change_scene_to_packed(tasks_player[current_task_id].minigame_scene)
+			

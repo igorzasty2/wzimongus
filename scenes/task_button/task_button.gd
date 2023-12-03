@@ -22,45 +22,49 @@ var _disabled_line_thickness = 0.0
 
 var _is_player_inside : bool = false
 
+@onready var sprite_node = get_node("Sprite2D")
+
 func _ready():
-	$Sprite2D.texture = sprite
-	$Sprite2D.scale = Vector2(scale_factor, scale_factor)
+	sprite_node.texture = sprite
+	sprite_node.scale = Vector2(scale_factor, scale_factor)
 	
 	if not disabled:
 		# Ustawia domyślny outline dla miejscu taska 
-		$Sprite2D.material.set_shader_parameter('line_color', _out_of_range_task_color)
-		$Sprite2D.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
-	else:
-		body_entered.disconnect(_on_body_entered)
-		body_exited.disconnect(_on_body_exited)
+		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
+		sprite_node.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
+#	else:
+#		body_entered.disconnect(_on_body_entered)
+#		body_exited.disconnect(_on_body_exited)
 
 
 func _on_body_entered(body):
-	if "id" in body and body.id == multiplayer.get_unique_id():
+	print("yo")
+	if "id" in body and body.id == multiplayer.get_unique_id() and not disabled:
 		_is_player_inside = true
-		$Sprite2D.material.set_shader_parameter('line_color', _in_range_task_color)
+		sprite_node.material.set_shader_parameter('line_color', _in_range_task_color)
 		TaskManager.current_task_id = task_id
 
 
 func _on_body_exited(body):
 	print(body.get_name())
 	
-	if "id" in body and body.id == multiplayer.get_unique_id():
+	if "id" in body and body.id == multiplayer.get_unique_id() and not disabled:
 		_is_player_inside = false
-		$Sprite2D.material.set_shader_parameter('line_color', _out_of_range_task_color)
+		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
 		TaskManager.current_task_id = null
 
 
 func enable_task(server_task_id):
-	$Sprite2D.material.set_shader_parameter('line_color', _out_of_range_task_color)
-	$Sprite2D.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
+	sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
+	sprite_node.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
+#	body_entered.connect(_on_body_entered)
+#	body_exited.connect(_on_body_exited)
 	task_id = server_task_id
 	disabled = false
+	
 
 func disable_task():
-	body_entered.disconnect(_on_body_entered)
-	body_exited.disconnect(_on_body_exited)
-	$Sprite2D.material.set_shader_parameter('line_color', _out_of_range_task_color)
-	$Sprite2D.material.set_shader_parameter('line_thickness', _disabled_line_thickness)
+#	body_entered.disconnect(_on_body_entered)
+#	body_exited.disconnect(_on_body_exited)
+	sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
+	sprite_node.material.set_shader_parameter('line_thickness', _disabled_line_thickness)

@@ -15,7 +15,7 @@ func _ready():
 			_add_player(i)
 		
 		# Losuje taski wszystkim graczom
-		TaskManager.assign_tasks_server(1)
+		TaskManager.assign_tasks_server(2)
 
 
 # Tworzy gracza w losowej pozycji na mapie.

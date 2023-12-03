@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=8 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/task_button/task_button.tscn" id="3_e0rk4"]
 [ext_resource type="Texture2D" uid="uid://dj1dqmbh77gan" path="res://scenes/task_button/assets/wifi.png" id="4_wgy3w"]
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_u6l5w"]
+[ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="6_slh3o"]
+[ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="7_7hrpe"]
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
@@ -25,3 +27,8 @@ spawn_limit = 10
 position = Vector2(214, 208)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("5_u6l5w")
+
+[node name="TaskButton2" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(650, 149)
+sprite = ExtResource("6_slh3o")
+minigame_scene = ExtResource("7_7hrpe")
