@@ -1,7 +1,10 @@
 extends CharacterBody2D
 
+# Kierunek ruchu postaci.
 var direction : Vector2 = Vector2.ZERO
+# Ostatni kierunek ruchu postaci na osi X.
 var last_direction_x : float
+# Stała określająca prędkość postaci.
 const SPEED = 300.0
 
 @onready var input = $InputSynchronizer
@@ -9,34 +12,36 @@ const SPEED = 300.0
 
 
 func _ready():
-	# Ustawia autorytet gracza na jego id w celu identyfikacji jego wejścia.
+	# Nadaje uprawnienia gracza do sterowania na podstawie jego identyfikatora.
 	input.set_multiplayer_authority(name.to_int())
 
-	# Jeśli gracz może sterować swoją postacią, to ustawia jego wejście na aktywne.
+	# Aktywuje przetwarzanie wejścia dla sterowanego przez gracza węzła.
 	if input.get_multiplayer_authority() == multiplayer.get_unique_id():
 		GameManager.input_status_changed.connect(_on_input_status_changed)
 	else:
 		input.set_process(false)
 
-	# Ustawia etykietę z nazwą gracza.
+	# Ustawia nazwę użytkownika w etykiecie.
 	$UsernameLabel.text = GameManager.get_registered_player_key(name.to_int(), "username")
 
-	# Ustawia animację gracza.
+	# Aktywuje drzewo animacji postaci.
 	animation_tree.active = true
 
-	# Ustawia początkowy kierunek wzroku gracza.
+	# Inicjalizuje początkowy kierunek postaci.
 	last_direction_x = 1
 
 
 func _process(_delta):
+	# Aktualizuje parametry animacji.
 	_update_animation_parameters()
 
 
 func _physics_process(_delta):
-	# Pobiera wejście gracza i ustawia odpowiedni kierunek ruchu.
+	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	direction = Vector2(input.direction.x, input.direction.y)
 	direction = direction.normalized()
 
+	# Ustawia prędkość postaci zgodnie z obliczonym kierunkiem.
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.y = direction.y * SPEED
@@ -44,16 +49,17 @@ func _physics_process(_delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.y = move_toward(velocity.y, 0, SPEED)
 
-	# Zapamiętuje ostatni kierunek wzroku postaci
+	# Zapisuje ostatni kierunek ruchu postaci.
 	if direction.x != 0:
 		last_direction_x = direction.x
 
-	# Porusza graczem i obsługuje kolizje.
+	# Porusza postacią i obsługuje kolizje.
 	move_and_slide()
 
 
-# Aktualizuje parametry animacji.
+# Aktualizuje parametry animacji postaci.
 func _update_animation_parameters():
+	# Ustawia parametry animacji w zależności od stanu ruchu.
 	if velocity == Vector2.ZERO:
 		animation_tree["parameters/conditions/idle"] = true
 		animation_tree["parameters/conditions/is_moving"] = false
@@ -68,7 +74,7 @@ func _update_animation_parameters():
 			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x ,direction.y)
 
 
-# Ustawia stan wejścia gracza.
+# Ustawia stan przetwarzania wejścia postaci.
 func _on_input_status_changed(state: bool):
 	input.set_process(state)
 	input.direction = Vector2.ZERO
