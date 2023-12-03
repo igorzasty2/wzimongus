@@ -19,8 +19,9 @@ _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
 spawn_limit = 10
 
-[node name="TaskButton" parent="." instance=ExtResource("3_e0rk4")]
+[node name="Tasks" type="Node2D" parent="."]
+
+[node name="TaskButton" parent="Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(214, 208)
 sprite = ExtResource("4_wgy3w")
-disabled = false
 minigame_scene = ExtResource("5_u6l5w")

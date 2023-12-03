@@ -9,10 +9,13 @@ func _ready():
 	if multiplayer.is_server():
 		# Sprawia, że gracz jest usuwany z mapy po opuszczeniu gry.
 		MultiplayerManager.player_deregistered.connect(_remove_player)
-
+		
 		# Tworzy wszystkich graczy jeden po drugim.
 		for i in MultiplayerManager.current_game["registered_players"]:
 			_add_player(i)
+		
+		# Losuje taski wszystkim graczom
+		TaskManager.assign_tasks_server(1)
 
 
 # Tworzy gracza w losowej pozycji na mapie.

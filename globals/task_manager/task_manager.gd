@@ -1,5 +1,7 @@
 extends Node
 
+
+signal task_completed;
 # TODO: Potrzebuje tutaj załadować minigry jako słownik, aby móc przez nie iterować.
 # Minigre muszą przechowywać swoją lokację i inne metadane potrzebne do zrobienia taska.
 var minigames = {}
@@ -13,8 +15,6 @@ var tasks_server = {}
 # Przechowuje zadania bieżącego gracza.
 var tasks_player = {}
 
-func complete_task():
-	mark_task_as_complete_player()
 
 # Usuwa task z lokalnego słownika tasków.
 @rpc("any_peer", "call_local")
@@ -45,20 +45,23 @@ func mark_task_as_complete_server(player_id, task_id):
 # graczom ze pomocą rpc_id.
 @rpc("authority", "call_local")
 func assign_tasks_server(task_amount):
+	minigames = get_node("/root/lobby_menu/Map/Map/Tasks").get_children()
+#	print(get_node("/root/Map"))
 	# TODO: żeby ten kod działał do końca trzeba stworzyć słownik minigier.
 	if multiplayer.is_server() and tasks_server.is_empty():
 		# Unikalny id dla każdego tasku.
 		var id_counter = 0
 
-		for i in MultiplayerManager.players:
+		for i in MultiplayerManager.current_game["registered_players"]:
 			# true w duplicate oznacza że kopia tego będzie głęboka
 			var available_tasks = minigames.duplicate(true)
 			var tasks_dict = {}
-
+			
 			# Tworzy słownik task_amount ilości losowych tasków.
 			for task_number in range(task_amount):
+#				var random_key = available_tasks.keys()[randi() % available_tasks.size()]
+				var random_key = randi() % available_tasks.size()
 				
-				var random_key = available_tasks.keys()[randi() % available_tasks.size()]
 				tasks_dict[id_counter] = available_tasks[random_key]
 				available_tasks.erase(random_key)
 				
@@ -66,13 +69,18 @@ func assign_tasks_server(task_amount):
 			
 			# Zapisywania słownika tasków odpowiednemu graczowi w słownik serwerowy.
 			tasks_server[i] = tasks_dict
-			assign_tasks_player.rpc_id(MultiplayerManager.players[i].id, tasks_dict)
+			print("I'm assigning")
+			assign_tasks_player.rpc_id(i, tasks_dict)
 				
 
 # Dodaje przesłane przez serwer taski w lokalną listę tasków.
-@rpc("authority", "call_remote")
+@rpc("authority", "call_local")
 func assign_tasks_player(tasks):
 	tasks_player = tasks
+
+	for i in tasks_player:
+		var task = get_node(tasks_player[i].get_path())
+		task.enable_task(i)
 
 
 func _input(event):

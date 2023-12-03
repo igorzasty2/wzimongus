@@ -42,3 +42,11 @@ func _on_body_exited(body):
 		_is_player_inside = false
 		$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
 		TaskManager.current_task_id = null
+
+
+func enable_task(task_id):
+	$Sprite2D.material.set_shader_parameter('line_color', [0.5, 0.5, 0,5, 1])
+	$Sprite2D.material.set_shader_parameter('line_thickness', 10.0)
+	body_entered.connect(_on_body_entered)
+	body_exited.connect(_on_body_exited)
+	disabled = false
