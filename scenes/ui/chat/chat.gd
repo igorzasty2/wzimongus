@@ -16,7 +16,7 @@ const FADE_OUT_TIME = 0.25
 @onready var chat_logs_scroll_container = $%ChatLogsScrollbar
 @onready var chat_logs_container = $%ChatLogsContainer
 @onready var chat_logs_scrollbar = chat_logs_scroll_container.get_v_scroll_bar()
-@onready var username = GameManager.get_current_player_info("username")
+@onready var username = GameManager.get_current_player_key("username")
 
 var message_scene = preload("res://scenes/ui/chat/message/message.tscn")
 var system_message_scene = preload("res://scenes/ui/chat/system_message/system_message.tscn")
@@ -44,18 +44,18 @@ func send_message(message, group, id):
 	match group:
 		Group.DEAD:
 			if current_group == Group.DEAD:
-				_create_message(GameManager.get_registered_player_info(id, "username"), message, Group.DEAD)
+				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.DEAD)
 		Group.IMPOSTOR:
 			if current_group == Group.IMPOSTOR:
-				_create_message(GameManager.get_registered_player_info(id, "username"), message, Group.IMPOSTOR)
+				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.IMPOSTOR)
 			else:
-				_create_message(GameManager.get_registered_player_info(id, "username"), message, Group.GLOBAL)
+				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.GLOBAL)
 		Group.SYSTEM:
 			var system_message_instance = system_message_scene.instantiate()
 			chat_logs_container.add_child(system_message_instance)
 			system_message_instance.init(message)
 		_:
-			_create_message(GameManager.get_registered_player_info(id, "username"), message, current_group)
+			_create_message(GameManager.get_registered_player_key(id, "username"), message, current_group)
 	
 	if multiplayer.is_server():
 		for peer_id in GameManager.get_registered_players().keys():

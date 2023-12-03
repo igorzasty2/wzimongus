@@ -62,7 +62,7 @@ func _update_display_player_list(id = null, player = null):
 		player_list_text += str(idx) + '. '
 
 		# Wyświetlanie nazwiska gracza
-		player_list_text += GameManager.get_registered_player_info(i, "username")
+		player_list_text += GameManager.get_registered_player_key(i, "username")
 
 		# Newline symbol
 		player_list_text += "\n"

@@ -9,7 +9,7 @@ signal player_registered(id:int, player:Dictionary)
 signal player_deregistered(id:int)
 
 # Sygnał emitowany, gdy stan inputu zostanie zmieniony.
-signal input_state_changed(paused:bool)
+signal input_status_changed(paused:bool)
 
 
 # Słownik przechowujący informacje o obecnym stanie gry.
@@ -31,6 +31,14 @@ var _server_settings = {
 	"port": 9001,
 	"max_players": 10,
 	"impostors": 1
+}
+
+# 
+var _public_player_keys = ["username"]
+
+# 
+var _private_player_keys = {
+	"impostor": false
 }
 
 
@@ -55,7 +63,7 @@ func create_game(port:int, max_players:int):
 		multiplayer.multiplayer_peer = peer
 
 		# Rejestruje hosta jako gracza.
-		_add_registered_player(1, _current_player)
+		_add_registered_player(1, _get_current_player_filtered())
 
 		_enter_lobby()
 	else:
@@ -76,6 +84,10 @@ func join_game(address:String, port:int):
 
 # Funkcja pozwalająca na rozpoczęcie gry.
 func start_game():
+	print(multiplayer.get_unique_id(), " ", _current_game)
+	print(multiplayer.get_unique_id(), " ", _current_player)
+	print(multiplayer.get_unique_id(), " ", _server_settings)
+
 	if multiplayer.is_server():
 		var available_players = get_registered_players().keys()
 		var impostors = []
@@ -91,13 +103,20 @@ func start_game():
 
 		for i in impostors:
 			_current_game["registered_players"][i]["impostor"] = true
-			_send_impostor_info.rpc_id(i)
+			_send_impostor_status.rpc_id(i)
 
 	_current_game["started"] = true
 
+	print(multiplayer.get_unique_id(), " ", _current_game)
+	print(multiplayer.get_unique_id(), " ", _current_player)
+	print(multiplayer.get_unique_id(), " ", _server_settings)
+
+
+#
 @rpc("reliable")
-func _send_impostor_info():
+func _send_impostor_status():
 	_current_player["impostor"] = true
+
 
 # Funkcja pozwalająca na zakończenie gry.
 func end_game():
@@ -116,7 +135,7 @@ func end_game():
 
 
 # Funkcja pozwalająca na otrzymanie danych o obecnej grze.
-func get_current_game_info(key:String):
+func get_current_game_key(key:String):
 	if _current_game.has(key):
 		return _current_game[key]
 
@@ -129,7 +148,7 @@ func get_registered_players():
 
 
 # Funkcja pozwalająca na otrzymanie danych o pewnym zarejestrowanym graczu.
-func get_registered_player_info(id:int, key:String):
+func get_registered_player_key(id:int, key:String):
 	if _current_game["registered_players"].has(id):
 		if _current_game["registered_players"][id].has(key):
 			return _current_game["registered_players"][id][key]
@@ -138,7 +157,7 @@ func get_registered_player_info(id:int, key:String):
 
 
 # Funkcja pozwalająca na otrzymanie danych o obecnym graczu.
-func get_current_player_info(key:String):
+func get_current_player_key(key:String):
 	if _current_player.has(key):
 		return _current_player[key]
 
@@ -146,21 +165,21 @@ func get_current_player_info(key:String):
 
 
 # Funkcja pozwalająca na zmianę danych obecnego gracza.
-func set_player_info(key:String, value):
+func set_player_key(key:String, value):
 	if _current_player.has(key):
 		_current_player[key] = value
 
 
 # Funkcja pozwalająca na zapauzowanie gry.
-func set_pause_state(paused:bool):
+func set_pause_status(paused:bool):
 	_current_game["paused"] = paused
-	input_state_changed.emit(!_current_game["paused"] && !_current_game["input_disabled"])
+	input_status_changed.emit(!_current_game["paused"] && !_current_game["input_disabled"])
 
 
 # Funkcja pozwalająca na wyłączenie sterowania.
-func set_input_state(state:bool):
-	_current_game["input_disabled"] = state
-	input_state_changed.emit(!_current_game["paused"] && !_current_game["input_disabled"])
+func set_input_status(state:bool):
+	_current_game["input_disabled"] = !state
+	input_status_changed.emit(!_current_game["paused"] && !_current_game["input_disabled"])
 
 
 # Funkcja wywoływana na serwerze po rozłączeniu gracza.
@@ -172,7 +191,7 @@ func _on_player_disconnected(id:int):
 # Funkcja wywoływana u klienta po połączeniu z serwerem.
 func _on_connected():
 	# Wysyła informacje o graczu do serwera.
-	_register_player.rpc_id(1, _current_player)
+	_register_player.rpc_id(1, _get_current_player_filtered())
 
 
 # Funkcja wywoływana u klienta po nieudanym połączeniu z serwerem.
@@ -183,6 +202,22 @@ func _on_connection_failed():
 # Funkcja wywoływana u klienta po rozłączeniu z serwerem.
 func _on_server_disconnected():
 	end_game()
+
+
+#
+func _filter_player(player:Dictionary):
+	var filtered_player = {}
+
+	for i in _public_player_keys:
+		if player.has(i):
+			filtered_player[i] = player[i]
+
+	return filtered_player
+
+
+# 
+func _get_current_player_filtered():
+	return _filter_player(_current_player)
 
 
 # Funkcja zmieniająca scenę na scenę lobby.
@@ -212,10 +247,10 @@ func _register_player(player:Dictionary):
 
 	# Wysyłanie do nowego gracza informacji o wszystkich połączonych już graczach.
 	for i in _current_game["registered_players"]:
-		_add_registered_player.rpc_id(id, i, _current_game["registered_players"][i])
+		_add_registered_player.rpc_id(id, i, _filter_player(_current_game["registered_players"][i]))
 
 	# Wysyłanie do wszystkich połączonych graczy informacji o nowym graczu.
-	_add_registered_player.rpc(id, player)
+	_add_registered_player.rpc(id, _filter_player(player))
 
 	# Wysyłanie do nowego gracza informacji o rejestracji na serwerze.
 	_on_player_registered.rpc_id(id)
@@ -230,8 +265,9 @@ func _on_player_registered():
 # Funkcja dodająca nowego zarejestrowanego gracza do listy graczy.
 @rpc("call_local", "reliable")
 func _add_registered_player(id:int, player:Dictionary):
-	_current_game["registered_players"][id] = player
-	player_registered.emit(id, player)
+	var filtered_player = _filter_player(player)
+	_current_game["registered_players"][id] = filtered_player
+	player_registered.emit(id, filtered_player)
 
 
 # Funkcja pozwalająca na usunięcie zderejestrowanego gracza z listy graczy.

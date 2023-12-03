@@ -12,7 +12,7 @@ func _ready():
 		for i in GameManager.get_registered_players():
 			_add_player(i)
 	
-	$TypeLabel.text = "Impostor" if GameManager.get_current_player_info("impostor") else "Crewmate"
+	$TypeLabel.text = "Impostor" if GameManager.get_current_player_key("impostor") else "Crewmate"
 
 
 # Dodaje nowego gracza do mapy.
