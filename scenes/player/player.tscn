@@ -236,10 +236,11 @@ visible = false
 
 [node name="UseButton" type="TextureButton" parent="."]
 visible = false
-offset_left = 374.0
-offset_top = 103.0
-offset_right = 474.0
-offset_bottom = 153.0
+top_level = true
+offset_left = 930.0
+offset_top = 484.0
+offset_right = 1030.0
+offset_bottom = 534.0
 disabled = true
 texture_normal = ExtResource("5_7mmko")
 texture_pressed = ExtResource("6_mkqyu")
@@ -247,6 +248,7 @@ texture_hover = ExtResource("7_qfxfh")
 
 [node name="MinigameContainer" type="SubViewportContainer" parent="."]
 visible = false
+z_index = 15
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

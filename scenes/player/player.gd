@@ -9,6 +9,7 @@ var direction : Vector2 = Vector2.ZERO
 var last_direction_x : float
 const SPEED = 300.0
 var minigame: PackedScene
+var minigame_instance:Node2D
 
 @onready var input = $InputSynchronizer
 @onready var animation_tree = $Skins/AltAnimationTree
@@ -95,9 +96,16 @@ func _input(event):
 func summon_window():
 	$MinigameContainer.visible = true
 	$MinigameContainer/MinigameViewport.add_child(minigame.instantiate())
-	var minigame_instance:Node2D = $MinigameContainer/MinigameViewport.get_child(0)
+	minigame_instance = $MinigameContainer/MinigameViewport.get_child(0)
 	var x_scale = $MinigameContainer/MinigameViewport.size.x / get_viewport_rect().size.x
 	var y_scale = $MinigameContainer/MinigameViewport.size.y / get_viewport_rect().size.y
 	minigame_instance.scale = Vector2(x_scale, y_scale)
 	$UseButton.visible = false
 	$UseButton.disabled = true
+	MultiplayerManager.set_input_state(false)
+	minigame_instance.minigame_end.connect(end_minigame)
+
+func end_minigame():
+	minigame_instance.queue_free()
+	$MinigameContainer.visible = false
+	MultiplayerManager.set_input_state(true)

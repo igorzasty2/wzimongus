@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=6 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
 [ext_resource type="PackedScene" uid="uid://1jgb32vu3lvr" path="res://scenes/map/scenes/interaction_points/interaction_point.tscn" id="3_1ao7y"]
 [ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="4_6s3my"]
+[ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_pwcjb"]
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
@@ -18,9 +19,10 @@ _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
 spawn_limit = 10
 
-[node name="interaction_point" parent="." instance=ExtResource("3_1ao7y")]
+[node name="interaction_point" parent="." groups=["interaction_points"] instance=ExtResource("3_1ao7y")]
 position = Vector2(275, 166)
 minigame = ExtResource("4_6s3my")
 
-[connection signal="character_entered" from="interaction_point" to="." method="_on_interaction_point_character_entered"]
-[connection signal="character_exited" from="interaction_point" to="." method="_on_interaction_point_character_exited"]
+[node name="interaction_point2" parent="." groups=["interaction_points"] instance=ExtResource("3_1ao7y")]
+position = Vector2(851, 183)
+minigame = ExtResource("5_pwcjb")

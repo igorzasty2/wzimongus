@@ -13,6 +13,10 @@ func _ready():
 		# Tworzy wszystkich graczy jeden po drugim.
 		for i in MultiplayerManager.current_game["registered_players"]:
 			_add_player(i)
+	var interaction_points = get_tree().get_nodes_in_group("interaction_points")
+	for i in interaction_points:
+		i.character_entered.connect(_on_interaction_point_character_entered)
+		i.character_exited.connect(_on_interaction_point_character_exited)
 
 
 # Tworzy gracza w losowej pozycji na mapie.
