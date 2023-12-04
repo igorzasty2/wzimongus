@@ -1,0 +1,90 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfdk7562ehhtp"]
+
+[ext_resource type="PackedScene" uid="uid://hdbqyphtfste" path="res://scenes/ui/voting_screen/player_box/player_box.tscn" id="1_0ppf1"]
+[ext_resource type="Script" path="res://scenes/ui/voting_screen/voting_screen.gd" id="1_kta77"]
+
+[node name="VotingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kta77")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.219608)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -116.0
+offset_top = 42.0
+offset_right = 134.0
+offset_bottom = 82.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 24
+text = "Who is the Impostor"
+
+[node name="Players" type="GridContainer" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -210.0
+offset_top = 120.0
+offset_right = 210.0
+offset_bottom = 304.0
+grow_horizontal = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="PlayerBox" parent="Background/Players" instance=ExtResource("1_0ppf1")]
+layout_mode = 2
+
+[node name="PlayerBox2" parent="Background/Players" instance=ExtResource("1_0ppf1")]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Background"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 103.0
+offset_top = -129.0
+offset_right = 223.0
+offset_bottom = -85.0
+grow_vertical = 0
+text = "SKIP VOTE"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Background"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -279.0
+offset_top = -129.0
+offset_right = -80.0
+offset_bottom = -103.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Voting ends in: [time]"
+
+[node name="EndVoteTimer" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="EndVoteTimer" to="." method="_on_end_vote_timer_timeout"]

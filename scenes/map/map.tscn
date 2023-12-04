@@ -1,12 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=4 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
+[ext_resource type="PackedScene" uid="uid://dfdk7562ehhtp" path="res://scenes/ui/voting_screen/voting_screen.tscn" id="3_ig4g4"]
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_xvngj")
 PlayerScene = ExtResource("2_0ktid")
+
+[node name="MapUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1155.0
+offset_bottom = 650.0
+
+[node name="VotingScreen" parent="MapUI" instance=ExtResource("3_ig4g4")]
+layout_mode = 1
+offset_left = 147.0
+offset_top = 61.0
+offset_right = -125.0
+offset_bottom = -68.0
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true

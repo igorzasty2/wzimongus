@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://hdbqyphtfste"]
+
+[ext_resource type="Texture2D" uid="uid://bjct6kxmgyau0" path="res://scenes/ui/chat/assets/man.png" id="1_o2nr2"]
+[ext_resource type="Script" path="res://scenes/ui/voting_screen/player_box/player_box.gd" id="1_sv2tq"]
+
+[node name="PlayerBox" type="Control"]
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 48.0
+script = ExtResource("1_sv2tq")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Avatar" type="TextureRect" parent="Panel/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_o2nr2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Username" type="RichTextLabel" parent="Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "[username]"
+fit_content = true
+autowrap_mode = 0
