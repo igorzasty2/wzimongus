@@ -7,10 +7,10 @@ var last_direction_x : float
 # Stała określająca prędkość postaci.
 const SPEED = 300.0
 
-
 @onready var input = $InputSynchronizer
 @onready var animation_tree = $Skins/AltAnimationTree
-@onready var camera = get_parent().get_parent().get_node("Camera2D")
+@onready var camera = get_parent().get_parent().get_node("Camera")
+
 
 func _ready():
 	# Nadaje uprawnienia gracza do sterowania na podstawie jego identyfikatora.
@@ -19,6 +19,7 @@ func _ready():
 	# Aktywuje przetwarzanie wejścia dla sterowanego przez gracza węzła.
 	if input.get_multiplayer_authority() == GameManager.get_current_player_id():
 		GameManager.input_status_changed.connect(_on_input_status_changed)
+		camera.player = self
 	else:
 		input.set_process(false)
 
@@ -30,17 +31,13 @@ func _ready():
 
 	# Inicjalizuje początkowy kierunek postaci.
 	last_direction_x = 1
-	
+
 
 func _process(_delta):
 	# Aktualizuje parametry animacji.
 	_update_animation_parameters()
-	
-	# Aktualizuje pozycję kamery
-	if name.to_int() == GameManager.get_current_player_id():
-		camera.position = position
-	
-	
+
+
 func _physics_process(_delta):
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	direction = Vector2(input.direction.x, input.direction.y)
@@ -79,9 +76,7 @@ func _update_animation_parameters():
 			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x ,direction.y)
 
 
-
 # Ustawia stan przetwarzania wejścia postaci.
 func _on_input_status_changed(state: bool):
 	input.set_process(state)
 	input.direction = Vector2.ZERO
-	

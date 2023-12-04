@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=4 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
+[ext_resource type="Script" path="res://scenes/map/camera.gd" id="3_gwvgv"]
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
@@ -11,7 +12,8 @@ PlayerScene = ExtResource("2_0ktid")
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("3_gwvgv")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
