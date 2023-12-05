@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=30 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
+[ext_resource type="Script" path="res://scenes/map/camera.gd" id="3_gwvgv"]
 [ext_resource type="PackedScene" uid="uid://dnni64h8l6jcd" path="res://scenes/map/scenes/wc.tscn" id="3_nbyec"]
 [ext_resource type="PackedScene" uid="uid://yk57h8tmiha6" path="res://scenes/map/scenes/sala_1.tscn" id="4_dojmv"]
 [ext_resource type="PackedScene" uid="uid://cwjp3351iq2cg" path="res://scenes/map/scenes/sala_2.tscn" id="5_ehcuo"]
@@ -117,10 +118,8 @@ position = Vector2(3038, -441)
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
-spawn_path = NodePath("../Players")
-spawn_limit = 10
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("3_gwvgv")
 
 [node name="TypeLabel" type="Label" parent="."]
 offset_right = 65.0
