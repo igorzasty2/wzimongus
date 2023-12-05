@@ -1,8 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://du4wbambleakw"]
+[gd_scene load_steps=3 format=3 uid="uid://du4wbambleakw"]
 
 [ext_resource type="Texture2D" uid="uid://cpj06qwqaen2k" path="res://scenes/map/assets/corridors/korytarz_chillroom_aula.png" id="1_lpp5y"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8iw7c"]
+size = Vector2(24, 253)
+
 [node name="korytarz_chillroom_aula" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("1_lpp5y")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-188, -0.5)
+shape = SubResource("RectangleShape2D_8iw7c")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(188, 0)
+shape = SubResource("RectangleShape2D_8iw7c")

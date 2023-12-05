@@ -1,8 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://h7j34elcqawo"]
+[gd_scene load_steps=6 format=3 uid="uid://h7j34elcqawo"]
 
 [ext_resource type="Texture2D" uid="uid://dcacy4usw4y7t" path="res://scenes/map/assets/corridors/korytarz_xero_chillroom.png" id="1_y3bol"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3h2cq"]
+size = Vector2(24, 632)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5k6u"]
+size = Vector2(804, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fhna2"]
+size = Vector2(431, 189)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53a82"]
+size = Vector2(24, 238)
+
 [node name="korytarz_xero_chillroom" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("1_y3bol")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-390, 0)
+shape = SubResource("RectangleShape2D_3h2cq")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(0, 304.5)
+shape = SubResource("RectangleShape2D_p5k6u")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(186.5, -172.5)
+shape = SubResource("RectangleShape2D_fhna2")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-17, -197)
+shape = SubResource("RectangleShape2D_53a82")
