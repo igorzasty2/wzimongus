@@ -1,8 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtjxbe3w5aln6"]
+[gd_scene load_steps=3 format=3 uid="uid://dtjxbe3w5aln6"]
 
 [ext_resource type="Texture2D" uid="uid://jl8w7pclpg6s" path="res://scenes/map/assets/samorzad.png" id="1_jvvmb"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ukt6"]
+size = Vector2(1157, 63)
+
 [node name="samorzad" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("1_jvvmb")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Background"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Background/CollisionBox"]
+polygon = PackedVector2Array(-517, 55, -517, -214, -487, -240, 398, -240, 516, -146, 516, 56, 581, 56, 581, -487, -298, -485, -581, -242, -581, 55)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/CollisionBox"]
+position = Vector2(-1.5, 455.5)
+shape = SubResource("RectangleShape2D_4ukt6")

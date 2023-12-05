@@ -4,5 +4,10 @@
 
 [node name="pokoj_wykladowcow" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("1_y06xx")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(-526, 248, -475, 201, -462, -289, 228, -272, 467, -14, 456, 481, -219, 464, -273, 514, 503, 534, 527, -239, 269, -513, -508, -534)

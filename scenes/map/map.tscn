@@ -36,7 +36,7 @@ PlayerScene = ExtResource("2_0ktid")
 [node name="Background" type="Node2D" parent="."]
 
 [node name="wc" parent="Background" instance=ExtResource("3_nbyec")]
-position = Vector2(-182, 1992)
+position = Vector2(72, 1586)
 
 [node name="sala_1" parent="Background" instance=ExtResource("4_dojmv")]
 position = Vector2(1807, -1112)
@@ -45,10 +45,10 @@ position = Vector2(1807, -1112)
 position = Vector2(-2727, -1356)
 
 [node name="sala_3" parent="Background" instance=ExtResource("6_j2fhe")]
-position = Vector2(-2568, -2712)
+position = Vector2(-2569, -2712)
 
 [node name="xero" parent="Background" instance=ExtResource("7_htmn5")]
-position = Vector2(-1428, -325)
+position = Vector2(-1481, -188)
 
 [node name="aula" parent="Background" instance=ExtResource("8_ckisu")]
 position = Vector2(10, -1072)
@@ -57,16 +57,16 @@ position = Vector2(10, -1072)
 position = Vector2(2399, -2368)
 
 [node name="samorzad" parent="Background" instance=ExtResource("11_g3ofr")]
-position = Vector2(1752, 324)
+position = Vector2(1754, 162)
 
 [node name="serwerownia" parent="Background" instance=ExtResource("12_6nmdt")]
 position = Vector2(-1298, -2554)
 
 [node name="dziekanat" parent="Background" instance=ExtResource("13_jctr6")]
-position = Vector2(-2906, 790)
+position = Vector2(-2870, 788)
 
 [node name="chillroom" parent="Background" instance=ExtResource("14_8x6md")]
-position = Vector2(-16, 561)
+position = Vector2(2, 492)
 
 [node name="pielegniarka" parent="Background" instance=ExtResource("15_giha0")]
 position = Vector2(531, -2557)
@@ -78,22 +78,22 @@ position = Vector2(4024, -1720)
 position = Vector2(1046, -1061)
 
 [node name="korytarz_samorzad_bufet" parent="Background" instance=ExtResource("18_lljii")]
-position = Vector2(2928, 281)
+position = Vector2(2926, 281)
 
 [node name="korytarz_chillroom_wc" parent="Background" instance=ExtResource("19_48mvo")]
-position = Vector2(-130, 1456)
+position = Vector2(123, 1065)
 
 [node name="korytarz_sala_2_sala_3" parent="Background" instance=ExtResource("20_oj1hn")]
 position = Vector2(-2707, -2088)
 
 [node name="korytarz_chillroom_aula" parent="Background" instance=ExtResource("21_5jspd")]
-position = Vector2(-17, -47)
+position = Vector2(-17, -94)
 
 [node name="korytarz_xero_chillroom" parent="Background" instance=ExtResource("22_85x4g")]
-position = Vector2(-1119, 466)
+position = Vector2(-1170, 602)
 
 [node name="korytarz_chillroom_samorzad" parent="Background" instance=ExtResource("23_us6c6")]
-position = Vector2(964, 410)
+position = Vector2(974, 317)
 
 [node name="korytarz_dziekanat_sala_2" parent="Background" instance=ExtResource("24_cj2rh")]
 position = Vector2(-2608, -258)
