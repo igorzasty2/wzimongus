@@ -1,12 +1,8 @@
-[gd_scene load_steps=31 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=27 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://scenes/player/input_synchronizer.gd" id="3_3x5pw"]
-[ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="3_tbjki"]
 [ext_resource type="Texture2D" uid="uid://bau8m0wvrashk" path="res://scenes/player/assets/alternatywka/alt_spritesheet.png" id="4_lkot5"]
-[ext_resource type="Texture2D" uid="uid://dl74edcckhnd" path="res://scenes/player/assets/use_button/use1.png" id="5_7mmko"]
-[ext_resource type="Texture2D" uid="uid://cb3uggck81vll" path="res://scenes/player/assets/use_button/use3.png" id="6_mkqyu"]
-[ext_resource type="Texture2D" uid="uid://donjo23ai4rn6" path="res://scenes/player/assets/use_button/use2.png" id="7_qfxfh"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_aer0t"]
 properties/0/path = NodePath(".:id")
@@ -230,48 +226,3 @@ parameters/conditions/idle = false
 parameters/conditions/is_moving = false
 parameters/idle/blend_position = Vector2(-0.992939, 0.982759)
 parameters/walk/blend_position = Vector2(0, 0)
-
-[node name="PauseMenu" parent="." instance=ExtResource("3_tbjki")]
-visible = false
-
-[node name="UseButton" type="TextureButton" parent="."]
-visible = false
-top_level = true
-offset_left = 930.0
-offset_top = 484.0
-offset_right = 1030.0
-offset_bottom = 534.0
-disabled = true
-texture_normal = ExtResource("5_7mmko")
-texture_pressed = ExtResource("6_mkqyu")
-texture_hover = ExtResource("7_qfxfh")
-
-[node name="MinigameContainer" type="SubViewportContainer" parent="."]
-visible = false
-z_index = 15
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -497.0
-offset_top = -269.0
-offset_right = 524.0
-offset_bottom = 274.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-size_flags_stretch_ratio = 0.0
-focus_mode = 2
-mouse_filter = 0
-stretch = true
-
-[node name="MinigameViewport" type="SubViewport" parent="MinigameContainer"]
-transparent_bg = true
-handle_input_locally = false
-physics_object_picking = true
-size = Vector2i(1021, 543)
-render_target_update_mode = 0
-
-[connection signal="pressed" from="UseButton" to="." method="_on_use_button_pressed"]
