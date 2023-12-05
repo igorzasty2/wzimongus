@@ -7,13 +7,14 @@ var last_direction_x : float
 # Stała określająca prędkość postaci.
 const SPEED = 300.0
 
-@onready var input = $InputSynchronizer
+@export var input: InputSynchronizer
+
 @onready var animation_tree = $Skins/AltAnimationTree
 
 
 func _ready():
-	# Nadaje uprawnienia gracza do sterowania na podstawie jego identyfikatora.
-	input.set_multiplayer_authority(name.to_int())
+	if input == null:
+		input = $Input
 
 	# Aktywuje przetwarzanie wejścia dla sterowanego przez gracza węzła.
 	if input.get_multiplayer_authority() == multiplayer.get_unique_id():
@@ -30,13 +31,16 @@ func _ready():
 	# Inicjalizuje początkowy kierunek postaci.
 	last_direction_x = 1
 
+	await get_tree().process_frame
+	$RollbackSynchronizer.process_settings()
+
 
 func _process(_delta):
 	# Aktualizuje parametry animacji.
 	_update_animation_parameters()
 
 
-func _physics_process(_delta):
+func _rollback_tick(delta, _tick, _is_fresh):
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	direction = Vector2(input.direction.x, input.direction.y)
 	direction = direction.normalized()
@@ -54,7 +58,9 @@ func _physics_process(_delta):
 		last_direction_x = direction.x
 
 	# Porusza postacią i obsługuje kolizje.
+	velocity *= NetworkTime.physics_factor
 	move_and_slide()
+	velocity /= NetworkTime.physics_factor
 
 
 # Aktualizuje parametry animacji postaci.
