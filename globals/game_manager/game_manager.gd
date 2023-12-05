@@ -23,7 +23,8 @@ var _current_game = {
 var _current_player = {
 	"username": "",
 	"impostor": false,
-	"died": false
+	"died": false,
+	"voted": false
 }
 
 # Ustawienia serwera gry.
@@ -42,7 +43,8 @@ var _player_hidden = ["impostor"]
 # Predefiniowane atrybuty gracza.
 var _player_attributes = {
 	"impostor": false,
-	"died": false
+	"died": false,
+	"voted": false
 }
 
 
@@ -139,6 +141,7 @@ func end_game():
 	_current_player["username"] = ""
 	_current_player["impostor"] = false
 	_current_player["died"] = false
+	_current_player["voted"] = false
 
 	# Obsługuje zakończenie gry.
 	_handle_error()
