@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-# Kierunek ruchu postaci.
-var direction: Vector2 = Vector2.ZERO
 # Ostatni kierunek ruchu postaci na osi X.
 var last_direction_x: float = 1
 # Stała określająca prędkość postaci.
@@ -29,25 +27,14 @@ func _ready():
 
 func _process(_delta):
 	# Aktualizuje parametry animacji.
-	_update_animation_parameters()
+	var direction = input.direction.normalized()
+
+	_update_animation_parameters(direction)
 
 
-func _rollback_tick(delta, _tick, _is_fresh):
+func _rollback_tick(_delta, _tick, _is_fresh):
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
-	direction = Vector2(input.direction.x, input.direction.y)
-	direction = direction.normalized()
-
-	# Ustawia prędkość postaci zgodnie z obliczonym kierunkiem.
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.y = direction.y * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.y = move_toward(velocity.y, 0, SPEED)
-
-	# Zapisuje ostatni kierunek ruchu postaci.
-	if direction.x != 0:
-		last_direction_x = direction.x
+	velocity = input.direction.normalized() * SPEED
 
 	# Porusza postacią i obsługuje kolizje.
 	velocity *= NetworkTime.physics_factor
@@ -56,9 +43,9 @@ func _rollback_tick(delta, _tick, _is_fresh):
 
 
 # Aktualizuje parametry animacji postaci.
-func _update_animation_parameters():
+func _update_animation_parameters(direction):
 	# Ustawia parametry animacji w zależności od stanu ruchu.
-	if velocity == Vector2.ZERO:
+	if direction == Vector2.ZERO:
 		animation_tree["parameters/conditions/idle"] = true
 		animation_tree["parameters/conditions/is_moving"] = false
 	else:
@@ -67,6 +54,7 @@ func _update_animation_parameters():
 		if direction.x != 0:
 			animation_tree["parameters/idle/blend_position"] = direction
 			animation_tree["parameters/walk/blend_position"] = direction
-		if direction.x == 0:
+			last_direction_x = direction.x
+		else:
 			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, direction.y)
 			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, direction.y)
