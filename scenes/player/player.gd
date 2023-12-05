@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 # Kierunek ruchu postaci.
-var direction : Vector2 = Vector2.ZERO
+var direction: Vector2 = Vector2.ZERO
 # Ostatni kierunek ruchu postaci na osi X.
-var last_direction_x : float
+var last_direction_x: float = 1
 # Stała określająca prędkość postaci.
 const SPEED = 300.0
 
@@ -16,23 +16,15 @@ func _ready():
 	if input == null:
 		input = $Input
 
-	# Aktywuje przetwarzanie wejścia dla sterowanego przez gracza węzła.
-	if input.get_multiplayer_authority() == multiplayer.get_unique_id():
-		GameManager.input_status_changed.connect(_on_input_status_changed)
-	else:
-		input.set_process(false)
+	await get_tree().process_frame
+
+	$RollbackSynchronizer.process_settings()
 
 	# Ustawia nazwę użytkownika w etykiecie.
 	$UsernameLabel.text = GameManager.get_registered_player_key(name.to_int(), "username")
 
 	# Aktywuje drzewo animacji postaci.
 	animation_tree.active = true
-
-	# Inicjalizuje początkowy kierunek postaci.
-	last_direction_x = 1
-
-	await get_tree().process_frame
-	$RollbackSynchronizer.process_settings()
 
 
 func _process(_delta):
@@ -76,11 +68,5 @@ func _update_animation_parameters():
 			animation_tree["parameters/idle/blend_position"] = direction
 			animation_tree["parameters/walk/blend_position"] = direction
 		if direction.x == 0:
-			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x ,direction.y)
-			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x ,direction.y)
-
-
-# Ustawia stan przetwarzania wejścia postaci.
-func _on_input_status_changed(state: bool):
-	input.set_process(state)
-	input.direction = Vector2.ZERO
+			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, direction.y)
+			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, direction.y)
