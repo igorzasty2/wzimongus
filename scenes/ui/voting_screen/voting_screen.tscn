@@ -35,16 +35,17 @@ text = "Who is the Impostor"
 
 [node name="Players" type="GridContainer" parent="Background"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -210.0
-offset_top = -92.0
-offset_right = 210.0
-offset_bottom = 92.0
+anchors_preset = -1
+anchor_left = 0.162
+anchor_top = 0.171
+anchor_right = 0.859
+anchor_bottom = 0.676
+offset_left = 0.376007
+offset_top = 0.192001
+offset_right = -0.568054
+offset_bottom = -0.0480347
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 20
@@ -75,7 +76,7 @@ anchor_bottom = 1.0
 offset_left = 35.0
 offset_top = -119.0
 offset_right = 278.0
-offset_bottom = -13.0
+offset_bottom = -33.0
 grow_vertical = 0
 
 [node name="SkipButton" type="Button" parent="Background/SkipDecision"]
@@ -105,6 +106,12 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "NO"
 
+[node name="EndVotingTimer" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+autostart = true
+
 [connection signal="pressed" from="Background/SkipDecision/SkipButton" to="." method="_on_skip_button_pressed"]
 [connection signal="pressed" from="Background/SkipDecision/Decision/DecisionYes" to="." method="_on_decision_yes_pressed"]
 [connection signal="pressed" from="Background/SkipDecision/Decision/DecisionNo" to="." method="_on_decision_no_pressed"]
+[connection signal="timeout" from="EndVotingTimer" to="." method="_on_end_voting_timer_timeout"]

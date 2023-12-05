@@ -17,10 +17,10 @@ offset_bottom = 650.0
 
 [node name="VotingScreen" parent="MapUI" instance=ExtResource("3_ig4g4")]
 layout_mode = 1
-offset_left = 147.0
-offset_top = 61.0
-offset_right = -125.0
-offset_bottom = -68.0
+offset_left = 62.0
+offset_top = 18.0
+offset_right = -41.0
+offset_bottom = -35.0
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true

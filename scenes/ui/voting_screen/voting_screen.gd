@@ -26,16 +26,6 @@ func _process(delta):
 
 		end_vote_text.text = "Voting ends in " + time_passed + " seconds"
 
-	if secs == 0:
-		if GameManager.get_current_player_key("voted"):
-			GameManager.set_player_key("voted", true)
-		end_vote_text.text = "Voting has ended"
-
-		for child in players.get_children():
-			child.queue_free()
-		
-		_render_player_boxes()
-
 
 func _on_player_voted(voted_player_key):
 	GameManager.set_player_key("voted", true)
@@ -66,3 +56,14 @@ func _render_player_boxes():
 
 		new_player_box.init(registered_players[key].username, key)
 		new_player_box.connect("player_voted", _on_player_voted)
+
+
+func _on_end_voting_timer_timeout():
+	if GameManager.get_current_player_key("voted"):
+		GameManager.set_player_key("voted", true)
+		end_vote_text.text = "Voting has ended"
+
+		for child in players.get_children():
+			child.queue_free()
+		
+		_render_player_boxes()
