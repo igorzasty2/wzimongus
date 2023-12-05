@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtke4a6qdlm03"]
+
+[ext_resource type="Texture2D" uid="uid://fy7dbjxbwilr" path="res://scenes/map/assets/corridors/korytarz_sala_2_serwerownia_aula.png" id="1_go5ct"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_towk8"]
+size = Vector2(1249, 26)
+
+[node name="korytarz_sala_2_serwerownia_aula" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_go5ct")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(-124, -447, -124, 50, -625, 50, -625, -138, -148, -138, -148, -447)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(225, -447, 225, 50, 624, 49, 624, -138, 248, -138, 248, -447)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-0.5, 434)
+shape = SubResource("RectangleShape2D_towk8")
