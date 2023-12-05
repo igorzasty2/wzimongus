@@ -15,11 +15,6 @@ y_sort_enabled = true
 [node name="Camera" type="Camera2D" parent="."]
 script = ExtResource("3_gwvgv")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
-spawn_path = NodePath("../Players")
-spawn_limit = 10
-
 [node name="TypeLabel" type="Label" parent="."]
 offset_right = 65.0
 offset_bottom = 23.0
