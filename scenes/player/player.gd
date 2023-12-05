@@ -19,9 +19,6 @@ func _ready():
 
 	$RollbackSynchronizer.process_settings()
 
-	if input.get_multiplayer_authority() == GameManager.get_current_player_id():
-		camera.player = self
-
 	# Ustawia nazwę użytkownika w etykiecie.
 	$UsernameLabel.text = GameManager.get_registered_player_key(name.to_int(), "username")
 

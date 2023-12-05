@@ -35,6 +35,9 @@ func _add_player(id: int):
 	var input = player.find_child("Input")
 	if input != null:
 		input.set_multiplayer_authority(id)
+	
+	if id == GameManager.get_current_player_id():
+		$Camera.player = player
 
 
 # Usuwa gracza z mapy.
