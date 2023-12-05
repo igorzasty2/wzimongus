@@ -8,6 +8,7 @@ const SPEED = 300.0
 @export var input: InputSynchronizer
 
 @onready var animation_tree = $Skins/AltAnimationTree
+@onready var camera = get_parent().get_parent().get_node("Camera")
 
 
 func _ready():
@@ -17,6 +18,9 @@ func _ready():
 	await get_tree().process_frame
 
 	$RollbackSynchronizer.process_settings()
+
+	if input.get_multiplayer_authority() == GameManager.get_current_player_id():
+		camera.player = self
 
 	# Ustawia nazwę użytkownika w etykiecie.
 	$UsernameLabel.text = GameManager.get_registered_player_key(name.to_int(), "username")

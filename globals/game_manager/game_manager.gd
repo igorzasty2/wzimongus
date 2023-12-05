@@ -204,6 +204,9 @@ func _on_player_disconnected(id:int):
 	# Wyrejestrowuje gracza.
 	_delete_deregistered_player.rpc(id)
 
+# Zwraca unikalny id gracza
+func get_current_player_id():
+	return multiplayer.get_unique_id()
 
 # Obsługuje połączenie z serwerem u klienta.
 func _on_connected():
