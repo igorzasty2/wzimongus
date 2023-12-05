@@ -70,6 +70,8 @@ func create_game(port:int, max_players:int):
 		# Rejestruje hosta jako gracza.
 		_add_registered_player(1, _current_player)
 
+		NetworkTime.start()
+
 		# Przechodzi do lobby.
 		_enter_lobby()
 	else:
@@ -85,6 +87,8 @@ func join_game(address:String, port:int):
 
 	if status == OK:
 		multiplayer.multiplayer_peer = peer
+
+		NetworkTime.start()
 	else:
 		# Obsługuje błąd połączenia.
 		_handle_error()
@@ -128,7 +132,10 @@ func _send_impostor_status(impostors):
 
 # Kończy grę.
 func end_game():
-	multiplayer.multiplayer_peer = null
+	multiplayer.multiplayer_peer.close()
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+
+	NetworkTime.stop()
 
 	# Resetuje stan gry.
 	_current_game["started"] = false
