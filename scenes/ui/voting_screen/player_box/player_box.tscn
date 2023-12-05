@@ -63,37 +63,11 @@ fit_content = true
 autowrap_mode = 0
 
 [node name="VotedBy" type="HBoxContainer" parent="VBoxContainer/Panel/Player"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 alignment = 2
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Panel/Player/VotedBy"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("1_o2nr2")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/Panel/Player/VotedBy"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("1_o2nr2")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/Panel/Player/VotedBy"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("1_o2nr2")
-expand_mode = 1
-stretch_mode = 4
 
 [node name="Button" type="Button" parent="VBoxContainer/Panel"]
 layout_mode = 1

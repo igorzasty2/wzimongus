@@ -1,7 +1,5 @@
 extends Control
 
-@onready var registered_players = GameManager.get_registered_players()
-
 @onready var players = get_node("%Players")
 @onready var end_vote_text = get_node("%EndVoteText")
 @onready var skip_decision = get_node("%Decision")
@@ -28,12 +26,18 @@ func _process(delta):
 
 
 func _on_player_voted(voted_player_key):
+	skip_button.disabled = true
 	GameManager.set_player_key("voted", true)
+	add_player_vote.rpc(voted_player_key)
+
+@rpc("call_local", "any_peer")
+func add_player_vote(player_key):
+	GameManager.add_vote(player_key, multiplayer.get_unique_id())
 
 
 func _on_skip_button_pressed():
 
-	if GameManager.get_current_player_key("voted"):
+	if GameManager.get_current_player_key("voted_for"):
 		return
 
 	skip_decision.visible = true
@@ -50,20 +54,27 @@ func _on_decision_no_pressed():
 
 
 func _render_player_boxes():
+
+	var registered_players = GameManager.get_registered_players()
+
+	var votes = GameManager.get_votes()
+
 	for key in registered_players.keys():
 		var new_player_box = player_box.instantiate()
 		players.add_child(new_player_box)
 
-		new_player_box.init(registered_players[key].username, key)
+		var player_votes = votes[key] if key in votes else []
+		new_player_box.init(registered_players[key].username, key, player_votes)
 		new_player_box.connect("player_voted", _on_player_voted)
 
 
 func _on_end_voting_timer_timeout():
 	if GameManager.get_current_player_key("voted"):
-		GameManager.set_player_key("voted", true)
-		end_vote_text.text = "Voting has ended"
+		GameManager.set_player_key("voted_for", true)
 
-		for child in players.get_children():
-			child.queue_free()
+	end_vote_text.text = "Voting has ended"
+
+	for child in players.get_children():
+		child.queue_free()
 		
-		_render_player_boxes()
+	_render_player_boxes()

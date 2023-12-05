@@ -19,6 +19,9 @@ var _current_game = {
 	"registered_players": {}
 }
 
+# Zawiera informacje o głosach
+var _votes = {}
+
 # Przechowuje dane aktualnego gracza.
 var _current_player = {
 	"username": "",
@@ -44,7 +47,7 @@ var _player_hidden = ["impostor"]
 var _player_attributes = {
 	"impostor": false,
 	"died": false,
-	"voted": false
+	"voted_for": false
 }
 
 
@@ -154,6 +157,16 @@ func get_current_game_key(key:String):
 
 	return null
 
+#Zwraca tablicę głosów
+func get_votes():
+	return _votes
+
+#Dodaje głos do tablicy głosów
+func add_vote(id:int, voted_by:int):
+	if _votes.has(id):
+		_votes[id].append(voted_by)
+	else:
+		_votes[id] = [voted_by]
 
 # Zwraca zarejestrowanych graczy.
 func get_registered_players():
