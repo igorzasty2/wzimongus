@@ -12,7 +12,7 @@ var minigame: PackedScene
 var minigame_instance:Node2D
 
 @onready var minigame_container = get_parent().get_parent().get_node("Camera2D").get_node("MinigameContainer")
-@onready var use_button = get_parent().get_parent().get_node("Camera2D").get_node("UseButton")
+@onready var use_button:TextureButton = get_parent().get_parent().get_node("Camera2D").get_node("UseButton")
 @onready var input = $InputSynchronizer
 @onready var animation_tree = $Skins/AltAnimationTree
 @onready var camera = get_parent().get_parent().get_node("Camera2D")
@@ -95,11 +95,12 @@ func hide_use_button(id):
 
 func _on_use_button_pressed():
 	if minigame != null:
+		print(use_button.focus_mode)
 		summon_window()
 
 
 func _input(event):
-	if event.is_action_pressed("interact") && minigame != null:
+	if event.is_action_pressed("interact") && minigame != null && !use_button.disabled:
 		summon_window()
 
 func summon_window():

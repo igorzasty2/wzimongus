@@ -34,10 +34,12 @@ minigame = ExtResource("5_pwcjb")
 
 [node name="UseButton" type="TextureButton" parent="Camera2D"]
 visible = false
+z_index = 15
 offset_left = 362.0
 offset_top = 111.0
 offset_right = 462.0
 offset_bottom = 161.0
+focus_mode = 0
 disabled = true
 texture_normal = ExtResource("6_ax5vx")
 texture_pressed = ExtResource("7_vye6l")
