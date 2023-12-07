@@ -129,6 +129,11 @@ position_smoothing_enabled = true
 position_smoothing_speed = 9.0
 script = ExtResource("3_gwvgv")
 
+[node name="Timer" type="Timer" parent="Camera"]
+one_shot = true
+
 [node name="TypeLabel" type="Label" parent="."]
 offset_right = 65.0
 offset_bottom = 23.0
+
+[connection signal="timeout" from="Camera/Timer" to="Camera" method="_on_timer_timeout"]
