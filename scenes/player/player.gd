@@ -3,7 +3,7 @@ extends CharacterBody2D
 # Ostatni kierunek ruchu postaci na osi X.
 var last_direction_x: float = 1
 # Stała określająca prędkość postaci.
-const SPEED = 300.0
+const SPEED = 600.0
 
 @export var input: InputSynchronizer
 
