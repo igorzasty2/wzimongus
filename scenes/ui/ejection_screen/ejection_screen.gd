@@ -4,35 +4,31 @@ extends Control
 @onready var votes = GameManager.get_votes()
 
 func _ready():
-	var vote_count = _count_votes()
-	var max_votes = 0
-	var max_vote = ""
+	var most_voted_player_id
+	var max_vote = 0
+	var prev_max_vote = 0
 	var is_tie = false
 
-	for vote in vote_count:
-		if vote_count[vote] > max_votes:
-			max_votes = vote_count[vote]
-			max_vote = vote
+	for vote_key in votes.keys():
+		var votes_count = votes[vote_key].size()
+		if votes_count > max_vote:
+			max_vote = votes_count
+			most_voted_player_id = vote_key
 			is_tie = false
-		elif vote_count[vote] == max_votes:
+		elif votes_count == max_vote and votes_count != prev_max_vote:
 			is_tie = true
 
+		prev_max_vote = votes_count
+
+
 	if is_tie:
-		max_vote = ""
+		most_voted_player_id = ""
 	
 	if str(max_vote) == "":
 		ejection_message.text = "No one was ejected."
-	elif(GameManager.get_registered_player_key(max_vote, 'impostor')):
-		ejection_message.text = GameManager.get_registered_player_key(max_vote, 'username') + " was ejected."
+	elif(GameManager.get_registered_player_key(most_voted_player_id, 'impostor')):
+		ejection_message.text = GameManager.get_registered_player_key(most_voted_player_id, 'username') + " was ejected."
 	else:
-		ejection_message.text = GameManager.get_registered_player_key(max_vote, 'username') + " was not an impostor."
+		ejection_message.text = GameManager.get_registered_player_key(most_voted_player_id, 'username') + " was not an impostor."
 		
 
-func _count_votes():
-	var vote_count = {}
-	for vote in votes:
-		if vote in vote_count:
-			vote_count[vote] += 1
-		else:
-			vote_count[vote] = 1
-	return vote_count
