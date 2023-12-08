@@ -5,6 +5,12 @@ extends Control
 @onready var skip_decision = get_node("%Decision")
 @onready var skip_button = get_node("%SkipButton")
 
+@export var VOTING_TIME = 60
+@onready var voting_timer = Timer.new()
+
+@export var EJECT_PLAYER_TIME = 5
+@onready var eject_player_timer = Timer.new()
+
 var player_box = preload("res://scenes/ui/voting_screen/player_box/player_box.tscn")
 
 var time = 0
@@ -13,15 +19,23 @@ var secs
 func _ready():
 	_render_player_boxes()
 
+	#End voting timer
+	add_child(voting_timer)
+	voting_timer.autostart = true
+	voting_timer.one_shot = true
+	voting_timer.connect("timeout", _on_end_voting_timer_timeout)
+	voting_timer.start(VOTING_TIME)
+
+	#Eject player timer
+	add_child(eject_player_timer)
+	eject_player_timer.connect("timeout", _on_eject_player_timer_timeout)
+
+
 func _process(delta):
-	if time < 60:
-
+	if time < VOTING_TIME:
 		time += delta
-
-		secs = 60 - fmod(time, 60)
-
+		secs = VOTING_TIME - fmod(time, VOTING_TIME)
 		var time_passed = "%02d" % (secs)
-
 		end_vote_text.text = "Voting ends in " + time_passed + " seconds"
 
 
@@ -29,6 +43,7 @@ func _on_player_voted(voted_player_key):
 	skip_button.disabled = true
 	GameManager.set_player_key("voted", true)
 	add_player_vote.rpc(voted_player_key)
+
 
 @rpc("call_local", "any_peer")
 func add_player_vote(player_key):
@@ -78,3 +93,14 @@ func _on_end_voting_timer_timeout():
 		child.queue_free()
 		
 	_render_player_boxes()
+
+	eject_player_timer.start(EJECT_PLAYER_TIME)
+
+
+func _on_eject_player_timer_timeout():
+	_change_scene_to_ejection_screen.rpc()
+
+@rpc("call_local", "any_peer")
+func _change_scene_to_ejection_screen():
+	get_tree().change_scene_to_file("res://scenes/ui/ejection_screen/ejection_screen.tscn")
+	self.queue_free()
