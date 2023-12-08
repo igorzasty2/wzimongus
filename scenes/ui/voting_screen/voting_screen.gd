@@ -42,12 +42,12 @@ func _process(delta):
 func _on_player_voted(voted_player_key):
 	skip_button.disabled = true
 	GameManager.set_player_key("voted", true)
-	add_player_vote.rpc(voted_player_key)
+	add_player_vote.rpc(voted_player_key, multiplayer.get_unique_id())
 
 
 @rpc("call_local", "any_peer")
-func add_player_vote(player_key):
-	GameManager.add_vote(player_key, multiplayer.get_unique_id())
+func add_player_vote(player_key, voted_by):
+	GameManager.add_vote(player_key, voted_by)
 
 
 func _on_skip_button_pressed():
