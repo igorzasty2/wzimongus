@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://gk1uab4ii8k1"]
+
+[ext_resource type="Texture2D" uid="uid://qi0k20xerdyv" path="res://scenes/map/assets/pielegniarka.png" id="1_0s44i"]
+
+[node name="pielegniarka" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_0s44i")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(-715, -191, -715, -279, 715, -279, 715, -53, 773, -53, 774, -562, -554, -562, -771, -319, -771, -191)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(-714, 180, -715, 505, 511, 501, 716, 306, 716, 299, 772, 299, 773, 325, 541, 561, -773, 562, -772, 180)

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcglaee2jl12o"]
+
+[ext_resource type="Texture2D" uid="uid://def87bfclqma8" path="res://scenes/map/assets/corridors/korytarz_samorzad_bufet.png" id="1_o5sw8"]
+
+[node name="korytarz_samorzad_bufet" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_o5sw8")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(571, -332, 568, 308, -595, 308, -595, 332, 595, 332, 595, -332)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(222, -332, 222, -59, -595, -59, -595, -252, 198, -252, 198, -332)
