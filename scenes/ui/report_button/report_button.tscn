@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://r6y42aeh1ep3"]
+
+[ext_resource type="Script" path="res://scenes/ui/report_button/report_button.gd" id="1_no2se"]
+
+[node name="report_button" type="Button"]
+anchors_preset = -1
+anchor_right = 0.216
+anchor_bottom = 0.087
+offset_right = 0.519989
+offset_bottom = 0.359997
+grow_horizontal = 2
+grow_vertical = 2
+text = "REPORT"
+script = ExtResource("1_no2se")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
