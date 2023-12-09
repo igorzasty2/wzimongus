@@ -130,6 +130,7 @@ offset_bottom = 23.0
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="report_button" parent="CanvasLayer" instance=ExtResource("30_202s1")]
+unique_name_in_owner = true
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0

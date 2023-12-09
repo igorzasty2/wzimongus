@@ -12,7 +12,6 @@ offset_bottom = -82.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kta77")
-VOTING_TIME = 10
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -38,7 +37,7 @@ offset_right = 134.0
 offset_bottom = 82.0
 grow_horizontal = 2
 theme_override_font_sizes/normal_font_size = 24
-text = "Who is the Impostor"
+text = "Who is the Impostor?"
 
 [node name="Players" type="GridContainer" parent="Background"]
 unique_name_in_owner = true
@@ -62,18 +61,16 @@ columns = 2
 [node name="EndVoteText" type="RichTextLabel" parent="Background"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -279.0
-offset_top = -129.0
-offset_right = -80.0
-offset_bottom = -103.0
+anchors_preset = -1
+anchor_left = 0.753968
+anchor_top = 0.810345
+anchor_right = 0.929453
+anchor_bottom = 0.851097
 grow_horizontal = 0
 grow_vertical = 0
+bbcode_enabled = true
 text = "Voting ends in: [time]"
+metadata/_edit_use_anchors_ = true
 
 [node name="SkipDecision" type="VBoxContainer" parent="Background"]
 layout_mode = 1
