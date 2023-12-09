@@ -42,8 +42,10 @@ func _ready():
 func _on_body_entered(body):
 	print("yo")
 	if "id" in body and body.id == multiplayer.get_unique_id() and not disabled:
+		body.id
 		_is_player_inside = true
 		sprite_node.material.set_shader_parameter('line_color', _in_range_task_color)
+		body.show_use_button(body.id, minigame_scene)
 		TaskManager.current_task_id = task_id
 
 
@@ -53,6 +55,7 @@ func _on_body_exited(body):
 	if "id" in body and body.id == multiplayer.get_unique_id() and not disabled:
 		_is_player_inside = false
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
+		body.hide_use_button(body.id)		
 		TaskManager.current_task_id = null
 
 
