@@ -10,7 +10,7 @@ func _ready():
 
 func _on_host_button_button_down():
 	# Ustawia nazwę użytkownika i maksymalną liczbę połączeń w MultiplayerManager.
-	MultiplayerManager.set_player_property("username", $UsernameInput.text)
+	MultiplayerManager.set_player_info("username", $UsernameInput.text)
 
 	# Tworzy grę o określonym porcie i maksymalnej liczbie połączeń w MultiplayerManager.
 	MultiplayerManager.create_game($PortInput.text.to_int(), $MaxConnectionsInput.text.to_int())
