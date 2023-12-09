@@ -55,7 +55,7 @@ func _on_body_exited(body):
 	if "id" in body and body.id == multiplayer.get_unique_id() and not disabled:
 		_is_player_inside = false
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
-		body.hide_use_button(body.id)		
+		body.hide_use_button(body.id)
 		TaskManager.current_task_id = null
 
 
@@ -73,3 +73,5 @@ func disable_task():
 #	body_exited.disconnect(_on_body_exited)
 	sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
 	sprite_node.material.set_shader_parameter('line_thickness', _disabled_line_thickness)
+#	task_id = null
+	disabled = true

@@ -16,10 +16,10 @@ func _ready():
 		
 		# Losuje taski wszystkim graczom
 		TaskManager.assign_tasks_server(1)
-	var interaction_points = get_tree().get_nodes_in_group("interaction_points")
-	for i in interaction_points:
-		i.character_entered.connect(_on_interaction_point_character_entered)
-		i.character_exited.connect(_on_interaction_point_character_exited)
+#	var interaction_points = get_tree().get_nodes_in_group("interaction_points")
+#	for i in interaction_points:
+#		i.character_entered.connect(_on_interaction_point_character_entered)
+#		i.character_exited.connect(_on_interaction_point_character_exited)
 
 
 # Tworzy gracza w losowej pozycji na mapie.
@@ -43,11 +43,11 @@ func _remove_player(id):
 		$Players.get_node(str(id)).queue_free()
 
 
-func _on_interaction_point_character_entered(character, minigame):
-	if $Players.has_node(str(character.id)):
-		$Players.get_node(str(character.id)).show_use_button(character.id, minigame)
-
-
-func _on_interaction_point_character_exited(character):
-	if $Players.has_node(str(character.id)):
-		$Players.get_node(str(character.id)).hide_use_button(character.id)
+#func _on_interaction_point_character_entered(character, minigame):
+#	if $Players.has_node(str(character.id)):
+#		$Players.get_node(str(character.id)).show_use_button(character.id, minigame)
+#
+#
+#func _on_interaction_point_character_exited(character):
+#	if $Players.has_node(str(character.id)):
+#		$Players.get_node(str(character.id)).hide_use_button(character.id)

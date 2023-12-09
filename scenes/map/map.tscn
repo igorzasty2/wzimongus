@@ -1,15 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=11 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
-[ext_resource type="PackedScene" uid="uid://1jgb32vu3lvr" path="res://scenes/map/scenes/interaction_points/interaction_point.tscn" id="3_1ao7y"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/task_button/task_button.tscn" id="3_e0rk4"]
 [ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="4_6s3my"]
 [ext_resource type="Texture2D" uid="uid://dj1dqmbh77gan" path="res://scenes/task_button/assets/wifi.png" id="4_wgy3w"]
-[ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_u6l5w"]
-[ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="6_slh3o"]
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_pwcjb"]
 [ext_resource type="Texture2D" uid="uid://dl74edcckhnd" path="res://scenes/player/assets/use_button/use1.png" id="6_ax5vx"]
+[ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="6_slh3o"]
 [ext_resource type="Texture2D" uid="uid://cb3uggck81vll" path="res://scenes/player/assets/use_button/use3.png" id="7_vye6l"]
 [ext_resource type="Texture2D" uid="uid://donjo23ai4rn6" path="res://scenes/player/assets/use_button/use2.png" id="8_byjce"]
 
@@ -31,21 +29,12 @@ spawn_limit = 10
 [node name="TaskButton" parent="Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(214, 208)
 sprite = ExtResource("4_wgy3w")
-minigame_scene = ExtResource("5_u6l5w")
+minigame_scene = ExtResource("5_pwcjb")
 
 [node name="TaskButton2" parent="Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(650, 149)
 sprite = ExtResource("6_slh3o")
 minigame_scene = ExtResource("4_6s3my")
-
-[node name="interaction_point" parent="." instance=ExtResource("3_1ao7y")]
-[node name="interaction_point" parent="." groups=["interaction_points"] instance=ExtResource("3_1ao7y")]
-position = Vector2(275, 166)
-minigame = ExtResource("4_6s3my")
-
-[node name="interaction_point2" parent="." groups=["interaction_points"] instance=ExtResource("3_1ao7y")]
-position = Vector2(851, 183)
-minigame = ExtResource("5_pwcjb")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

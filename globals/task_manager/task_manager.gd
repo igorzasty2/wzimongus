@@ -21,9 +21,11 @@ var tasks_player = {}
 func mark_task_as_complete_player():
 	# Usuwa zadanie z listy zadań bieżącego gracza.
 	var player_id = multiplayer.get_unique_id()
+	tasks_player[current_task_id].disable_task()
 	tasks_player.erase(current_task_id)
 
 	mark_task_as_complete_server.rpc_id(1, player_id, current_task_id)
+	current_task_id = null
 
 
 # Usuwa task z serwerowego słownika tasków.
@@ -80,10 +82,3 @@ func assign_tasks_player(tasks):
 		var task = get_node(tasks[i].get_path())
 		task.enable_task(i)
 		tasks_player[i] = task
-
-
-func _input(event):
-	if event.is_action_pressed("interact"):
-		if TaskManager.current_task_id != null:
-			get_tree().change_scene_to_packed(tasks_player[current_task_id].minigame_scene)
-			

@@ -120,3 +120,4 @@ func end_minigame():
 	minigame_instance.queue_free()
 	minigame_container.visible = false
 	MultiplayerManager.set_input_state(true)
+	TaskManager.mark_task_as_complete_player()
