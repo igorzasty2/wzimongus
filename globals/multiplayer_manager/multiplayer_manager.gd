@@ -112,7 +112,7 @@ func set_pause_state(paused:bool):
 
 # Funkcja pozwalająca na wyłączenie sterowania.
 func set_input_state(state:bool):
-	current_game["input_disabled"] = state
+	current_game["input_disabled"] = !state
 	input_state_changed.emit(!current_game["paused"] && !current_game["input_disabled"])
 
 

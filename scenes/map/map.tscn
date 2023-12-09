@@ -8,6 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://dj1dqmbh77gan" path="res://scenes/task_button/assets/wifi.png" id="4_wgy3w"]
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_u6l5w"]
 [ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="6_slh3o"]
+[ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_pwcjb"]
+[ext_resource type="Texture2D" uid="uid://dl74edcckhnd" path="res://scenes/player/assets/use_button/use1.png" id="6_ax5vx"]
+[ext_resource type="Texture2D" uid="uid://cb3uggck81vll" path="res://scenes/player/assets/use_button/use3.png" id="7_vye6l"]
+[ext_resource type="Texture2D" uid="uid://donjo23ai4rn6" path="res://scenes/player/assets/use_button/use2.png" id="8_byjce"]
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
@@ -35,8 +39,55 @@ sprite = ExtResource("6_slh3o")
 minigame_scene = ExtResource("4_6s3my")
 
 [node name="interaction_point" parent="." instance=ExtResource("3_1ao7y")]
+[node name="interaction_point" parent="." groups=["interaction_points"] instance=ExtResource("3_1ao7y")]
 position = Vector2(275, 166)
 minigame = ExtResource("4_6s3my")
 
-[connection signal="character_entered" from="interaction_point" to="." method="_on_interaction_point_character_entered"]
-[connection signal="character_exited" from="interaction_point" to="." method="_on_interaction_point_character_exited"]
+[node name="interaction_point2" parent="." groups=["interaction_points"] instance=ExtResource("3_1ao7y")]
+position = Vector2(851, 183)
+minigame = ExtResource("5_pwcjb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="UseButton" type="TextureButton" parent="Camera2D"]
+visible = false
+z_index = 15
+offset_left = 362.0
+offset_top = 111.0
+offset_right = 462.0
+offset_bottom = 161.0
+focus_mode = 0
+disabled = true
+texture_normal = ExtResource("6_ax5vx")
+texture_pressed = ExtResource("7_vye6l")
+texture_hover = ExtResource("8_byjce")
+
+[node name="MinigameContainer" type="SubViewportContainer" parent="Camera2D"]
+visible = false
+z_index = 15
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -497.0
+offset_top = -269.0
+offset_right = 524.0
+offset_bottom = 274.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+focus_mode = 2
+mouse_filter = 0
+stretch = true
+
+[node name="MinigameViewport" type="SubViewport" parent="Camera2D/MinigameContainer"]
+transparent_bg = true
+handle_input_locally = false
+physics_object_picking = true
+size = Vector2i(1021, 543)
+render_target_update_mode = 0
+
+[connection signal="pressed" from="Camera2D/UseButton" to="." method="_on_use_button_pressed"]

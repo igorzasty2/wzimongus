@@ -1,5 +1,7 @@
 extends Node2D
 
+signal minigame_end
+
 # Tablica przechowująca sekwencję
 var sequence = []
 
@@ -65,7 +67,7 @@ func player_pressed(name):
 		
 		# Sprawdzenie, czy gracz rozwiązał 3 sekwencje (numerowane od 0 do 3)
 		if (current_solved == 3 and player_button_count == 4):
-			print("task completed")
+			minigame_end.emit()
 		
 		# Sprawdzenie, czy gracz rozwiązał całą sekwencję
 		if (player_button_count > current_solved):

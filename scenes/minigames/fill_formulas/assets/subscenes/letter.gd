@@ -26,6 +26,9 @@ func _ready():
 
 
 func _process(delta):
+	if MultiplayerManager.get_current_game_info("paused"):
+		return_to_orig_pos()
+		return
 	# Przypisanie często używanej funkcji do zmiennej w celu skrócenia kodu
 	var mouse_position:Vector2 = get_viewport().get_mouse_position()
 	# sprawdza czy pole powinno być w danym momencie poruszane, zwraca true jeśli
