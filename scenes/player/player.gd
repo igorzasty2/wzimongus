@@ -13,6 +13,7 @@ var minigame_instance:Node2D
 
 @onready var minigame_container = get_parent().get_parent().get_node("Camera2D").get_node("MinigameContainer")
 @onready var use_button:TextureButton = get_parent().get_parent().get_node("Camera2D").get_node("UseButton")
+@onready var close_button:TextureButton = get_parent().get_parent().get_node("Camera2D").get_node("CloseButton")
 @onready var input = $InputSynchronizer
 @onready var animation_tree = $Skins/AltAnimationTree
 @onready var camera = get_parent().get_parent().get_node("Camera2D")
@@ -32,6 +33,7 @@ func _ready():
 	animation_tree.active = true
 	last_direction_x = 1
 	use_button.pressed.connect(_on_use_button_pressed)
+	close_button.pressed.connect(close_minigame)
 
 
 func _process(_delta):
@@ -115,9 +117,18 @@ func summon_window():
 	use_button.disabled = true
 	MultiplayerManager.set_input_state(false)
 	minigame_instance.minigame_end.connect(end_minigame)
+	close_button.visible = true
 
 func end_minigame():
 	minigame_instance.queue_free()
 	minigame_container.visible = false
 	MultiplayerManager.set_input_state(true)
+	close_button.visible = false
 	TaskManager.mark_task_as_complete_player()
+	
+func close_minigame():
+	minigame_instance.queue_free()
+	minigame_container.visible = false
+	MultiplayerManager.set_input_state(true)
+	close_button.visible = false
+	show_use_button(id, minigame)

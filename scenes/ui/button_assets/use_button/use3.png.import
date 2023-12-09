@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl74edcckhnd"
-path="res://.godot/imported/use1.png-9646f349487e5839c3ab4d4050f8f69a.ctex"
+uid="uid://cb3uggck81vll"
+path="res://.godot/imported/use3.png-466cd980e3fdc79f35224510e87e85f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/use_button/use1.png"
-dest_files=["res://.godot/imported/use1.png-9646f349487e5839c3ab4d4050f8f69a.ctex"]
+source_file="res://scenes/ui/button_assets/use_button/use3.png"
+dest_files=["res://.godot/imported/use3.png-466cd980e3fdc79f35224510e87e85f2.ctex"]
 
 [params]
 

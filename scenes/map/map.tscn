@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=14 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
@@ -6,10 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="4_6s3my"]
 [ext_resource type="Texture2D" uid="uid://dj1dqmbh77gan" path="res://scenes/task_button/assets/wifi.png" id="4_wgy3w"]
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_pwcjb"]
-[ext_resource type="Texture2D" uid="uid://dl74edcckhnd" path="res://scenes/player/assets/use_button/use1.png" id="6_ax5vx"]
 [ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="6_slh3o"]
-[ext_resource type="Texture2D" uid="uid://cb3uggck81vll" path="res://scenes/player/assets/use_button/use3.png" id="7_vye6l"]
-[ext_resource type="Texture2D" uid="uid://donjo23ai4rn6" path="res://scenes/player/assets/use_button/use2.png" id="8_byjce"]
+[ext_resource type="Texture2D" uid="uid://dl74edcckhnd" path="res://scenes/ui/button_assets/use_button/use1.png" id="8_6xiik"]
+[ext_resource type="Texture2D" uid="uid://cb3uggck81vll" path="res://scenes/ui/button_assets/use_button/use3.png" id="9_fe7jm"]
+[ext_resource type="Texture2D" uid="uid://donjo23ai4rn6" path="res://scenes/ui/button_assets/use_button/use2.png" id="10_lwx2h"]
+[ext_resource type="Texture2D" uid="uid://duof0ela0iipq" path="res://scenes/ui/button_assets/close_button/close_button1.png" id="11_28kv6"]
+[ext_resource type="Texture2D" uid="uid://pmrgxruihggd" path="res://scenes/ui/button_assets/close_button/close_button3.png" id="12_k2ue0"]
+[ext_resource type="Texture2D" uid="uid://byv08l1nglh18" path="res://scenes/ui/button_assets/close_button/close_button2.png" id="13_e3x6e"]
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
@@ -47,9 +50,18 @@ offset_right = 462.0
 offset_bottom = 161.0
 focus_mode = 0
 disabled = true
-texture_normal = ExtResource("6_ax5vx")
-texture_pressed = ExtResource("7_vye6l")
-texture_hover = ExtResource("8_byjce")
+texture_normal = ExtResource("8_6xiik")
+texture_pressed = ExtResource("9_fe7jm")
+texture_hover = ExtResource("10_lwx2h")
+
+[node name="TopPanel" type="ColorRect" parent="Camera2D"]
+visible = false
+offset_left = -498.0
+offset_top = -267.0
+offset_right = 523.0
+offset_bottom = -227.0
+mouse_filter = 2
+color = Color(0.34, 0.34, 0.34, 0.67451)
 
 [node name="MinigameContainer" type="SubViewportContainer" parent="Camera2D"]
 visible = false
@@ -70,7 +82,6 @@ size_flags_vertical = 4
 size_flags_stretch_ratio = 0.0
 focus_mode = 2
 mouse_filter = 0
-stretch = true
 
 [node name="MinigameViewport" type="SubViewport" parent="Camera2D/MinigameContainer"]
 transparent_bg = true
@@ -78,5 +89,22 @@ handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(1021, 543)
 render_target_update_mode = 0
+
+[node name="CloseButton" type="TextureButton" parent="Camera2D"]
+z_index = 16
+anchors_preset = -1
+anchor_left = 0.959
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 464.0
+offset_top = -265.0
+offset_right = 504.0
+offset_bottom = -225.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+texture_normal = ExtResource("11_28kv6")
+texture_pressed = ExtResource("12_k2ue0")
+texture_hover = ExtResource("13_e3x6e")
 
 [connection signal="pressed" from="Camera2D/UseButton" to="." method="_on_use_button_pressed"]

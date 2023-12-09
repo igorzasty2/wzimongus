@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb3uggck81vll"
-path="res://.godot/imported/use3.png-98775382b3f1c0c18b5248dee4ae9bd4.ctex"
+uid="uid://byv08l1nglh18"
+path="res://.godot/imported/close_button2.png-7d658ea72acffaa5e4256fb66b7fa7bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/use_button/use3.png"
-dest_files=["res://.godot/imported/use3.png-98775382b3f1c0c18b5248dee4ae9bd4.ctex"]
+source_file="res://scenes/ui/button_assets/close_button/close_button2.png"
+dest_files=["res://.godot/imported/close_button2.png-7d658ea72acffaa5e4256fb66b7fa7bb.ctex"]
 
 [params]
 
