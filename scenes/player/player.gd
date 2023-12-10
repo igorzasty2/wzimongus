@@ -83,13 +83,17 @@ func hide_use_button(id):
 
 
 func _on_use_button_pressed():
-	if minigame != null:
-		print(use_button.focus_mode)
+	if minigame != null && minigame_container.get_node("MinigameViewport").get_child_count() == 0:
 		summon_window()
 
 
 func _input(event):
-	if event.is_action_pressed("interact") && minigame != null && !use_button.disabled:
+	if (
+		event.is_action_pressed("interact") 
+		&& minigame != null && !use_button.disabled 
+		&& minigame_container.get_node("MinigameViewport").get_child_count() == 0
+		&& !GameManager.get_current_game_key("paused")
+	):
 		summon_window()
 
 func summon_window():
@@ -114,8 +118,9 @@ func end_minigame():
 	TaskManager.mark_task_as_complete_player()
 	
 func close_minigame():
-	minigame_instance.queue_free()
-	minigame_container.visible = false
-	GameManager.set_input_status(true)
-	close_button.visible = false
-	show_use_button(name.to_int(), minigame)
+	if minigame_instance != null:
+		minigame_instance.queue_free()
+		minigame_container.visible = false
+		GameManager.set_input_status(true)
+		close_button.visible = false
+		show_use_button(name.to_int(), minigame)
