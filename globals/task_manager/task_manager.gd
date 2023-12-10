@@ -64,7 +64,7 @@ func assign_tasks_server(task_amount):
 #				var random_key = available_tasks.keys()[randi() % available_tasks.size()]
 				var random_key = randi() % available_tasks.size()
 				
-				tasks_dict[id_counter] = available_tasks[random_key]
+				tasks_dict[id_counter] = available_tasks[random_key].get_path()
 				available_tasks.remove_at(random_key)
 				
 				
@@ -79,6 +79,9 @@ func assign_tasks_server(task_amount):
 @rpc("authority", "call_local")
 func assign_tasks_player(tasks):
 	for i in tasks:
-		var task = get_node(tasks[i].get_path())
+		# print(multiplayer.get_unique_id())
+		# print(get_node('/root/lobby_menu/Map').get_children())
+		var task = get_node(tasks[i])
+		print(tasks[i])
 		task.enable_task(i)
 		tasks_player[i] = task
