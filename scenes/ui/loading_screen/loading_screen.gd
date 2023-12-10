@@ -4,7 +4,6 @@ var rola = GameManager.get_current_player_key("impostor")
 
 func _ready():
 	$AnimationPlayer.play("pop_up")
-	print(rola)
 
 func _process(delta):
 	pass
