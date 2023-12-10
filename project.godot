@@ -23,6 +23,7 @@ NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
 NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
 NetworkEvents="*res://addons/netfox/network-events.gd"
 Interpolators="*res://addons/netfox/interpolators.gd"
+TaskManager="*res://globals/task_manager/task_manager.gd"
 
 [display]
 
