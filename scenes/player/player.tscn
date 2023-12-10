@@ -159,6 +159,7 @@ states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 position = Vector2(-1, -77)
 collision_layer = 2
 motion_mode = 1
@@ -185,10 +186,16 @@ scale = Vector2(0.682897, 1)
 shape = SubResource("CapsuleShape2D_st64e")
 
 [node name="UsernameLabel" type="Label" parent="."]
-offset_left = -19.0
-offset_top = -108.0
-offset_right = 21.0
-offset_bottom = -85.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -39.0
+offset_top = -222.0
+offset_right = 42.0
+offset_bottom = -199.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 10
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -200,7 +207,6 @@ libraries = {
 }
 
 [node name="AltSprite" type="Sprite2D" parent="Skins"]
-z_index = 1
 position = Vector2(4, -48)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_lkot5")
