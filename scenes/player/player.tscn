@@ -195,9 +195,10 @@ offset_right = 42.0
 offset_bottom = -199.0
 grow_horizontal = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 25
 horizontal_alignment = 1
 vertical_alignment = 1
+visible_characters = 18
 
 [node name="Skins" type="Node2D" parent="."]
 
