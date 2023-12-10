@@ -14,6 +14,7 @@ var minigame_instance:Node2D
 @onready var minigame_container = get_parent().get_parent().get_node("Camera").get_node("MinigameContainer")
 @onready var use_button:TextureButton = get_parent().get_parent().get_node("Camera").get_node("UseButton")
 @onready var close_button:TextureButton = get_parent().get_parent().get_node("Camera").get_node("CloseButton")
+@onready var minigame_background:ColorRect = get_parent().get_parent().get_node("Camera").get_node("MinigameBackground")
 
 
 func _ready():
@@ -109,6 +110,7 @@ func summon_window():
 	GameManager.set_input_status(false)
 	minigame_instance.minigame_end.connect(end_minigame)
 	close_button.visible = true
+	minigame_background.visible = true
 
 func end_minigame():
 	minigame_instance.queue_free()
@@ -116,6 +118,7 @@ func end_minigame():
 	GameManager.set_input_status(true)
 	close_button.visible = false
 	TaskManager.mark_task_as_complete_player()
+	minigame_background.visible = false
 	
 func close_minigame():
 	if minigame_instance != null:
@@ -124,3 +127,4 @@ func close_minigame():
 		GameManager.set_input_status(true)
 		close_button.visible = false
 		show_use_button(name.to_int(), minigame)
+		minigame_background.visible = false
