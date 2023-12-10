@@ -27,6 +27,11 @@ func start_game():
 	# Ukrywa interfejs lobby
 	$LobbyUI.hide()
 	
+	# włączenie loading_screena
+	var loading_screen = preload("res://scenes/ui/loading_screen/loading_screen.tscn").instantiate()
+	add_child(loading_screen)
+	loading_screen.show()
+	
 	# Przestaje aktualizować listę graczy
 	GameManager.player_registered.disconnect(_update_display_player_list)
 	GameManager.player_deregistered.disconnect(_update_display_player_list)
@@ -68,3 +73,7 @@ func _update_display_player_list(id = null, player = null):
 
 	# Wyświetla zaktualizowaną listę graczy
 	$LobbyUI/PlayerList.text = player_list_text
+
+
+func _on_loading_screen_loading_done():
+	$loading_screen.hide()
