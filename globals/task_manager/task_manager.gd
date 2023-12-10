@@ -80,9 +80,6 @@ func assign_tasks_server(task_amount):
 func assign_tasks_player(tasks):
 	
 	for i in tasks:
-		print(multiplayer.get_unique_id())
-		print(get_node('/root/lobby_menu').get_children())
 		var task = get_node(tasks[i])
-		print(tasks[i])
 		task.enable_task(i)
 		tasks_player[i] = task

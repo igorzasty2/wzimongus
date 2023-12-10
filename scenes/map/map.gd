@@ -45,13 +45,3 @@ func _remove_player(id: int):
 	# Sprawdza, czy gracz istnieje w drzewie sceny i usuwa go.
 	if $Players.has_node(str(id)):
 		$Players.get_node(str(id)).queue_free()
-
-
-#func _on_interaction_point_character_entered(character, minigame):
-#	if $Players.has_node(str(character.id)):
-#		$Players.get_node(str(character.id)).show_use_button(character.id, minigame)
-#
-#
-#func _on_interaction_point_character_exited(character):
-#	if $Players.has_node(str(character.id)):
-#		$Players.get_node(str(character.id)).hide_use_button(character.id)

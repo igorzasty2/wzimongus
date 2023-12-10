@@ -29,18 +29,12 @@ func _ready():
 	sprite_node.scale = Vector2(scale_factor, scale_factor)
 	sprite_node.material = sprite_node.material.duplicate()
 	
-	
 	if not disabled:
-		# Ustawia domyślny outline dla miejscu taska 
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
 		sprite_node.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
-#	else:
-#		body_entered.disconnect(_on_body_entered)
-#		body_exited.disconnect(_on_body_exited)
 
 
 func _on_body_entered(body):
-	print("yo")
 	if body.name.to_int() == multiplayer.get_unique_id() and not disabled:
 		_is_player_inside = true
 		sprite_node.material.set_shader_parameter('line_color', _in_range_task_color)
@@ -49,8 +43,6 @@ func _on_body_entered(body):
 
 
 func _on_body_exited(body):
-	print(body.get_name())
-	
 	if body.name.to_int() == multiplayer.get_unique_id() and not disabled:
 		_is_player_inside = false
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
@@ -61,16 +53,11 @@ func _on_body_exited(body):
 func enable_task(server_task_id):
 	sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
 	sprite_node.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
-#	body_entered.connect(_on_body_entered)
-#	body_exited.connect(_on_body_exited)
 	task_id = server_task_id
 	disabled = false
 	
 
 func disable_task():
-#	body_entered.disconnect(_on_body_entered)
-#	body_exited.disconnect(_on_body_exited)
 	sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
 	sprite_node.material.set_shader_parameter('line_thickness', _disabled_line_thickness)
-#	task_id = null
 	disabled = true
