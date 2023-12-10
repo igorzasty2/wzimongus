@@ -1,7 +1,6 @@
 extends Node2D
 
 
-
 # Tablica przechowująca sekwencję
 var sequence = []
 
