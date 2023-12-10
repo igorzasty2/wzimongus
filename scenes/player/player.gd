@@ -1,12 +1,8 @@
-# Definiuje postać gracza.
-
 extends CharacterBody2D
 
-@export var id : int
-@export var username : String
-
-var direction : Vector2 = Vector2.ZERO
-var last_direction_x : float
+# Ostatni kierunek ruchu postaci na osi X.
+var last_direction_x: float = 1
+# Stała określająca prędkość postaci.
 const SPEED = 300.0
 var minigame: PackedScene
 var minigame_instance:Node2D
@@ -14,22 +10,25 @@ var minigame_instance:Node2D
 @onready var minigame_container = get_parent().get_parent().get_node("Camera2D").get_node("MinigameContainer")
 @onready var use_button:TextureButton = get_parent().get_parent().get_node("Camera2D").get_node("UseButton")
 @onready var close_button:TextureButton = get_parent().get_parent().get_node("Camera2D").get_node("CloseButton")
-@onready var input = $InputSynchronizer
+@export var input: InputSynchronizer
+
 @onready var animation_tree = $Skins/AltAnimationTree
 @onready var camera = get_parent().get_parent().get_node("Camera2D")
+@onready var camera = get_parent().get_parent().get_node("Camera")
 
 
 func _ready():
-	# Ustawia autorytet gracza na jego id w celu jego identyfikacji w systemie multiplayer.
-	input.set_multiplayer_authority(id)
-	# Wyłącza synchronizację wejścia gracza, jeśli nie jest on obecnym graczem.
-	if input.get_multiplayer_authority() == multiplayer.get_unique_id():
-		MultiplayerManager.input_state_changed.connect(_on_input_state_changed)
-	else:
-		input.set_process(false)
+	if input == null:
+		input = $Input
 
-	# Ustawia etykietę pseudonimu gracza.
-	$UsernameLabel.text = username
+	await get_tree().process_frame
+
+	$RollbackSynchronizer.process_settings()
+
+	# Ustawia nazwę użytkownika w etykiecie.
+	$UsernameLabel.text = GameManager.get_registered_player_key(name.to_int(), "username")
+
+	# Aktywuje drzewo animacji postaci.
 	animation_tree.active = true
 	last_direction_x = 1
 	use_button.pressed.connect(_on_use_button_pressed)
@@ -37,6 +36,18 @@ func _ready():
 
 
 func _process(_delta):
+	# Aktualizuje parametry animacji.
+	var direction = input.direction.normalized()
+
+	_update_animation_parameters(direction)
+
+
+func _rollback_tick(_delta, _tick, _is_fresh):
+	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
+	velocity = input.direction.normalized() * SPEED
+
+	# Porusza postacią i obsługuje kolizje.
+	velocity *= NetworkTime.physics_factor
 	update_animation_parameters()
 	
 	if name.to_int() == multiplayer.get_unique_id():
@@ -59,10 +70,13 @@ func _physics_process(_delta):
 		last_direction_x = direction.x
 	# Porusza graczem i obsługuje kolizje.
 	move_and_slide()
+	velocity /= NetworkTime.physics_factor
 
 
-func update_animation_parameters():
-	if velocity == Vector2.ZERO:
+# Aktualizuje parametry animacji postaci.
+func _update_animation_parameters(direction):
+	# Ustawia parametry animacji w zależności od stanu ruchu.
+	if direction == Vector2.ZERO:
 		animation_tree["parameters/conditions/idle"] = true
 		animation_tree["parameters/conditions/is_moving"] = false
 	else:
@@ -71,15 +85,10 @@ func update_animation_parameters():
 		if direction.x != 0:
 			animation_tree["parameters/idle/blend_position"] = direction
 			animation_tree["parameters/walk/blend_position"] = direction
-		if direction.x == 0:
-			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x ,direction.y)
-			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x ,direction.y)
-
-
-# Wyłącza ruch gracza gdy jest pauza, włącza gdy nie ma pauzy
-func _on_input_state_changed(state: bool):
-	input.set_process(state)
-	input.direction = Vector2.ZERO
+			last_direction_x = direction.x
+		else:
+			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, direction.y)
+			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, direction.y)
 
 func show_use_button(id, minigame):
 	if id == multiplayer.get_unique_id():

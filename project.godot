@@ -17,16 +17,26 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-MultiplayerManager="*res://globals/multiplayer_manager/multiplayer_manager.gd"
-TaskManager="*res://globals/task_manager/task_manager.gd"
+GameManager="*res://globals/game_manager/game_manager.gd"
+NetworkTime="*res://addons/netfox/network-time.gd"
+NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
+NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
+NetworkEvents="*res://addons/netfox/network-events.gd"
+Interpolators="*res://addons/netfox/interpolators.gd"
 
 [display]
 
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
 [dotnet]
 
 project/assembly_name="WZiMong Us"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/netfox/plugin.cfg")
 
 [input]
 
