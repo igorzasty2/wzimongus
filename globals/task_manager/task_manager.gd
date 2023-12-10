@@ -54,7 +54,7 @@ func assign_tasks_server(task_amount):
 		# Unikalny id dla każdego tasku.
 		var id_counter = 0
 
-		for i in MultiplayerManager.current_game["registered_players"]:
+		for i in GameManager.get_registered_players():
 			# true w duplicate oznacza że kopia tego będzie głęboka
 			var available_tasks = minigames.duplicate(true)
 			var tasks_dict = {}
@@ -78,9 +78,10 @@ func assign_tasks_server(task_amount):
 # Dodaje przesłane przez serwer taski w lokalną listę tasków.
 @rpc("authority", "call_local")
 func assign_tasks_player(tasks):
+	
 	for i in tasks:
-		# print(multiplayer.get_unique_id())
-		# print(get_node('/root/lobby_menu/Map').get_children())
+		print(multiplayer.get_unique_id())
+		print(get_node('/root/lobby_menu').get_children())
 		var task = get_node(tasks[i])
 		print(tasks[i])
 		task.enable_task(i)

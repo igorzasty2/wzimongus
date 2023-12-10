@@ -7,14 +7,13 @@ const SPEED = 300.0
 var minigame: PackedScene
 var minigame_instance:Node2D
 
-@onready var minigame_container = get_parent().get_parent().get_node("Camera2D").get_node("MinigameContainer")
-@onready var use_button:TextureButton = get_parent().get_parent().get_node("Camera2D").get_node("UseButton")
-@onready var close_button:TextureButton = get_parent().get_parent().get_node("Camera2D").get_node("CloseButton")
 @export var input: InputSynchronizer
 
 @onready var animation_tree = $Skins/AltAnimationTree
-@onready var camera = get_parent().get_parent().get_node("Camera2D")
 @onready var camera = get_parent().get_parent().get_node("Camera")
+@onready var minigame_container = get_parent().get_parent().get_node("Camera").get_node("MinigameContainer")
+@onready var use_button:TextureButton = get_parent().get_parent().get_node("Camera").get_node("UseButton")
+@onready var close_button:TextureButton = get_parent().get_parent().get_node("Camera").get_node("CloseButton")
 
 
 func _ready():
@@ -48,27 +47,6 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 
 	# Porusza postacią i obsługuje kolizje.
 	velocity *= NetworkTime.physics_factor
-	update_animation_parameters()
-	
-	if name.to_int() == multiplayer.get_unique_id():
-		var target_position = position
-		camera.position = camera.position.lerp(target_position, 5 * _delta)
-
-
-func _physics_process(_delta):
-	# Pobiera pionowe i poziome wejście gracza, i odpowiednio ustawia pionową oraz poziomą prędkość.
-	direction = Vector2(input.direction.x, input.direction.y)
-	direction = direction.normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.y = direction.y * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.y = move_toward(velocity.y, 0, SPEED)
-	# Zapamiętuje ostatni kierunek wzroku postaci
-	if direction.x != 0:
-		last_direction_x = direction.x
-	# Porusza graczem i obsługuje kolizje.
 	move_and_slide()
 	velocity /= NetworkTime.physics_factor
 
@@ -124,20 +102,20 @@ func summon_window():
 	minigame_instance.scale = Vector2(x_scale, y_scale)
 	use_button.visible = false
 	use_button.disabled = true
-	MultiplayerManager.set_input_state(false)
+	GameManager.set_input_status(false)
 	minigame_instance.minigame_end.connect(end_minigame)
 	close_button.visible = true
 
 func end_minigame():
 	minigame_instance.queue_free()
 	minigame_container.visible = false
-	MultiplayerManager.set_input_state(true)
+	GameManager.set_input_status(true)
 	close_button.visible = false
 	TaskManager.mark_task_as_complete_player()
 	
 func close_minigame():
 	minigame_instance.queue_free()
 	minigame_container.visible = false
-	MultiplayerManager.set_input_state(true)
+	GameManager.set_input_status(true)
 	close_button.visible = false
-	show_use_button(id, minigame)
+	show_use_button(name.to_int(), minigame)

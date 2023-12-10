@@ -26,7 +26,7 @@ func _ready():
 
 
 func _process(delta):
-	if MultiplayerManager.get_current_game_info("paused"):
+	if GameManager.get_current_game_key("paused"):
 		return_to_orig_pos()
 		return
 	# Przypisanie często używanej funkcji do zmiennej w celu skrócenia kodu

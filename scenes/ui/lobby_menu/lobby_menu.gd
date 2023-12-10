@@ -49,6 +49,7 @@ func _change_map(scene: PackedScene):
 	
 	# Dodaje nową mapę
 	map.add_child(scene.instantiate())
+	TaskManager.assign_tasks_server(1)
 
 
 # Aktualizuje wyświetlaną listę graczy
