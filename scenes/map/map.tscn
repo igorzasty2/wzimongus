@@ -120,10 +120,10 @@ y_sort_enabled = true
 
 [node name="Camera" type="Camera2D" parent="."]
 zoom = Vector2(0.45, 0.45)
-limit_left = -3383
-limit_top = -3169
-limit_right = 4551
-limit_bottom = 1999
+limit_left = -3388
+limit_top = -3174
+limit_right = 4556
+limit_bottom = 2004
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 9.0
