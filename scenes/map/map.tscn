@@ -1,18 +1,29 @@
-[gd_scene load_steps=30 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=41 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
+[ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/task_button/task_button.tscn" id="3_e0rk4"]
 [ext_resource type="Script" path="res://scenes/map/camera.gd" id="3_gwvgv"]
 [ext_resource type="PackedScene" uid="uid://dnni64h8l6jcd" path="res://scenes/map/scenes/wc.tscn" id="3_nbyec"]
+[ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="4_6s3my"]
 [ext_resource type="PackedScene" uid="uid://yk57h8tmiha6" path="res://scenes/map/scenes/sala_1.tscn" id="4_dojmv"]
+[ext_resource type="Texture2D" uid="uid://dj1dqmbh77gan" path="res://scenes/task_button/assets/wifi.png" id="4_wgy3w"]
 [ext_resource type="PackedScene" uid="uid://cwjp3351iq2cg" path="res://scenes/map/scenes/sala_2.tscn" id="5_ehcuo"]
+[ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_pwcjb"]
 [ext_resource type="PackedScene" uid="uid://t3ayjy0eflf" path="res://scenes/map/scenes/sala_3.tscn" id="6_j2fhe"]
+[ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="6_slh3o"]
 [ext_resource type="PackedScene" uid="uid://q56d4alpaarl" path="res://scenes/map/scenes/xero.tscn" id="7_htmn5"]
+[ext_resource type="Texture2D" uid="uid://dl74edcckhnd" path="res://scenes/ui/button_assets/use_button/use1.png" id="8_6xiik"]
 [ext_resource type="PackedScene" uid="uid://db74hr2yilxel" path="res://scenes/map/scenes/aula.tscn" id="8_ckisu"]
+[ext_resource type="Texture2D" uid="uid://cb3uggck81vll" path="res://scenes/ui/button_assets/use_button/use3.png" id="9_fe7jm"]
 [ext_resource type="PackedScene" uid="uid://deoe0yhjya0it" path="res://scenes/map/scenes/willy.tscn" id="9_r6nh5"]
 [ext_resource type="PackedScene" uid="uid://bcr0n6fy1ajvx" path="res://scenes/map/scenes/bufet.tscn" id="10_dswbv"]
+[ext_resource type="Texture2D" uid="uid://donjo23ai4rn6" path="res://scenes/ui/button_assets/use_button/use2.png" id="10_lwx2h"]
+[ext_resource type="Texture2D" uid="uid://duof0ela0iipq" path="res://scenes/ui/button_assets/close_button/close_button1.png" id="11_28kv6"]
 [ext_resource type="PackedScene" uid="uid://dtjxbe3w5aln6" path="res://scenes/map/scenes/samorzad.tscn" id="11_g3ofr"]
 [ext_resource type="PackedScene" uid="uid://b7o2j3ukypgy6" path="res://scenes/map/scenes/serwerownia.tscn" id="12_6nmdt"]
+[ext_resource type="Texture2D" uid="uid://pmrgxruihggd" path="res://scenes/ui/button_assets/close_button/close_button3.png" id="12_k2ue0"]
+[ext_resource type="Texture2D" uid="uid://byv08l1nglh18" path="res://scenes/ui/button_assets/close_button/close_button2.png" id="13_e3x6e"]
 [ext_resource type="PackedScene" uid="uid://cjpyjgxwnxvda" path="res://scenes/map/scenes/dziekanat.tscn" id="13_jctr6"]
 [ext_resource type="PackedScene" uid="uid://dk3g05gq43kad" path="res://scenes/map/scenes/chillroom.tscn" id="14_8x6md"]
 [ext_resource type="PackedScene" uid="uid://gk1uab4ii8k1" path="res://scenes/map/scenes/pielegniarka.tscn" id="15_giha0"]
@@ -132,8 +143,88 @@ script = ExtResource("3_gwvgv")
 [node name="Timer" type="Timer" parent="Camera"]
 one_shot = true
 
+[node name="UseButton" type="TextureButton" parent="Camera"]
+visible = false
+z_index = 15
+offset_left = 693.0
+offset_top = 380.0
+offset_right = 793.0
+offset_bottom = 430.0
+focus_mode = 0
+disabled = true
+texture_normal = ExtResource("8_6xiik")
+texture_pressed = ExtResource("9_fe7jm")
+texture_hover = ExtResource("10_lwx2h")
+
+[node name="MinigameBackground" type="ColorRect" parent="Camera"]
+visible = false
+offset_left = -822.0
+offset_top = -448.0
+offset_right = 852.0
+offset_bottom = 466.0
+mouse_filter = 2
+color = Color(0.34, 0.34, 0.34, 0.67451)
+
+[node name="MinigameContainer" type="SubViewportContainer" parent="Camera"]
+visible = false
+z_index = 15
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -822.0
+offset_top = -448.0
+offset_right = 852.0
+offset_bottom = 466.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+focus_mode = 2
+mouse_filter = 0
+
+[node name="MinigameViewport" type="SubViewport" parent="Camera/MinigameContainer"]
+transparent_bg = true
+handle_input_locally = false
+physics_object_picking = true
+size = Vector2i(1674, 914)
+render_target_update_mode = 0
+
+[node name="CloseButton" type="TextureButton" parent="Camera"]
+visible = false
+z_index = 16
+anchors_preset = -1
+anchor_left = 0.959
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 812.0
+offset_top = -448.0
+offset_right = 852.0
+offset_bottom = -408.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+texture_normal = ExtResource("11_28kv6")
+texture_pressed = ExtResource("12_k2ue0")
+texture_hover = ExtResource("13_e3x6e")
+
 [node name="TypeLabel" type="Label" parent="."]
 offset_right = 65.0
 offset_bottom = 23.0
 
+[node name="Tasks" type="Node2D" parent="."]
+
+[node name="TaskButton" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(-35, 379)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("5_pwcjb")
+
+[node name="TaskButton2" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(502, 385)
+sprite = ExtResource("6_slh3o")
+minigame_scene = ExtResource("4_6s3my")
+
+[connection signal="pressed" from="Camera/UseButton" to="." method="_on_use_button_pressed"]
 [connection signal="timeout" from="Camera/Timer" to="Camera" method="_on_timer_timeout"]
