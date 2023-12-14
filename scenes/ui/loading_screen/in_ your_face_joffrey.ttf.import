@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://locq7yfyj43v"
-path="res://.godot/imported/In your face, joffrey!.ttf-340548efa07498516935185c8760cec8.fontdata"
+path="res://.godot/imported/in_ your_face_joffrey.ttf-a823bee834814ab4b5010fbdcfbb4110.fontdata"
 
 [deps]
 
-source_file="res://scenes/ui/loading_screen/In your face, joffrey!.ttf"
-dest_files=["res://.godot/imported/In your face, joffrey!.ttf-340548efa07498516935185c8760cec8.fontdata"]
+source_file="res://scenes/ui/loading_screen/in_ your_face_joffrey.ttf"
+dest_files=["res://.godot/imported/in_ your_face_joffrey.ttf-a823bee834814ab4b5010fbdcfbb4110.fontdata"]
 
 [params]
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://ct2plxemq2ft5"]
 
 [ext_resource type="Script" path="res://scenes/ui/loading_screen/loading_screen.gd" id="1_3sy48"]
-[ext_resource type="Texture2D" uid="uid://bb3so5pp26xqm" path="res://scenes/ui/loading_screen/ShhhLogo.png" id="1_62pxn"]
-[ext_resource type="FontFile" uid="uid://locq7yfyj43v" path="res://scenes/ui/loading_screen/In your face, joffrey!.ttf" id="3_tsaei"]
+[ext_resource type="Texture2D" uid="uid://bb3so5pp26xqm" path="res://scenes/ui/loading_screen/shhh_logo.png" id="1_62pxn"]
+[ext_resource type="FontFile" uid="uid://locq7yfyj43v" path="res://scenes/ui/loading_screen/in_ your_face_joffrey.ttf" id="3_tsaei"]
 
 [sub_resource type="Animation" id="Animation_n0sii"]
 length = 0.001

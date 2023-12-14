@@ -13,7 +13,6 @@ var default_offset : Vector2 = offset
 @onready var tween : Tween = create_tween()
 
 func _ready():
-	set_process(true)
 	randomize()
 
 func _process(delta):
