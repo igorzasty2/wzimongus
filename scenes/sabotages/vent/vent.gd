@@ -16,20 +16,20 @@ var player_body
 func _ready():
 	set_process_input(false)
 	var dir_id = 0
-	# instantiate button for every vent
+	# Instancjonuje przycisk dla każdego docelowego venta
 	for target_vent in vent_target_list:
-		# calculate direction of button
+		# Oblicza kierunek przycisku
 		var direction_button_pos : Vector2 = (target_vent.position - position).normalized()
 		instantiante_direction_button(direction_button_pos * DIRECTION_BUTTON_DISTANCE_MULTIPLIER)
 		vent_direction_button_list[-1].id = dir_id
 		dir_id += 1
 
-# handles entering vent
+# Obsługuje input wejścia do venta
 func _input(event):
 	if event.is_action_pressed("use_vent"):
 		use_vent()
 
-# handles using vent
+# Obsługuje użycie venta
 func use_vent():
 	if can_be_used:
 		if is_player_in_vent:
@@ -37,39 +37,39 @@ func use_vent():
 		elif !is_player_in_vent:
 			enter_vent()
 
-# instances direction button
+# Instancjonuje przycisk kierunkowy w danym miejscu
 func instantiante_direction_button(pos : Vector2):
 	var vent_dir_bttn_instance = vent_direction_button.instantiate()
-	# connect direction button instance
+	# Łączy instancje przycisku
 	vent_dir_bttn_instance.direction_button_pressed.connect(_on_direction_button_pressed)
 	
-	# set position of button
+	# Ustawia pozycję przycisku
 	vent_dir_bttn_instance.position = pos
-	# set button rotation towards target
+	# Ustawia rotację przycisku w kierunku docelowego venta
 	vent_dir_bttn_instance.rotation = pos.angle()
 	
 	add_child(vent_dir_bttn_instance)
 	vent_direction_button_list.append(vent_dir_bttn_instance)
 
-# handles direction button press
+# Obsługuje naciśnięcie przyciku kierunkowego
 func _on_direction_button_pressed(id):
-	# prevents moving to another vent and exiting at the same time
+	# Zapobiega przeniesieniu się do innego venta i wyjściu w tym samym momencie
 	set_process_input(false)
 	
 	move_to_vent(id)
 
-# handles moving player from one vent to another
+# Obsługuje przeniesienie gracza do innego venta
 func move_to_vent(id):
-	# handle start vent
+	# Obsługuje vent startowy
 	change_dir_bttns_visibility(false)
 	is_player_in_vent = false
 	
-	# handle target vent
+	# Obsługuje vent docelowy
 	vent_target_list[id].is_player_in_vent = true
 	vent_target_list[id].change_dir_bttns_visibility(true)
 	vent_target_list[id].player_body.position = vent_target_list[id].position - Vector2(0,50)
 
-# handles player entering vent
+# Obsługuje wejście gracza do venta
 func enter_vent():
 	for i in vent_target_list:
 		i.player_body = self.player_body
@@ -81,7 +81,7 @@ func enter_vent():
 	is_player_in_vent = true
 	change_dir_bttns_visibility(true)
 
-# handles player exiting vent
+# Obsługuje wyjście gracza z venta
 func exit_vent():
 	player_body.visible = true
 	is_player_in_vent = false
@@ -89,19 +89,19 @@ func exit_vent():
 	player_body.toggle_movement(true)
 	change_dir_bttns_visibility(false)
 
-# changes visibility of vent direction buttons
+# Zmienia vidoczność przycisków kierunkowych
 func change_dir_bttns_visibility(visibility:bool):
 	for dir_butt in vent_direction_button_list:
 		dir_butt.visible = visibility
 
-# handles player entering venting area
+# Obsługuje wejście gracza w obszar w którym może ventować
 func _on_area_2d_body_entered(body):
 	# to do: check if player is impostor, put everything inside if
 	set_process_input(true)
 	player_body = body
 	can_be_used = true
 
-# handles player exiting venting area
+# Obsługuje wyjście gracza z obszaru w którym może ventować
 func _on_area_2d_body_exited(body):
 	set_process_input(false)
 	can_be_used = false
