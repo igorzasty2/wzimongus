@@ -11,10 +11,11 @@ func _ready():
 	for i in GameManager.get_registered_players():
 		_add_player(i)
 
-	# Ustawia etykietę typu na "Impostor" lub "Crewmate".
-	$TypeLabel.text = "Impostor" if GameManager.get_current_player_key("impostor") else "Crewmate"
-
-
+	# włączenie loading_screena
+	var loading_screen = preload("res://scenes/ui/loading_screen/loading_screen.tscn").instantiate()
+	add_child(loading_screen)
+	loading_screen.show()
+	
 # Dodaje nowego gracza na mapę.
 func _add_player(id: int):
 	# Ładuje i tworzy instancję gracza.
