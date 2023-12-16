@@ -29,26 +29,26 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -128.0
-offset_top = 194.0
+offset_top = 280.0
 offset_right = 128.0
-offset_bottom = 244.0
+offset_bottom = 330.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Rozpocznij grę"
 
 [node name="PlayerList" type="Label" parent="."]
 layout_mode = 0
-offset_left = 808.0
-offset_top = 77.0
-offset_right = 1061.0
-offset_bottom = 461.0
+offset_left = 960.0
+offset_top = 32.0
+offset_right = 1248.0
+offset_bottom = 608.0
 
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 18.0
-offset_top = 14.0
-offset_right = -634.0
-offset_bottom = -354.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = -384.0
+offset_bottom = -112.0
 
 [connection signal="button_down" from="StartGameButton" to="." method="_on_start_game_button_button_down"]

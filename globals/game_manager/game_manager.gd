@@ -102,15 +102,8 @@ func join_game(address:String, port:int):
 func start_game():
 	if multiplayer.is_server():
 		_select_impostors()
-	
-	change_map.emit("res://scenes/maps/main_map/main_map.tscn")
-
-	if multiplayer.is_server():
-		# Ustawia ilość tasków u jednego gracza
+		_on_game_started.rpc()
 		TaskManager.assign_tasks_server(1)
-
-	_current_game["started"] = true
-
 
 # Losuje morderców wśród graczy.
 func _select_impostors():
@@ -288,6 +281,12 @@ func _register_player(player:Dictionary):
 @rpc("reliable")
 func _on_player_registered():
 	_enter_lobby()
+
+# Obsługuje rejestrację gracza u klienta.
+@rpc("call_local", "reliable")
+func _on_game_started():
+	change_map.emit("res://scenes/maps/main_map/main_map.tscn")
+	_current_game["started"] = true
 
 
 # Dodaje zarejestrowanego gracza do listy.
