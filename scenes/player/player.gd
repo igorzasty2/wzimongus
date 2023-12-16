@@ -88,7 +88,7 @@ func _input(event):
 		event.is_action_pressed("interact") 
 		&& minigame != null && !use_button.disabled 
 		&& minigame_container.get_node("MinigameViewport").get_child_count() == 0
-		&& !GameManager.get_current_game_key("paused")
+		&& !GameManager.get_current_game_key("is_paused")
 	):
 		summon_window()
 

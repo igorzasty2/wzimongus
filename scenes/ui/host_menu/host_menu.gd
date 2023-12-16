@@ -14,4 +14,4 @@ func _on_host_button_button_down():
 	GameManager.set_player_key("username", $UsernameInput.text)
 
 	# Inicjuje grę z podanym portem i maksymalną liczbą połączeń, pobranymi z PortInput i MaxConnectionsInput.
-	GameManager.create_game($PortInput.text.to_int(), $MaxConnectionsInput.text.to_int())
+	GameManager.host_game($PortInput.text.to_int(), $MaxConnectionsInput.text.to_int())

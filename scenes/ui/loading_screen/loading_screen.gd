@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-var rola = GameManager.get_current_player_key("impostor")
+var rola = GameManager.get_current_player_key("is_impostor")
 
 func _ready():
 	GameManager.set_input_status(0)
