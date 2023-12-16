@@ -47,8 +47,8 @@ func mark_task_as_complete_server(player_id, task_id):
 # graczom ze pomocą rpc_id.
 @rpc("authority", "call_local")
 func assign_tasks_server(task_amount):
-	minigames = get_node("/root/lobby_menu/Map/Map/Tasks").get_children()
-#	print(get_node("/root/Map"))
+	await get_tree().process_frame
+	minigames = get_node("/root/Game/Maps/MainMap/Tasks").get_children()
 	# TODO: żeby ten kod działał do końca trzeba stworzyć słownik minigier.
 	if multiplayer.is_server() and tasks_server.is_empty():
 		# Unikalny id dla każdego tasku.
@@ -78,7 +78,7 @@ func assign_tasks_server(task_amount):
 # Dodaje przesłane przez serwer taski w lokalną listę tasków.
 @rpc("authority", "call_local")
 func assign_tasks_player(tasks):
-	
+	await get_tree().process_frame
 	for i in tasks:
 		var task = get_node(tasks[i])
 		task.enable_task(i)

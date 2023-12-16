@@ -8,6 +8,8 @@ func _ready():
 
 
 func _on_host_button_button_down():
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
+
 	# Ustawia wybraną nazwę użytkownika w GameManager, korzystając z tekstu wprowadzonego w UsernameInput.
 	GameManager.set_player_key("username", $UsernameInput.text)
 

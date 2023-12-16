@@ -11,6 +11,9 @@ signal player_deregistered(id:int)
 signal input_status_changed(paused:bool)
 
 
+signal change_map(scene)
+
+
 # Zawiera informacje o aktualnym stanie gry.
 var _current_game = {
 	"started": false,
@@ -48,6 +51,7 @@ var _player_attributes = {
 
 # Inicjalizuje połączenia sygnałów multiplayer.
 func _ready():
+	multiplayer.peer_connected.connect(_on_player_connected)
 	multiplayer.peer_disconnected.connect(_on_player_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected)
 	multiplayer.connection_failed.connect(_on_connection_failed)
@@ -98,6 +102,12 @@ func join_game(address:String, port:int):
 func start_game():
 	if multiplayer.is_server():
 		_select_impostors()
+	
+	change_map.emit("res://scenes/maps/main_map/main_map.tscn")
+
+	if multiplayer.is_server():
+		# Ustawia ilość tasków u jednego gracza
+		TaskManager.assign_tasks_server(1)
 
 	_current_game["started"] = true
 
@@ -204,6 +214,18 @@ func _on_player_disconnected(id:int):
 	# Wyrejestrowuje gracza.
 	_delete_deregistered_player.rpc(id)
 
+# Obsługuje rozłączenie gracza na serwerze.
+func _on_player_connected(id:int):
+	# Rozłącza gracza, jeśli przekroczono limit połączeń.
+	if _current_game["registered_players"].size() >= _server_settings["max_players"]:
+		multiplayer.disconnect_peer(id)
+		return
+
+	# Rozłącza gracza, jeśli gra już się rozpoczęła.
+	if _current_game["started"]:
+		multiplayer.disconnect_peer(id)
+		return
+
 # Zwraca unikalny id gracza
 func get_current_player_id():
 	return multiplayer.get_unique_id()
@@ -237,7 +259,8 @@ func _filter_player(player:Dictionary):
 
 # Zmienia scenę na scenę lobby.
 func _enter_lobby():
-	get_tree().change_scene_to_file("res://scenes/ui/lobby_menu/lobby_menu.tscn")
+	await get_tree().process_frame
+	change_map.emit("res://scenes/maps/lobby/lobby.tscn")
 
 
 # Obsługuje błędy (do implementacji).
@@ -249,16 +272,6 @@ func _handle_error():
 @rpc("any_peer", "reliable")
 func _register_player(player:Dictionary):
 	var id = multiplayer.get_remote_sender_id()
-
-	# Rozłącza gracza, jeśli przekroczono limit połączeń.
-	if _current_game["registered_players"].size() >= _server_settings["max_players"]:
-		multiplayer.disconnect_peer(id)
-		return
-
-	# Rozłącza gracza, jeśli gra już się rozpoczęła.
-	if _current_game["started"]:
-		multiplayer.disconnect_peer(id)
-		return
 
 	# Informuje nowego gracza o pozostałych graczach.
 	for i in _current_game["registered_players"]:

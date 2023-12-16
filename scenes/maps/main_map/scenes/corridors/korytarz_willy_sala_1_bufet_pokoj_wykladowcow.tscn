@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3 uid="uid://1nb6uwps5542"]
+
+[ext_resource type="Texture2D" uid="uid://tbgku3ra8705" path="res://scenes/maps/main_map/assets/corridors/korytarz_willy_sala_1_bufet_pokoj_wykladowcow.png" id="1_87y23"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kyudw"]
+size = Vector2(24, 625.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nhcpi"]
+size = Vector2(201, 188)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd5ap"]
+size = Vector2(201, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_swxhs"]
+size = Vector2(24, 78)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_soq2p"]
+size = Vector2(528, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6w0n4"]
+size = Vector2(24.0264, 458.237)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fqhnt"]
+size = Vector2(211.341, 330.691)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_154n4"]
+size = Vector2(340, 191)
+
+[node name="korytarz_willy_sala_1_bufet_pokoj_wykladowcow" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_87y23")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-511, -223.25)
+shape = SubResource("RectangleShape2D_kyudw")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-599.5, -5)
+shape = SubResource("RectangleShape2D_nhcpi")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-142, -218.875)
+shape = SubResource("RectangleShape2D_kyudw")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-599.5, 467)
+shape = SubResource("RectangleShape2D_dd5ap")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-511, 494)
+shape = SubResource("RectangleShape2D_swxhs")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-142, 494)
+shape = SubResource("RectangleShape2D_swxhs")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(110, 467)
+shape = SubResource("RectangleShape2D_soq2p")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(529.009, 310.009)
+rotation = 0.794125
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_6w0n4")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(238.469, -95.058)
+rotation = 0.837758
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_fqhnt")
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(16, -1.5)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_154n4")

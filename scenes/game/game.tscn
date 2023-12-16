@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwogo8if36ix7"]
+
+[ext_resource type="Script" path="res://scenes/game/game.gd" id="1_b20el"]
+[ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="3_knil8"]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b20el")
+
+[node name="Maps" type="Node" parent="."]
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_knil8")]
+visible = false
