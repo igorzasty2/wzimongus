@@ -171,7 +171,8 @@ _data = {
 "pop_up": SubResource("Animation_0q8mi")
 }
 
-[node name="loading_screen" type="CanvasLayer"]
+[node name="LoadingScreen" type="CanvasLayer"]
+layer = 5
 script = ExtResource("1_3sy48")
 
 [node name="ColorRect" type="ColorRect" parent="."]
