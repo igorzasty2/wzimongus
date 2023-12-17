@@ -7,6 +7,10 @@ const SPEED = 600.0
 var minigame: PackedScene
 var minigame_instance:Node2D
 
+# Zmienne do obsługi ventów
+var teleport_position = Vector2.ZERO 
+var is_impostor = GameManager._current_player["impostor"]
+
 @export var input: InputSynchronizer
 
 @onready var animation_tree = $Skins/AltAnimationTree
@@ -41,7 +45,6 @@ func _process(_delta):
 
 	_update_animation_parameters(direction)
 
-
 func _rollback_tick(_delta, _tick, _is_fresh):
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	velocity = input.direction.normalized() * SPEED
@@ -50,6 +53,11 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 	velocity *= NetworkTime.physics_factor
 	move_and_slide()
 	velocity /= NetworkTime.physics_factor
+	
+	# Odpowiada za przeniesienie gracza do innego venta
+	if teleport_position != Vector2.ZERO :#&& is_impostor:
+		position = teleport_position
+		teleport_position = Vector2.ZERO
 
 
 # Aktualizuje parametry animacji postaci.

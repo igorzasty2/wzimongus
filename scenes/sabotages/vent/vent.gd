@@ -68,6 +68,7 @@ func _on_direction_button_pressed(id):
 	move_to_vent(id)
 
 # Obsługuje przeniesienie gracza do innego venta
+@rpc("any_peer", "call_local", "reliable")
 func move_to_vent(id):
 	# Obsługuje vent startowy
 	change_dir_bttns_visibility(false)
@@ -76,14 +77,12 @@ func move_to_vent(id):
 	# Obsługuje vent docelowy
 	vent_target_list[id].is_player_in_vent = true
 	vent_target_list[id].change_dir_bttns_visibility(true)
-	vent_target_list[id].player_body.position = vent_target_list[id].position - Vector2(0,50)
+	player_body.teleport_position = vent_target_list[id].position - Vector2(0,50)
 
 # Obsługuje wejście gracza do venta
+@rpc("any_peer", "call_local", "reliable")
 func enter_vent():
-	for i in vent_target_list:
-		i.player_body = self.player_body
-
-	player_body.position = self.position - Vector2(0,50)
+	player_body.teleport_position = self.position - Vector2(0,50)
 	player_body.visible = false
 	GameManager.set_input_status(false)
 	
@@ -91,6 +90,7 @@ func enter_vent():
 	change_dir_bttns_visibility(true)
 
 # Obsługuje wyjście gracza z venta
+@rpc("any_peer", "call_local", "reliable")
 func exit_vent():
 	player_body.visible = true
 	is_player_in_vent = false
@@ -105,23 +105,33 @@ func change_dir_bttns_visibility(visibility:bool):
 
 # Obsługuje wejście gracza w obszar w którym może ventować
 func _on_area_2d_body_entered(body):
-	# to do: check if player is impostor, put everything inside if
+	print("entered area ")
+	#if is_impostor():
 	set_process_input(true)
+	
 	player_body = body
 	can_be_used = true
-	toggle_highlight(true)
-	print("entered area ")
+	
+	if body.name.to_int() == multiplayer.get_unique_id():
+		toggle_highlight(true)
 
 # Obsługuje wyjście gracza z obszaru w którym może ventować
 func _on_area_2d_body_exited(body):
-	# to do: check if player is impostor, put everything inside if
+	#if is_impostor():
 	set_process_input(false)
+	
 	can_be_used = false
-	toggle_highlight(false)
+	
+	if body.name.to_int() == multiplayer.get_unique_id():
+		toggle_highlight(false)
 
 # Włącza i wyłącza podświetlenie venta
 func toggle_highlight(is_on: bool):
 	if is_on:
-		sprite_2d.material.set_shader_parameter('line_color', in_range_color);
+		sprite_2d.material.set_shader_parameter('line_color', in_range_color)
 	else:
-		sprite_2d.material.set_shader_parameter('line_color', out_of_range_color);
+		sprite_2d.material.set_shader_parameter('line_color', out_of_range_color)
+
+# Sprawdza czy gracz jest impostorem
+func is_impostor():
+	return GameManager._current_player["impostor"]
