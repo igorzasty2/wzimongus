@@ -2,6 +2,7 @@ class_name Vent
 extends Node2D
 
 @export var vent_target_list : Array[Vent] = []
+@onready var sprite_2d = $Sprite2D
 
 var vent_direction_button = preload("res://scenes/sabotages/vent/vent_direction_button/vent_direction_button.tscn")
 var vent_direction_button_list = []
@@ -13,9 +14,17 @@ var is_player_in_vent = false
 var can_be_used = false
 var player_body
 
+var in_range_color = [180, 0, 0, 255]
+var out_of_range_color = [0, 0, 0, 0]
+
 func _ready():
 	set_process_input(false)
+	
+	# Ukrywa podświetlenie venta
+	toggle_highlight(false)
+	
 	var dir_id = 0
+	
 	# Instancjonuje przycisk dla każdego docelowego venta
 	for target_vent in vent_target_list:
 		# Oblicza kierunek przycisku
@@ -63,7 +72,7 @@ func move_to_vent(id):
 	# Obsługuje vent startowy
 	change_dir_bttns_visibility(false)
 	is_player_in_vent = false
-	
+
 	# Obsługuje vent docelowy
 	vent_target_list[id].is_player_in_vent = true
 	vent_target_list[id].change_dir_bttns_visibility(true)
@@ -76,7 +85,7 @@ func enter_vent():
 
 	player_body.position = self.position - Vector2(0,50)
 	player_body.visible = false
-	player_body.toggle_movement(false)
+	GameManager.set_input_status(false)
 	
 	is_player_in_vent = true
 	change_dir_bttns_visibility(true)
@@ -85,8 +94,8 @@ func enter_vent():
 func exit_vent():
 	player_body.visible = true
 	is_player_in_vent = false
-	
-	player_body.toggle_movement(true)
+
+	GameManager.set_input_status(true)
 	change_dir_bttns_visibility(false)
 
 # Zmienia vidoczność przycisków kierunkowych
@@ -100,8 +109,19 @@ func _on_area_2d_body_entered(body):
 	set_process_input(true)
 	player_body = body
 	can_be_used = true
+	toggle_highlight(true)
+	print("entered area ")
 
 # Obsługuje wyjście gracza z obszaru w którym może ventować
 func _on_area_2d_body_exited(body):
+	# to do: check if player is impostor, put everything inside if
 	set_process_input(false)
 	can_be_used = false
+	toggle_highlight(false)
+
+# Włącza i wyłącza podświetlenie venta
+func toggle_highlight(is_on: bool):
+	if is_on:
+		sprite_2d.material.set_shader_parameter('line_color', in_range_color);
+	else:
+		sprite_2d.material.set_shader_parameter('line_color', out_of_range_color);

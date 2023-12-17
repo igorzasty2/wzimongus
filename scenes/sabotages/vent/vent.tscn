@@ -1,7 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwapulye6fjyc"]
+[gd_scene load_steps=6 format=3 uid="uid://cwapulye6fjyc"]
 
 [ext_resource type="Script" path="res://scenes/sabotages/vent/vent.gd" id="1_16s2l"]
+[ext_resource type="Shader" path="res://scenes/sabotages/vent/vent.gdshader" id="2_cocqu"]
 [ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="2_h1yhr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d00ip"]
+resource_local_to_scene = true
+shader = ExtResource("2_cocqu")
+shader_parameter/line_color = Color(0.705882, 0, 0, 1)
+shader_parameter/line_thickness = 3.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a8y3v"]
 size = Vector2(61, 61)
@@ -12,11 +19,11 @@ script = ExtResource("1_16s2l")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_d00ip")
 scale = Vector2(0.473958, 0.473958)
 texture = ExtResource("2_h1yhr")
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
