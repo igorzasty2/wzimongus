@@ -7,13 +7,19 @@ signal player_registered(id: int, player: Dictionary)
 ## Emitowany po wyrejestrowaniu gracza z serwera.
 signal player_deregistered(id: int)
 
-## Emitowany w celu zmiany statusu sterowania u gracza.
+## Emitowany po zmianie statusu sterowania u gracza.
 signal input_status_changed(is_paused: bool)
 
-## Emitowany w celu zmiany sceny.
-signal change_map(scene: String)
+## Emitowany u klienta po pomyślnej rejestracji na serwerze.
+signal registered_successfully()
 
-## Emitowany w celu wyświetlenia komunikatu o błędzie.
+## Emitowany po rozpoczęciu gry.
+signal game_started()
+
+## Emitowany po zakończeniu gry.
+signal game_ended()
+
+## Emitowany po wystąpieniu błędu.
 signal error_occured(message: String)
 
 # Przechowuje informacje o aktualnym stanie gry.
@@ -51,7 +57,6 @@ var _player_attributes = {
 }
 
 func _ready():
-	multiplayer.peer_connected.connect(_on_player_connected)
 	multiplayer.peer_disconnected.connect(_on_player_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected)
 	multiplayer.connection_failed.connect(_on_connection_failed)
@@ -67,20 +72,28 @@ func host_game(port:int, max_players:int):
 	var peer = ENetMultiplayerPeer.new()
 	var status = peer.create_server(_server_settings["port"])
 
-	if status == OK:
-		multiplayer.multiplayer_peer = peer
+	if status != OK:
+		_handle_error("Nie udało się nasłuchiwać na porcie " + str(_server_settings["port"]) + "!")
+		return
 
-		# Rejestruje hosta jako gracza.
-		_add_registered_player(1, _current_player)
+	multiplayer.multiplayer_peer = peer
 
-		# Uruchamia synchronizację czasu.
-		NetworkTime.start()
+	# Oczekuje na wystartowanie serwera.
+	await async_condition(
+		func():
+			return peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTING
+	)
 
-		# Przechodzi do lobby.
-		_enter_lobby()
-	else:
-		# Obsługuje błąd połączenia.
-		_handle_error("Nie można utworzyć serwera!")
+	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
+		_handle_error("Nie udało się uruchomić serwera!")
+		return
+
+	# Uruchamia synchronizację czasu.
+	NetworkTime.start()
+
+	# Rejestruje hosta jako gracza.
+	_add_registered_player(1, _current_player)
+	_on_player_registered()
 
 ## Dołącza do istniejącego serwera gry.
 func join_game(address:String, port:int):
@@ -88,55 +101,37 @@ func join_game(address:String, port:int):
 	var peer = ENetMultiplayerPeer.new()
 	var status = peer.create_client(address, port)
 
-	if status == OK:
-		multiplayer.multiplayer_peer = peer
+	if status != OK:
+		_handle_error("Nie udało się utworzyć klienta! Powód: " + error_string(status))
+		return
 
-		# Uruchamia synchronizację czasu.
-		NetworkTime.start()
-	else:
-		# Obsługuje błąd połączenia.
-		_handle_error("Nie można dołączyć do serwera!")
+	multiplayer.multiplayer_peer = peer
+
+	# Oczekuje na połączenie z serwerem.
+	await async_condition(
+		func():
+			return peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTING
+	)
+
+	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
+		_handle_error("Nie udało się połączyć z " + str(address) + ":" + str(port) + "!")
+		return
+
+	# Uruchamia synchronizację czasu.
+	NetworkTime.start()
 
 ## Rozpoczyna grę.
 func start_game():
 	# Tylko host może rozpocząć grę.
 	if multiplayer.is_server():
+		# Wybiera morderców.
 		_select_impostors()
+
+		# Ładuje główną mapę.
 		_on_game_started.rpc()
+
+		# Przypisuje zadania.
 		TaskManager.assign_tasks_server(1)
-
-## Obsługuje rozpoczęcie gry u graczy.
-@rpc("call_local", "reliable")
-func _on_game_started():
-	change_map.emit("res://scenes/maps/main_map/main_map.tscn")
-	_current_game["is_started"] = true
-
-## Wybiera morderców.
-func _select_impostors():
-	var available_players = get_registered_players().keys()
-	var impostors = []
-
-	for i in range(_server_settings["max_impostors"]):
-		var id = available_players[randi() % available_players.size()]
-
-		impostors.append(id)
-		available_players.erase(id)
-
-	for i in impostors:
-		_current_game["registered_players"][i]["is_impostor"] = true
-
-		if i != 1:
-			_send_impostor_status.rpc_id(i, impostors)
-		else:
-			_current_player["is_impostor"] = true
-
-@rpc("reliable")
-## Wysyła informacje o mordercach.
-func _send_impostor_status(impostors):
-	for i in get_registered_players():
-		_current_game["registered_players"][i]["is_impostor"] = true if i in impostors else false
-
-	_current_player["is_impostor"] = true
 
 ## Kończy grę.
 func end_game():
@@ -157,8 +152,8 @@ func end_game():
 	_current_player["is_impostor"] = false
 	_current_player["is_dead"] = false
 
-	# Przechodzi do menu startowego.
-	get_tree().change_scene_to_file("res://scenes/ui/start_menu/start_menu.tscn")
+	await get_tree().process_frame
+	game_ended.emit()
 
 ## Zwraca informację o grze, która jest przechowywana pod danym kluczem.
 func get_current_game_key(key:String):
@@ -205,35 +200,27 @@ func set_input_status(state:bool):
 	_current_game["is_input_disabled"] = !state
 	input_status_changed.emit(!_current_game["is_paused"] && !_current_game["is_input_disabled"])
 
-## Obsługuje połączenie nowego gracza na serwerze.
-func _on_player_connected(id:int):
-	# Rozłącza gracza, jeśli przekroczono limit połączeń.
-	if _current_game["registered_players"].size() >= _server_settings["max_players"]:
-		multiplayer.disconnect_peer(id)
-		return
-
-	# Rozłącza gracza, jeśli gra już się rozpoczęła.
-	if _current_game["is_started"]:
-		multiplayer.disconnect_peer(id)
-		return
-
 ## Obsługuje rozłączenie gracza na serwerze.
 func _on_player_disconnected(id:int):
-	# Wyrejestrowuje gracza.
 	_delete_deregistered_player.rpc(id)
 
 ## Obsługuje połączenie z serwerem u klienta.
 func _on_connected():
+	# Oczekuje na synchronizację czasu.
+	await NetworkTime.after_sync
+
 	# Wysyła informacje o graczu do serwera w celu rejestracji.
 	_register_player.rpc_id(1, _filter_player(_current_player))
 
 ## Obsługuje nieudane połączenie z serwerem u klienta.
 func _on_connection_failed():
 	_handle_error("Nie można połączyć się z serwerem!")
+	end_game()
 
 ## Obsługuje rozłączenie z serwerem u klienta.
 func _on_server_disconnected():
 	_handle_error("Połączenie z serwerem zostało przerwane!")
+	end_game()
 
 ## Filtruje informacje o graczu.
 func _filter_player(player:Dictionary):
@@ -246,20 +233,25 @@ func _filter_player(player:Dictionary):
 
 	return filtered_player
 
-## Przechodzi do lobby.
-func _enter_lobby():
-	await get_tree().process_frame
-	change_map.emit("res://scenes/maps/lobby/lobby.tscn")
-
 ## Obsługuje błędy.
 func _handle_error(message: String):
 	await get_tree().process_frame
 	error_occured.emit(message)
 
-## Rejestruje gracza na serwerze.
 @rpc("any_peer", "reliable")
+## Rejestruje gracza na serwerze.
 func _register_player(player:Dictionary):
 	var id = multiplayer.get_remote_sender_id()
+
+	# Wyrzuca gracza, jeśli gra już się rozpoczęła.
+	if _current_game["is_started"]:
+		_kick_player.rpc_id(id, "Gra już się rozpoczęła!")
+		return
+
+	# Wyrzuca gracza, jeśli przekroczono limit graczy.
+	if _current_game["registered_players"].size() >= _server_settings["max_players"]:
+		_kick_player.rpc_id(id, "Przekroczono limit połączeń!")
+		return
 
 	# Informuje nowego gracza o obecnych graczach.
 	for i in _current_game["registered_players"]:
@@ -271,13 +263,14 @@ func _register_player(player:Dictionary):
 	# Informuje nowego gracza o poprawnej rejestracji.
 	_on_player_registered.rpc_id(id)
 
-## Obsługuje pomyślną rejestrację gracza u klienta.
 @rpc("reliable")
+## Obsługuje pomyślną rejestrację gracza u klienta.
 func _on_player_registered():
-	_enter_lobby()
+	await get_tree().process_frame
+	registered_successfully.emit()
 
-## Dodaje zarejestrowanego gracza do słownika.
 @rpc("call_local", "reliable")
+## Dodaje zarejestrowanego gracza do słownika.
 func _add_registered_player(id:int, player:Dictionary):
 	# Filtruje informacje od klienta.
 	var filtered_player = _filter_player(player)
@@ -294,8 +287,56 @@ func _add_registered_player(id:int, player:Dictionary):
 	_current_game["registered_players"][id] = filtered_player
 	player_registered.emit(id, filtered_player)
 
-## Usuwa wyrejestrowanego gracza ze słownika.
 @rpc("call_local", "reliable")
+## Usuwa wyrejestrowanego gracza ze słownika.
 func _delete_deregistered_player(id:int):
 	_current_game["registered_players"].erase(id)
 	player_deregistered.emit(id)
+
+@rpc("reliable")
+## Wyrzuca gracza z serwera.
+func _kick_player(reason: String):
+	_handle_error(reason)
+	end_game()
+
+@rpc("call_local", "reliable")
+## Obsługuje rozpoczęcie gry u graczy.
+func _on_game_started():
+	_current_game["is_started"] = true
+	game_started.emit()
+
+## Wybiera morderców.
+func _select_impostors():
+	var available_players = get_registered_players().keys()
+	var impostors = []
+
+	for i in range(_server_settings["max_impostors"]):
+		var id = available_players[randi() % available_players.size()]
+
+		impostors.append(id)
+		available_players.erase(id)
+
+	for i in impostors:
+		_current_game["registered_players"][i]["is_impostor"] = true
+
+		if i != 1:
+			_send_impostor_status.rpc_id(i, impostors)
+		else:
+			_current_player["is_impostor"] = true
+
+@rpc("reliable")
+## Wysyła informacje o mordercach.
+func _send_impostor_status(impostors):
+	for i in get_registered_players():
+		_current_game["registered_players"][i]["is_impostor"] = true if i in impostors else false
+
+	_current_player["is_impostor"] = true
+
+## Asynchronicznie czeka na warunek.
+func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
+	timeout = Time.get_ticks_msec() + timeout * 1000
+	while not cond.call():
+		await get_tree().process_frame
+		if Time.get_ticks_msec() > timeout:
+			return ERR_TIMEOUT
+	return OK

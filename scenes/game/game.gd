@@ -1,34 +1,46 @@
 extends Control
 
 @onready var error_pop_up = $ErrorPopUp
+@onready var connecting_label = $ConnectingLabel
 
 func _ready():
-	GameManager.change_map.connect(_change_map)
+	GameManager.registered_successfully.connect(_on_registered_successfully)
+	GameManager.game_started.connect(_on_game_started)
+	GameManager.game_ended.connect(_on_game_ended)
 	GameManager.error_occured.connect(_on_error_occured)
 	error_pop_up.left_pressed.connect(_on_error_pop_up_closed)
 
-## Zmień wyświetlaną globalnie mapę.
-func _change_map(scene: String):
-	var maps = $Maps
+func _on_registered_successfully():
+	connecting_label.hide()
+	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
 
-	# Usuń aktualną mapę.
-	for i in maps.get_children():
-		maps.remove_child(i)
-		i.queue_free()
+func _on_game_started():
+	connecting_label.hide()
+	_change_map.call_deferred(load("res://scenes/maps/main_map/main_map.tscn"))
 
-	# Dodaj nową mapę.
-	maps.add_child(load(scene).instantiate())
+func _on_game_ended():
+	if !error_pop_up.visible:
+		get_tree().change_scene_to_file("res://scenes/ui/start_menu/start_menu.tscn")
 
 func _on_error_occured(message: String):
+	if !error_pop_up.visible:
+		connecting_label.hide()
+		_delete_map()
+		error_pop_up.set_information(message)
+		error_pop_up.show()
+
+func _on_error_pop_up_closed():
+	get_tree().change_scene_to_file("res://scenes/ui/start_menu/start_menu.tscn")
+
+## Zmienia wyświetlaną globalnie mapę.
+func _change_map(scene: PackedScene):
+	_delete_map()
+	$Maps.add_child(scene.instantiate())
+
+## Usuwa aktualną mapę.
+func _delete_map():
 	var maps = $Maps
 
-	# Usuń aktualną mapę.
 	for i in maps.get_children():
 		maps.remove_child(i)
 		i.queue_free()
-	
-	error_pop_up.set_information(message)
-	error_pop_up.show()
-
-func _on_error_pop_up_closed():
-	GameManager.end_game()
