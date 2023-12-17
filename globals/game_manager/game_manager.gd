@@ -2,16 +2,19 @@ extends Node
 ## Klasa odpowiadająca za zarządzanie stanem gry, gracza i serwera.
 
 ## Emitowany po zarejestrowaniu nowego gracza na serwerze.
-signal player_registered(id:int, player:Dictionary)
+signal player_registered(id: int, player: Dictionary)
 
 ## Emitowany po wyrejestrowaniu gracza z serwera.
-signal player_deregistered(id:int)
+signal player_deregistered(id: int)
 
 ## Emitowany w celu zmiany statusu sterowania u gracza.
-signal input_status_changed(is_paused:bool)
+signal input_status_changed(is_paused: bool)
 
 ## Emitowany w celu zmiany sceny.
-signal change_map(scene)
+signal change_map(scene: String)
+
+## Emitowany w celu wyświetlenia komunikatu o błędzie.
+signal error_occured(message: String)
 
 # Przechowuje informacje o aktualnym stanie gry.
 var _current_game = {
@@ -77,7 +80,7 @@ func host_game(port:int, max_players:int):
 		_enter_lobby()
 	else:
 		# Obsługuje błąd połączenia.
-		_handle_error()
+		_handle_error("Nie można utworzyć serwera!")
 
 ## Dołącza do istniejącego serwera gry.
 func join_game(address:String, port:int):
@@ -92,7 +95,7 @@ func join_game(address:String, port:int):
 		NetworkTime.start()
 	else:
 		# Obsługuje błąd połączenia.
-		_handle_error()
+		_handle_error("Nie można dołączyć do serwera!")
 
 ## Rozpoczyna grę.
 func start_game():
@@ -154,8 +157,8 @@ func end_game():
 	_current_player["is_impostor"] = false
 	_current_player["is_dead"] = false
 
-	# Obsługuje zakończenie gry.
-	_handle_error()
+	# Przechodzi do menu startowego.
+	get_tree().change_scene_to_file("res://scenes/ui/start_menu/start_menu.tscn")
 
 ## Zwraca informację o grze, która jest przechowywana pod danym kluczem.
 func get_current_game_key(key:String):
@@ -226,11 +229,11 @@ func _on_connected():
 
 ## Obsługuje nieudane połączenie z serwerem u klienta.
 func _on_connection_failed():
-	end_game()
+	_handle_error("Nie można połączyć się z serwerem!")
 
 ## Obsługuje rozłączenie z serwerem u klienta.
 func _on_server_disconnected():
-	end_game()
+	_handle_error("Połączenie z serwerem zostało przerwane!")
 
 ## Filtruje informacje o graczu.
 func _filter_player(player:Dictionary):
@@ -249,8 +252,9 @@ func _enter_lobby():
 	change_map.emit("res://scenes/maps/lobby/lobby.tscn")
 
 ## Obsługuje błędy.
-func _handle_error():
-	get_tree().change_scene_to_file("res://scenes/ui/start_menu/start_menu.tscn")
+func _handle_error(message: String):
+	await get_tree().process_frame
+	error_occured.emit(message)
 
 ## Rejestruje gracza na serwerze.
 @rpc("any_peer", "reliable")

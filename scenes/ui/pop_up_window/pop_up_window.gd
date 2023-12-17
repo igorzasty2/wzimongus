@@ -22,3 +22,7 @@ func _on_left_button_pressed():
 
 func _on_right_button_pressed():
 	emit_signal("right_pressed")
+
+func set_information(text: String):
+	information = text
+	label.text = text

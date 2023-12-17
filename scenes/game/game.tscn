@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwogo8if36ix7"]
+[gd_scene load_steps=4 format=3 uid="uid://cwogo8if36ix7"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_b20el"]
+[ext_resource type="PackedScene" uid="uid://ctojv5s5r4v3" path="res://scenes/ui/pop_up_window/pop_up_window.tscn" id="2_66ag0"]
 [ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="2_knil8"]
 
 [node name="Game" type="Control"]
@@ -13,6 +14,12 @@ grow_vertical = 2
 script = ExtResource("1_b20el")
 
 [node name="Maps" type="Node" parent="."]
+
+[node name="ErrorPopUp" parent="." instance=ExtResource("2_66ag0")]
+visible = false
+layout_mode = 1
+left_button_text = "Ok"
+right_button_text = ""
 
 [node name="PauseMenu" parent="." instance=ExtResource("2_knil8")]
 visible = false
