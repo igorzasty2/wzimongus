@@ -9,6 +9,7 @@ size = Vector2(118, 118)
 [node name="Letter" type="StaticBody2D"]
 input_pickable = true
 script = ExtResource("1_ooer1")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_2ff2l")

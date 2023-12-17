@@ -2,15 +2,14 @@ extends Control
 
 
 func _ready():
-	# Dodaje elementy do menu rozwijanego MaxConnectionsInput w scenie Host Menu.
-	# Elementy to liczby całkowite od 10 do 2 w kolejności malejącej.
+	# Dodaje liczby całkowite od 10 do 2 do menu rozwijanego MaxConnectionsInput
 	for i in range(10, 1, -1):
 		$MaxConnectionsInput.add_item("{i}".format({"i": i}))
 
 
 func _on_host_button_button_down():
-	# Ustawia nazwę użytkownika i maksymalną liczbę połączeń w MultiplayerManager.
-	MultiplayerManager.set_player_property("username", $UsernameInput.text)
+	# Ustawia wybraną nazwę użytkownika w GameManager, korzystając z tekstu wprowadzonego w UsernameInput.
+	GameManager.set_player_key("username", $UsernameInput.text)
 
-	# Tworzy grę o określonym porcie i maksymalnej liczbie połączeń w MultiplayerManager.
-	MultiplayerManager.create_game($PortInput.text.to_int(), $MaxConnectionsInput.text.to_int())
+	# Inicjuje grę z podanym portem i maksymalną liczbą połączeń, pobranymi z PortInput i MaxConnectionsInput.
+	GameManager.create_game($PortInput.text.to_int(), $MaxConnectionsInput.text.to_int())
