@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=42 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/map/map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://sx7ejcssw0xi" path="res://scenes/player/player.tscn" id="2_0ktid"]
@@ -40,6 +40,7 @@
 [ext_resource type="PackedScene" uid="uid://dtke4a6qdlm03" path="res://scenes/map/scenes/corridors/korytarz_sala_2_serwerownia_aula.tscn" id="26_tqpop"]
 [ext_resource type="PackedScene" uid="uid://bodsrjrylxs0s" path="res://scenes/map/scenes/corridors/korytarz_serwerownia_pielegniarka.tscn" id="27_71qtx"]
 [ext_resource type="PackedScene" uid="uid://1nb6uwps5542" path="res://scenes/map/scenes/corridors/korytarz_willy_sala_1_bufet_pokoj_wykladowcow.tscn" id="28_00vjh"]
+[ext_resource type="PackedScene" uid="uid://m6q8rh67ru1c" path="res://scenes/ui/user_interface/user_interface.tscn" id="41_eiukw"]
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
@@ -225,6 +226,8 @@ minigame_scene = ExtResource("5_pwcjb")
 position = Vector2(502, 385)
 sprite = ExtResource("6_slh3o")
 minigame_scene = ExtResource("4_6s3my")
+
+[node name="UserInterface" parent="." instance=ExtResource("41_eiukw")]
 
 [connection signal="timeout" from="Camera/Timer" to="Camera" method="_on_timer_timeout"]
 [connection signal="pressed" from="Camera/UseButton" to="." method="_on_use_button_pressed"]
