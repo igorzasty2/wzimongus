@@ -88,9 +88,6 @@ func host_game(port:int, max_players:int):
 		_handle_error("Nie udało się uruchomić serwera!")
 		return
 
-	# Uruchamia synchronizację czasu.
-	NetworkTime.start()
-
 	# Rejestruje hosta jako gracza.
 	_add_registered_player(1, _current_player)
 	_on_player_registered()
@@ -117,9 +114,6 @@ func join_game(address:String, port:int):
 		_handle_error("Nie udało się połączyć z " + str(address) + ":" + str(port) + "!")
 		return
 
-	# Uruchamia synchronizację czasu.
-	NetworkTime.start()
-
 ## Rozpoczyna grę.
 func start_game():
 	# Tylko host może rozpocząć grę.
@@ -138,9 +132,6 @@ func end_game():
 	# Zamyka połączenie i przywraca domyślny peer.
 	multiplayer.multiplayer_peer.close()
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
-
-	# Zatrzymuje synchronizację czasu.
-	NetworkTime.stop()
 
 	# Resetuje stan gry.
 	_current_game["is_started"] = false
@@ -207,7 +198,7 @@ func _on_player_disconnected(id:int):
 ## Obsługuje połączenie z serwerem u klienta.
 func _on_connected():
 	# Oczekuje na synchronizację czasu.
-	await NetworkTime.after_sync
+	# await NetworkTime.after_sync
 
 	# Wysyła informacje o graczu do serwera w celu rejestracji.
 	_register_player.rpc_id(1, _filter_player(_current_player))

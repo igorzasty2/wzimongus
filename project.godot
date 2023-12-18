@@ -121,6 +121,7 @@ chat_change_group={
 
 events/enabled=false
 logging/log_level=4
+logging/netfox_log_level=4
 
 [rendering]
 

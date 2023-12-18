@@ -1,6 +1,9 @@
 extends Node2D
 
 func _ready():
+	# Uruchamia synchronizację czasu.
+	NetworkTime.start()
+
 	# Włącza ekran ładowania.
 	var loading_screen = preload("res://scenes/ui/loading_screen/loading_screen.tscn").instantiate()
 	add_child(loading_screen)
@@ -14,6 +17,9 @@ func _ready():
 	GameManager.player_deregistered.connect(_remove_player)
 
 func _exit_tree():
+	# Zatrzymuje synchronizację czasu.
+	NetworkTime.stop()
+	
 	for i in $Players.get_children():
 		i.queue_free()
 
