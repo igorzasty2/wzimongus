@@ -1,7 +1,9 @@
 extends Control
 
-@onready var error_pop_up = $ErrorPopUp
+@onready var background = $Background
 @onready var connecting_label = $ConnectingLabel
+@onready var error_pop_up = $ErrorPopUp
+
 
 func _ready():
 	GameManager.registered_successfully.connect(_on_registered_successfully)
@@ -26,6 +28,7 @@ func _on_error_occured(message: String):
 	if !error_pop_up.visible:
 		connecting_label.hide()
 		_delete_map()
+		background.show()
 		error_pop_up.set_information(message)
 		error_pop_up.show()
 

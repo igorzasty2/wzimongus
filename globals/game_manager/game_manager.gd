@@ -63,10 +63,11 @@ func _ready():
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 ## Tworzy nowy serwer gry.
-func host_game(port:int, max_players:int):
+func host_game(port: int, max_players: int, max_lecturers: int):
 	# Ustawia parametry serwera.
 	_server_settings["port"] = port
 	_server_settings["max_players"] = max_players
+	_server_settings["max_impostors"] = max_lecturers
 
 	# Inicjalizuje serwer.
 	var peer = ENetMultiplayerPeer.new()

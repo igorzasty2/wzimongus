@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/ui/join_menu/join_menu.gd" id="1_o0flq"]
 
-[node name="join_menu" type="Control"]
+[node name="JoinMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,97 +11,66 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o0flq")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.533333, 0.521569, 0.427451, 0.980392)
-metadata/_edit_use_anchors_ = true
+color = Color(0.352941, 0.352941, 0.443137, 1)
 
-[node name="UsernameLabel" type="Label" parent="."]
+[node name="InputsContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -127.0
-offset_top = 192.0
-offset_right = -85.0
-offset_bottom = 218.0
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -119.0
+offset_right = 125.0
+offset_bottom = 119.0
 grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="UsernameContainer" type="VBoxContainer" parent="InputsContainer"]
+layout_mode = 2
+
+[node name="UsernameLabel" type="Label" parent="InputsContainer/UsernameContainer"]
+layout_mode = 2
 text = "Login"
 
-[node name="UsernameInput" type="LineEdit" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -128.0
-offset_top = 216.0
-offset_right = 127.0
-offset_bottom = 247.0
-grow_horizontal = 2
+[node name="UsernameInput" type="LineEdit" parent="InputsContainer/UsernameContainer"]
+layout_mode = 2
 
-[node name="AddressLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -127.0
-offset_top = 264.0
-offset_right = -16.0
-offset_bottom = 290.0
-grow_horizontal = 2
+[node name="AddressContainer" type="VBoxContainer" parent="InputsContainer"]
+layout_mode = 2
+
+[node name="AddressLabel" type="Label" parent="InputsContainer/AddressContainer"]
+layout_mode = 2
 text = "Adres IP hosta"
 
-[node name="AddressInput" type="LineEdit" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -127.0
-offset_top = 288.0
-offset_right = 128.0
-offset_bottom = 319.0
-grow_horizontal = 2
-text = "127.0.0.1"
+[node name="AddressInput" type="LineEdit" parent="InputsContainer/AddressContainer"]
+layout_mode = 2
+text = "localhost"
 
-[node name="PortLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -127.0
-offset_top = 337.0
-offset_right = -87.0
-offset_bottom = 363.0
-grow_horizontal = 2
+[node name="PortContainer" type="HSplitContainer" parent="InputsContainer"]
+layout_mode = 2
+
+[node name="PortLabel" type="Label" parent="InputsContainer/PortContainer"]
+custom_minimum_size = Vector2(169, 2.08165e-12)
+layout_mode = 2
 text = "Port"
 
-[node name="PortInput" type="LineEdit" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 64.0
-offset_top = 337.0
-offset_right = 131.062
-offset_bottom = 368.0
-grow_horizontal = 2
+[node name="PortInput" type="LineEdit" parent="InputsContainer/PortContainer"]
+layout_mode = 2
 text = "9001"
 
-[node name="JoinButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -127.0
-offset_top = 384.0
-offset_right = 128.0
-offset_bottom = 434.0
-grow_horizontal = 2
+[node name="JoinButton" type="Button" parent="InputsContainer"]
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
 text = "Dołącz do gry"
 
-[connection signal="button_down" from="JoinButton" to="." method="_on_join_button_button_down"]
+[connection signal="button_down" from="InputsContainer/JoinButton" to="." method="_on_join_button_button_down"]
