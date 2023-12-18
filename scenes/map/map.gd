@@ -25,7 +25,7 @@ func _add_player(id: int):
 	player.name = str(id)
 
 	if multiplayer.is_server():
-		player.position = Vector2(randi_range(0, 1152), randi_range(0, 648))
+		player.position = Vector2(randi_range(0, 100), randi_range(0, 100))
 
 	# Dodaje gracza do drzewa sceny.
 	$Players.add_child(player)

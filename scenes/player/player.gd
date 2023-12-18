@@ -7,9 +7,8 @@ const SPEED = 600.0
 var minigame: PackedScene
 var minigame_instance:Node2D
 
-# Zmienne do obsługi ventów
-var teleport_position = Vector2.ZERO 
-var is_impostor = GameManager._current_player["impostor"]
+# Zmienna do obsługi ventów
+var teleport_position = null
 
 @export var input: InputSynchronizer
 
@@ -55,9 +54,9 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 	velocity /= NetworkTime.physics_factor
 	
 	# Odpowiada za przeniesienie gracza do innego venta
-	if teleport_position != Vector2.ZERO :#&& is_impostor:
+	if teleport_position != null:
 		position = teleport_position
-		teleport_position = Vector2.ZERO
+		teleport_position = null
 
 
 # Aktualizuje parametry animacji postaci.

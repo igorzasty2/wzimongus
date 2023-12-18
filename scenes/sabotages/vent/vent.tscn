@@ -16,6 +16,7 @@ size = Vector2(61, 61)
 [node name="Vent" type="Node2D"]
 scale = Vector2(2.4, 2.4)
 script = ExtResource("1_16s2l")
+allow_crewmate_vent = true
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

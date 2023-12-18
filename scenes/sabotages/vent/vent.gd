@@ -1,6 +1,7 @@
 class_name Vent
 extends Node2D
 
+@export var allow_crewmate_vent: bool = false
 @export var vent_target_list : Array[Vent] = []
 @onready var sprite_2d = $Sprite2D
 
@@ -11,7 +12,6 @@ const DIRECTION_BUTTON_DISTANCE_MULTIPLIER = 60
 
 var is_player_in_vent = false
 
-var can_be_used = false
 var player_body
 
 var in_range_color = [180, 0, 0, 255]
@@ -40,11 +40,10 @@ func _input(event):
 
 # Obsługuje użycie venta
 func use_vent():
-	if can_be_used:
-		if is_player_in_vent:
-			exit_vent()
-		elif !is_player_in_vent:
-			enter_vent()
+	if is_player_in_vent:
+		exit_vent()
+	elif !is_player_in_vent:
+		enter_vent()
 
 # Instancjonuje przycisk kierunkowy w danym miejscu
 func instantiante_direction_button(pos : Vector2):
@@ -68,7 +67,6 @@ func _on_direction_button_pressed(id):
 	move_to_vent(id)
 
 # Obsługuje przeniesienie gracza do innego venta
-@rpc("any_peer", "call_local", "reliable")
 func move_to_vent(id):
 	# Obsługuje vent startowy
 	change_dir_bttns_visibility(false)
@@ -77,26 +75,50 @@ func move_to_vent(id):
 	# Obsługuje vent docelowy
 	vent_target_list[id].is_player_in_vent = true
 	vent_target_list[id].change_dir_bttns_visibility(true)
-	player_body.teleport_position = vent_target_list[id].position - Vector2(0,50)
+	
+	move_to_vent_server.rpc(id)
+
+# Obsługuje przeniesienie gracza do innego venta od strony serwera
+@rpc("any_peer", "call_local", "reliable")
+func move_to_vent_server(id):
+	if player_body!=null:
+		player_body.teleport_position = vent_target_list[id].position - Vector2(0,50)
+	else:
+		print("ERROR ",player_body)
 
 # Obsługuje wejście gracza do venta
-@rpc("any_peer", "call_local", "reliable")
 func enter_vent():
-	player_body.teleport_position = self.position - Vector2(0,50)
-	player_body.visible = false
 	GameManager.set_input_status(false)
-	
 	is_player_in_vent = true
 	change_dir_bttns_visibility(true)
+	
+	enter_vent_server.rpc()
+
+# Obsługuje wejście gracza do venta od strony serwera
+@rpc("any_peer", "call_local", "reliable")
+func enter_vent_server():
+	print("vent entered")
+	if player_body!=null:
+		player_body.teleport_position = self.position - Vector2(0,50)
+		player_body.visible = false
+	else:
+		print("ERROR ",player_body)
 
 # Obsługuje wyjście gracza z venta
-@rpc("any_peer", "call_local", "reliable")
 func exit_vent():
-	player_body.visible = true
 	is_player_in_vent = false
-
 	GameManager.set_input_status(true)
 	change_dir_bttns_visibility(false)
+	
+	exit_vent_server.rpc()
+
+# Obsługuje wyjście gracza z venta od strony serwera
+@rpc("any_peer", "call_local", "reliable")
+func exit_vent_server():
+	if player_body!=null:
+		player_body.visible = true
+	else:
+		print("ERROR ",player_body)
 
 # Zmienia vidoczność przycisków kierunkowych
 func change_dir_bttns_visibility(visibility:bool):
@@ -105,25 +127,22 @@ func change_dir_bttns_visibility(visibility:bool):
 
 # Obsługuje wejście gracza w obszar w którym może ventować
 func _on_area_2d_body_entered(body):
-	print("entered area ")
-	#if is_impostor():
-	set_process_input(true)
-	
-	player_body = body
-	can_be_used = true
-	
-	if body.name.to_int() == multiplayer.get_unique_id():
-		toggle_highlight(true)
+	print("body entered: ", body)
+	if can_use_vent() || allow_crewmate_vent:
+		set_process_input(true)
+		
+		player_body = body
+		
+		if body.name.to_int() == multiplayer.get_unique_id():
+			toggle_highlight(true)
 
 # Obsługuje wyjście gracza z obszaru w którym może ventować
 func _on_area_2d_body_exited(body):
-	#if is_impostor():
-	set_process_input(false)
-	
-	can_be_used = false
-	
-	if body.name.to_int() == multiplayer.get_unique_id():
-		toggle_highlight(false)
+	if can_use_vent() || allow_crewmate_vent:
+		set_process_input(false)
+		
+		if body.name.to_int() == multiplayer.get_unique_id():
+			toggle_highlight(false)
 
 # Włącza i wyłącza podświetlenie venta
 func toggle_highlight(is_on: bool):
@@ -132,6 +151,7 @@ func toggle_highlight(is_on: bool):
 	else:
 		sprite_2d.material.set_shader_parameter('line_color', out_of_range_color)
 
-# Sprawdza czy gracz jest impostorem
-func is_impostor():
-	return GameManager._current_player["impostor"]
+# Sprawdza czy gracz jest impostorem i nie jest martwy
+func can_use_vent():
+	return GameManager._current_player["impostor"] && !GameManager._current_player["died"]
+	
