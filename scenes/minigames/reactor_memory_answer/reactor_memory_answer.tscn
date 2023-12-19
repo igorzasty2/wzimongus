@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cc3kuyaqojlob" path="res://scenes/minigames/reactor_memory_answer/indicator.tscn" id="5_mmqq7"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vau2l"]
-load_path = "res://.godot/imported/grid.png-8e7f0b1a168d7b596cda549b494edd26.ctex"
 
 [node name="minigra_reaktor" type="Node2D"]
 scale = Vector2(1.0105, 1.01303)
