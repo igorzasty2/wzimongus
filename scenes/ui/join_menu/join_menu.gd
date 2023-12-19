@@ -1,9 +1,9 @@
 extends Control
 
-func _on_join_button_button_down():
-	var username = $InputsContainer/UsernameContainer/UsernameInput.text
-	var address = $InputsContainer/AddressContainer/AddressInput.text
-	var port = $InputsContainer/PortContainer/PortInput.text.to_int()
+@onready var username_input = $InputsContainer/UsernameContainer/UsernameInput
+@onready var address_input = $InputsContainer/AddressContainer/AddressInput
+@onready var port_input = $InputsContainer/PortContainer/PortInput
 
-	GameManager.set_player_key("username", username)
-	GameManager.join_game(address, port)
+func _on_join_button_button_down():
+	GameManager.set_player_key("username", username_input.text)
+	GameManager.join_game(address_input.text, port_input.text.to_int())

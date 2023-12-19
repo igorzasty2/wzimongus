@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj1dqmbh77gan"
-path="res://.godot/imported/wifi.png-54f3b8023f09385a03b3f86a743669a6.ctex"
+uid="uid://pmrgxruihggd"
+path="res://.godot/imported/close_button3.png-253e51570d20a1b905f7414b0b27df76.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/task_button/assets/wifi.png"
-dest_files=["res://.godot/imported/wifi.png-54f3b8023f09385a03b3f86a743669a6.ctex"]
+source_file="res://scenes/ui/minigame_menu/assets/close_button3.png"
+dest_files=["res://.godot/imported/close_button3.png-253e51570d20a1b905f7414b0b27df76.ctex"]
 
 [params]
 

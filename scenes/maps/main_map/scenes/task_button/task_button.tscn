@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cxdyrnlbs0811"]
 
-[ext_resource type="Script" path="res://scenes/task_button/task_button.gd" id="1_dfaon"]
-[ext_resource type="Shader" path="res://scenes/task_button/assets/task_button.gdshader" id="2_o3jvt"]
+[ext_resource type="Script" path="res://scenes/maps/main_map/scenes/task_button/task_button.gd" id="1_dfaon"]
+[ext_resource type="Shader" path="res://scenes/maps/main_map/scenes/task_button/assets/task_button.gdshader" id="2_o3jvt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ykn66"]
 radius = 170.238

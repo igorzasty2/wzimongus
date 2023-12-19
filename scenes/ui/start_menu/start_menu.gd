@@ -4,9 +4,6 @@ extends Control
 @onready var settings: Control = $Settings
 
 func _ready():
-	settings.visible = false
-	menu.visible = true
-
 	# Ustawia minimalną wielkość okna na 800x600
 	DisplayServer.window_set_min_size(Vector2i(800,600))
 

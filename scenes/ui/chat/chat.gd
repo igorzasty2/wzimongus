@@ -1,10 +1,10 @@
 extends Control
 
-enum Group { GLOBAL, IMPOSTOR, DEAD, SYSTEM }
+enum Group { GLOBAL, LECTURER, DEAD, SYSTEM }
 
 const GROUP_COLORS = {
 	Group.GLOBAL: "white",
-	Group.IMPOSTOR: "red",
+	Group.LECTURER: "red",
 	Group.DEAD: "gray",
 	Group.SYSTEM: "yellow"
 }
@@ -23,7 +23,7 @@ var system_message_scene = preload("res://scenes/ui/chat/system_message/system_m
 
 
 var last_known_scroll_max = 0
-var current_group = Group.IMPOSTOR
+var current_group = Group.LECTURER
 var fade_out_tween 
 
 func _ready():
@@ -45,9 +45,9 @@ func send_message(message, group, id):
 		Group.DEAD:
 			if current_group == Group.DEAD:
 				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.DEAD)
-		Group.IMPOSTOR:
-			if current_group == Group.IMPOSTOR:
-				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.IMPOSTOR)
+		Group.LECTURER:
+			if current_group == Group.LECTURER:
+				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.LECTURER)
 			else:
 				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.GLOBAL)
 		Group.SYSTEM:

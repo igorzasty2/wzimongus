@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://donjo23ai4rn6"
-path="res://.godot/imported/use2.png-b718c085bc1d149d3ff18bca1b4d5e61.ctex"
+uid="uid://dj1dqmbh77gan"
+path="res://.godot/imported/wifi.png-9d30c5bb79c00c234e8c507dae47796f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/button_assets/use_button/use2.png"
-dest_files=["res://.godot/imported/use2.png-b718c085bc1d149d3ff18bca1b4d5e61.ctex"]
+source_file="res://scenes/maps/main_map/scenes/task_button/assets/wifi.png"
+dest_files=["res://.godot/imported/wifi.png-9d30c5bb79c00c234e8c507dae47796f.ctex"]
 
 [params]
 
