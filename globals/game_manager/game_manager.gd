@@ -306,9 +306,10 @@ func _on_game_started():
 ## Wybiera morderców.
 func _select_impostors():
 	var available_players = get_registered_players().keys()
+	var impostors_amount = min(ceil(available_players.size() / 4.0), _server_settings["max_impostors"])
 	var impostors = []
 
-	for i in range(_server_settings["max_impostors"]):
+	for i in range(impostors_amount):
 		var id = available_players[randi() % available_players.size()]
 
 		impostors.append(id)
