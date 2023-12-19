@@ -61,10 +61,11 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 		input.direction = move_toward_position - position
 		position = position.move_toward(move_toward_position, _delta*SPEED)
 		if position == move_toward_position:
-			visible = false
+			# Tutaj będzie animacja ventowania
+			toggle_visible.rpc(false)
 			move_toward_position = null
 	
-	# Odpowiada za przeniesienie gracza do innego venta
+	# Odpowiada za przeniesienie gracza z venta do innego venta
 	if teleport_position != null:
 		position = teleport_position
 		teleport_position = null
@@ -86,6 +87,11 @@ func _update_animation_parameters(direction):
 		else:
 			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, direction.y)
 			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, direction.y)
+
+# Zmienia widoczność gracza na serwerze
+@rpc("any_peer", "call_local", "reliable")
+func toggle_visible(is_visible:bool):
+	visible = is_visible
 
 func show_use_button(id, minigame):
 	if id == multiplayer.get_unique_id():
