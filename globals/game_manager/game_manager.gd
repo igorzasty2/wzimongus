@@ -64,6 +64,9 @@ func _ready():
 
 ## Tworzy nowy serwer gry.
 func host_game(port: int, max_players: int, max_lecturers: int):
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
+	await get_tree().process_frame
+
 	# Ustawia parametry serwera.
 	_server_settings["port"] = port
 	_server_settings["max_players"] = max_players
@@ -95,6 +98,9 @@ func host_game(port: int, max_players: int, max_lecturers: int):
 
 ## Dołącza do istniejącego serwera gry.
 func join_game(address:String, port:int):
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
+	await get_tree().process_frame
+	
 	# Tworzy klienta gry.
 	var peer = ENetMultiplayerPeer.new()
 	var status = peer.create_client(address, port)

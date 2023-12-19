@@ -1,6 +1,5 @@
 extends Control
 
-
 func _on_host_button_button_down():
 	var username = $InputsContainer/UsernameContainer/UsernameInput.text
 	var port = $InputsContainer/PortContainer/PortInput.text.to_int()
@@ -9,5 +8,3 @@ func _on_host_button_button_down():
 
 	GameManager.set_player_key("username", username)
 	GameManager.host_game(port, max_connections, max_lectureres)
-
-	get_tree().change_scene_to_file("res://scenes/game/game.tscn")

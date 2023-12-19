@@ -43,6 +43,7 @@ layout_mode = 2
 text = "Login"
 
 [node name="UsernameInput" type="LineEdit" parent="InputsContainer/UsernameContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 32)
 layout_mode = 2
 
 [node name="AddressContainer" type="VBoxContainer" parent="InputsContainer"]
@@ -53,6 +54,7 @@ layout_mode = 2
 text = "Adres IP hosta"
 
 [node name="AddressInput" type="LineEdit" parent="InputsContainer/AddressContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 32)
 layout_mode = 2
 text = "localhost"
 
@@ -60,7 +62,7 @@ text = "localhost"
 layout_mode = 2
 
 [node name="PortLabel" type="Label" parent="InputsContainer/PortContainer"]
-custom_minimum_size = Vector2(169, 2.08165e-12)
+custom_minimum_size = Vector2(170, 2.08165e-12)
 layout_mode = 2
 text = "Port"
 
