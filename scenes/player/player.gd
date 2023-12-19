@@ -7,8 +7,10 @@ const SPEED = 600.0
 var minigame: PackedScene
 var minigame_instance:Node2D
 
-# Zmienna do obsługi ventów
+# Zmienne do obsługi ventów
 var teleport_position = null
+var move_toward_position = null
+var player_name = GameManager._current_player["username"]
 
 @export var input: InputSynchronizer
 
@@ -45,13 +47,22 @@ func _process(_delta):
 	_update_animation_parameters(direction)
 
 func _rollback_tick(_delta, _tick, _is_fresh):
+	
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	velocity = input.direction.normalized() * SPEED
-
+	
 	# Porusza postacią i obsługuje kolizje.
 	velocity *= NetworkTime.physics_factor
 	move_and_slide()
 	velocity /= NetworkTime.physics_factor
+	
+	# Odpowiada za przesunięcie gracza do venta
+	if move_toward_position != null:
+		input.direction = move_toward_position - position
+		position = position.move_toward(move_toward_position, _delta*SPEED)
+		if position == move_toward_position:
+			visible = false
+			move_toward_position = null
 	
 	# Odpowiada za przeniesienie gracza do innego venta
 	if teleport_position != null:

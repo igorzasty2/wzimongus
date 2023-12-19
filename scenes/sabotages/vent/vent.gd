@@ -37,6 +37,7 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("use_vent"):
 		use_vent()
+		print(GameManager._current_player)
 
 # Obsługuje użycie venta
 func use_vent():
@@ -99,8 +100,10 @@ func enter_vent():
 func enter_vent_server():
 	print("vent entered")
 	if player_body!=null:
-		player_body.teleport_position = self.position - Vector2(0,50)
-		player_body.visible = false
+		# Przesuwa gracza do venta
+		player_body.move_toward_position = self.position - Vector2(0,50)
+#		player_body.visible = false
+		print(player_body.visible)
 	else:
 		print("ERROR ",player_body)
 
@@ -127,7 +130,7 @@ func change_dir_bttns_visibility(visibility:bool):
 
 # Obsługuje wejście gracza w obszar w którym może ventować
 func _on_area_2d_body_entered(body):
-	print("body entered: ", body)
+	print("body entered: ", body, multiplayer.get_unique_id(), GameManager._current_player, " ", body.player_name) # id, body, current_player.username
 	if can_use_vent() || allow_crewmate_vent:
 		set_process_input(true)
 		

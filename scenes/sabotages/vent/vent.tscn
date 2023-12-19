@@ -10,8 +10,8 @@ shader = ExtResource("2_cocqu")
 shader_parameter/line_color = Color(0.705882, 0, 0, 1)
 shader_parameter/line_thickness = 10.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8y3v"]
-size = Vector2(61, 61)
+[sub_resource type="CircleShape2D" id="CircleShape2D_kp4xp"]
+radius = 93.3343
 
 [node name="Vent" type="Node2D"]
 scale = Vector2(2.4, 2.4)
@@ -28,7 +28,8 @@ texture = ExtResource("3_ho44u")
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_a8y3v")
+position = Vector2(0, 10)
+shape = SubResource("CircleShape2D_kp4xp")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
