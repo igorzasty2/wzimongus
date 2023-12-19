@@ -28,51 +28,67 @@ columns = 4
 
 [node name="Button1" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button2" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button3" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button4" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button5" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button6" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button7" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button8" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button9" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button10" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button11" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button12" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button13" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button14" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button15" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button16" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Console" type="GridContainer" parent="."]
 offset_left = 348.0
