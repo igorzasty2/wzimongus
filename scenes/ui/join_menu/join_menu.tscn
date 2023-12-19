@@ -60,6 +60,7 @@ text = "localhost"
 
 [node name="PortContainer" type="HSplitContainer" parent="InputsContainer"]
 layout_mode = 2
+dragger_visibility = 1
 
 [node name="PortLabel" type="Label" parent="InputsContainer/PortContainer"]
 custom_minimum_size = Vector2(170, 2.08165e-12)

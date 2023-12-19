@@ -48,6 +48,7 @@ layout_mode = 2
 
 [node name="MaxConnectionsContainer" type="HSplitContainer" parent="InputsContainer"]
 layout_mode = 2
+dragger_visibility = 1
 
 [node name="MaxConnectionsLabel" type="Label" parent="InputsContainer/MaxConnectionsContainer"]
 custom_minimum_size = Vector2(170, 2.08165e-12)
@@ -85,6 +86,7 @@ popup/item_8/id = 8
 
 [node name="MaxLecturersContainer" type="HSplitContainer" parent="InputsContainer"]
 layout_mode = 2
+dragger_visibility = 1
 
 [node name="MaxLecturersLabel" type="Label" parent="InputsContainer/MaxLecturersContainer"]
 custom_minimum_size = Vector2(170, 2.08165e-12)
@@ -110,6 +112,7 @@ popup/item_2/id = 2
 
 [node name="PortContainer" type="HSplitContainer" parent="InputsContainer"]
 layout_mode = 2
+dragger_visibility = 1
 
 [node name="PortLabel" type="Label" parent="InputsContainer/PortContainer"]
 custom_minimum_size = Vector2(170, 2.08165e-12)

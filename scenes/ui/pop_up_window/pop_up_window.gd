@@ -12,7 +12,6 @@ signal left_pressed
 signal right_pressed
 
 func _ready():
-	visible = false
 	label.text = information
 	left_button.text = left_button_text
 	right_button.text = right_button_text

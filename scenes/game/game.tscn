@@ -13,8 +13,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b20el")
 
-[node name="Background" type="ColorRect" parent="."]
-visible = false
+[node name="Connecting" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="Background" type="ColorRect" parent="Connecting"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,17 +27,17 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.352941, 0.352941, 0.443137, 1)
 
-[node name="ConnectingLabel" type="Label" parent="."]
+[node name="ConnectingLabel" type="Label" parent="Connecting"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -13.0
-offset_right = 40.0
-offset_bottom = 13.0
+offset_left = -92.5
+offset_top = -18.5
+offset_right = 92.5
+offset_bottom = 18.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24
@@ -41,8 +45,22 @@ text = "Trwa łączenie ..."
 
 [node name="Maps" type="Node" parent="."]
 
-[node name="ErrorPopUp" parent="." instance=ExtResource("2_66ag0")]
+[node name="Error" type="Control" parent="."]
 visible = false
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="Background" type="ColorRect" parent="Error"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.352941, 0.352941, 0.443137, 1)
+
+[node name="ErrorPopUp" parent="Error" instance=ExtResource("2_66ag0")]
 layout_mode = 1
 left_button_text = "Ok"
 right_button_text = ""
