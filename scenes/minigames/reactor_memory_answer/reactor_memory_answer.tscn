@@ -5,13 +5,15 @@
 [ext_resource type="PackedScene" uid="uid://d10w530fs7vtr" path="res://scenes/minigames/reactor_memory_answer/button.tscn" id="3_lvsqn"]
 [ext_resource type="PackedScene" uid="uid://cgexmsp7251so" path="res://scenes/minigames/reactor_memory_answer/flash.tscn" id="4_wdxkn"]
 [ext_resource type="PackedScene" uid="uid://cc3kuyaqojlob" path="res://scenes/minigames/reactor_memory_answer/indicator.tscn" id="5_mmqq7"]
-[ext_resource type="Texture2D" uid="uid://dwwnfjujftwmx" path="res://scenes/minigames/reactor_memory_answer/assets/grid.png" id="6_o7hxt"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vau2l"]
 
 [node name="minigra_reaktor" type="Node2D"]
 scale = Vector2(1.0105, 1.01303)
 script = ExtResource("1_sk1a7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.989609, 0)
 texture = ExtResource("2_n7vpl")
 offset = Vector2(570, 320)
 
@@ -26,51 +28,67 @@ columns = 4
 
 [node name="Button1" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button2" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button3" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button4" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button5" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button6" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button7" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button8" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button9" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button10" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button11" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button12" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button13" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button14" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button15" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Button16" parent="PlayerButtons" instance=ExtResource("3_lvsqn")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="Console" type="GridContainer" parent="."]
 offset_left = 348.0
@@ -189,7 +207,7 @@ one_shot = true
 [node name="Grid" type="Sprite2D" parent="."]
 visible = false
 rotation = -1.77675
-texture = ExtResource("6_o7hxt")
+texture = SubResource("CompressedTexture2D_vau2l")
 
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]
 [connection signal="timeout" from="PauseTimer" to="." method="_on_PauseTimer_timeout"]
