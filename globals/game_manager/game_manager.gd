@@ -148,6 +148,9 @@ func end_game():
 	_current_player["is_lecturer"] = false
 	_current_player["is_dead"] = false
 
+	# Resetuje zadania.
+	TaskManager.reset()
+
 	game_ended.emit()
 
 

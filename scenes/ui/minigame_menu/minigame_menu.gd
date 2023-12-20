@@ -69,7 +69,7 @@ func end_minigame():
 
 	GameManager.set_input_status(true)
 
-	TaskManager.mark_task_as_complete_player()
+	TaskManager.mark_task_as_complete()
 
 func close_minigame():
 	if _minigame_instance != null:
