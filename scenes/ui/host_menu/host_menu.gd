@@ -8,7 +8,10 @@ extends Control
 
 func _on_host_button_button_down():
 	GameManager.set_player_key("username", username_input.text)
-	GameManager.host_game(port_input.text.to_int(), max_connections.text.to_int(), max_lectureres.text.to_int())
+
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
+
+	GameManager.host_game.call_deferred(port_input.text.to_int(), max_connections.text.to_int(), max_lectureres.text.to_int())
 
 
 func _on_connections_lecturers_item_selected(_index: int):

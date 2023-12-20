@@ -6,4 +6,7 @@ extends Control
 
 func _on_join_button_button_down():
 	GameManager.set_player_key("username", username_input.text)
-	GameManager.join_game(address_input.text, port_input.text.to_int())
+
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
+
+	GameManager.join_game.call_deferred(address_input.text, port_input.text.to_int())
