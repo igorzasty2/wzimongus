@@ -3,14 +3,27 @@ extends CanvasLayer
 @onready var crewmate_interface = $CrewmateInterface
 @onready var lecturer_interface = $LecturerInterface
 
-# Na początku gry ustawia odpowiedni interface w zależności czy gracz jest imposotrem czy crewmatem
+@onready var disabled_button_shader = preload("res://scenes/ui/user_interface/assets/disabled_button.gdshader")
+
+var disabled_button_material = ShaderMaterial.new()
+
+# Na początku gry ustawia odpowiedni interface w zależności czy gracz jest imposotrem czy crewmatem, wyłącza wszystkie przyciski poza ustawieniami
 func _ready():
-	if GameManager._current_player["is_lecturer"]:
+	if GameManager.get_current_player_key("is_lecturer"):
 		crewmate_interface.visible = false
 		lecturer_interface.visible = true
+		
+		toggle_button_active("VentButton", false)
+		toggle_button_active("FailButton", false)
+		toggle_button_active("SabotageButton", false)
+		toggle_button_active("ReportButton", false)
+		toggle_button_active("InteractButton", false)
 	else: 
 		crewmate_interface.visible = true
 		lecturer_interface.visible = false
+		
+		toggle_button_active("ReportButton", false)
+		toggle_button_active("InteractButton", false)
 
 # Wykonuje podaną akcję
 func execute_action(action_name:String):
@@ -48,3 +61,23 @@ func _on_sabotage_button_button_down():
 func _on_pause_button_button_down():
 	execute_action("pause_menu")
 	print("pause button pressed")
+
+# Dodaje lub usuwa materiał do przycisku, obsługuje zmiane koloru przycisku na aktywy/nieaktywny
+func add_or_remove_material(bttn:TextureButton, add:bool):
+	if add == true:
+		bttn.material = disabled_button_material
+		bttn.material.set_shader(disabled_button_shader)
+		bttn.material.resource_local_to_scene = true
+		bttn.material.set_shader_parameter("off_color", Color8(92,92,92))
+	else:
+		bttn.set_material(null)
+
+# Aktywuje i deaktywuje dany przycisk interakcji
+func toggle_button_active(button_name:String, is_active:bool):
+	var button : TextureButton
+	if GameManager.get_current_player_key("is_lecturer") == true:
+		button = get_node("LecturerInterface").get_node("GridContainer").get_node(button_name)
+	else:
+		button = get_node("CrewmateInterface").get_node("GridContainer").get_node(button_name)
+	button.disabled = !is_active
+	add_or_remove_material(button, !is_active)

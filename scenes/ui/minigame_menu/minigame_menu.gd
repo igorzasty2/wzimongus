@@ -5,23 +5,26 @@ var _minigame_instance: Node2D
 
 @onready var minigame_container = $MinigameContainer
 @onready var viewport = minigame_container.get_node("ViewportContainer/Viewport")
-@onready var use_button: TextureButton = $UseButton
 @onready var close_button: TextureButton = minigame_container.get_node("CloseButton")
 
+# Zmienne do obsługi interface gracza
+@onready var user_interface = get_parent().get_node("UserInterface")
+signal use_button_active(is_active:bool)
+
+
 func _ready():
-	use_button.pressed.connect(_on_use_button_pressed)
 	close_button.pressed.connect(close_minigame)
+	use_button_active.connect(user_interface.toggle_button_active)
 
 func show_use_button(minigame):
 	_minigame = minigame
-	use_button.visible = true
-	use_button.disabled = false
+	emit_signal("use_button_active", "InteractButton", true)
 
 func hide_use_button():
 	_minigame = null
-	use_button.visible = false
-	use_button.disabled = true
+	emit_signal("use_button_active", "InteractButton", false)
 
+# connect in user interface to this
 func _on_use_button_pressed():
 	if _minigame == null:
 		return
@@ -38,9 +41,6 @@ func _input(event):
 	if _minigame == null:
 		return
 
-	if use_button.disabled:
-		return
-
 	if viewport.get_child_count() != 0:
 		return
 
@@ -54,9 +54,8 @@ func summon_window():
 
 	viewport.add_child(_minigame.instantiate())
 	_minigame_instance = viewport.get_child(0)
-
-	use_button.visible = false
-	use_button.disabled = true
+	
+	emit_signal("use_button_active", "InteractButton", false)
 
 	GameManager.set_input_status(false)
 
