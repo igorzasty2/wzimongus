@@ -13,16 +13,16 @@ config_version=5
 config/name="WZiMong Us"
 run/main_scene="res://scenes/ui/start_menu/start_menu.tscn"
 config/features=PackedStringArray("4.1")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*res://globals/game_manager/game_manager.gd"
 NetworkTime="*res://addons/netfox/network-time.gd"
 NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
 NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
 NetworkEvents="*res://addons/netfox/network-events.gd"
-Interpolators="*res://addons/netfox/interpolators.gd"
+GameManager="*res://globals/game_manager/game_manager.gd"
 TaskManager="*res://globals/task_manager/task_manager.gd"
 
 [display]
@@ -37,7 +37,7 @@ project/assembly_name="WZiMong Us"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/netfox/plugin.cfg")
+enabled=PackedStringArray("res://addons/netfox.internals/plugin.cfg", "res://addons/netfox/plugin.cfg")
 
 [input]
 
@@ -116,6 +116,12 @@ chat_change_group={
 
 2d_physics/layer_1="static_objects"
 2d_physics/layer_2="players"
+
+[netfox]
+
+events/enabled=false
+logging/log_level=4
+logging/netfox_log_level=4
 
 [rendering]
 

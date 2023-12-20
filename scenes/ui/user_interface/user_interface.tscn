@@ -51,7 +51,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("3_vmpl2")
 
-[node name="ImpostorInterface" type="Control" parent="."]
+[node name="LecturerInterface" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 3
 anchor_left = 1.0
@@ -62,7 +62,7 @@ grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(0.2, 0.2)
 
-[node name="GridContainer" type="GridContainer" parent="ImpostorInterface"]
+[node name="GridContainer" type="GridContainer" parent="LecturerInterface"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -79,38 +79,38 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 3
 
-[node name="Filler" type="Control" parent="ImpostorInterface/GridContainer"]
+[node name="Filler" type="Control" parent="LecturerInterface/GridContainer"]
 layout_mode = 2
 
-[node name="VentButton" type="TextureButton" parent="ImpostorInterface/GridContainer"]
+[node name="VentButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("4_bo6gn")
 
-[node name="FailButton" type="TextureButton" parent="ImpostorInterface/GridContainer"]
+[node name="FailButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("5_gsccy")
 
-[node name="SabotageButton" type="TextureButton" parent="ImpostorInterface/GridContainer"]
+[node name="SabotageButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("6_c8bgx")
 
-[node name="ReportButton" type="TextureButton" parent="ImpostorInterface/GridContainer"]
+[node name="ReportButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("2_0vfg4")
 
-[node name="InteractButton" type="TextureButton" parent="ImpostorInterface/GridContainer"]
+[node name="InteractButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -148,9 +148,9 @@ texture_normal = ExtResource("7_p10qh")
 
 [connection signal="button_down" from="CrewmateInterface/GridContainer/ReportButton" to="." method="_on_report_button_button_down"]
 [connection signal="button_down" from="CrewmateInterface/GridContainer/InteractButton" to="." method="_on_interact_button_button_down"]
-[connection signal="button_down" from="ImpostorInterface/GridContainer/VentButton" to="." method="_on_vent_button_button_down"]
-[connection signal="button_down" from="ImpostorInterface/GridContainer/FailButton" to="." method="_on_fail_button_button_down"]
-[connection signal="button_down" from="ImpostorInterface/GridContainer/SabotageButton" to="." method="_on_sabotage_button_button_down"]
-[connection signal="button_down" from="ImpostorInterface/GridContainer/ReportButton" to="." method="_on_report_button_button_down"]
-[connection signal="button_down" from="ImpostorInterface/GridContainer/InteractButton" to="." method="_on_interact_button_button_down"]
+[connection signal="button_down" from="LecturerInterface/GridContainer/VentButton" to="." method="_on_vent_button_button_down"]
+[connection signal="button_down" from="LecturerInterface/GridContainer/FailButton" to="." method="_on_fail_button_button_down"]
+[connection signal="button_down" from="LecturerInterface/GridContainer/SabotageButton" to="." method="_on_sabotage_button_button_down"]
+[connection signal="button_down" from="LecturerInterface/GridContainer/ReportButton" to="." method="_on_report_button_button_down"]
+[connection signal="button_down" from="LecturerInterface/GridContainer/InteractButton" to="." method="_on_interact_button_button_down"]
 [connection signal="button_down" from="UniversalInterface/GridContainer/PauseButton" to="." method="_on_pause_button_button_down"]

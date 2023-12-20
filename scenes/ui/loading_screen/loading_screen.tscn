@@ -45,7 +45,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ImpostorLabel:modulate")
+tracks/3/path = NodePath("LecturerLabel:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -96,12 +96,12 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_5acmc"]
-resource_name = "impostor_pop_up"
+resource_name = "lecturer_pop_up"
 length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ImpostorLabel:modulate")
+tracks/0/path = NodePath("LecturerLabel:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -167,11 +167,12 @@ tracks/1/keys = {
 _data = {
 "RESET": SubResource("Animation_n0sii"),
 "crewmate_pop_up": SubResource("Animation_wvkkt"),
-"impostor_pop_up": SubResource("Animation_5acmc"),
+"lecturer_pop_up": SubResource("Animation_5acmc"),
 "pop_up": SubResource("Animation_0q8mi")
 }
 
-[node name="loading_screen" type="CanvasLayer"]
+[node name="LoadingScreen" type="CanvasLayer"]
+layer = 5
 script = ExtResource("1_3sy48")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -212,7 +213,7 @@ text = "You are crewmate"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ImpostorLabel" type="Label" parent="."]
+[node name="LecturerLabel" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 14
 anchor_top = 0.5
@@ -225,7 +226,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.807843, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_tsaei")
 theme_override_font_sizes/font_size = 80
-text = "You are impostor"
+text = "You are lecturer"
 horizontal_alignment = 1
 vertical_alignment = 1
 

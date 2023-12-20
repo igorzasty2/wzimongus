@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/ui/play_menu/play_menu.gd" id="1_lyan3"]
 
-[node name="play_menu" type="Control"]
+[node name="PlayMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,68 +11,50 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lyan3")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.533333, 0.521569, 0.427451, 0.980392)
+color = Color(0.352941, 0.352941, 0.443137, 1)
 
-[node name="HostLabel" type="Label" parent="."]
+[node name="ButtonsContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -128.0
-offset_top = 224.0
-offset_right = -88.0
-offset_bottom = 250.0
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -92.0
+offset_right = 125.0
+offset_bottom = 92.0
 grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HostLabel" type="Label" parent="ButtonsContainer"]
+layout_mode = 2
 text = "Host"
 
-[node name="HostButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -76.0
-offset_right = 128.0
-offset_bottom = -26.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HostButton" type="Button" parent="ButtonsContainer"]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
 text = "Stwórz grę"
 
-[node name="JoinLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -128.0
-offset_top = 328.0
-offset_right = -84.0
-offset_bottom = 354.0
-grow_horizontal = 2
+[node name="Separator" type="HSeparator" parent="ButtonsContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 25)
+layout_mode = 2
+
+[node name="JoinLabel" type="Label" parent="ButtonsContainer"]
+layout_mode = 2
 text = "Gracz"
 
-[node name="JoinButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = 30.0
-offset_right = 128.0
-offset_bottom = 80.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="JoinButton" type="Button" parent="ButtonsContainer"]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
 text = "Dołącz do gry"
 
-[connection signal="button_down" from="HostButton" to="." method="_on_host_button_button_down"]
-[connection signal="button_down" from="JoinButton" to="." method="_on_join_button_button_down"]
+[connection signal="button_down" from="ButtonsContainer/HostButton" to="." method="_on_host_button_button_down"]
+[connection signal="button_down" from="ButtonsContainer/JoinButton" to="." method="_on_join_button_button_down"]

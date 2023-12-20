@@ -1,16 +1,16 @@
 extends CanvasLayer
 
 @onready var crewmate_interface = $CrewmateInterface
-@onready var impostor_interface = $ImpostorInterface
+@onready var lecturer_interface = $LecturerInterface
 
 # Na początku gry ustawia odpowiedni interface w zależności czy gracz jest imposotrem czy crewmatem
 func _ready():
-	if GameManager._current_player["impostor"]:
+	if GameManager._current_player["is_lecturer"]:
 		crewmate_interface.visible = false
-		impostor_interface.visible = true
+		lecturer_interface.visible = true
 	else: 
 		crewmate_interface.visible = true
-		impostor_interface.visible = false
+		lecturer_interface.visible = false
 
 # Wykonuje podaną akcję
 func execute_action(action_name:String):
