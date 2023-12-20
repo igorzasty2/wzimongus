@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://deoe0yhjya0it"]
+
+[ext_resource type="Texture2D" uid="uid://d2cy1ewy13wio" path="res://scenes/map/assets/willy.png" id="1_gfual"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_er5jc"]
+size = Vector2(1460, 254)
+
+[node name="willy" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gfual")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(0, -369)
+shape = SubResource("RectangleShape2D_er5jc")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+position = Vector2(378, -117)
+polygon = PackedVector2Array(141, -125, 296, 91, 298, 508, 295, 519, 288, 534, 275, 546, 262, 553, 243, 558, 135, 558, 134, 615, 351, 615, 352, -125)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="CollisionBox"]
+position = Vector2(-651, 377)
+polygon = PackedVector2Array(-21, -265, -78, -265, -78, 122, 822, 121, 822, 62, 14, 60, 6, 56, -3, 49, -11, 40, -16, 31)

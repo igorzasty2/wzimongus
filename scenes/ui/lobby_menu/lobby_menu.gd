@@ -49,6 +49,9 @@ func _change_map(scene: PackedScene):
 	
 	# Dodaje nową mapę
 	map.add_child(scene.instantiate())
+	
+	# Ustawia ilość tasków u jednego gracza
+	TaskManager.assign_tasks_server(1)
 
 
 # Aktualizuje wyświetlaną listę graczy
@@ -68,3 +71,7 @@ func _update_display_player_list(id = null, player = null):
 
 	# Wyświetla zaktualizowaną listę graczy
 	$LobbyUI/PlayerList.text = player_list_text
+
+
+func _on_loading_screen_loading_done():
+	$loading_screen.hide()

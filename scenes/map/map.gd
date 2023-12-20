@@ -4,29 +4,41 @@ extends Node2D
 
 
 func _ready():
-	if multiplayer.is_server():
-		# Usuwa gracza z mapy po jego wyrejestrowaniu.
-		GameManager.player_deregistered.connect(_remove_player)
+	# Usuwa gracza z mapy po jego wyrejestrowaniu.
+	GameManager.player_deregistered.connect(_remove_player)
 
-		# Inicjuje graczy zarejestrowanych w GameManager.
-		for i in GameManager.get_registered_players():
-			_add_player(i)
+	# Inicjuje graczy zarejestrowanych w GameManager.
+	for i in GameManager.get_registered_players():
+		_add_player(i)
 
-	# Ustawia etykietę typu na "Impostor" lub "Crewmate".
-	$TypeLabel.text = "Impostor" if GameManager.get_current_player_key("impostor") else "Crewmate"
-
-
+	# włączenie loading_screena
+	var loading_screen = preload("res://scenes/ui/loading_screen/loading_screen.tscn").instantiate()
+	add_child(loading_screen)
+	loading_screen.show()
+	
 # Dodaje nowego gracza na mapę.
 func _add_player(id: int):
 	# Ładuje i tworzy instancję gracza.
-	var player = preload("res://scenes/player/player.tscn").instantiate()
+	var player = preload("res://scenes/player/player.tscn").instantiate() as Node
 
 	# Nadaje graczowi id i losową pozycję.
 	player.name = str(id)
-	player.position = Vector2(randi_range(0, 1152), randi_range(0, 648))
+
+	if multiplayer.is_server():
+		player.position = Vector2(randi_range(0, 1152), randi_range(0, 648))
 
 	# Dodaje gracza do drzewa sceny.
-	$Players.add_child(player, true)
+	$Players.add_child(player)
+
+	# Ustawia gracza jako własność serwera.
+	player.set_multiplayer_authority(1)
+
+	var input = player.find_child("Input")
+	if input != null:
+		input.set_multiplayer_authority(id)
+	
+	if id == GameManager.get_current_player_id():
+		$Camera.player = player
 
 
 # Usuwa gracza z mapy.

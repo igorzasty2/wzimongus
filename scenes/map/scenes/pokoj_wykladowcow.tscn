@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy5elj455alsv"]
+
+[ext_resource type="Texture2D" uid="uid://pp4bwuw6e72b" path="res://scenes/map/assets/pokoj_wykladowcow.png" id="1_y06xx"]
+
+[node name="pokoj_wykladowcow" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_y06xx")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(-526, 248, -475, 201, -462, -289, 228, -272, 467, -14, 456, 481, -219, 464, -273, 514, 503, 534, 527, -239, 269, -513, -508, -534)

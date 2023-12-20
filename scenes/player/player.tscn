@@ -1,24 +1,14 @@
 [gd_scene load_steps=27 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
-[ext_resource type="Script" path="res://scenes/player/input_synchronizer.gd" id="3_3x5pw"]
+[ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
+[ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
+[ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
 [ext_resource type="Texture2D" uid="uid://bau8m0wvrashk" path="res://scenes/player/assets/alternatywka/alt_spritesheet.png" id="4_lkot5"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_aer0t"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/sync = true
-properties/0/watch = false
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gggcu"]
-properties/0/path = NodePath(".:direction")
-properties/0/spawn = false
-properties/0/sync = true
-properties/0/watch = false
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_st64e"]
-radius = 86.85
-height = 173.7
+radius = 26.3583
+height = 148.0
 
 [sub_resource type="Animation" id="Animation_fqt5r"]
 length = 0.001
@@ -169,31 +159,46 @@ states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 position = Vector2(-1, -77)
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_rovco")
 
-[node name="ServerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_aer0t")
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_lrt2l")
+root = NodePath("..")
+state_properties = Array[String]([":position"])
+input_properties = Array[String](["Input:direction"])
 
-[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="."]
-root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_gggcu")
-script = ExtResource("3_3x5pw")
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_l2yj5")
+root = NodePath("..")
+properties = Array[String]([":position"])
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("4_8ajvt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
+position = Vector2(0, 60)
+rotation = 1.5708
 scale = Vector2(0.682897, 1)
 shape = SubResource("CapsuleShape2D_st64e")
 
 [node name="UsernameLabel" type="Label" parent="."]
-offset_left = -19.0
-offset_top = -108.0
-offset_right = 21.0
-offset_bottom = -85.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -39.0
+offset_top = -222.0
+offset_right = 42.0
+offset_bottom = -199.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
 horizontal_alignment = 1
 vertical_alignment = 1
+visible_characters = 18
 
 [node name="Skins" type="Node2D" parent="."]
 
@@ -203,7 +208,8 @@ libraries = {
 }
 
 [node name="AltSprite" type="Sprite2D" parent="Skins"]
-scale = Vector2(0.200939, 0.2)
+position = Vector2(4, -48)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_lkot5")
 hframes = 4
 vframes = 4
