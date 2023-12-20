@@ -1,9 +1,12 @@
 extends Control
 
+@onready var username_input = $InputsContainer/UsernameContainer/UsernameInput
+@onready var address_input = $InputsContainer/AddressContainer/AddressInput
+@onready var port_input = $InputsContainer/PortContainer/PortInput
 
 func _on_join_button_button_down():
-	# Ustawia nazwę użytkownika w GameManager, używając wartości z pola UsernameInput.
-	GameManager.set_player_key("username", $UsernameInput.text)
+	GameManager.set_player_key("username", username_input.text)
 
-	# Dołącza do gry, używając adresu IP i portu z pól AddressInput i PortInput.
-	GameManager.join_game($AddressInput.text, $PortInput.text.to_int())
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
+
+	GameManager.join_game.call_deferred(address_input.text, port_input.text.to_int())

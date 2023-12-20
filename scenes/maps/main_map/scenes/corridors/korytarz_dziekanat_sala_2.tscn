@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://bwrknp56vi64y"]
+
+[ext_resource type="Texture2D" uid="uid://b8ixebb4xv814" path="res://scenes/maps/main_map/assets/corridors/korytarz_dziekanat_sala_2.png" id="1_5bhes"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ply1"]
+size = Vector2(24, 712)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j7g43"]
+size = Vector2(631, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ms0qb"]
+size = Vector2(24, 382.125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tljxj"]
+size = Vector2(24, 929)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qkt0f"]
+size = Vector2(630, 188.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2757r"]
+size = Vector2(24, 330)
+
+[node name="korytarz_dziekanat_sala_2" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_5bhes")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(489, -179)
+shape = SubResource("RectangleShape2D_6ply1")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(185.5, 165)
+shape = SubResource("RectangleShape2D_j7g43")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-118, 343.938)
+shape = SubResource("RectangleShape2D_ms0qb")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-489, 71)
+shape = SubResource("RectangleShape2D_tljxj")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-186, -299.375)
+shape = SubResource("RectangleShape2D_qkt0f")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(117, -370)
+shape = SubResource("RectangleShape2D_2757r")

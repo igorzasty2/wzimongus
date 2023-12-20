@@ -12,7 +12,6 @@ signal left_pressed
 signal right_pressed
 
 func _ready():
-	visible = false
 	label.text = information
 	left_button.text = left_button_text
 	right_button.text = right_button_text
@@ -22,3 +21,7 @@ func _on_left_button_pressed():
 
 func _on_right_button_pressed():
 	emit_signal("right_pressed")
+
+func set_information(text: String):
+	information = text
+	label.text = text

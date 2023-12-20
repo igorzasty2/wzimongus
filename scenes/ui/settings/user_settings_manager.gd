@@ -5,7 +5,7 @@ extends Resource
 const DEFAULT_VOLUME: int = 20
 const DEFAULT_FULL_SCREEN: bool = false
 const DEFAULT_V_SYNC: bool = true
-const DEFAULT_RESOLUTION: Vector2i = Vector2i(1152, 648)
+const DEFAULT_RESOLUTION: Vector2i = Vector2i(1280, 720)
 const DEFAULT_CONTROLS_DICTIONARY = {
 	"sabotage" : [KEY_TAB, null],
 	"use_vent" : [KEY_V, null],
