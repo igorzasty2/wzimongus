@@ -8,6 +8,10 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l8v7t"]
 bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -35,6 +39,7 @@ tab_alignment = 1
 script = ExtResource("2_ihltu")
 
 [node name="SoundAndGraphics" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/SoundAndGraphics"]
@@ -115,7 +120,6 @@ size_flags_vertical = 8
 text = "Zastosuj"
 
 [node name="Controls" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/Controls"]
@@ -200,6 +204,140 @@ layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxEmpty_xriee")
 
+[node name="KeyRebindWindow" type="Control" parent="TabContainer/Controls"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="TabContainer/Controls/KeyRebindWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l8v7t")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeyRebindWindow/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -100.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="ActionName" type="Label" parent="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Action"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Naciśnij przycisk, aby przypisać akcję"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Controls/KeyRebindWindow/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = 70.0
+offset_right = 82.5
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="DeleteButton" type="Button" parent="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer2"]
+custom_minimum_size = Vector2(165, 40)
+layout_mode = 2
+text = "Usuń przypisanie"
+
+[node name="CancelButton" type="Button" parent="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer2"]
+custom_minimum_size = Vector2(165, 40)
+layout_mode = 2
+text = "Anuluj"
+
+[node name="KeyUsedWindow" type="Control" parent="TabContainer/Controls"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="TabContainer/Controls/KeyUsedWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l8v7t")
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeyUsedWindow/Panel"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -26.0
+offset_right = 200.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Naciśnięty przycisk jest już przypisany do innej akcji, czy mimo to chcesz go przypisać do tej akcji?"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Controls/KeyUsedWindow/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.624
+anchor_right = 0.5
+anchor_bottom = 0.624
+offset_left = -215.0
+offset_top = -20.0
+offset_right = 215.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+
+[node name="YesButton" type="Button" parent="TabContainer/Controls/KeyUsedWindow/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(165, 40)
+layout_mode = 2
+text = "Tak"
+
+[node name="NoButton" type="Button" parent="TabContainer/Controls/KeyUsedWindow/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(165, 40)
+layout_mode = 2
+text = "Nie"
+
 [node name="Default" type="TabBar" parent="TabContainer"]
 visible = false
 layout_mode = 2
@@ -256,152 +394,9 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Przywróć"
 
-[node name="KeyRebindWindow" type="Control" parent="."]
-visible = false
-z_index = 1
-layout_mode = 1
-anchor_left = 0.285
-anchor_top = 0.235
-anchor_right = 0.715
-anchor_bottom = 0.815
-offset_left = -0.320038
-offset_top = -0.280014
-offset_right = 0.319946
-offset_bottom = -0.120056
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="KeyRebindWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_l8v7t")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="KeyRebindWindow/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -100.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 18
-
-[node name="ActionName" type="Label" parent="KeyRebindWindow/Panel/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Action"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label" type="Label" parent="KeyRebindWindow/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Naciśnij przycisk, aby przypisać akcję"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="KeyRebindWindow/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -82.5
-offset_top = 70.0
-offset_right = 82.5
-offset_bottom = 45.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
-
-[node name="DeleteButton" type="Button" parent="KeyRebindWindow/Panel/VBoxContainer2"]
-custom_minimum_size = Vector2(165, 40)
-layout_mode = 2
-text = "Usuń przypisanie"
-
-[node name="CancelButton" type="Button" parent="KeyRebindWindow/Panel/VBoxContainer2"]
-custom_minimum_size = Vector2(165, 40)
-layout_mode = 2
-text = "Anuluj"
-
-[node name="KeyUsedWindow" type="Control" parent="."]
-visible = false
-z_index = 1
-layout_mode = 1
-anchor_left = 0.285
-anchor_top = 0.235
-anchor_right = 0.715
-anchor_bottom = 0.815
-offset_left = -0.320038
-offset_top = -0.280014
-offset_right = 0.319946
-offset_bottom = -0.120056
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="KeyUsedWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_l8v7t")
-
-[node name="Label" type="Label" parent="KeyUsedWindow/Panel"]
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -26.0
-offset_right = 200.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Naciśnięty przycisk jest już przypisany do innej akcji, czy mimo to chcesz go przypisać do tej akcji?"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="KeyUsedWindow/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -230.0
-offset_top = 80.0
-offset_right = 230.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 130
-
-[node name="YesButton" type="Button" parent="KeyUsedWindow/Panel/HBoxContainer"]
-custom_minimum_size = Vector2(165, 40)
-layout_mode = 2
-text = "Tak"
-
-[node name="NoButton" type="Button" parent="KeyUsedWindow/Panel/HBoxContainer"]
-custom_minimum_size = Vector2(165, 40)
-layout_mode = 2
-text = "Nie"
-
 [connection signal="hidden" from="." to="." method="_on_hidden"]
 [connection signal="hidden" from="TabContainer" to="TabContainer" method="_on_hidden"]
+[connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/ResolutionSlider" to="." method="_on_resolution_slider_value_changed"]
 [connection signal="toggled" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/FullScreenCheckBox" to="." method="_on_full_screen_checkbox_toggled"]
@@ -417,9 +412,9 @@ text = "Nie"
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveRightKeyRebind" to="." method="_on_move_right_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveDownKeyRebind" to="." method="_on_move_down_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveUpKeyRebind" to="." method="_on_move_up_key_rebind_rebind_button_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer2/DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer2/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/KeyUsedWindow/Panel/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/KeyUsedWindow/Panel/HBoxContainer/NoButton" to="." method="_on_no_button_pressed"]
 [connection signal="pressed" from="TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton" to="." method="_on_default_sound_graphics_button_pressed"]
 [connection signal="pressed" from="TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2/DefaultControlsButton" to="." method="_on_default_controls_button_pressed"]
-[connection signal="pressed" from="KeyRebindWindow/Panel/VBoxContainer2/DeleteButton" to="." method="_on_delete_button_pressed"]
-[connection signal="pressed" from="KeyRebindWindow/Panel/VBoxContainer2/CancelButton" to="." method="_on_cancel_button_pressed"]
-[connection signal="pressed" from="KeyUsedWindow/Panel/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]
-[connection signal="pressed" from="KeyUsedWindow/Panel/HBoxContainer/NoButton" to="." method="_on_no_button_pressed"]
