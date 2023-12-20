@@ -39,6 +39,10 @@ project/assembly_name="WZiMong Us"
 
 enabled=PackedStringArray("res://addons/netfox.internals/plugin.cfg", "res://addons/netfox/plugin.cfg")
 
+[gui]
+
+theme/custom="res://themes/default/default.tres"
+
 [input]
 
 pause_menu={
