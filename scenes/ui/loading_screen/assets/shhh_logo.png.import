@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl74edcckhnd"
-path="res://.godot/imported/use1.png-d1238273a590674429983f6e00f1b050.ctex"
+uid="uid://bb3so5pp26xqm"
+path="res://.godot/imported/shhh_logo.png-511226c832f5b2049d1b9f89e441faf8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/minigame_menu/assets/use1.png"
-dest_files=["res://.godot/imported/use1.png-d1238273a590674429983f6e00f1b050.ctex"]
+source_file="res://scenes/ui/loading_screen/assets/shhh_logo.png"
+dest_files=["res://.godot/imported/shhh_logo.png-511226c832f5b2049d1b9f89e441faf8.ctex"]
 
 [params]
 

@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://ct2plxemq2ft5"]
+[gd_scene load_steps=8 format=3 uid="uid://ct2plxemq2ft5"]
 
 [ext_resource type="Script" path="res://scenes/ui/loading_screen/loading_screen.gd" id="1_3sy48"]
-[ext_resource type="Texture2D" uid="uid://bb3so5pp26xqm" path="res://scenes/ui/loading_screen/shhh_logo.png" id="1_62pxn"]
-[ext_resource type="FontFile" uid="uid://locq7yfyj43v" path="res://scenes/ui/loading_screen/in_ your_face_joffrey.ttf" id="3_tsaei"]
+[ext_resource type="Texture2D" uid="uid://bb3so5pp26xqm" path="res://scenes/ui/loading_screen/assets/shhh_logo.png" id="1_62pxn"]
 
 [sub_resource type="Animation" id="Animation_n0sii"]
 length = 0.001
@@ -207,7 +206,6 @@ offset_bottom = 147.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0.643137, 0, 1)
-theme_override_fonts/font = ExtResource("3_tsaei")
 theme_override_font_sizes/font_size = 80
 text = "You are crewmate"
 horizontal_alignment = 1
@@ -224,7 +222,6 @@ offset_bottom = 147.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.807843, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_tsaei")
 theme_override_font_sizes/font_size = 80
 text = "You are lecturer"
 horizontal_alignment = 1
