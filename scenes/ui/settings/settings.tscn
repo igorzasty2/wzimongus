@@ -78,7 +78,7 @@ layout_mode = 2
 max_value = 1.0
 
 [node name="ResolutionOutput" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(85, 0)
+custom_minimum_size = Vector2(92, 2.08165e-12)
 layout_mode = 2
 text = "0000x0000"
 
