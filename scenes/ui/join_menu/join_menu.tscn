@@ -21,6 +21,66 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.352941, 0.352941, 0.443137, 1)
 
+[node name="ServerPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 1248.0
+offset_bottom = 616.0
+
+[node name="Table" type="VBoxContainer" parent="ServerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="Panel" parent="ServerPanel/Table"]
+custom_minimum_size = Vector2(2.08165e-12, 42)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ServerPanel/Table/Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ServerPanel/Table/Header/MarginContainer"]
+layout_mode = 2
+
+[node name="LobbyName" type="Label" parent="ServerPanel/Table/Header/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Nazwa lobby"
+
+[node name="ServerAddress" type="Label" parent="ServerPanel/Table/Header/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Adres serwera"
+
+[node name="PlayerCount" type="Label" parent="ServerPanel/Table/Header/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Liczba graczy"
+
+[node name="Filler" type="Control" parent="ServerPanel/Table/Header/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+
+[node name="ServerList" type="VBoxContainer" parent="ServerPanel/Table"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ServerListener" type="Node" parent="."]
+script = ExtResource("2_07ghn")
+
 [node name="InputsContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -28,10 +88,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -361.0
-offset_top = -92.0
-offset_right = 361.0
-offset_bottom = -30.0
+offset_left = -384.0
+offset_top = -86.0
+offset_right = 384.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 20
@@ -54,16 +114,15 @@ size_flags_horizontal = 3
 
 [node name="AddressLabel" type="Label" parent="InputsContainer/AddressContainer"]
 layout_mode = 2
-text = "Adres IP hosta"
+text = "Adres serwera"
 
 [node name="AddressInput" type="LineEdit" parent="InputsContainer/AddressContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 32)
 layout_mode = 2
-text = "localhost"
 
 [node name="PortContainer" type="VBoxContainer" parent="InputsContainer"]
+custom_minimum_size = Vector2(70, 2.08165e-12)
 layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="PortLabel" type="Label" parent="InputsContainer/PortContainer"]
 layout_mode = 2
@@ -74,20 +133,10 @@ layout_mode = 2
 text = "9001"
 
 [node name="JoinButton" type="Button" parent="InputsContainer"]
+custom_minimum_size = Vector2(175, 2.08165e-12)
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Dołącz do gry"
+text = "Dołącz do lobby"
 
-[node name="ServerList" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 46.0
-offset_top = 41.0
-offset_right = 1224.0
-offset_bottom = 594.0
-
-[node name="ServerListener" type="Node" parent="."]
-script = ExtResource("2_07ghn")
-
-[connection signal="button_down" from="InputsContainer/JoinButton" to="." method="_on_join_button_button_down"]
 [connection signal="new_server" from="ServerListener" to="." method="_on_server_listener_new_server"]
 [connection signal="remove_server" from="ServerListener" to="." method="_on_server_listener_remove_server"]
+[connection signal="button_down" from="InputsContainer/JoinButton" to="." method="_on_join_button_button_down"]
