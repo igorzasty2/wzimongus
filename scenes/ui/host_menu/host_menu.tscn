@@ -20,6 +20,41 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.352941, 0.352941, 0.443137, 1)
 
+[node name="StatusBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = 74.0
+grow_horizontal = 2
+
+[node name="TitleContainer" type="CenterContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="StatusBar/TitleContainer"]
+layout_mode = 2
+text = "Stwórz lobby"
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="StatusBar/ButtonsContainer"]
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+text = "⬅️ Wróć"
+
 [node name="InputsContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -34,6 +69,17 @@ offset_bottom = 148.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
+
+[node name="LobbyNameContainer" type="VBoxContainer" parent="InputsContainer"]
+layout_mode = 2
+
+[node name="LobbyNameLabel" type="Label" parent="InputsContainer/LobbyNameContainer"]
+layout_mode = 2
+text = "Nazwa lobby"
+
+[node name="LobbyNameInput" type="LineEdit" parent="InputsContainer/LobbyNameContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 32)
+layout_mode = 2
 
 [node name="UsernameContainer" type="VBoxContainer" parent="InputsContainer"]
 layout_mode = 2
@@ -132,8 +178,9 @@ text = "9001"
 [node name="HostButton" type="Button" parent="InputsContainer"]
 custom_minimum_size = Vector2(250, 40)
 layout_mode = 2
-text = "Stwórz grę"
+text = "Stwórz lobby"
 
+[connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="item_selected" from="InputsContainer/MaxConnectionsContainer/MaxConnectionsInputContainer/MaxConnectionsInput" to="." method="_on_connections_lecturers_item_selected"]
 [connection signal="item_selected" from="InputsContainer/MaxLecturersContainer/MaxLecturersInputContainer/MaxLecturersInput" to="." method="_on_connections_lecturers_item_selected"]
-[connection signal="button_down" from="InputsContainer/HostButton" to="." method="_on_host_button_button_down"]
+[connection signal="pressed" from="InputsContainer/HostButton" to="." method="_on_host_button_pressed"]

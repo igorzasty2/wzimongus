@@ -39,9 +39,10 @@ var _current_player = {
 
 # Przechowuje ustawienia serwera.
 var _server_settings = {
+	"lobby_name": "Lobby",
 	"port": 9001,
 	"max_players": 10,
-	"max_lecturers": 1
+	"max_lecturers": 3
 }
 
 # Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -64,8 +65,9 @@ func _ready():
 
 
 ## Tworzy nowy serwer gry.
-func host_game(port: int, max_players: int, max_lecturers: int):
+func host_game(lobby_name: String, port: int, max_players: int, max_lecturers: int):
 	# Ustawia parametry serwera.
+	_server_settings["lobby_name"] = lobby_name
 	_server_settings["port"] = port
 	_server_settings["max_players"] = max_players
 	_server_settings["max_lecturers"] = max_lecturers
@@ -193,6 +195,11 @@ func get_current_player_key(key:String):
 func set_player_key(key:String, value):
 	if _current_player.has(key):
 		_current_player[key] = value
+
+
+## Zwraca informacje o ustawieniach serwera.
+func get_server_settings():
+	return _server_settings
 
 
 ## Zmienia status informacji o wyświetlaniu menu pauzy.

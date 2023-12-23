@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://l2mxisy85ciw"]
+[gd_scene load_steps=4 format=3 uid="uid://l2mxisy85ciw"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/lobby.gd" id="1_dytr5"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
+[ext_resource type="Script" path="res://addons/LANServerBroadcast/server_advertiser/ServerAdvertiser.gd" id="3_4702b"]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -50,5 +51,8 @@ offset_left = 32.0
 offset_top = 32.0
 offset_right = -384.0
 offset_bottom = -112.0
+
+[node name="ServerAdvertiser" type="Node" parent="."]
+script = ExtResource("3_4702b")
 
 [connection signal="button_down" from="StartGameButton" to="." method="_on_start_game_button_button_down"]
