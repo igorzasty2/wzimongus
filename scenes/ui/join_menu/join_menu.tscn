@@ -21,23 +21,24 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.352941, 0.352941, 0.443137, 1)
 
-[node name="InputsContainer" type="VBoxContainer" parent="."]
+[node name="InputsContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -119.0
-offset_right = 125.0
-offset_bottom = 119.0
+anchor_bottom = 1.0
+offset_left = -361.0
+offset_top = -92.0
+offset_right = 361.0
+offset_bottom = -30.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 15
+grow_vertical = 0
+theme_override_constants/separation = 20
 
 [node name="UsernameContainer" type="VBoxContainer" parent="InputsContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="UsernameLabel" type="Label" parent="InputsContainer/UsernameContainer"]
 layout_mode = 2
@@ -49,6 +50,7 @@ layout_mode = 2
 
 [node name="AddressContainer" type="VBoxContainer" parent="InputsContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="AddressLabel" type="Label" parent="InputsContainer/AddressContainer"]
 layout_mode = 2
@@ -59,12 +61,11 @@ custom_minimum_size = Vector2(2.08165e-12, 32)
 layout_mode = 2
 text = "localhost"
 
-[node name="PortContainer" type="HSplitContainer" parent="InputsContainer"]
+[node name="PortContainer" type="VBoxContainer" parent="InputsContainer"]
 layout_mode = 2
-dragger_visibility = 1
+size_flags_horizontal = 3
 
 [node name="PortLabel" type="Label" parent="InputsContainer/PortContainer"]
-custom_minimum_size = Vector2(170, 2.08165e-12)
 layout_mode = 2
 text = "Port"
 
@@ -73,16 +74,16 @@ layout_mode = 2
 text = "9001"
 
 [node name="JoinButton" type="Button" parent="InputsContainer"]
-custom_minimum_size = Vector2(250, 40)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Dołącz do gry"
 
 [node name="ServerList" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 46.0
 offset_top = 41.0
-offset_right = 461.0
-offset_bottom = 666.0
+offset_right = 1224.0
+offset_bottom = 594.0
 
 [node name="ServerListener" type="Node" parent="."]
 script = ExtResource("2_07ghn")

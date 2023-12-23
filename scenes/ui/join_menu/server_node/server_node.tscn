@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://denfqgiat465h"]
+
+[ext_resource type="Script" path="res://scenes/ui/join_menu/server_node/server_node.gd" id="1_sm4ug"]
+
+[node name="ServerNode" type="HBoxContainer"]
+offset_right = 1280.0
+offset_bottom = 50.0
+script = ExtResource("1_sm4ug")
+
+[node name="LobbyName" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Lobby 1"
+
+[node name="ServerAddress" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "192.168.0.1:2345"
+
+[node name="PlayerCount" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "9/10"
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Wybierz"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
