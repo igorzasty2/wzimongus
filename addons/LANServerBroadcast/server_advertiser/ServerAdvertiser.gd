@@ -1,7 +1,7 @@
 extends Node
 class_name ServerAdvertiser
 
-const DEFAULT_PORT := 3111
+const DEFAULT_PORT := 9000
 
 # How often to broadcast out to the network that this host is active
 @export var broadcast_interval: float = 1.0

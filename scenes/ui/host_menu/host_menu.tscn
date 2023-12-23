@@ -35,6 +35,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 
+[node name="LobbyNameContainer" type="VBoxContainer" parent="InputsContainer"]
+layout_mode = 2
+
+[node name="LobbyNameLabel" type="Label" parent="InputsContainer/LobbyNameContainer"]
+layout_mode = 2
+text = "Nazwa lobby"
+
+[node name="LobbyNameInput" type="LineEdit" parent="InputsContainer/LobbyNameContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 32)
+layout_mode = 2
+
 [node name="UsernameContainer" type="VBoxContainer" parent="InputsContainer"]
 layout_mode = 2
 
@@ -132,7 +143,7 @@ text = "9001"
 [node name="HostButton" type="Button" parent="InputsContainer"]
 custom_minimum_size = Vector2(250, 40)
 layout_mode = 2
-text = "Stwórz grę"
+text = "Stwórz lobby"
 
 [connection signal="item_selected" from="InputsContainer/MaxConnectionsContainer/MaxConnectionsInputContainer/MaxConnectionsInput" to="." method="_on_connections_lecturers_item_selected"]
 [connection signal="item_selected" from="InputsContainer/MaxLecturersContainer/MaxLecturersInputContainer/MaxLecturersInput" to="." method="_on_connections_lecturers_item_selected"]

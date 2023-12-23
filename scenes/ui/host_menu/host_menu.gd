@@ -1,5 +1,6 @@
 extends Control
 
+@onready var lobby_name_input = $InputsContainer/LobbyNameContainer/LobbyNameInput
 @onready var username_input = $InputsContainer/UsernameContainer/UsernameInput
 @onready var port_input = $InputsContainer/PortContainer/PortInput
 @onready var max_connections = $InputsContainer/MaxConnectionsContainer/MaxConnectionsInputContainer/MaxConnectionsInput
@@ -11,7 +12,7 @@ func _on_host_button_button_down():
 
 	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 
-	GameManager.host_game.call_deferred(port_input.text.to_int(), max_connections.text.to_int(), max_lectureres.text.to_int())
+	GameManager.host_game.call_deferred(lobby_name_input.text, port_input.text.to_int(), max_connections.text.to_int(), max_lectureres.text.to_int())
 
 
 func _on_connections_lecturers_item_selected(_index: int):

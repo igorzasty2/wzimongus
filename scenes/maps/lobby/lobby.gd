@@ -34,7 +34,6 @@ func _exit_tree():
 func _update_broadcast_info(_id = null, _player = null):
 	server_advertiser.serverInfo = GameManager.get_server_settings()
 	server_advertiser.serverInfo["player_count"] = GameManager.get_registered_players().size()
-	print("Broadcasting server info: ", server_advertiser.serverInfo)
 
 
 ## Aktualizuje listę graczy.

@@ -65,8 +65,9 @@ func _ready():
 
 
 ## Tworzy nowy serwer gry.
-func host_game(port: int, max_players: int, max_lecturers: int):
+func host_game(lobby_name: String, port: int, max_players: int, max_lecturers: int):
 	# Ustawia parametry serwera.
+	_server_settings["lobby_name"] = lobby_name
 	_server_settings["port"] = port
 	_server_settings["max_players"] = max_players
 	_server_settings["max_lecturers"] = max_lecturers
