@@ -39,9 +39,10 @@ var _current_player = {
 
 # Przechowuje ustawienia serwera.
 var _server_settings = {
+	"lobby_name": "Lobby",
 	"port": 9001,
 	"max_players": 10,
-	"max_lecturers": 1
+	"max_lecturers": 3
 }
 
 # Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -195,12 +196,9 @@ func set_player_key(key:String, value):
 		_current_player[key] = value
 
 
-## Zwraca informację o ustawieniu serwera, które jest przechowywane pod danym kluczem.
-func get_server_settings_key(key:String):
-	if _server_settings.has(key):
-		return _server_settings[key]
-
-	return null
+## Zwraca informacje o ustawieniach serwera.
+func get_server_settings():
+	return _server_settings
 
 
 ## Zmienia status informacji o wyświetlaniu menu pauzy.

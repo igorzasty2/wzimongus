@@ -29,5 +29,5 @@ func _on_server_listener_remove_server(server_ip):
 
 
 func _on_server_selected(server_info):
-	address_input.text = server_info.ip
-	port_input.text = str(server_info.port)
+	address_input.text = server_info["ip"]
+	port_input.text = str(server_info["port"])

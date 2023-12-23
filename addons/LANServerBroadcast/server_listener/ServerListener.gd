@@ -25,8 +25,6 @@ func _ready():
 	
 	if socketUDP.bind(listenPort) != OK:
 		print("GameServer LAN service: Error listening on port: " + str(listenPort))
-	else:
-		print("GameServer LAN service: Listening on port: " + str(listenPort))
 
 func _process(delta):
 	if socketUDP.get_available_packet_count() > 0:
@@ -44,7 +42,6 @@ func _process(delta):
 				gameInfo.ip = serverIp
 				gameInfo.lastSeen = Time.get_unix_time_from_system()
 				knownServers[serverIp] = gameInfo
-				print("New server found: %s - %s:%s" % [gameInfo.name, gameInfo.ip, gameInfo.port])
 				emit_signal("new_server", gameInfo)
 			# Update the last seen time
 			else:
@@ -57,7 +54,6 @@ func clean_up():
 		var serverInfo = knownServers[serverIp]
 		if (now - serverInfo.lastSeen) > server_cleanup_threshold:
 			knownServers.erase(serverIp)
-			print('Remove old server: %s' % serverIp)
 			emit_signal("remove_server", serverIp)
 
 func _exit_tree():

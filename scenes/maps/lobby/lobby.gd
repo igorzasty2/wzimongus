@@ -1,16 +1,19 @@
 extends Control
 
+@onready var start_game_button = $StartGameButton
 @onready var server_advertiser = $ServerAdvertiser
 
 func _ready():
 	# Ukrywa przycisk rozpoczęcia gry przed klientami.
 	if !multiplayer.is_server():
-		$StartGameButton.hide()
+		start_game_button.hide()
 
 	# Włącza broadcast serwera.
 	if multiplayer.is_server():
-		server_advertiser.serverInfo["name"] = "A great lobby"
-		server_advertiser.serverInfo["port"] = GameManager.get_server_settings_key("port")
+		_update_broadcast_info()
+
+		GameManager.player_registered.connect(_update_broadcast_info)
+		GameManager.player_deregistered.connect(_update_broadcast_info)
 
 	# Aktualizuje listę graczy.
 	_update_player_list()
@@ -18,9 +21,21 @@ func _ready():
 	GameManager.player_registered.connect(_update_player_list)
 	GameManager.player_deregistered.connect(_update_player_list)
 
+
 func _exit_tree():
+	if multiplayer.is_server():
+		GameManager.player_registered.disconnect(_update_broadcast_info)
+		GameManager.player_deregistered.disconnect(_update_broadcast_info)
+
 	GameManager.player_registered.disconnect(_update_player_list)
 	GameManager.player_deregistered.disconnect(_update_player_list)
+
+
+func _update_broadcast_info(_id = null, _player = null):
+	server_advertiser.serverInfo = GameManager.get_server_settings()
+	server_advertiser.serverInfo["player_count"] = GameManager.get_registered_players().size()
+	print("Broadcasting server info: ", server_advertiser.serverInfo)
+
 
 ## Aktualizuje listę graczy.
 func _update_player_list(_id = null, _player = null):
@@ -35,6 +50,7 @@ func _update_player_list(_id = null, _player = null):
 		idx += 1
 
 	$PlayerList.text = player_list
+
 
 func _on_start_game_button_button_down():
 	GameManager.start_game()
