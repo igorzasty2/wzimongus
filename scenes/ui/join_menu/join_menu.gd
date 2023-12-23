@@ -3,7 +3,7 @@ extends Control
 @onready var username_input = $InputsContainer/UsernameContainer/UsernameInput
 @onready var address_input = $InputsContainer/AddressContainer/AddressInput
 @onready var port_input = $InputsContainer/PortContainer/PortInput
-@onready var server_list = $ServerPanel/Table/ServerList
+@onready var server_list = $ServerPanel/Table/ServerListScroll/ServerList
 
 func _on_join_button_pressed():
 	GameManager.set_player_key("username", username_input.text)

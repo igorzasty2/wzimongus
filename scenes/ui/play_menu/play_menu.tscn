@@ -42,7 +42,7 @@ grow_vertical = 2
 layout_mode = 2
 text = "Graj"
 
-[node name="ButtonContainer" type="HBoxContainer" parent="StatusBar"]
+[node name="ButtonsContainer" type="HBoxContainer" parent="StatusBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,7 +50,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BackButton" type="Button" parent="StatusBar/ButtonContainer"]
+[node name="BackButton" type="Button" parent="StatusBar/ButtonsContainer"]
 custom_minimum_size = Vector2(80, 2.08165e-12)
 layout_mode = 2
 text = "⬅️ Wróć"
@@ -92,6 +92,6 @@ custom_minimum_size = Vector2(2.08165e-12, 60)
 layout_mode = 2
 text = "Dołącz do lobby"
 
-[connection signal="pressed" from="StatusBar/ButtonContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="ButtonsContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="ButtonsContainer/JoinButton" to="." method="_on_join_button_pressed"]

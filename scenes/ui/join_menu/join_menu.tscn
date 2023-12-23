@@ -43,7 +43,7 @@ grow_vertical = 2
 layout_mode = 2
 text = "Dołącz do lobby"
 
-[node name="ButtonContainer" type="HBoxContainer" parent="StatusBar"]
+[node name="ButtonsContainer" type="HBoxContainer" parent="StatusBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,7 +51,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BackButton" type="Button" parent="StatusBar/ButtonContainer"]
+[node name="BackButton" type="Button" parent="StatusBar/ButtonsContainer"]
 custom_minimum_size = Vector2(80, 2.08165e-12)
 layout_mode = 2
 text = "⬅️ Wróć"
@@ -87,30 +87,35 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ServerPanel/Table/Header/MarginContainer"]
+[node name="AttributesContainer" type="HBoxContainer" parent="ServerPanel/Table/Header/MarginContainer"]
 layout_mode = 2
 
-[node name="LobbyName" type="Label" parent="ServerPanel/Table/Header/MarginContainer/HBoxContainer"]
+[node name="LobbyName" type="Label" parent="ServerPanel/Table/Header/MarginContainer/AttributesContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Nazwa lobby"
 
-[node name="ServerAddress" type="Label" parent="ServerPanel/Table/Header/MarginContainer/HBoxContainer"]
+[node name="ServerAddress" type="Label" parent="ServerPanel/Table/Header/MarginContainer/AttributesContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Adres serwera"
 
-[node name="PlayerCount" type="Label" parent="ServerPanel/Table/Header/MarginContainer/HBoxContainer"]
+[node name="PlayerCount" type="Label" parent="ServerPanel/Table/Header/MarginContainer/AttributesContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Liczba graczy"
 
-[node name="Filler" type="Control" parent="ServerPanel/Table/Header/MarginContainer/HBoxContainer"]
+[node name="Filler" type="Control" parent="ServerPanel/Table/Header/MarginContainer/AttributesContainer"]
 custom_minimum_size = Vector2(150, 2.08165e-12)
 layout_mode = 2
 
-[node name="ServerList" type="VBoxContainer" parent="ServerPanel/Table"]
+[node name="ServerListScroll" type="ScrollContainer" parent="ServerPanel/Table"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ServerList" type="VBoxContainer" parent="ServerPanel/Table/ServerListScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ServerListener" type="Node" parent="."]
@@ -172,7 +177,7 @@ custom_minimum_size = Vector2(175, 2.08165e-12)
 layout_mode = 2
 text = "Dołącz do lobby"
 
-[connection signal="pressed" from="StatusBar/ButtonContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="new_server" from="ServerListener" to="." method="_on_server_listener_new_server"]
 [connection signal="remove_server" from="ServerListener" to="." method="_on_server_listener_remove_server"]
 [connection signal="pressed" from="InputsContainer/JoinButton" to="." method="_on_join_button_pressed"]
