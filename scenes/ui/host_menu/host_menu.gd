@@ -7,7 +7,7 @@ extends Control
 @onready var max_lectureres = $InputsContainer/MaxLecturersContainer/MaxLecturersInputContainer/MaxLecturersInput
 @onready var lecturers_amount_alert = $InputsContainer/LecturersAmountAlert
 
-func _on_host_button_button_down():
+func _on_host_button_pressed():
 	GameManager.set_player_key("username", username_input.text)
 
 	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
@@ -18,3 +18,7 @@ func _on_host_button_button_down():
 func _on_connections_lecturers_item_selected(_index: int):
 	# Ustawia widoczność alertu o zbyt dużej ilości wykładowców
 	lecturers_amount_alert.visible = true if ceil(max_connections.text.to_int() / 4.0) < max_lectureres.text.to_int() else false
+
+
+func _on_back_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/ui/play_menu/play_menu.tscn")

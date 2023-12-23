@@ -5,7 +5,7 @@ extends Control
 @onready var port_input = $InputsContainer/PortContainer/PortInput
 @onready var server_list = $ServerPanel/Table/ServerList
 
-func _on_join_button_button_down():
+func _on_join_button_pressed():
 	GameManager.set_player_key("username", username_input.text)
 
 	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
@@ -31,3 +31,7 @@ func _on_server_listener_remove_server(server_ip):
 func _on_server_selected(server_info):
 	address_input.text = server_info["ip"]
 	port_input.text = str(server_info["port"])
+
+
+func _on_back_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/ui/play_menu/play_menu.tscn")

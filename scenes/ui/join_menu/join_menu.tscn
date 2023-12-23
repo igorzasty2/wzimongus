@@ -21,10 +21,45 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.352941, 0.352941, 0.443137, 1)
 
+[node name="StatusBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = 74.0
+grow_horizontal = 2
+
+[node name="TitleContainer" type="CenterContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="StatusBar/TitleContainer"]
+layout_mode = 2
+text = "Dołącz do lobby"
+
+[node name="ButtonContainer" type="HBoxContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="StatusBar/ButtonContainer"]
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+text = "⬅️ Wróć"
+
 [node name="ServerPanel" type="Panel" parent="."]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 24.0
+offset_top = 96.0
 offset_right = 1248.0
 offset_bottom = 616.0
 
@@ -137,6 +172,7 @@ custom_minimum_size = Vector2(175, 2.08165e-12)
 layout_mode = 2
 text = "Dołącz do lobby"
 
+[connection signal="pressed" from="StatusBar/ButtonContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="new_server" from="ServerListener" to="." method="_on_server_listener_new_server"]
 [connection signal="remove_server" from="ServerListener" to="." method="_on_server_listener_remove_server"]
-[connection signal="button_down" from="InputsContainer/JoinButton" to="." method="_on_join_button_button_down"]
+[connection signal="pressed" from="InputsContainer/JoinButton" to="." method="_on_join_button_pressed"]
