@@ -1,9 +1,16 @@
 extends Control
 
+@onready var server_advertiser = $ServerAdvertiser
+
 func _ready():
 	# Ukrywa przycisk rozpoczęcia gry przed klientami.
 	if !multiplayer.is_server():
 		$StartGameButton.hide()
+
+	# Włącza broadcast serwera.
+	if multiplayer.is_server():
+		server_advertiser.serverInfo["name"] = "A great lobby"
+		server_advertiser.serverInfo["port"] = GameManager.get_server_settings_key("port")
 
 	# Aktualizuje listę graczy.
 	_update_player_list()

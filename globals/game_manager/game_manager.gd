@@ -195,6 +195,14 @@ func set_player_key(key:String, value):
 		_current_player[key] = value
 
 
+## Zwraca informację o ustawieniu serwera, które jest przechowywane pod danym kluczem.
+func get_server_settings_key(key:String):
+	if _server_settings.has(key):
+		return _server_settings[key]
+
+	return null
+
+
 ## Zmienia status informacji o wyświetlaniu menu pauzy.
 func set_pause_menu_status(is_paused:bool):
 	_current_game["is_paused"] = is_paused

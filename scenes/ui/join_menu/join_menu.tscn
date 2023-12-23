@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://do0gv7fs1aegr"]
+[gd_scene load_steps=3 format=3 uid="uid://do0gv7fs1aegr"]
 
 [ext_resource type="Script" path="res://scenes/ui/join_menu/join_menu.gd" id="1_o0flq"]
+[ext_resource type="Script" path="res://addons/LANServerBroadcast/server_listener/ServerListener.gd" id="2_07ghn"]
 
 [node name="JoinMenu" type="Control"]
 layout_mode = 3
@@ -76,4 +77,16 @@ custom_minimum_size = Vector2(250, 40)
 layout_mode = 2
 text = "Dołącz do gry"
 
+[node name="ServerList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 41.0
+offset_right = 461.0
+offset_bottom = 666.0
+
+[node name="ServerListener" type="Node" parent="."]
+script = ExtResource("2_07ghn")
+
 [connection signal="button_down" from="InputsContainer/JoinButton" to="." method="_on_join_button_button_down"]
+[connection signal="new_server" from="ServerListener" to="." method="_on_server_listener_new_server"]
+[connection signal="remove_server" from="ServerListener" to="." method="_on_server_listener_remove_server"]
