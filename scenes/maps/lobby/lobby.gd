@@ -23,6 +23,8 @@ func _ready():
 	GameManager.player_registered.connect(_update_player_list)
 	GameManager.player_deregistered.connect(_update_player_list)
 
+	load_finished.emit()
+
 
 func _exit_tree():
 	if multiplayer.is_server():

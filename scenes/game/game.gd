@@ -40,8 +40,8 @@ func _on_error_pop_up_closed():
 
 ## Zmienia wyświetlaną globalnie mapę.
 func _change_map(scene: PackedScene):
-	_delete_map()
 	connecting.show()
+	_delete_map()
 	var scene_instantiated = scene.instantiate()
 	scene_instantiated.connect("load_finished", _on_load_finished)
 	maps.add_child(scene_instantiated)
@@ -50,7 +50,7 @@ func _change_map(scene: PackedScene):
 ## Usuwa aktualną mapę.
 func _delete_map():
 	for i in maps.get_children():
-		maps.disconnect("load_finished", _on_load_finished)
+		i.disconnect("load_finished", _on_load_finished)
 		maps.remove_child(i)
 		i.queue_free()
 
