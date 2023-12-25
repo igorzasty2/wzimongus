@@ -7,6 +7,9 @@ signal load_finished
 @onready var players = $Players
 
 func _ready():
+	# Uruchamia synchronizację czasu.
+	NetworkTime.start()
+
 	hide()
 	camera.enabled = false
 	GameManager.set_input_status(false)
@@ -17,9 +20,6 @@ func _ready():
 
 	# Despawnuje wyrejestrowanego gracza.
 	GameManager.player_deregistered.connect(_remove_player)
-
-	# Uruchamia synchronizację czasu.
-	NetworkTime.start()
 
 	# Czeka na synchronizację czasu.
 	if multiplayer.is_server():
@@ -33,10 +33,10 @@ func _ready():
 
 
 func _exit_tree():
-	GameManager.player_deregistered.disconnect(_remove_player)
-	
 	# Zatrzymuje synchronizację czasu.
 	NetworkTime.stop()
+
+	GameManager.player_deregistered.disconnect(_remove_player)
 
 
 @rpc("call_local", "reliable")
