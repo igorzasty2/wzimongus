@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=37 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://1nb6uwps5542" path="res://scenes/maps/main_map/scenes/corridors/korytarz_willy_sala_1_bufet_pokoj_wykladowcow.tscn" id="28_00vjh"]
 [ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_menu.tscn" id="34_5r0ro"]
 [ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_menu.gd" id="35_23714"]
+[ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
 
 [node name="MainMap" type="Node2D"]
 y_sort_enabled = true
@@ -151,5 +152,7 @@ one_shot = true
 
 [node name="MinigameMenu" parent="." instance=ExtResource("34_5r0ro")]
 script = ExtResource("35_23714")
+
+[node name="ReportButton" parent="." instance=ExtResource("36_xfee5")]
 
 [connection signal="timeout" from="Camera/Timer" to="Camera" method="_on_timer_timeout"]

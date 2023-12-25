@@ -12,5 +12,4 @@ func _open_voting_screen():
 	var voting_screen_instance = voting_screen.instantiate()
 	self.get_parent().add_child(voting_screen_instance)
 	GameManager.set_input_status(false)
-	GameManager.set_pause_status(true)
 	self.hide()

@@ -41,16 +41,20 @@ func _process(delta):
 func _on_player_voted(voted_player_key):
 	skip_button.disabled = true
 	GameManager.set_player_key("voted", true)
-	_add_player_vote.rpc(voted_player_key, multiplayer.get_unique_id())
+
+	if multiplayer.is_server():
+		_add_player_vote(voted_player_key, multiplayer.get_unique_id())
+	else:
+		_add_player_vote.rpc_id(1, voted_player_key, multiplayer.get_unique_id())
 
 
-@rpc("call_local", "any_peer")
+@rpc("call_remote", "any_peer")
 func _add_player_vote(player_key, voted_by):
 	GameManager.add_vote(player_key, voted_by)
 
 
 func _on_skip_button_pressed():
-	if GameManager.get_current_player_key("voted_for"):
+	if GameManager.get_current_player_key("voted"):
 		return
 
 	skip_decision.visible = true
@@ -64,8 +68,11 @@ func _on_decision_yes_pressed():
 func _on_decision_no_pressed():
 	skip_decision.visible = false
 
-
+@rpc("call_local", "authority", "reliable")
 func _render_player_boxes():
+	for child in players.get_children():
+		child.queue_free()
+
 	var registered_players = GameManager.get_registered_players()
 
 	var votes = GameManager.get_votes()
@@ -85,19 +92,22 @@ func _on_end_voting_timer_timeout():
 
 	end_vote_text.text = "[center]Voting has ended[/center]"
 
-	for child in players.get_children():
-		child.queue_free()
+	if multiplayer.is_server():
+		for player_id in GameManager.get_votes().keys():
+			var voted_by_players = GameManager.get_votes()[player_id]
+			for voted_by in voted_by_players:
+				_add_player_vote.rpc(player_id, voted_by)
 		
-	_render_player_boxes()
+		_render_player_boxes.rpc()
 
 	eject_player_timer.start(EJECT_PLAYER_TIME)
-
+	
 
 func _on_eject_player_timer_timeout():
 	_change_scene_to_ejection_screen.rpc()
 
 
-@rpc("call_local", "any_peer")
+@rpc("call_local", "any_peer", "reliable")
 func _change_scene_to_ejection_screen():
 	self.get_parent().add_child(ejection_screen.instantiate())
 	self.queue_free()

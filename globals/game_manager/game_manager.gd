@@ -27,14 +27,22 @@ var _current_game = {
 	"is_started": false,
 	"is_paused": false,
 	"is_input_disabled": false,
-	"registered_players": {}
+	"registered_players": {},
+	"most_voted_player": null
 }
+
+var _votes = {}
+
+@rpc("call_local", "reliable")
+func set_most_voted_player(player):
+	_current_game["most_voted_player"] = player
 
 # Przechowuje dane o obecnym graczu.
 var _current_player = {
 	"username": "",
 	"is_lecturer": false,
-	"is_dead": false
+	"is_dead": false,
+	"voted": false
 }
 
 # Przechowuje ustawienia serwera.
@@ -119,6 +127,12 @@ func join_game(address:String, port:int):
 		_handle_error("Nie udało się połączyć z " + str(address) + ":" + str(port) + "!")
 		return
 
+## Rozpoczyna następną rundę
+func next_round():
+	GameManager.set_player_key("voted", false)
+	_current_game["most_voted_player"] = null
+	GameManager.set_input_status(true)
+	_votes = {}
 
 ## Rozpoczyna grę.
 func start_game():

@@ -8,9 +8,12 @@ extends Control
 
 
 func _ready():
-	var most_voted_player_id = get_most_voted_player_id()
-	var message = get_ejection_message(most_voted_player_id)
-	ejection_message.text = message
+	if multiplayer.is_server():
+		var most_voted_player_id = get_most_voted_player_id()
+
+		if most_voted_player_id != null:
+			GameManager.set_most_voted_player.rpc(GameManager.get_registered_players()[most_voted_player_id])
+		update_ejection_message.rpc()
 
 	#NEXT ROUND TIMER
 	add_child(next_round_timer)
@@ -19,7 +22,7 @@ func _ready():
 	next_round_timer.connect("timeout", _on_next_round_timer_timeout)
 	next_round_timer.start(NEXT_ROUND_TIME)
 
-	
+
 func get_most_voted_player_id():
 	var most_voted_players = []
 	var max_vote = 0
@@ -37,25 +40,23 @@ func get_most_voted_player_id():
 	else:
 		return most_voted_players[0]
 
+@rpc("call_local", "authority", "reliable")
+func update_ejection_message():
+	var most_voted_player = GameManager.get_current_game_key("most_voted_player")
 
-func get_ejection_message(player_id):
-	if player_id == null:
-		return "[center]No one was ejected.[/center]"
-	elif GameManager.get_registered_player_key(player_id, 'impostor'):
+	if  most_voted_player == null:
+		ejection_message.text = "[center]No one was ejected.[/center]"
+	elif most_voted_player["is_lecturer"]:
 		#TODO: GameManager.set_registered_player_key(player_id, 'alive', false)
-		return "[center]" + GameManager.get_registered_player_key(player_id, 'username') + " was ejected.[/center]"
+		ejection_message.text = "[center]" + most_voted_player['username'] + " was ejected.[/center]"
 	else:
 		#TODO: GameManager.set_registered_player_key(player_id, 'alive', false)
-		return "[center]" + GameManager.get_registered_player_key(player_id, 'username') + " was not an impostor.[/center]"
+		ejection_message.text = "[center]" + most_voted_player['username'] + " was not an impostor.[/center]"
 
 
 func _on_next_round_timer_timeout():
 	self.queue_free()
-	GameManager.set_input_status(true)
-	GameManager.set_pause_status(false)
-	self.get_parent().get_node("%report_button").show()
-	GameManager.set_player_key("voted", false)
+	self.get_parent().get_node("%Button").show()
 
-	#! Nie powinno usuwać tutaj, tylko w GameManagerze, podczas inicjalizacji następnej rundy
-	GameManager._votes = {}
+	GameManager.next_round()
 
