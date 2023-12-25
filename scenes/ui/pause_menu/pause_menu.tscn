@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ctojv5s5r4v3" path="res://scenes/ui/pop_up_window/pop_up_window.tscn" id="3_tdiax"]
 
 [node name="PauseMenu" type="CanvasLayer"]
+layer = 10
 script = ExtResource("1_xdxlx")
 
 [node name="ColorRect" type="ColorRect" parent="."]

@@ -1,49 +1,44 @@
 extends CharacterBody2D
 
-# Ostatni kierunek ruchu postaci na osi X.
+@export var speed = 600.0
+
 var last_direction_x: float = 1
-# Stała określająca prędkość postaci.
-const SPEED = 300.0
 
-@export var input: InputSynchronizer
-
+@onready var input = $Input
 @onready var animation_tree = $Skins/AltAnimationTree
-@onready var camera = get_parent().get_parent().get_node("Camera")
-
 
 func _ready():
-	if input == null:
-		input = $Input
+	# Gracz jest własnością serwera.
+	set_multiplayer_authority(1)
 
-	await get_tree().process_frame
+	# Wejście gracza jest własnością gracza.
+	input.set_multiplayer_authority(name.to_int())
 
+	# Konfiguruje synchronizację.
 	$RollbackSynchronizer.process_settings()
 
-	# Ustawia nazwę użytkownika w etykiecie.
+	# Ustawia etykietę z nazwą gracza.
 	$UsernameLabel.text = GameManager.get_registered_player_key(name.to_int(), "username")
 
 	# Aktywuje drzewo animacji postaci.
 	animation_tree.active = true
-
+	last_direction_x = 1
 
 func _process(_delta):
-	# Aktualizuje parametry animacji.
+	# Aktualizuje parametry animacji postaci.
 	var direction = input.direction.normalized()
-
 	_update_animation_parameters(direction)
-
 
 func _rollback_tick(_delta, _tick, _is_fresh):
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
-	velocity = input.direction.normalized() * SPEED
+	velocity = input.direction.normalized() * speed
 
 	# Porusza postacią i obsługuje kolizje.
 	velocity *= NetworkTime.physics_factor
 	move_and_slide()
 	velocity /= NetworkTime.physics_factor
 
-
-# Aktualizuje parametry animacji postaci.
+## Aktualizuje parametry animacji postaci.
 func _update_animation_parameters(direction):
 	# Ustawia parametry animacji w zależności od stanu ruchu.
 	if direction == Vector2.ZERO:
