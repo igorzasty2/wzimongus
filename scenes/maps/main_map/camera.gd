@@ -8,8 +8,13 @@ var player: CharacterBody2D
 var shake_amount: float = 0
 var default_offset: Vector2 = offset
 
+var timer = Timer.new()
+
 func _ready():
 	randomize()
+	timer.timeout.connect(_on_timer_timeout)
+	timer.one_shot = true
+	add_child(timer)
 
 func _process(delta):
 	# Interpoluje pozycję kamery do pozycji gracza.
@@ -22,7 +27,8 @@ func _process(delta):
 ## Trząsa kamerą przez określony czas.
 func shake(time: float, amount: float):
 	shake_amount = amount
-	set_process(true)	
-	await get_tree().create_timer(time).timeout	
-	set_process(false)
-	Tween.interpolate_value(self, "offset", 1, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	timer.wait_time = time
+	timer.start()
+
+func _on_timer_timeout():
+	shake_amount = 0
