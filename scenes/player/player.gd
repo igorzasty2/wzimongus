@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed = 600.0
 
-var last_direction_x: float = 1
+var last_direction_x: float = -1
 
 @onready var input = $Input
 @onready var animation_tree = $Skins/AltAnimationTree
@@ -22,8 +22,7 @@ func _ready():
 
 	# Aktywuje drzewo animacji postaci.
 	animation_tree.active = true
-	last_direction_x = 1
-
+	
 func _process(_delta):
 	# Aktualizuje parametry animacji postaci.
 	var direction = input.direction.normalized()

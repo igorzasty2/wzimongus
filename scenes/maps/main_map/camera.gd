@@ -8,8 +8,6 @@ var player: CharacterBody2D
 var shake_amount: float = 0
 var default_offset: Vector2 = offset
 
-@onready var timer : Timer = $Timer
-
 func _ready():
 	randomize()
 
@@ -23,11 +21,8 @@ func _process(delta):
 
 ## Trząsa kamerą przez określony czas.
 func shake(time: float, amount: float):
-	timer.wait_time = time
 	shake_amount = amount
-	set_process(true)
-	timer.start()
-
-func _on_timer_timeout() -> void:
+	set_process(true)	
+	await get_tree().create_timer(time).timeout	
 	set_process(false)
 	Tween.interpolate_value(self, "offset", 1, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
