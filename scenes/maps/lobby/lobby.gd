@@ -1,5 +1,7 @@
 extends Control
 
+signal load_finished
+
 @onready var start_game_button = $StartGameButton
 @onready var server_advertiser = $ServerAdvertiser
 

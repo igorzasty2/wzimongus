@@ -1,13 +1,12 @@
 extends Node2D
 
-func _ready():
-	# Uruchamia synchronizację czasu.
-	NetworkTime.start()
+signal load_finished
 
-	# Włącza ekran ładowania.
-	var loading_screen = preload("res://scenes/ui/loading_screen/loading_screen.tscn").instantiate()
-	add_child(loading_screen)
-	loading_screen.show()
+@onready var loading_screen = $LoadingScreen
+@onready var camera = $Camera
+
+func _ready():
+	hide()
 
 	# Spawnuje zarejestrowanych graczy.
 	for i in GameManager.get_registered_players():
@@ -16,12 +15,32 @@ func _ready():
 	# Despawnuje wyrejestrowanego gracza.
 	GameManager.player_deregistered.connect(_remove_player)
 
+	# Uruchamia synchronizację czasu.
+	NetworkTime.start()
+
+	# Czeka na synchronizację czasu.
+	if multiplayer.is_server():
+		for id in GameManager.get_registered_players():
+			if id == 1:
+				continue
+			while not NetworkTime.is_client_synced(id):
+				await NetworkTime.after_client_sync
+		
+		_start_game.rpc()
+
+
 func _exit_tree():
 	# Zatrzymuje synchronizację czasu.
 	NetworkTime.stop()
-	
-	for i in $Players.get_children():
-		i.queue_free()
+
+@rpc("call_local", "reliable")
+func _start_game():
+	# Włącza ekran ładowania.
+	camera.enabled = true
+	loading_screen.play()
+	load_finished.emit()
+	show()
+
 
 ## Spawnuje gracza na mapie.
 func _spawn_player(id: int):
@@ -38,6 +57,7 @@ func _spawn_player(id: int):
 	# Ustawia kamerę na gracza.
 	if GameManager.get_current_player_id() == id:
 		$Camera.player = player
+
 
 ## Usuwa gracza z mapy.
 func _remove_player(id: int):

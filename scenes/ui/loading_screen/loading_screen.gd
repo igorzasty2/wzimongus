@@ -1,13 +1,10 @@
 extends CanvasLayer
 
-var rola = GameManager.get_current_player_key("is_lecturer")
+var role = GameManager.get_current_player_key("is_lecturer")
 
-func _ready():
+func play():
 	GameManager.set_input_status(0)
 	$AnimationPlayer.play("pop_up")
-
-func _process(delta):
-	pass
 
 
 func display_roles(is_lecturer: bool):
@@ -19,8 +16,8 @@ func display_roles(is_lecturer: bool):
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "pop_up":
-		display_roles(rola)
-		
+		display_roles(role)
+
 	if anim_name == "lecturer_pop_up" or anim_name == "crewmate_pop_up":
-		$".".hide()
+		hide()
 		GameManager.set_input_status(1)
