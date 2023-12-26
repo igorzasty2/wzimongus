@@ -24,7 +24,7 @@ func _ready():
 	if !multiplayer.is_server():
 		start_game_button.hide()
 
-	GameManager.player_registered.connect(_spawn_player)
+	GameManager.player_registered.connect(_on_player_registered)
 	# Despawnuje wyrejestrowanego gracza.
 	GameManager.player_deregistered.connect(_remove_player)
 
@@ -53,7 +53,7 @@ func _exit_tree():
 		GameManager.player_registered.disconnect(_update_broadcast_info)
 		GameManager.player_deregistered.disconnect(_update_broadcast_info)
 
-	GameManager.player_registered.disconnect(_spawn_player)
+	GameManager.player_registered.disconnect(_on_player_registered)
 	GameManager.player_deregistered.disconnect(_remove_player)
 
 
@@ -64,6 +64,12 @@ func _update_broadcast_info(_id = null, _player = null):
 
 func _on_start_game_button_button_down():
 	GameManager.start_game()
+
+
+func _on_player_registered(id: int, _player = null):
+	_spawn_player(id)
+	camera.shake(1.5, 10)
+
 
 ## Spawnuje gracza na mapie.
 func _spawn_player(id: int, _player = null):
