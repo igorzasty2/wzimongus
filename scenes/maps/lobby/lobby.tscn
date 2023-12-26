@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://l2mxisy85ciw"]
+[gd_scene load_steps=6 format=3 uid="uid://l2mxisy85ciw"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/lobby.gd" id="1_dytr5"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
 [ext_resource type="Script" path="res://addons/LANServerBroadcast/server_advertiser/ServerAdvertiser.gd" id="3_4702b"]
+[ext_resource type="Texture2D" uid="uid://cgwj38vvymfdq" path="res://scenes/player/assets/two_characters.png" id="3_ypjxs"]
+[ext_resource type="Script" path="res://scenes/maps/lobby/SkinOptionButton.gd" id="4_oewbt"]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -49,10 +51,46 @@ unique_name_in_owner = true
 layout_mode = 1
 offset_left = 32.0
 offset_top = 32.0
-offset_right = -384.0
+offset_right = -641.0
 offset_bottom = -112.0
+
+[node name="SkinSelect" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SkinSelectLabel" type="Label" parent="SkinSelect"]
+layout_mode = 0
+offset_left = 705.0
+offset_top = 93.0
+offset_right = 871.0
+offset_bottom = 119.0
+text = "Wybierz swoją postać"
+
+[node name="SelectedSkin" type="Sprite2D" parent="SkinSelect"]
+position = Vector2(785, 210)
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("3_ypjxs")
+hframes = 10
+vframes = 2
+
+[node name="SkinOptionButton" type="OptionButton" parent="SkinSelect"]
+layout_mode = 0
+offset_left = 707.0
+offset_top = 297.0
+offset_right = 871.0
+offset_bottom = 328.0
+alignment = 1
+item_count = 2
+selected = 0
+popup/item_0/text = "Alternatywka"
+popup/item_0/id = 0
+popup/item_1/text = "Nerd"
+popup/item_1/id = 1
+script = ExtResource("4_oewbt")
 
 [node name="ServerAdvertiser" type="Node" parent="."]
 script = ExtResource("3_4702b")
 
 [connection signal="button_down" from="StartGameButton" to="." method="_on_start_game_button_button_down"]
+[connection signal="item_selected" from="SkinSelect/SkinOptionButton" to="SkinSelect/SkinOptionButton" method="_on_item_selected"]

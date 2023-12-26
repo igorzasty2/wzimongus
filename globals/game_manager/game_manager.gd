@@ -34,7 +34,8 @@ var _current_game = {
 var _current_player = {
 	"username": "",
 	"is_lecturer": false,
-	"is_dead": false
+	"is_dead": false,
+	"skin": 0
 }
 
 # Przechowuje ustawienia serwera.
@@ -54,7 +55,8 @@ var _player_hidden = ["is_lecturer"]
 # Predefiniowane atrybuty gracza, które nadpiszą informacje od klienta przy rejestracji.
 var _player_attributes = {
 	"is_lecturer": false,
-	"is_dead": false
+	"is_dead": false,
+	"skin": 0
 }
 
 func _ready():

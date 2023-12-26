@@ -25,7 +25,6 @@ func _ready():
 	# Aktywuje drzewo animacji postaci.
 	animation_tree.active = true
 
-
 func _process(_delta):
 	# Aktualizuje parametry animacji postaci.
 	var direction = input.direction.normalized()
