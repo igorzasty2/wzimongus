@@ -12,6 +12,38 @@ script = ExtResource("1_dytr5")
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="0" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-1200, -700)
+
+[node name="1" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-900, -700)
+
+[node name="2" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-600, -700)
+
+[node name="3" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-300, -700)
+
+[node name="4" type="Node2D" parent="SpawnPoints"]
+position = Vector2(2.08165e-12, -700)
+
+[node name="5" type="Node2D" parent="SpawnPoints"]
+position = Vector2(300, -700)
+
+[node name="6" type="Node2D" parent="SpawnPoints"]
+position = Vector2(600, -700)
+
+[node name="7" type="Node2D" parent="SpawnPoints"]
+position = Vector2(900, -700)
+
+[node name="8" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1200, -700)
+
+[node name="9" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-1200, -400)
+
 [node name="Camera" type="Camera2D" parent="."]
 zoom = Vector2(0.45, 0.45)
 limit_left = -3888
@@ -33,20 +65,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = 268.0
-offset_right = 125.0
-offset_bottom = 328.0
+offset_left = -1351.0
+offset_top = 692.0
+offset_right = -1101.0
+offset_bottom = 752.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Rozpocznij grę"
 
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
-offset_left = 32.0
-offset_top = 32.0
-offset_right = -384.0
-offset_bottom = -112.0
+offset_left = -1376.0
+offset_top = -761.0
+offset_right = -54.0
+offset_bottom = -46.0
 
 [node name="ServerAdvertiser" type="Node" parent="."]
 script = ExtResource("3_4702b")

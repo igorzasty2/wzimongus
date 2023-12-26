@@ -2,8 +2,9 @@ extends Node2D
 
 signal load_finished
 
-@onready var camera = $Camera
 @onready var players = $Players
+@onready var spawn_points = $SpawnPoints
+@onready var camera = $Camera
 @onready var start_game_button = $StartGameButton
 @onready var server_advertiser = $ServerAdvertiser
 
@@ -71,8 +72,7 @@ func _spawn_player(id: int, _player = null):
 	player.name = str(id)
 
 	# Ustawia startową pozycję gracza.
-	if multiplayer.is_server():
-		player.position = Vector2(randi_range(0, 100), randi_range(0, 100))
+	player.position = spawn_points.get_child(GameManager.get_registered_players().keys().find(id)).position
 
 	# Ustawia pozycję i animację gracza na podstawie aktualnych danych.
 	if GameManager.lobby_data_at_registration.has(id):
