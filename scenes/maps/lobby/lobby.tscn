@@ -1,29 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://l2mxisy85ciw"]
+[gd_scene load_steps=6 format=3 uid="uid://l2mxisy85ciw"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/lobby.gd" id="1_dytr5"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
 [ext_resource type="Script" path="res://addons/LANServerBroadcast/server_advertiser/ServerAdvertiser.gd" id="3_4702b"]
+[ext_resource type="Script" path="res://scenes/maps/main_map/camera.gd" id="4_te0gu"]
+[ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="5_1rfh5"]
 
-[node name="Lobby" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Lobby" type="Node2D"]
 script = ExtResource("1_dytr5")
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.352941, 0.352941, 0.443137, 1)
+[node name="Players" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(0.45, 0.45)
+limit_left = -3888
+limit_top = -3674
+limit_right = 5056
+limit_bottom = 2504
+limit_smoothed = true
+position_smoothing_enabled = true
+script = ExtResource("4_te0gu")
+
+[node name="TickInterpolator" type="Node" parent="Camera" node_paths=PackedStringArray("root")]
+script = ExtResource("5_1rfh5")
+root = NodePath("..")
+properties = Array[String]([":global_position"])
 
 [node name="StartGameButton" type="Button" parent="."]
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -37,16 +41,8 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Rozpocznij grę"
 
-[node name="PlayerList" type="Label" parent="."]
-layout_mode = 0
-offset_left = 960.0
-offset_top = 32.0
-offset_right = 1248.0
-offset_bottom = 608.0
-
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
-layout_mode = 1
 offset_left = 32.0
 offset_top = 32.0
 offset_right = -384.0

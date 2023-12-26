@@ -1,14 +1,31 @@
-extends Control
+extends Node2D
 
 signal load_finished
 
+@onready var camera = $Camera
+@onready var players = $Players
 @onready var start_game_button = $StartGameButton
 @onready var server_advertiser = $ServerAdvertiser
 
 func _ready():
+	# Uruchamia synchronizację czasu.
+	NetworkTime.start()
+
+	hide()
+	camera.enabled = false
+	GameManager.set_input_status(false)
+
+	# Spawnuje zarejestrowanych graczy.
+	for i in GameManager.get_registered_players():
+		_spawn_player(i)
+
 	# Ukrywa przycisk rozpoczęcia gry przed klientami.
 	if !multiplayer.is_server():
 		start_game_button.hide()
+
+	GameManager.player_registered.connect(_spawn_player)
+	# Despawnuje wyrejestrowanego gracza.
+	GameManager.player_deregistered.connect(_remove_player)
 
 	# Włącza broadcast serwera.
 	if multiplayer.is_server():
@@ -17,22 +34,26 @@ func _ready():
 		GameManager.player_registered.connect(_update_broadcast_info)
 		GameManager.player_deregistered.connect(_update_broadcast_info)
 
-	# Aktualizuje listę graczy.
-	_update_player_list()
+	# Czeka na synchronizację czasu.
+	if !multiplayer.is_server():
+		await NetworkTime.after_sync
 
-	GameManager.player_registered.connect(_update_player_list)
-	GameManager.player_deregistered.connect(_update_player_list)
-
+	show()
+	camera.enabled = true
+	GameManager.set_input_status(true)
 	load_finished.emit()
 
 
 func _exit_tree():
+	# Zatrzymuje synchronizację czasu.
+	NetworkTime.stop()
+
 	if multiplayer.is_server():
 		GameManager.player_registered.disconnect(_update_broadcast_info)
 		GameManager.player_deregistered.disconnect(_update_broadcast_info)
 
-	GameManager.player_registered.disconnect(_update_player_list)
-	GameManager.player_deregistered.disconnect(_update_player_list)
+	GameManager.player_registered.disconnect(_spawn_player)
+	GameManager.player_deregistered.disconnect(_remove_player)
 
 
 func _update_broadcast_info(_id = null, _player = null):
@@ -40,20 +61,27 @@ func _update_broadcast_info(_id = null, _player = null):
 	server_advertiser.serverInfo["player_count"] = GameManager.get_registered_players().size()
 
 
-## Aktualizuje listę graczy.
-func _update_player_list(_id = null, _player = null):
-	var player_list = "Lista graczy:\n"
-	var idx = 1
-
-	for i in GameManager.get_registered_players():
-		player_list += str(idx) + '. '
-		player_list += GameManager.get_registered_player_key(i, "username")
-		player_list += "\n"
-
-		idx += 1
-
-	$PlayerList.text = player_list
-
-
 func _on_start_game_button_button_down():
 	GameManager.start_game()
+
+## Spawnuje gracza na mapie.
+func _spawn_player(id: int, _player = null):
+	var player = preload("res://scenes/player/player.tscn").instantiate()
+
+	player.name = str(id)
+
+	# Ustawia startową pozycję gracza.
+	if multiplayer.is_server():
+		player.position = Vector2(randi_range(0, 100), randi_range(0, 100))
+
+	players.add_child(player)
+
+	# Ustawia kamerę.
+	if GameManager.get_current_player_id() == id:
+		camera.player = player
+
+
+## Usuwa gracza z mapy.
+func _remove_player(id: int):
+	if players.has_node(str(id)):
+		players.get_node(str(id)).queue_free()
