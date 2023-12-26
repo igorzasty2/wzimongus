@@ -22,6 +22,9 @@ signal game_ended()
 ## Emitowany po wystąpieniu błędu.
 signal error_occured(message: String)
 
+# Przechowuje dane innych graczy z momentu rejestracji, w celu zespawnowania ich w lobby.
+var lobby_data_at_registration = {}
+
 # Przechowuje informacje o aktualnym stanie gry.
 var _current_game = {
 	"is_started": false,
@@ -269,7 +272,13 @@ func _register_player(player:Dictionary):
 
 	# Informuje nowego gracza o obecnych graczach.
 	for i in _current_game["registered_players"]:
-		_add_registered_player.rpc_id(id, i, _filter_player(_current_game["registered_players"][i]))
+		var player_in_lobby = get_tree().root.get_node("Game/Maps/Lobby/Players/" + str(i))
+		var lobby_data = {
+			"position": player_in_lobby.position,
+			"last_direction_x": player_in_lobby.last_direction_x
+		}
+
+		_add_registered_player.rpc_id(id, i, _filter_player(_current_game["registered_players"][i]), lobby_data)
 
 	# Informuje pozostałych graczy o nowym graczu.
 	_add_registered_player.rpc(id, _filter_player(player))
@@ -286,7 +295,7 @@ func _on_player_registered():
 
 @rpc("call_local", "reliable")
 ## Dodaje zarejestrowanego gracza do słownika.
-func _add_registered_player(id:int, player:Dictionary):
+func _add_registered_player(id:int, player:Dictionary, lobby_data:Dictionary = {}):
 	# Filtruje informacje od klienta.
 	var filtered_player = _filter_player(player)
 
@@ -300,6 +309,11 @@ func _add_registered_player(id:int, player:Dictionary):
 				filtered_player.erase(i)
 
 	_current_game["registered_players"][id] = filtered_player
+
+	# Zapisuje dane gracza z lobby, jeśli są dostępne.
+	if lobby_data.size() > 0:
+		lobby_data_at_registration[id] = lobby_data
+
 	player_registered.emit(id, filtered_player)
 
 

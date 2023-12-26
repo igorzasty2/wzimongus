@@ -74,6 +74,12 @@ func _spawn_player(id: int, _player = null):
 	if multiplayer.is_server():
 		player.position = Vector2(randi_range(0, 100), randi_range(0, 100))
 
+	# Ustawia pozycję i animację gracza na podstawie aktualnych danych.
+	if GameManager.lobby_data_at_registration.has(id):
+		player.position = GameManager.lobby_data_at_registration[id]["position"]
+		player.last_direction_x = GameManager.lobby_data_at_registration[id]["last_direction_x"]
+		GameManager.lobby_data_at_registration.erase(id)
+
 	players.add_child(player)
 
 	# Ustawia kamerę.
