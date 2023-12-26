@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bau8m0wvrashk"
-path="res://.godot/imported/alt_spritesheet.png-43311a062193d601defa99a90dce5986.ctex"
+uid="uid://cgwj38vvymfdq"
+path="res://.godot/imported/two_characters.png-66ca5b89aba0525213c607b24327f713.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/alternatywka/alt_spritesheet.png"
-dest_files=["res://.godot/imported/alt_spritesheet.png-43311a062193d601defa99a90dce5986.ctex"]
+source_file="res://scenes/player/assets/two_characters.png"
+dest_files=["res://.godot/imported/two_characters.png-66ca5b89aba0525213c607b24327f713.ctex"]
 
 [params]
 
