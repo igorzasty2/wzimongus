@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://l2mxisy85ciw"]
+[gd_scene load_steps=8 format=3 uid="uid://l2mxisy85ciw"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/lobby.gd" id="1_dytr5"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
+[ext_resource type="PackedScene" uid="uid://lfxaubfh4wik" path="res://scenes/maps/lobby/scenes/lobby_background/lobby_background.tscn" id="2_mmhfw"]
 [ext_resource type="Script" path="res://addons/LANServerBroadcast/server_advertiser/ServerAdvertiser.gd" id="3_4702b"]
 [ext_resource type="Script" path="res://scenes/maps/shared/camera.gd" id="4_te0gu"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="5_1rfh5"]
@@ -10,40 +11,42 @@
 [node name="Lobby" type="Node2D"]
 script = ExtResource("1_dytr5")
 
+[node name="LobbyBackground" parent="." instance=ExtResource("2_mmhfw")]
+
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="SpawnPoints"]
-position = Vector2(-1200, -700)
+position = Vector2(-1350, 2.08165e-12)
 
 [node name="1" type="Node2D" parent="SpawnPoints"]
-position = Vector2(-900, -700)
+position = Vector2(-1050, 2.08165e-12)
 
 [node name="2" type="Node2D" parent="SpawnPoints"]
-position = Vector2(-600, -700)
+position = Vector2(-750, 2.08165e-12)
 
 [node name="3" type="Node2D" parent="SpawnPoints"]
-position = Vector2(-300, -700)
+position = Vector2(-450, 2.08165e-12)
 
 [node name="4" type="Node2D" parent="SpawnPoints"]
-position = Vector2(2.08165e-12, -700)
+position = Vector2(-150, 2.08165e-12)
 
 [node name="5" type="Node2D" parent="SpawnPoints"]
-position = Vector2(300, -700)
+position = Vector2(150, 2.08165e-12)
 
 [node name="6" type="Node2D" parent="SpawnPoints"]
-position = Vector2(600, -700)
+position = Vector2(450, 2.08165e-12)
 
 [node name="7" type="Node2D" parent="SpawnPoints"]
-position = Vector2(900, -700)
+position = Vector2(750, 2.08165e-12)
 
 [node name="8" type="Node2D" parent="SpawnPoints"]
-position = Vector2(1200, -700)
+position = Vector2(1050, 2.08165e-12)
 
 [node name="9" type="Node2D" parent="SpawnPoints"]
-position = Vector2(-1200, -400)
+position = Vector2(1350, 2.08165e-12)
 
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
