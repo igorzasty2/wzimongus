@@ -36,7 +36,7 @@ func _process(delta):
 	if time < VOTING_TIME:
 		time += delta
 		var time_remaining = VOTING_TIME - time
-		end_vote_text.text = "Voting ends in %02d seconds" % time_remaining
+		end_vote_text.text = "Głosowanie kończy się za %02d sekund" % time_remaining
 
 
 func _on_player_voted(voted_player_key):
@@ -50,7 +50,7 @@ func _on_player_voted(voted_player_key):
 		_add_player_vote.rpc_id(1, voted_player_key, multiplayer.get_unique_id())
 
 
-@rpc("call_remote", "any_peer")
+@rpc("call_remote", "any_peer", "reliable")
 func _add_player_vote(player_key, voted_by):
 	GameManager.add_vote(player_key, voted_by)
 
@@ -97,20 +97,27 @@ func _on_end_voting_timer_timeout():
 	if !GameManager.get_current_player_key("voted"):
 		GameManager.set_player_key("voted", true)
 
-	end_vote_text.text = "[center]Voting has ended[/center]"
+	end_vote_text.text = "[center]Głosowanie zakończone![/center]"
+	
+	eject_player_timer.start(EJECT_PLAYER_TIME)
 
-
-	#Serwer wysyła głosy do graczy
+	#Serwer wysyła głosy do graczy, wynik głosowania i renderuje boxy z graczami
 	if multiplayer.is_server():
+
+		var most_voted_player_id = get_most_voted_player_id()
+
 		for player_id in GameManager.get_votes().keys():
 			var voted_by_players = GameManager.get_votes()[player_id]
 			for voted_by in voted_by_players:
 				_add_player_vote.rpc(player_id, voted_by)
 		
 		_render_player_boxes.rpc()
+		
+		if most_voted_player_id != null:
+			GameManager.set_most_voted_player.rpc(GameManager.get_registered_players()[most_voted_player_id])
+		else:
+			GameManager.set_most_voted_player.rpc(null)
 
-	eject_player_timer.start(EJECT_PLAYER_TIME)
-	
 
 #Zmienia scene na ekran wyrzucenia
 func _on_eject_player_timer_timeout():
@@ -121,3 +128,21 @@ func _on_eject_player_timer_timeout():
 func _change_scene_to_ejection_screen():
 	self.get_parent().add_child(ejection_screen.instantiate())
 	self.queue_free()
+
+#Zwraca id gracza z największą ilością głosów, jeśli jest remis zwraca null
+func get_most_voted_player_id():
+	var most_voted_players = []
+	var max_vote = 0
+
+	for vote_key in GameManager.get_votes().keys():
+		var votes_count = GameManager.get_votes()[vote_key].size()
+		if votes_count > max_vote:
+			max_vote = votes_count
+			most_voted_players = [vote_key]
+		elif votes_count == max_vote:
+			most_voted_players.append(vote_key)
+
+	if most_voted_players.size() > 1 || most_voted_players.size() == 0:
+		return null
+	else:
+		return most_voted_players[0]

@@ -33,6 +33,9 @@ var _current_game = {
 # Przechowuje informacje o głosach
 var _votes = {}
 
+# Przechowuje informacje o graczu z największą ilością głosów
+var _most_voted_player = null
+
 # Przechowuje dane o obecnym graczu.
 var _current_player = {
 	"username": "",
@@ -126,9 +129,9 @@ func join_game(address:String, port:int):
 ## Rozpoczyna następną rundę
 func next_round():
 	GameManager.set_player_key("voted", false)
-	_current_game["most_voted_player"] = null
 	GameManager.set_input_status(true)
 	_votes = {}
+	_most_voted_player = null
 
 ## Rozpoczyna grę.
 func start_game():
@@ -183,6 +186,15 @@ func add_vote(id:int, voted_by:int):
 		_votes[id].append(voted_by)
 	else:
 		_votes[id] = [voted_by]
+
+#Ustawia gracza z największą ilością głosów
+@rpc("call_local", "reliable", "authority")
+func set_most_voted_player(player):
+	_most_voted_player = player
+
+#Zwraca gracza z największą ilością głosów
+func get_most_voted_player():
+	return _most_voted_player
 
 ## Zwraca słownik zarejestrowanych graczy.
 func get_registered_players():

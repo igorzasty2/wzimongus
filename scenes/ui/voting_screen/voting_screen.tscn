@@ -37,7 +37,7 @@ offset_right = 134.0
 offset_bottom = 82.0
 grow_horizontal = 2
 theme_override_font_sizes/normal_font_size = 24
-text = "Who is the Lecturer?"
+text = "Kto jest wykładowcą?"
 
 [node name="Players" type="GridContainer" parent="Background"]
 unique_name_in_owner = true
@@ -62,14 +62,14 @@ columns = 2
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.753968
+anchor_left = 0.733686
 anchor_top = 0.810345
 anchor_right = 0.929453
-anchor_bottom = 0.851097
+anchor_bottom = 0.899687
 grow_horizontal = 0
 grow_vertical = 0
 bbcode_enabled = true
-text = "Voting ends in: [time]"
+text = "Głosowanie zakończy się za [time] sekund"
 metadata/_edit_use_anchors_ = true
 
 [node name="SkipDecision" type="VBoxContainer" parent="Background"]
@@ -86,7 +86,7 @@ grow_vertical = 0
 [node name="SkipButton" type="Button" parent="Background/SkipDecision"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "SKIP VOTE"
+text = "POMIŃ GŁOS"
 
 [node name="Decision" type="HBoxContainer" parent="Background/SkipDecision"]
 unique_name_in_owner = true
