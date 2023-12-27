@@ -74,6 +74,6 @@ func _spawn_player(id: int):
 
 
 ## Usuwa gracza z mapy.
-func _remove_player(id: int):
+func _remove_player(id: int, _player: Dictionary = {}):
 	if players.has_node(str(id)):
 		players.get_node(str(id)).queue_free()

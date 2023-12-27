@@ -5,7 +5,7 @@ extends Node
 signal player_registered(id: int, player: Dictionary)
 
 ## Emitowany po wyrejestrowaniu gracza z serwera.
-signal player_deregistered(id: int)
+signal player_deregistered(id: int, player: Dictionary)
 
 ## Emitowany po zmianie statusu sterowania u gracza.
 signal input_status_changed(is_paused: bool)
@@ -61,7 +61,7 @@ var _player_attributes = {
 }
 
 func _ready():
-	multiplayer.peer_disconnected.connect(_on_player_disconnected)
+	multiplayer.peer_disconnected.connect(_delete_deregistered_player)
 	multiplayer.connected_to_server.connect(_on_connected)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
@@ -217,11 +217,6 @@ func set_input_status(state:bool):
 	input_status_changed.emit(!_current_game["is_paused"] && !_current_game["is_input_disabled"])
 
 
-## Obsługuje rozłączenie gracza na serwerze.
-func _on_player_disconnected(id:int):
-	_delete_deregistered_player.rpc(id)
-
-
 ## Obsługuje połączenie z serwerem u klienta.
 func _on_connected():
 	# Wysyła informacje o graczu do serwera w celu rejestracji.
@@ -232,6 +227,7 @@ func _on_connected():
 func _on_connection_failed():
 	_handle_error("Nie można połączyć się z serwerem!")
 	end_game()
+
 
 ## Obsługuje rozłączenie z serwerem u klienta.
 func _on_server_disconnected():
@@ -249,6 +245,7 @@ func _filter_player(player:Dictionary):
 			filtered_player[i] = player[i]
 
 	return filtered_player
+
 
 ## Obsługuje błędy.
 func _handle_error(message: String):
@@ -317,11 +314,11 @@ func _add_registered_player(id:int, player:Dictionary, lobby_data:Dictionary = {
 	player_registered.emit(id, filtered_player)
 
 
-@rpc("call_local", "reliable")
 ## Usuwa wyrejestrowanego gracza ze słownika.
 func _delete_deregistered_player(id:int):
+	var player = _current_game["registered_players"][id]
 	_current_game["registered_players"].erase(id)
-	player_deregistered.emit(id)
+	player_deregistered.emit(id, player)
 
 
 @rpc("reliable")
