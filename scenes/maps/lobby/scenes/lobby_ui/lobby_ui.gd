@@ -22,7 +22,7 @@ func _exit_tree():
 
 
 func _on_lobby_settings_button_pressed():
-	pass # Replace with function body.
+	get_parent().get_node("LobbySettings").show()
 
 
 func _on_start_game_button_pressed():
