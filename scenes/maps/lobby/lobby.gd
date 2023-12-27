@@ -13,7 +13,6 @@ func _ready():
 	NetworkTime.start()
 
 	hide()
-	camera.enabled = false
 	GameManager.set_input_status(false)
 
 	# Spawnuje zarejestrowanych graczy.
@@ -90,7 +89,8 @@ func _spawn_player(id: int, _player = null):
 
 	# Ustawia kamerę.
 	if GameManager.get_current_player_id() == id:
-		camera.player = player
+		camera.target = player
+		camera.global_position = player.global_position
 
 
 ## Usuwa gracza z mapy.
