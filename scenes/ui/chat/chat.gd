@@ -52,6 +52,8 @@ func send_message(message, group, id):
 			var system_message_instance = system_message_scene.instantiate()
 			chat_logs_container.add_child(system_message_instance)
 			system_message_instance.init(message)
+			chat_logs_scroll_container.modulate.a = 1
+			timer.start()
 		_:
 			_create_message(GameManager.get_registered_player_key(id, "username"), message, current_group)
 	
