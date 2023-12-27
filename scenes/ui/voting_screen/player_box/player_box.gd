@@ -5,6 +5,7 @@ extends Control
 @onready var voted_by_container = get_node("%VotedBy")
 
 signal player_voted
+signal player_selected
 
 var player_key
 var display_tween
@@ -29,13 +30,20 @@ func init(username: String, player_key: int, voted_by):
 		self.disconnect("player_voted", _on_button_pressed)
 
 func _on_button_pressed():
-	if GameManager.get_current_player_key("voted"):
+	if GameManager.get_current_player_key("voted") || GameManager.get_current_player_key("preselected"):
 		return
-
+	
+	if decision.visible:
+		decision.visible = false
+		GameManager.set_player_key("preselected", false)
+		return
+	
 	decision.visible = true
+	GameManager.set_player_key("preselected", true)
 
 func _on_decision_no_pressed():
 	decision.visible = false
+	GameManager.set_player_key("preselected", false)
 
 func _on_decision_yes_pressed():
 	decision.visible = false

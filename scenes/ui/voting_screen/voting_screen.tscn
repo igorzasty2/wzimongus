@@ -7,24 +7,20 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -146.0
-offset_bottom = -82.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kta77")
+metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 78.0
-offset_top = 33.0
-offset_right = 78.0
-offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.14902, 0.14902, 0.14902, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Background"]
 layout_mode = 1

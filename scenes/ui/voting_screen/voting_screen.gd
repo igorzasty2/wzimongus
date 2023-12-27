@@ -16,6 +16,8 @@ var ejection_screen = preload("res://scenes/ui/ejection_screen/ejection_screen.t
 
 var time = 0
 
+var is_selected = false
+
 func _ready():
 	#Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
@@ -57,19 +59,22 @@ func _add_player_vote(player_key, voted_by):
 
 #Wyświetla decyzję o skipowaniu
 func _on_skip_button_pressed():
-	if GameManager.get_current_player_key("voted"):
+	if GameManager.get_current_player_key("voted") || GameManager.get_current_player_key("preselected"):
 		return
-
+	
 	skip_decision.visible = true
+	GameManager.set_player_key("preselected", true)
 
 
 #Zamyka decyzję o skipowaniu
 func _on_decision_yes_pressed():
 	GameManager.set_player_key("voted", true)
 	skip_decision.visible = false
+	skip_button.disabled = true
 
 
 func _on_decision_no_pressed():
+	GameManager.set_player_key("preselected", false)
 	skip_decision.visible = false
 
 

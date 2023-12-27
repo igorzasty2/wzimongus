@@ -41,7 +41,8 @@ var _current_player = {
 	"username": "",
 	"is_lecturer": false,
 	"is_dead": false,
-	"voted": false
+	"voted": false,
+	"preselected": false
 }
 
 # Przechowuje ustawienia serwera.
@@ -129,6 +130,7 @@ func join_game(address:String, port:int):
 ## Rozpoczyna następną rundę
 func next_round():
 	GameManager.set_player_key("voted", false)
+	GameManager.set_player_key("preselected", false)
 	GameManager.set_input_status(true)
 	_votes = {}
 	_most_voted_player = null
