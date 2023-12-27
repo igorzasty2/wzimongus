@@ -183,16 +183,17 @@ func enter_vent_server(vent_position):
 func exit_vent():
 	var vent = get_closest_vent()
 	if vent!=null:
-		# do zrobienia: włączyć animacje wyjścia z venta
-		
-		vent.change_dir_bttns_visibility(false)
-		
-		GameManager.set_input_status(true)
-		is_in_vent = false
-		
-		toggle_visible.rpc(true)
-		
-		# do zrobienia: w tym miejscu włączyć możliwość zabicia
+		if position == vent.position - Vector2(0,50):
+			# do zrobienia: włączyć animacje wyjścia z venta
+			
+			vent.change_dir_bttns_visibility(false)
+			
+			GameManager.set_input_status(true)
+			is_in_vent = false
+			
+			toggle_visible.rpc(true)
+			
+			# do zrobienia: w tym miejscu włączyć możliwość zabicia
 
 
 # Zwraca vent najbliżej gracza w odległości mniejszej niz 300
