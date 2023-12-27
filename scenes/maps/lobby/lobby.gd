@@ -6,6 +6,7 @@ signal load_finished
 @onready var spawn_points = $SpawnPoints
 @onready var camera = $Camera
 @onready var start_game_button = $StartGameButton
+@onready var chat = $Chat
 @onready var server_advertiser = $ServerAdvertiser
 
 func _ready():
@@ -65,9 +66,12 @@ func _on_start_game_button_button_down():
 	GameManager.start_game()
 
 
-func _on_player_registered(id: int, _player = null):
+func _on_player_registered(id: int, player = null):
 	_spawn_player(id)
 	camera.shake(1.5, 10)
+
+	if multiplayer.is_server():
+		chat.send_system_message("Gracz " + player.username + " dołączył do gry.")
 
 
 ## Spawnuje gracza na mapie.

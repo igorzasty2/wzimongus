@@ -76,10 +76,6 @@ text = "Rozpocznij grę"
 
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
-offset_left = -1376.0
-offset_top = -761.0
-offset_right = -54.0
-offset_bottom = -46.0
 
 [node name="ServerAdvertiser" type="Node" parent="."]
 script = ExtResource("3_4702b")

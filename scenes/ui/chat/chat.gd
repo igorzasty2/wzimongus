@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 enum Group { GLOBAL, LECTURER, DEAD, SYSTEM }
 
@@ -21,13 +21,11 @@ const FADE_OUT_TIME = 0.25
 var message_scene = preload("res://scenes/ui/chat/message/message.tscn")
 var system_message_scene = preload("res://scenes/ui/chat/system_message/system_message.tscn")
 
-
 var last_known_scroll_max = 0
 var current_group = Group.LECTURER
 var fade_out_tween 
 
 func _ready():
-
 	chat_logs_scrollbar.changed.connect(_update_scrollbar_position)
 	input_text.hide()
 
@@ -39,7 +37,7 @@ func _process(_delta):
 		_close_chat()
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func send_message(message, group, id):
 	match group:
 		Group.DEAD:
@@ -62,10 +60,10 @@ func send_message(message, group, id):
 			if peer_id != 1:
 				send_message.rpc_id(peer_id, message, group, id)
 
-@rpc("authority", "call_local")
+
 func send_system_message(message):
 	const SYSTEM_MESSAGE_ID = 1
-	send_message.rpc(message, Group.SYSTEM, SYSTEM_MESSAGE_ID)
+	send_message(message, Group.SYSTEM, SYSTEM_MESSAGE_ID)
 
 
 func _create_message(username, message, group):
@@ -103,12 +101,16 @@ func _update_scrollbar_position():
 		last_known_scroll_max = chat_logs_scrollbar.max_value
 		chat_logs_scroll_container.scroll_vertical = last_known_scroll_max
 
+
 func _open_chat():
+	GameManager.set_input_status(false)
 	input_text.grab_focus()
 	input_text.show()
 	chat_logs_scroll_container.modulate.a = 1
 
+
 func _close_chat():
+	GameManager.set_input_status(true)
 	input_text.release_focus()
 	input_text.hide()
 	timer.start()
