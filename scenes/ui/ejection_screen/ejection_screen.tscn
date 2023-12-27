@@ -32,5 +32,6 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
-text = "[center][username] [ejection message][/center]"
 fit_content = true
+
+[connection signal="most_voted_player_set" from="." to="." method="_on_most_voted_player_set"]

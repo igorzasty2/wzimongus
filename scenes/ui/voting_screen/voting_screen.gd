@@ -17,6 +17,7 @@ var ejection_screen = preload("res://scenes/ui/ejection_screen/ejection_screen.t
 var time = 0
 
 func _ready():
+	#Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
 
 	#END VOTING TIMER
@@ -42,6 +43,7 @@ func _on_player_voted(voted_player_key):
 	skip_button.disabled = true
 	GameManager.set_player_key("voted", true)
 
+	#Dodaje głos do listy głosów na serwerze
 	if multiplayer.is_server():
 		_add_player_vote(voted_player_key, multiplayer.get_unique_id())
 	else:
@@ -53,6 +55,7 @@ func _add_player_vote(player_key, voted_by):
 	GameManager.add_vote(player_key, voted_by)
 
 
+#Wyświetla decyzję o skipowaniu
 func _on_skip_button_pressed():
 	if GameManager.get_current_player_key("voted"):
 		return
@@ -60,6 +63,7 @@ func _on_skip_button_pressed():
 	skip_decision.visible = true
 
 
+#Zamyka decyzję o skipowaniu
 func _on_decision_yes_pressed():
 	GameManager.set_player_key("voted", true)
 	skip_decision.visible = false
@@ -68,6 +72,8 @@ func _on_decision_yes_pressed():
 func _on_decision_no_pressed():
 	skip_decision.visible = false
 
+
+#Renderuje boxy z graczami
 @rpc("call_local", "authority", "reliable")
 func _render_player_boxes():
 	for child in players.get_children():
@@ -86,12 +92,15 @@ func _render_player_boxes():
 		new_player_box.connect("player_voted", _on_player_voted)
 
 
+#Zamyka głosowanie
 func _on_end_voting_timer_timeout():
 	if !GameManager.get_current_player_key("voted"):
 		GameManager.set_player_key("voted", true)
 
 	end_vote_text.text = "[center]Voting has ended[/center]"
 
+
+	#Serwer wysyła głosy do graczy
 	if multiplayer.is_server():
 		for player_id in GameManager.get_votes().keys():
 			var voted_by_players = GameManager.get_votes()[player_id]
@@ -103,6 +112,7 @@ func _on_end_voting_timer_timeout():
 	eject_player_timer.start(EJECT_PLAYER_TIME)
 	
 
+#Zmienia scene na ekran wyrzucenia
 func _on_eject_player_timer_timeout():
 	_change_scene_to_ejection_screen.rpc()
 

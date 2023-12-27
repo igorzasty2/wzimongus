@@ -28,14 +28,10 @@ var _current_game = {
 	"is_paused": false,
 	"is_input_disabled": false,
 	"registered_players": {},
-	"most_voted_player": null
 }
 
+# Przechowuje informacje o głosach
 var _votes = {}
-
-@rpc("call_local", "reliable")
-func set_most_voted_player(player):
-	_current_game["most_voted_player"] = player
 
 # Przechowuje dane o obecnym graczu.
 var _current_player = {

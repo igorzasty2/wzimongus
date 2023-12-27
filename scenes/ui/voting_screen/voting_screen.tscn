@@ -37,7 +37,7 @@ offset_right = 134.0
 offset_bottom = 82.0
 grow_horizontal = 2
 theme_override_font_sizes/normal_font_size = 24
-text = "Who is the Impostor?"
+text = "Who is the Lecturer?"
 
 [node name="Players" type="GridContainer" parent="Background"]
 unique_name_in_owner = true
