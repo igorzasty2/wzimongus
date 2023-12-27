@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://l2mxisy85ciw"]
+[gd_scene load_steps=7 format=3 uid="uid://l2mxisy85ciw"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/lobby.gd" id="1_dytr5"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
 [ext_resource type="Script" path="res://addons/LANServerBroadcast/server_advertiser/ServerAdvertiser.gd" id="3_4702b"]
 [ext_resource type="Script" path="res://scenes/maps/shared/camera.gd" id="4_te0gu"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="5_1rfh5"]
+[ext_resource type="PackedScene" uid="uid://dyuj3stgg8wl4" path="res://scenes/maps/lobby/scenes/lobby_ui/lobby_ui.tscn" id="5_7r85o"]
 
 [node name="Lobby" type="Node2D"]
 script = ExtResource("1_dytr5")
@@ -60,24 +61,10 @@ script = ExtResource("5_1rfh5")
 root = NodePath("..")
 properties = Array[String]([":global_position"])
 
-[node name="StartGameButton" type="Button" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1351.0
-offset_top = 692.0
-offset_right = -1101.0
-offset_bottom = 752.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Rozpocznij grę"
-
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
 
+[node name="LobbyUi" parent="." instance=ExtResource("5_7r85o")]
+
 [node name="ServerAdvertiser" type="Node" parent="."]
 script = ExtResource("3_4702b")
-
-[connection signal="button_down" from="StartGameButton" to="." method="_on_start_game_button_button_down"]

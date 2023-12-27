@@ -5,9 +5,9 @@ signal load_finished
 @onready var players = $Players
 @onready var spawn_points = $SpawnPoints
 @onready var camera = $Camera
-@onready var start_game_button = $StartGameButton
 @onready var chat = $Chat
 @onready var server_advertiser = $ServerAdvertiser
+
 
 func _ready():
 	# Uruchamia synchronizację czasu.
@@ -19,10 +19,6 @@ func _ready():
 	# Spawnuje zarejestrowanych graczy.
 	for i in GameManager.get_registered_players():
 		_spawn_player(i)
-
-	# Ukrywa przycisk rozpoczęcia gry przed klientami.
-	if !multiplayer.is_server():
-		start_game_button.hide()
 
 	# Spawnuje nowych graczy.
 	GameManager.player_registered.connect(_on_player_registered)
@@ -62,10 +58,6 @@ func _exit_tree():
 func _update_broadcast_info(_id: int = 0, _player: Dictionary = {}):
 	server_advertiser.serverInfo = GameManager.get_server_settings()
 	server_advertiser.serverInfo["player_count"] = GameManager.get_registered_players().size()
-
-
-func _on_start_game_button_button_down():
-	GameManager.start_game()
 
 
 func _on_player_registered(id: int, player: Dictionary):
