@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bha1146nfvg6s"]
+[gd_scene load_steps=4 format=3 uid="uid://bha1146nfvg6s"]
 
 [ext_resource type="Script" path="res://scenes/ui/start_menu/start_menu.gd" id="1_kh2k6"]
+[ext_resource type="PackedScene" uid="uid://rv57oeaui5t0" path="res://scenes/ui/credits/credits.tscn" id="3_6yiou"]
 [ext_resource type="PackedScene" uid="uid://01iag5x618my" path="res://scenes/ui/settings/settings.tscn" id="3_j535k"]
 
 [node name="StartMenu" type="Control"]
@@ -33,12 +34,15 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 0.143
 anchor_right = 0.5
+anchor_bottom = 0.143
 offset_left = -333.0
-offset_top = 32.0
+offset_top = -77.0
 offset_right = 333.0
-offset_bottom = 186.0
+offset_bottom = 77.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 110
 text = "WZiMong Us"
 horizontal_alignment = 1
@@ -46,15 +50,15 @@ vertical_alignment = 1
 
 [node name="ButtonsContainer" type="VBoxContainer" parent="Menu"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.627
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.627
 offset_left = -125.0
-offset_top = -60.0
+offset_top = -157.5
 offset_right = 125.0
-offset_bottom = 170.0
+offset_bottom = 157.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -70,6 +74,11 @@ text = "Graj"
 custom_minimum_size = Vector2(250, 60)
 layout_mode = 2
 text = "Ustawienia"
+
+[node name="CreditsButton" type="Button" parent="Menu/ButtonsContainer"]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
+text = "Twórcy"
 
 [node name="ExitButton" type="Button" parent="Menu/ButtonsContainer"]
 custom_minimum_size = Vector2(250, 60)
@@ -94,16 +103,46 @@ grow_vertical = 2
 [node name="Settings" parent="Settings" instance=ExtResource("3_j535k")]
 layout_mode = 1
 
-[node name="BackButton" type="Button" parent="Settings"]
+[node name="SettingsBackButton" type="Button" parent="Settings"]
 custom_minimum_size = Vector2(165, 40)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.752
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.752
 offset_left = -82.5
-offset_top = 310.0
+offset_top = -20.0
+offset_right = 82.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Powrót"
+
+[node name="Credits" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Credits" parent="Credits" instance=ExtResource("3_6yiou")]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.85
+
+[node name="CreditsBackButton" type="Button" parent="Credits"]
+custom_minimum_size = Vector2(165, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.91
+anchor_right = 0.5
+anchor_bottom = 0.91
+offset_left = -82.5
+offset_top = -20.0
 offset_right = 82.5
 offset_bottom = 20.0
 grow_horizontal = 2
@@ -112,5 +151,7 @@ text = "Powrót"
 
 [connection signal="pressed" from="Menu/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Menu/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Menu/ButtonsContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="Menu/ButtonsContainer/ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="pressed" from="Settings/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Settings/SettingsBackButton" to="." method="_on_settings_back_button_pressed"]
+[connection signal="pressed" from="Credits/CreditsBackButton" to="." method="_on_credits_back_button_pressed"]
