@@ -337,9 +337,10 @@ func _add_registered_player(id:int, player:Dictionary, lobby_data:Dictionary = {
 
 ## Usuwa wyrejestrowanego gracza ze słownika.
 func _delete_deregistered_player(id:int):
-	var player = _current_game["registered_players"][id]
-	_current_game["registered_players"].erase(id)
-	player_deregistered.emit(id, player)
+	if _current_game["registered_players"].has(id):
+		var player = _current_game["registered_players"][id]
+		_current_game["registered_players"].erase(id)
+		player_deregistered.emit(id, player)
 
 
 @rpc("reliable")
