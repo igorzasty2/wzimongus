@@ -84,4 +84,5 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 text = "Zastosuj"
 
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="SettingsContainer/MarginContainer/SaveButton" to="." method="_on_save_button_pressed"]

@@ -25,16 +25,19 @@ var last_known_scroll_max = 0
 var current_group = Group.LECTURER
 var fade_out_tween 
 
+
 func _ready():
 	chat_logs_scrollbar.changed.connect(_update_scrollbar_position)
 	input_text.hide()
 
 
-func _process(_delta):
-	if Input.is_action_just_pressed("chat_open"):
+func _input(event):
+	if event.is_action_pressed("chat_open") && !input_text.visible:
 		_open_chat()
-	if Input.is_action_just_pressed("chat_close"):
+		get_viewport().set_input_as_handled()
+	if event.is_action_pressed("pause_menu") && input_text.visible:
 		_close_chat()
+		get_viewport().set_input_as_handled()
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -79,6 +82,10 @@ func _create_message(username, message, group):
 	timer.start()
 
 
+func _on_input_text_visibility_changed():
+	get_parent().update_input()
+
+
 func _on_input_text_text_submitted(submitted_text):
 	submitted_text = submitted_text.strip_edges()
 
@@ -105,14 +112,12 @@ func _update_scrollbar_position():
 
 
 func _open_chat():
-	GameManager.set_input_status(false)
 	input_text.grab_focus()
 	input_text.show()
 	chat_logs_scroll_container.modulate.a = 1
 
 
 func _close_chat():
-	GameManager.set_input_status(true)
 	input_text.release_focus()
 	input_text.hide()
 	timer.start()

@@ -14,9 +14,6 @@ script = ExtResource("1_dytr5")
 
 [node name="LobbyBackground" parent="." instance=ExtResource("2_mmhfw")]
 
-[node name="Players" type="Node2D" parent="."]
-y_sort_enabled = true
-
 [node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="SpawnPoints"]
@@ -49,6 +46,9 @@ position = Vector2(1050, 2.08165e-12)
 [node name="9" type="Node2D" parent="SpawnPoints"]
 position = Vector2(1350, 2.08165e-12)
 
+[node name="Players" type="Node2D" parent="."]
+y_sort_enabled = true
+
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
 zoom = Vector2(0.45, 0.45)
@@ -65,12 +65,12 @@ script = ExtResource("5_1rfh5")
 root = NodePath("..")
 properties = Array[String]([":global_position"])
 
-[node name="LobbyUi" parent="." instance=ExtResource("5_7r85o")]
+[node name="ServerAdvertiser" type="Node" parent="."]
+script = ExtResource("3_4702b")
 
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
 
-[node name="ServerAdvertiser" type="Node" parent="."]
-script = ExtResource("3_4702b")
+[node name="LobbyUi" parent="." instance=ExtResource("5_7r85o")]

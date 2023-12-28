@@ -45,3 +45,4 @@ flat = true
 
 [connection signal="timeout" from="ChatContainer/ChatLogsScrollbar/ChatLogsContainer/ChatDisappearTimer" to="." method="_on_timer_timeout"]
 [connection signal="text_submitted" from="ChatContainer/InputText" to="." method="_on_input_text_text_submitted"]
+[connection signal="visibility_changed" from="ChatContainer/InputText" to="." method="_on_input_text_visibility_changed"]

@@ -2,11 +2,19 @@ extends Node2D
 
 signal load_finished
 
-@onready var players = $Players
 @onready var spawn_points = $SpawnPoints
+@onready var players = $Players
 @onready var camera = $Camera
-@onready var chat = $Chat
 @onready var server_advertiser = $ServerAdvertiser
+@onready var chat = $Chat
+@onready var chat_input = $Chat/ChatContainer/InputText
+@onready var lobby_settings = $LobbySettings
+
+
+func update_input():
+	if chat_input && lobby_settings:
+		var input_status = !(chat_input.visible || lobby_settings.visible)
+		GameManager.set_input_status(input_status)
 
 
 func _ready():
