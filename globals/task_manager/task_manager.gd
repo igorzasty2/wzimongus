@@ -14,8 +14,12 @@ var _tasks = {}
 # Przechowuje zadania bieżącego gracza.
 var current_player_tasks = {}
 
+
 ## Przypisuje zadania graczom.
-func assign_tasks_server(task_amount):
+func assign_tasks(task_amount):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+
 	# Oczekuje jedną klatkę na wczytanie mapy._active
 	await get_tree().process_frame
 
@@ -68,6 +72,9 @@ func _send_tasks(tasks):
 @rpc("any_peer", "reliable")
 ## Wysyła infomację do serwera informujące o wykonaniu zadania.
 func _send_task_completion(player_id, task_id):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+
 	# Usuwa zadanie z listy zadań na serwerze.
 	_tasks[player_id].erase(task_id)
 
@@ -78,6 +85,7 @@ func _send_task_completion(player_id, task_id):
 	if _tasks.is_empty():
 		# TODO: Jeśli wszystkie zadania zostały wykonane oznacz, że studenci wygrali.
 		pass
+
 
 ## Resetuje zadania.
 func reset():

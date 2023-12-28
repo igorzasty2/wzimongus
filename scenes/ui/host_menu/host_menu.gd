@@ -10,7 +10,7 @@ func _on_host_button_pressed():
 
 	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 
-	GameManager.host_game.call_deferred(lobby_name_input.text, port_input.text.to_int())
+	GameManager.create_lobby.call_deferred(lobby_name_input.text, port_input.text.to_int())
 
 
 func _on_back_button_pressed():

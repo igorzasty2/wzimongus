@@ -72,7 +72,7 @@ func _ready():
 
 
 ## Tworzy nowy serwer gry.
-func host_game(lobby_name: String, port: int):
+func create_lobby(lobby_name: String, port: int):
 	# Ustawia parametry serwera.
 	_server_settings["lobby_name"] = lobby_name
 	_server_settings["port"] = port
@@ -104,6 +104,9 @@ func host_game(lobby_name: String, port: int):
 
 ## Zmienia ustawienia serwera.
 func change_server_settings(max_players: int, max_lecturers: int):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+
 	_server_settings["max_players"] = max_players
 	_server_settings["max_lecturers"] = max_lecturers
 	_update_server_settings.rpc(_server_settings)
@@ -118,7 +121,7 @@ func _update_server_settings(server_settings: Dictionary):
 
 
 ## Dołącza do istniejącego serwera gry.
-func join_game(address:String, port:int):
+func join_lobby(address:String, port:int):
 	# Tworzy klienta gry.
 	var peer = ENetMultiplayerPeer.new()
 	var status = peer.create_client(address, port)
@@ -142,16 +145,17 @@ func join_game(address:String, port:int):
 
 ## Rozpoczyna grę.
 func start_game():
-	# Tylko host może rozpocząć grę.
-	if multiplayer.is_server():
-		# Wybiera wykładowców.
-		_select_lecturers()
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
 
-		# Ładuje główną mapę.
-		_on_game_started.rpc()
+	# Wybiera wykładowców.
+	_select_lecturers()
 
-		# Przypisuje zadania.
-		TaskManager.assign_tasks_server(1)
+	# Ładuje główną mapę.
+	_on_game_started.rpc()
+
+	# Przypisuje zadania.
+	TaskManager.assign_tasks(1)
 
 
 ## Kończy grę.
@@ -213,6 +217,9 @@ func get_current_player_key(key:String):
 
 ## Zmienia informację o obecnym graczu, która jest przechowywana pod danym kluczem.
 func set_player_key(key:String, value):
+	if not key in _player_fillable:
+		return ERR_UNAUTHORIZED
+
 	if _current_player.has(key):
 		_current_player[key] = value
 
@@ -272,6 +279,9 @@ func _handle_error(message: String):
 @rpc("any_peer", "reliable")
 ## Rejestruje gracza na serwerze.
 func _register_player(player:Dictionary):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+
 	var id = multiplayer.get_remote_sender_id()
 
 	# Wyrzuca gracza, jeśli gra już się rozpoczęła.
