@@ -105,7 +105,6 @@ func _spawn_player(id: int):
 	# Ustawia kamerę.
 	if GameManager.get_current_player_id() == id:
 		camera.target = player
-		camera.global_position = player.global_position
 
 
 ## Usuwa gracza z mapy.

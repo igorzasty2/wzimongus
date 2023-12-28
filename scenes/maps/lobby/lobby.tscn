@@ -52,10 +52,6 @@ y_sort_enabled = true
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
 zoom = Vector2(0.45, 0.45)
-limit_left = -3888
-limit_top = -3674
-limit_right = 5056
-limit_bottom = 2504
 limit_smoothed = true
 position_smoothing_enabled = true
 script = ExtResource("4_te0gu")

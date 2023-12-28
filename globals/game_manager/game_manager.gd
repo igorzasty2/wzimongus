@@ -63,6 +63,7 @@ var _player_attributes = {
 	"is_dead": false
 }
 
+
 func _ready():
 	multiplayer.peer_disconnected.connect(_delete_deregistered_player)
 	multiplayer.connected_to_server.connect(_on_connected)
@@ -71,12 +72,10 @@ func _ready():
 
 
 ## Tworzy nowy serwer gry.
-func host_game(lobby_name: String, port: int, max_players: int, max_lecturers: int):
+func host_game(lobby_name: String, port: int):
 	# Ustawia parametry serwera.
 	_server_settings["lobby_name"] = lobby_name
 	_server_settings["port"] = port
-	_server_settings["max_players"] = max_players
-	_server_settings["max_lecturers"] = max_lecturers
 
 	# Inicjalizuje serwer.
 	var peer = ENetMultiplayerPeer.new()
