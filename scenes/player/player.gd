@@ -25,6 +25,10 @@ func _ready():
 	# Aktywuje drzewo animacji postaci.
 	animation_tree.active = true
 
+	# Aktualizuje parametry animacji postaci.
+	animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, 0)
+	animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, 0)
+
 
 func _process(_delta):
 	# Aktualizuje parametry animacji postaci.

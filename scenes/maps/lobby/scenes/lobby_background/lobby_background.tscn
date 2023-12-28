@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://lfxaubfh4wik"]
+
+[ext_resource type="Texture2D" uid="uid://dqrmha7n8w0ig" path="res://scenes/maps/lobby/scenes/lobby_background/assets/lobby_background.png" id="1_0y0d2"]
+
+[node name="LobbyBackground" type="Node2D"]
+
+[node name="LobbyBackground" type="Sprite2D" parent="."]
+scale = Vector2(1.12154, 1.05481)
+texture = ExtResource("1_0y0d2")

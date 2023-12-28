@@ -1,9 +1,10 @@
 extends Control
 
 @onready var connecting = $Connecting
+@onready var maps = $Maps
 @onready var error = $Error
 @onready var error_pop_up = $Error/ErrorPopUp
-@onready var maps = $Maps
+
 
 func _ready():
 	GameManager.registered_successfully.connect(_on_registered_successfully)
