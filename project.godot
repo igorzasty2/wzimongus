@@ -37,7 +37,7 @@ project/assembly_name="WZiMong Us"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/netfox.internals/plugin.cfg", "res://addons/netfox/plugin.cfg")
+enabled=PackedStringArray("res://addons/LANServerBroadcast/plugin.cfg", "res://addons/netfox.internals/plugin.cfg", "res://addons/netfox/plugin.cfg")
 
 [gui]
 
@@ -126,6 +126,9 @@ chat_change_group={
 events/enabled=false
 logging/log_level=4
 logging/netfox_log_level=4
+time/max_ticks_per_frame=5
+time/recalibrate_threshold=0.5
+time/sync_samples=5
 
 [rendering]
 

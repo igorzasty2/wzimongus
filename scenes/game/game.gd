@@ -1,9 +1,10 @@
 extends Control
 
 @onready var connecting = $Connecting
+@onready var maps = $Maps
 @onready var error = $Error
 @onready var error_pop_up = $Error/ErrorPopUp
-@onready var maps = $Maps
+
 
 func _ready():
 	GameManager.registered_successfully.connect(_on_registered_successfully)
@@ -14,7 +15,6 @@ func _ready():
 
 
 func _on_registered_successfully():
-	connecting.hide()
 	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
 
 
@@ -41,12 +41,20 @@ func _on_error_pop_up_closed():
 
 ## Zmienia wyświetlaną globalnie mapę.
 func _change_map(scene: PackedScene):
+	connecting.show()
 	_delete_map()
-	maps.add_child(scene.instantiate())
+	var scene_instantiated = scene.instantiate()
+	scene_instantiated.connect("load_finished", _on_load_finished)
+	maps.add_child(scene_instantiated)
 
 
 ## Usuwa aktualną mapę.
 func _delete_map():
 	for i in maps.get_children():
+		i.disconnect("load_finished", _on_load_finished)
 		maps.remove_child(i)
 		i.queue_free()
+
+
+func _on_load_finished():
+	connecting.hide()

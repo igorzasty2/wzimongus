@@ -1,7 +1,7 @@
 class_name UserSettingsManager 
 extends Resource
 
-# default settings
+# Domyślne ustawienia
 const DEFAULT_VOLUME: int = 20
 const DEFAULT_FULL_SCREEN: bool = false
 const DEFAULT_V_SYNC: bool = true
@@ -19,18 +19,18 @@ const DEFAULT_CONTROLS_DICTIONARY = {
 	"move_up" : [KEY_W, KEY_UP]
 }
 
-# user settings initially set to default
+# Ustawienia użytkownika, początkowo ustawione na domyślne
 @export_range(0,100) var volume: int = DEFAULT_VOLUME
 @export var full_screen: bool = DEFAULT_FULL_SCREEN
 @export var v_sync: bool = DEFAULT_V_SYNC
 @export var resolution: Vector2i = DEFAULT_RESOLUTION
 @export var controls_dictionary = DEFAULT_CONTROLS_DICTIONARY.duplicate(true)
 
-# saves settings
+# Zapisuje ustawienia
 func save():
 	ResourceSaver.save(self, "user://user_settings.tres")
 
-# loads saved settings or creates default settings save and loads it
+# Zwraca zapisane ustawienia z pliku lub tworzy nowy plik z domyślnymi ustawieniami i je zwraca
 static func load_or_create():
 	var res : UserSettingsManager
 	if FileAccess.file_exists("user://user_settings.tres"):
@@ -39,7 +39,7 @@ static func load_or_create():
 		res = UserSettingsManager.new()
 	return res
 
-# restores default sound and graphics settings
+# Przywraca domyślne ustawienia dźwięku i grafiki
 func restore_default_sound_and_graphics():
 	volume = DEFAULT_VOLUME
 	full_screen = DEFAULT_FULL_SCREEN
@@ -47,7 +47,7 @@ func restore_default_sound_and_graphics():
 	resolution= DEFAULT_RESOLUTION
 	save()
 
-# restores default controls settings
+# Przywraca domyślne ustawienia sterowania
 func restore_default_controls():
 	controls_dictionary = DEFAULT_CONTROLS_DICTIONARY.duplicate(true)
 	save()

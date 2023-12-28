@@ -2,9 +2,11 @@ extends CharacterBody2D
 
 @export var speed = 600.0
 
-var last_direction_x: float = 1
+var last_direction_x: float = -1
 
 @onready var input = $Input
+@onready var rollback_synchronizer = $RollbackSynchronizer
+@onready var username_label = $UsernameLabel
 @onready var animation_tree = $Skins/AltAnimationTree
 
 func _ready():
@@ -15,19 +17,24 @@ func _ready():
 	input.set_multiplayer_authority(name.to_int())
 
 	# Konfiguruje synchronizację.
-	$RollbackSynchronizer.process_settings()
+	rollback_synchronizer.process_settings()
 
 	# Ustawia etykietę z nazwą gracza.
-	$UsernameLabel.text = GameManager.get_registered_player_key(name.to_int(), "username")
+	username_label.text = GameManager.get_registered_player_key(name.to_int(), "username")
 
 	# Aktywuje drzewo animacji postaci.
 	animation_tree.active = true
-	last_direction_x = 1
+
+	# Aktualizuje parametry animacji postaci.
+	animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, 0)
+	animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, 0)
+
 
 func _process(_delta):
 	# Aktualizuje parametry animacji postaci.
 	var direction = input.direction.normalized()
 	_update_animation_parameters(direction)
+
 
 func _rollback_tick(_delta, _tick, _is_fresh):
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
@@ -37,6 +44,7 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 	velocity *= NetworkTime.physics_factor
 	move_and_slide()
 	velocity /= NetworkTime.physics_factor
+
 
 ## Aktualizuje parametry animacji postaci.
 func _update_animation_parameters(direction):
