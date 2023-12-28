@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://rv57oeaui5t0"]
+
+[ext_resource type="Script" path="res://scenes/ui/credits/credits.gd" id="1_xy0th"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xy0th")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "
+[center][b][font_size=60][color=#c90404]WZiMong Us[/color][/font_size][/b]
+
+
+[b][font_size=25][color=#11c223]Opiekun projektu[/color][/font_size][/b]
+[color=#fcfcf5]Mgr. Inż. Aleksandra Konopka[/color]
+
+[b][font_size=25][color=#11c223]Menedżer projektu[/color][/font_size][/b]
+[color=#fcfcf5]Mateusz Ługowski[/color]
+
+[b][font_size=25][color=#11c223]Kierownik zespołu deweloperów[/color][/font_size][/b]
+[color=#fcfcf5]Igor Osiakowski[/color]
+
+[b][font_size=25][color=#11c223]Zespół deweloperów[/color][/font_size][/b]
+[color=#fcfcf5]Dawid Maliszewski
+Kamil Marszałek
+Sebastian Matejak
+Piotr Matoszka
+Patryk Matuszewski
+Ivan Matveichyk
+Ilya Pauliuk
+Kacper Pełka[/color]
+
+[b][font_size=25][color=#11c223]Kierownik zespołu artystów[/color][/font_size][/b]
+[color=#fcfcf5]Daryna Mala[/color]
+
+[b][font_size=25][color=#11c223]Zespół artystów[/color][/font_size][/b]
+[color=#fcfcf5]Błażej Józwik
+Aleksander Maciejewski
+Zuzanna Majewska
+Amelia Posiadała[/color]
+
+[b][font_size=25][color=#11c223]Kierownik zespołu testerów[/color][/font_size][/b]
+[color=#fcfcf5]Szymon Mlonek[/color]
+
+[b][font_size=25][color=#11c223]Zespół testerów[/color][/font_size][/b]
+[color=#fcfcf5]Michał Łyszkowicz
+Kacper Malik
+Jakub Mierzwa
+Tomasz Niewiadomski[/color][/center]
+
+
+"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

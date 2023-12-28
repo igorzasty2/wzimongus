@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
-[ext_resource type="Script" path="res://scenes/maps/main_map/camera.gd" id="3_gwvgv"]
+[ext_resource type="Script" path="res://scenes/maps/shared/camera.gd" id="3_gwvgv"]
 [ext_resource type="PackedScene" uid="uid://dnni64h8l6jcd" path="res://scenes/maps/main_map/scenes/rooms/wc.tscn" id="3_nbyec"]
 [ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="4_6s3my"]
 [ext_resource type="PackedScene" uid="uid://yk57h8tmiha6" path="res://scenes/maps/main_map/scenes/rooms/sala_1.tscn" id="4_dojmv"]
@@ -138,6 +138,7 @@ minigame_scene = ExtResource("4_6s3my")
 y_sort_enabled = true
 
 [node name="Camera" type="Camera2D" parent="."]
+enabled = false
 zoom = Vector2(0.45, 0.45)
 limit_left = -3888
 limit_top = -3674

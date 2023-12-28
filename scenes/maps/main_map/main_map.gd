@@ -2,16 +2,15 @@ extends Node2D
 
 signal load_finished
 
-@onready var loading_screen = $LoadingScreen
-@onready var camera = $Camera
 @onready var players = $Players
+@onready var camera = $Camera
+@onready var loading_screen = $LoadingScreen
 
 func _ready():
 	# Uruchamia synchronizację czasu.
 	NetworkTime.start()
 
 	hide()
-	camera.enabled = false
 	GameManager.set_input_status(false)
 
 	# Spawnuje zarejestrowanych graczy.
@@ -70,10 +69,11 @@ func _spawn_player(id: int):
 
 	# Ustawia kamerę.
 	if GameManager.get_current_player_id() == id:
-		camera.player = player
+		camera.target = player
+		camera.global_position = player.global_position
 
 
 ## Usuwa gracza z mapy.
-func _remove_player(id: int):
+func _remove_player(id: int, _player: Dictionary = {}):
 	if players.has_node(str(id)):
 		players.get_node(str(id)).queue_free()

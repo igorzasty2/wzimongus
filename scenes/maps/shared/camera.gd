@@ -1,7 +1,7 @@
 extends Camera2D
 
 # Referencja do śledzonego gracza.
-var player: CharacterBody2D
+var target: CharacterBody2D
 
 var timer = Timer.new()
 var shake_amount: float = 0
@@ -18,11 +18,11 @@ func _ready():
 
 
 func _on_tick(_delta, _tick):
-	if not player:
+	if not target:
 		return
 
 	# Ustawia pozycję kamery na pozycję gracza.
-	global_position = player.global_position
+	global_position = target.global_position
 
 
 func _process(_delta):
