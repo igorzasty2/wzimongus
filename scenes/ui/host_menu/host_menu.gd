@@ -7,6 +7,7 @@ extends Control
 @onready var max_lectureres = $InputsContainer/MaxLecturersContainer/MaxLecturersInputContainer/MaxLecturersInput
 @onready var lecturers_amount_alert = $InputsContainer/LecturersAmountAlert
 
+
 func _on_host_button_pressed():
 	GameManager.set_player_key("username", username_input.text)
 

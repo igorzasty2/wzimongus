@@ -14,11 +14,13 @@ func _ready():
 
 	GameManager.player_registered.connect(_update_current_players_counter)
 	GameManager.player_deregistered.connect(_update_current_players_counter)
+	GameManager.server_settings_changed.connect(_update_current_players_counter)
 
 
 func _exit_tree():
 	GameManager.player_registered.disconnect(_update_current_players_counter)
 	GameManager.player_deregistered.disconnect(_update_current_players_counter)
+	GameManager.server_settings_changed.disconnect(_update_current_players_counter)
 
 
 func _on_lobby_settings_button_pressed():

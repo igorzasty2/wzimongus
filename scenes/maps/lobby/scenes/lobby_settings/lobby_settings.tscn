@@ -21,25 +21,31 @@ grow_vertical = 2
 [node name="MarginContainer" type="MarginContainer" parent="SettingsContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 40
+theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 90
+theme_override_constants/margin_bottom = 60
 
-[node name="GridContainer" type="GridContainer" parent="SettingsContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/h_separation = 32
-theme_override_constants/v_separation = 20
-columns = 2
+theme_override_constants/separation = 20
 
-[node name="MaxConnectionsLabel" type="Label" parent="SettingsContainer/MarginContainer/GridContainer"]
+[node name="MaxConnectionsContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+dragger_visibility = 1
+
+[node name="MaxConnectionsLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/MaxConnectionsContainer"]
+custom_minimum_size = Vector2(200, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Maksymalna
 liczba graczy"
 
-[node name="MaxConnectionsInput" type="OptionButton" parent="SettingsContainer/MarginContainer/GridContainer"]
+[node name="MaxConnectionsInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/MaxConnectionsContainer"]
+custom_minimum_size = Vector2(65, 2.08165e-12)
 layout_mode = 2
+size_flags_horizontal = 8
 size_flags_stretch_ratio = 0.0
 item_count = 8
 selected = 7
@@ -60,13 +66,27 @@ popup/item_6/id = 6
 popup/item_7/text = "10"
 popup/item_7/id = 7
 
-[node name="MaxLecturersLabel" type="Label" parent="SettingsContainer/MarginContainer/GridContainer"]
+[node name="LecturersAmountAlert" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+text = "Zbyt wielu wykładowców na liczbę graczy!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="MaxLecturersContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MaxLecturersLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/MaxLecturersContainer"]
+custom_minimum_size = Vector2(200, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Maksymalna
 liczba wykładowców"
 
-[node name="MaxLecturersInput" type="OptionButton" parent="SettingsContainer/MarginContainer/GridContainer"]
+[node name="MaxLecturersInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/MaxLecturersContainer"]
+custom_minimum_size = Vector2(65, 2.08165e-12)
 layout_mode = 2
+size_flags_horizontal = 8
 size_flags_stretch_ratio = 0.0
 item_count = 3
 selected = 2
@@ -85,4 +105,6 @@ size_flags_vertical = 8
 text = "Zastosuj"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/MaxConnectionsContainer/MaxConnectionsInput" to="." method="_on_connections_lecturers_item_selected"]
+[connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/MaxLecturersContainer/MaxLecturersInput" to="." method="_on_connections_lecturers_item_selected"]
 [connection signal="pressed" from="SettingsContainer/MarginContainer/SaveButton" to="." method="_on_save_button_pressed"]

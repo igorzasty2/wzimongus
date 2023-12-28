@@ -22,6 +22,9 @@ signal game_ended()
 ## Emitowany po wystąpieniu błędu.
 signal error_occured(message: String)
 
+## Emitowany po zmianie ustawień serwera.
+signal server_settings_changed()
+
 # Przechowuje dane innych graczy z momentu rejestracji, w celu zespawnowania ich w lobby.
 var lobby_data_at_registration = {}
 
@@ -98,6 +101,21 @@ func host_game(lobby_name: String, port: int, max_players: int, max_lecturers: i
 	# Rejestruje hosta jako gracza.
 	_add_registered_player(1, _current_player)
 	_on_player_registered()
+
+
+## Zmienia ustawienia serwera.
+func change_server_settings(max_players: int, max_lecturers: int):
+	_server_settings["max_players"] = max_players
+	_server_settings["max_lecturers"] = max_lecturers
+	_update_server_settings.rpc(_server_settings)
+
+
+## Wysyła informacje o ustawieniach serwera.
+@rpc("call_local", "reliable")
+func _update_server_settings(server_settings: Dictionary):
+	if !multiplayer.is_server():
+		_server_settings = server_settings
+	server_settings_changed.emit()
 
 
 ## Dołącza do istniejącego serwera gry.
@@ -266,6 +284,9 @@ func _register_player(player:Dictionary):
 	if _current_game["registered_players"].size() >= _server_settings["max_players"]:
 		_kick_player.rpc_id(id, "Przekroczono limit połączeń!")
 		return
+
+	# Informuje gracza o obecnych ustawieniach serwera.
+	_update_server_settings.rpc_id(id, _server_settings)
 
 	# Informuje nowego gracza o obecnych graczach.
 	for i in _current_game["registered_players"]:

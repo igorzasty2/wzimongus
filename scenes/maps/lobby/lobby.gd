@@ -40,6 +40,7 @@ func _ready():
 
 		GameManager.player_registered.connect(_update_broadcast_info)
 		GameManager.player_deregistered.connect(_update_broadcast_info)
+		GameManager.server_settings_changed.connect(_update_broadcast_info)
 
 	# Czeka na synchronizację czasu.
 	if !multiplayer.is_server():
@@ -61,6 +62,7 @@ func _exit_tree():
 	if multiplayer.is_server():
 		GameManager.player_registered.disconnect(_update_broadcast_info)
 		GameManager.player_deregistered.disconnect(_update_broadcast_info)
+		GameManager.server_settings_changed.disconnect(_update_broadcast_info)
 
 
 func _update_broadcast_info(_id: int = 0, _player: Dictionary = {}):
