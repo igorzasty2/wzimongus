@@ -16,6 +16,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.25098)
 
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="SettingsContainer" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -23,10 +31,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Settings" parent="SettingsContainer" instance=ExtResource("2_buvgv")]
 layout_mode = 2
 anchors_preset = 0
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SettingsContainer"]
 layout_mode = 1
@@ -58,10 +68,12 @@ text = "Powrót do gry"
 
 [node name="PopUpWindow" parent="." instance=ExtResource("3_tdiax")]
 visible = false
+mouse_filter = 2
 information = "Czy na pewno chcesz opuścić rozgrywkę?"
 left_button_text = "Tak"
 right_button_text = "Nie"
 
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_rebind" from="SettingsContainer/Settings" to="." method="_on_settings_button_rebind"]
 [connection signal="pressed" from="SettingsContainer/HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
 [connection signal="pressed" from="SettingsContainer/HBoxContainer/BackToGameButton" to="." method="_on_back_to_game_button_pressed"]

@@ -24,13 +24,13 @@ scale = Vector2(0.2, 0.2)
 
 [node name="GridContainer" type="GridContainer" parent="CrewmateInterface"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -10.0
-offset_bottom = -10.0
+offset_left = -1008.0
+offset_top = -500.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/h_separation = 10
@@ -64,15 +64,13 @@ scale = Vector2(0.2, 0.2)
 
 [node name="GridContainer" type="GridContainer" parent="LecturerInterface"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -414.0
-offset_top = -276.0
-offset_right = -10.0
-offset_bottom = -10.0
+offset_left = -1517.0
+offset_top = -1010.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/h_separation = 10
@@ -127,13 +125,11 @@ scale = Vector2(0.2, 0.2)
 
 [node name="GridContainer" type="GridContainer" parent="UniversalInterface"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -509.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 510.0
+offset_left = -499.0
+offset_bottom = 500.0
 grow_horizontal = 0
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10

@@ -1,34 +1,93 @@
-[gd_scene load_steps=2 format=3 uid="uid://dyuj3stgg8wl4"]
+[gd_scene load_steps=7 format=3 uid="uid://dyuj3stgg8wl4"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/scenes/lobby_ui/lobby_ui.gd" id="1_x2ran"]
+[ext_resource type="Texture2D" uid="uid://bueqlf2ymley7" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_start_button.png" id="2_efse7"]
+[ext_resource type="Texture2D" uid="uid://bseg8twvv5f48" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_lobby_settings_button.png" id="3_srhgy"]
+[ext_resource type="Texture2D" uid="uid://dg6u5sp2tupw2" path="res://scenes/ui/user_interface/assets/temporary_interact_button.png" id="4_dgy7o"]
+[ext_resource type="Texture2D" uid="uid://bb0mgwg86586a" path="res://scenes/ui/user_interface/assets/temporary_settings_button.png" id="5_a0wmq"]
+[ext_resource type="Texture2D" uid="uid://dff84sjkn48cm" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_chat_button.png" id="6_0dsnu"]
 
 [node name="LobbyUi" type="CanvasLayer"]
 script = ExtResource("1_x2ran")
 
 [node name="CurrentPlayersCounter" type="Label" parent="."]
-offset_left = 1144.0
-offset_top = 24.0
-offset_right = 1248.0
-offset_bottom = 80.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_right = 52.0
+offset_bottom = 56.0
+grow_horizontal = 2
 theme_override_font_sizes/font_size = 36
 text = "0/0"
-horizontal_alignment = 2
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="LobbySettingsButton" type="Button" parent="."]
-offset_left = 1152.0
-offset_top = 480.0
-offset_right = 1248.0
-offset_bottom = 576.0
-text = "Ustawienia
-lobby"
+[node name="StartGameButton" type="TextureButton" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.965
+anchor_right = 0.5
+anchor_bottom = 0.965
+offset_left = -250.0
+offset_top = -276.0
+offset_right = 250.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.6, 0.6)
+pivot_offset = Vector2(250, 276)
+texture_normal = ExtResource("2_efse7")
 
-[node name="StartGameButton" type="Button" parent="."]
-offset_left = 1152.0
-offset_top = 600.0
-offset_right = 1248.0
-offset_bottom = 696.0
-text = "Rozpocznij
-grę"
+[node name="InteractButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -499.0
+offset_top = -500.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(499, 500)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_dgy7o")
 
-[connection signal="pressed" from="LobbySettingsButton" to="." method="_on_lobby_settings_button_pressed"]
-[connection signal="pressed" from="StartGameButton" to="." method="_on_start_game_button_pressed"]
+[node name="GridContainer" type="GridContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1009.0
+offset_bottom = 500.0
+grow_horizontal = 0
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(1010, 0)
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="ChatButton" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_0dsnu")
+
+[node name="PauseButton" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("5_a0wmq")
+
+[node name="Filler" type="Control" parent="GridContainer"]
+layout_mode = 2
+
+[node name="LobbySettingsButton" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_srhgy")
+
+[connection signal="button_down" from="StartGameButton" to="." method="_on_start_game_button_button_down"]
+[connection signal="button_down" from="InteractButton" to="." method="_on_interact_button_button_down"]
+[connection signal="button_down" from="GridContainer/ChatButton" to="." method="_on_chat_button_button_down"]
+[connection signal="button_down" from="GridContainer/PauseButton" to="." method="_on_pause_button_button_down"]
+[connection signal="button_down" from="GridContainer/LobbySettingsButton" to="." method="_on_lobby_settings_button_button_down"]
