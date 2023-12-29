@@ -1,15 +1,12 @@
 extends CanvasLayer
 
-@onready var crewmate_interface = $CrewmateInterface
-@onready var lecturer_interface = $LecturerInterface
+@onready var grid_container = $GridContainer
+@onready var filler = $GridContainer/Filler
 
 # Na początku gry ustawia odpowiedni interface w zależności czy gracz jest imposotrem czy crewmatem, wyłącza wszystkie przyciski poza ustawieniami
 func _ready():
 	# Gracz jest impostorem
 	if GameManager.get_current_player_key("is_lecturer"):
-		crewmate_interface.visible = false
-		lecturer_interface.visible = true
-		
 		toggle_button_active("VentButton", false)
 		toggle_button_active("FailButton", false)
 		toggle_button_active("SabotageButton", false)
@@ -17,8 +14,10 @@ func _ready():
 		toggle_button_active("InteractButton", false)
 	# Gracz jest crewmatem
 	else: 
-		crewmate_interface.visible = true
-		lecturer_interface.visible = false
+		remove_button("VentButton")
+		remove_button("FailButton")
+		remove_button("SabotageButton")
+		fill_grid(3)
 		
 		toggle_button_active("ReportButton", false)
 		toggle_button_active("InteractButton", false)
@@ -68,13 +67,9 @@ func _on_pause_button_button_down():
 	print("pause button pressed")
 
 
-# Aktywuje i deaktywuje dany przycisk interakcji
+# Aktywuje i deaktywuje przycisk o danej nazwie
 func toggle_button_active(button_name:String, is_active:bool):
-	var button : TextureButton
-	if GameManager.get_current_player_key("is_lecturer") == true:
-		button = get_node("LecturerInterface").get_node("GridContainer").get_node(button_name)
-	else:
-		button = get_node("CrewmateInterface").get_node("GridContainer").get_node(button_name)
+	var button : TextureButton = get_node("GridContainer").get_node(button_name)
 	
 	button.disabled = !is_active
 	toggle_button_visual(button, is_active)
@@ -86,3 +81,17 @@ func toggle_button_visual(button:TextureButton, is_on:bool):
 		button.modulate = Color8(255, 255, 255, 255)
 	else:
 		button.modulate = Color8(130, 130, 130, 100)
+
+
+# Zmienia wioczność przycisku o danej nazwie
+func remove_button(button_name:String):
+	var button : TextureButton = get_node("GridContainer").get_node(button_name)
+	button.queue_free()
+
+
+# Napełnia siatkę daną ilością zapełniaczy
+func fill_grid(amount:int):
+	for i in range(0, amount):
+		var filler_duplicate = filler.duplicate()
+		grid_container.add_child(filler_duplicate)
+		grid_container.move_child(filler_duplicate, 0)

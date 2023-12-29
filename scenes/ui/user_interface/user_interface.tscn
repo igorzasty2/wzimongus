@@ -1,152 +1,96 @@
 [gd_scene load_steps=8 format=3 uid="uid://m6q8rh67ru1c"]
 
 [ext_resource type="Script" path="res://scenes/ui/user_interface/user_interface.gd" id="1_vsf4i"]
-[ext_resource type="Texture2D" uid="uid://c18f0e8yqopc0" path="res://scenes/ui/user_interface/assets/temporary_report_button.png" id="2_0vfg4"]
-[ext_resource type="Texture2D" uid="uid://dg6u5sp2tupw2" path="res://scenes/ui/user_interface/assets/temporary_interact_button.png" id="3_vmpl2"]
-[ext_resource type="Texture2D" uid="uid://cj0ftv3658mbo" path="res://scenes/ui/user_interface/assets/temporary_vent_button.png" id="4_bo6gn"]
-[ext_resource type="Texture2D" uid="uid://v7tsgfsnfpsd" path="res://scenes/ui/user_interface/assets/temporary_fail_button.png" id="5_gsccy"]
-[ext_resource type="Texture2D" uid="uid://cmx1meaq1scoh" path="res://scenes/ui/user_interface/assets/temporary_sabotage_button.png" id="6_c8bgx"]
-[ext_resource type="Texture2D" uid="uid://bb0mgwg86586a" path="res://scenes/ui/user_interface/assets/temporary_settings_button.png" id="7_p10qh"]
+[ext_resource type="Texture2D" uid="uid://dsettngrbbnks" path="res://scenes/ui/user_interface/assets/temporary_report_button.png" id="2_0vfg4"]
+[ext_resource type="Texture2D" uid="uid://cxaevxj4uv5c5" path="res://scenes/ui/user_interface/assets/temporary_vent_button.png" id="4_bo6gn"]
+[ext_resource type="Texture2D" uid="uid://bpqkru4xygamv" path="res://scenes/ui/user_interface/assets/temporary_fail_button.png" id="5_gsccy"]
+[ext_resource type="Texture2D" uid="uid://43efnso8r1f0" path="res://scenes/ui/user_interface/assets/5_przycisk_uzyj.png" id="6_57n6h"]
+[ext_resource type="Texture2D" uid="uid://c8qofnih3r8wy" path="res://scenes/ui/user_interface/assets/temporary_sabotage_button.png" id="6_c8bgx"]
+[ext_resource type="Texture2D" uid="uid://cnox6721edy8e" path="res://scenes/ui/user_interface/assets/temporary_settings_button.png" id="7_p10qh"]
 
 [node name="UserInterface" type="CanvasLayer"]
 script = ExtResource("1_vsf4i")
 
-[node name="CrewmateInterface" type="Control" parent="."]
-layout_mode = 3
+[node name="GridContainer" type="GridContainer" parent="."]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -380.0
+offset_top = -250.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(0.2, 0.2)
-
-[node name="GridContainer" type="GridContainer" parent="CrewmateInterface"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1008.0
-offset_top = -500.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 10
-columns = 2
-
-[node name="ReportButton" type="TextureButton" parent="CrewmateInterface/GridContainer"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_0vfg4")
-
-[node name="InteractButton" type="TextureButton" parent="CrewmateInterface/GridContainer"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("3_vmpl2")
-
-[node name="LecturerInterface" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(0.2, 0.2)
-
-[node name="GridContainer" type="GridContainer" parent="LecturerInterface"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1517.0
-offset_top = -1010.0
-grow_horizontal = 0
-grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 3
 
-[node name="Filler" type="Control" parent="LecturerInterface/GridContainer"]
+[node name="Filler" type="Control" parent="GridContainer"]
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 
-[node name="VentButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
+[node name="VentButton" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("4_bo6gn")
 
-[node name="FailButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
+[node name="FailButton" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("5_gsccy")
 
-[node name="SabotageButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
+[node name="SabotageButton" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("6_c8bgx")
 
-[node name="ReportButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
+[node name="ReportButton" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("2_0vfg4")
 
-[node name="InteractButton" type="TextureButton" parent="LecturerInterface/GridContainer"]
+[node name="InteractButton" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("3_vmpl2")
+texture_normal = ExtResource("6_57n6h")
 
-[node name="UniversalInterface" type="Control" parent="."]
-layout_mode = 3
+[node name="GridContainer2" type="GridContainer" parent="."]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
+offset_left = -120.0
+offset_bottom = 120.0
 grow_horizontal = 0
-scale = Vector2(0.2, 0.2)
-
-[node name="GridContainer" type="GridContainer" parent="UniversalInterface"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -499.0
-offset_bottom = 500.0
-grow_horizontal = 0
+scale = Vector2(0.7, 0.7)
+pivot_offset = Vector2(120, 0)
+size_flags_horizontal = 8
+size_flags_vertical = 0
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 2
 
-[node name="PauseButton" type="TextureButton" parent="UniversalInterface/GridContainer"]
+[node name="PauseButton" type="TextureButton" parent="GridContainer2"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("7_p10qh")
 
-[connection signal="button_down" from="CrewmateInterface/GridContainer/ReportButton" to="." method="_on_report_button_button_down"]
-[connection signal="button_down" from="CrewmateInterface/GridContainer/InteractButton" to="." method="_on_interact_button_button_down"]
-[connection signal="button_down" from="LecturerInterface/GridContainer/VentButton" to="." method="_on_vent_button_button_down"]
-[connection signal="button_down" from="LecturerInterface/GridContainer/FailButton" to="." method="_on_fail_button_button_down"]
-[connection signal="button_down" from="LecturerInterface/GridContainer/SabotageButton" to="." method="_on_sabotage_button_button_down"]
-[connection signal="button_down" from="LecturerInterface/GridContainer/ReportButton" to="." method="_on_report_button_button_down"]
-[connection signal="button_down" from="LecturerInterface/GridContainer/InteractButton" to="." method="_on_interact_button_button_down"]
-[connection signal="button_down" from="UniversalInterface/GridContainer/PauseButton" to="." method="_on_pause_button_button_down"]
+[connection signal="button_down" from="GridContainer/VentButton" to="." method="_on_vent_button_button_down"]
+[connection signal="button_down" from="GridContainer/FailButton" to="." method="_on_fail_button_button_down"]
+[connection signal="button_down" from="GridContainer/SabotageButton" to="." method="_on_sabotage_button_button_down"]
+[connection signal="button_down" from="GridContainer/ReportButton" to="." method="_on_report_button_button_down"]
+[connection signal="button_down" from="GridContainer/InteractButton" to="." method="_on_interact_button_button_down"]
+[connection signal="button_down" from="GridContainer2/PauseButton" to="." method="_on_pause_button_button_down"]

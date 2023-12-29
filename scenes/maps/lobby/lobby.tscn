@@ -67,6 +67,6 @@ script = ExtResource("3_4702b")
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
 
-[node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
-
 [node name="LobbyUi" parent="." instance=ExtResource("5_7r85o")]
+
+[node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]

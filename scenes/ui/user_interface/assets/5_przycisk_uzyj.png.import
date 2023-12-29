@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dg6u5sp2tupw2"
-path="res://.godot/imported/temporary_interact_button.png-31b30bef541f8e502b54df1bffa31dd1.ctex"
+uid="uid://43efnso8r1f0"
+path="res://.godot/imported/5_przycisk_uzyj.png-be9aeca2bd51abc9f9abfc8e3dfc3ea3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/user_interface/assets/temporary_interact_button.png"
-dest_files=["res://.godot/imported/temporary_interact_button.png-31b30bef541f8e502b54df1bffa31dd1.ctex"]
+source_file="res://scenes/ui/user_interface/assets/5_przycisk_uzyj.png"
+dest_files=["res://.godot/imported/5_przycisk_uzyj.png-be9aeca2bd51abc9f9abfc8e3dfc3ea3.ctex"]
 
 [params]
 
