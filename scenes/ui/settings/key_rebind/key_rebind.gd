@@ -30,7 +30,6 @@ func _ready():
 		saved_event = InputEventKey.new()
 		saved_event.physical_keycode = user_sett.controls_dictionary[action_project_name][1]
 		InputMap.action_add_event(action_project_name, saved_event)
-	var xx : InputEventKey = InputMap.action_get_events("ui_accept")[0] as InputEventKey
 
 	# Ustawia nazwy etykiet
 	action.text = action_label_name

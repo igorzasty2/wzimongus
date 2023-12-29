@@ -65,5 +65,5 @@ color = Color(0.352941, 0.352941, 0.443137, 1)
 
 [node name="ErrorPopUp" parent="Error" instance=ExtResource("2_66ag0")]
 layout_mode = 1
-left_button_text = "Ok"
-right_button_text = ""
+one_button = true
+middle_button_text = "Ok"
