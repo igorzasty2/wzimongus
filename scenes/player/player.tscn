@@ -6,10 +6,6 @@
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
 [ext_resource type="Texture2D" uid="uid://bau8m0wvrashk" path="res://scenes/player/assets/alternatywka/alt_spritesheet.png" id="4_lkot5"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_st64e"]
-radius = 26.3583
-height = 148.0
-
 [sub_resource type="Animation" id="Animation_fqt5r"]
 length = 0.001
 
@@ -158,47 +154,16 @@ states/walk/node = SubResource("AnimationNodeBlendSpace2D_fnme7")
 states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_st64e"]
+radius = 26.3583
+height = 148.0
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(-1, -77)
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_rovco")
-
-[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("2_lrt2l")
-root = NodePath("..")
-state_properties = Array[String]([":position"])
-input_properties = Array[String](["Input:direction"])
-
-[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("3_l2yj5")
-root = NodePath("..")
-properties = Array[String]([":position"])
-
-[node name="Input" type="Node" parent="."]
-script = ExtResource("4_8ajvt")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 60)
-rotation = 1.5708
-scale = Vector2(0.682897, 1)
-shape = SubResource("CapsuleShape2D_st64e")
-
-[node name="UsernameLabel" type="Label" parent="."]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -39.0
-offset_top = -222.0
-offset_right = 42.0
-offset_bottom = -199.0
-grow_horizontal = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 25
-horizontal_alignment = 1
-vertical_alignment = 1
-visible_characters = 18
 
 [node name="Skins" type="Node2D" parent="."]
 
@@ -224,3 +189,38 @@ parameters/conditions/idle = false
 parameters/conditions/is_moving = false
 parameters/idle/blend_position = Vector2(-0.992939, 0.982759)
 parameters/walk/blend_position = Vector2(0, 0)
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 60)
+rotation = 1.5708
+scale = Vector2(0.682897, 1)
+shape = SubResource("CapsuleShape2D_st64e")
+
+[node name="UsernameLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -39.0
+offset_top = -222.0
+offset_right = 42.0
+offset_bottom = -199.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 18
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("4_8ajvt")
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_lrt2l")
+root = NodePath("..")
+state_properties = Array[String]([":global_transform"])
+input_properties = Array[String](["Input:direction"])
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_l2yj5")
+root = NodePath("..")
+properties = Array[String]([":global_transform"])

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjpyjgxwnxvda"]
+
+[ext_resource type="Texture2D" uid="uid://o1yqmw51nbg7" path="res://scenes/maps/main_map/assets/rooms/dziekanat.png" id="1_eosrk"]
+
+[node name="dziekanat" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_eosrk")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+position = Vector2(2, 0)
+polygon = PackedVector2Array(-218, -274, -310, -274, -532, -52, -527, 458, 523, 458, 523, -14, 262, -275, 134, -275, 133, -459, 133, -517, 274, -517, 582, -242, 582, 517, -586, 517, -586, -277, -317, -516, -218, -516)

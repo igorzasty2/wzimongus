@@ -1,10 +1,10 @@
-extends Control
+extends CanvasLayer
 
-enum Group { GLOBAL, IMPOSTOR, DEAD, SYSTEM }
+enum Group { GLOBAL, LECTURER, DEAD, SYSTEM }
 
 const GROUP_COLORS = {
 	Group.GLOBAL: "white",
-	Group.IMPOSTOR: "red",
+	Group.LECTURER: "red",
 	Group.DEAD: "gray",
 	Group.SYSTEM: "yellow"
 }
@@ -21,39 +21,42 @@ const FADE_OUT_TIME = 0.25
 var message_scene = preload("res://scenes/ui/chat/message/message.tscn")
 var system_message_scene = preload("res://scenes/ui/chat/system_message/system_message.tscn")
 
-
 var last_known_scroll_max = 0
-var current_group = Group.IMPOSTOR
+var current_group = Group.LECTURER
 var fade_out_tween 
 
-func _ready():
 
+func _ready():
 	chat_logs_scrollbar.changed.connect(_update_scrollbar_position)
 	input_text.hide()
 
 
-func _process(_delta):
-	if Input.is_action_just_pressed("chat_open"):
+func _input(event):
+	if event.is_action_pressed("chat_open") && !input_text.visible:
 		_open_chat()
-	if Input.is_action_just_pressed("chat_close"):
+		get_viewport().set_input_as_handled()
+	if event.is_action_pressed("pause_menu") && input_text.visible:
 		_close_chat()
+		get_viewport().set_input_as_handled()
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func send_message(message, group, id):
 	match group:
 		Group.DEAD:
 			if current_group == Group.DEAD:
 				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.DEAD)
-		Group.IMPOSTOR:
-			if current_group == Group.IMPOSTOR:
-				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.IMPOSTOR)
+		Group.LECTURER:
+			if current_group == Group.LECTURER:
+				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.LECTURER)
 			else:
 				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.GLOBAL)
 		Group.SYSTEM:
 			var system_message_instance = system_message_scene.instantiate()
 			chat_logs_container.add_child(system_message_instance)
 			system_message_instance.init(message)
+			chat_logs_scroll_container.modulate.a = 1
+			timer.start()
 		_:
 			_create_message(GameManager.get_registered_player_key(id, "username"), message, current_group)
 	
@@ -62,10 +65,10 @@ func send_message(message, group, id):
 			if peer_id != 1:
 				send_message.rpc_id(peer_id, message, group, id)
 
-@rpc("authority", "call_local")
+
 func send_system_message(message):
 	const SYSTEM_MESSAGE_ID = 1
-	send_message.rpc(message, Group.SYSTEM, SYSTEM_MESSAGE_ID)
+	send_message(message, Group.SYSTEM, SYSTEM_MESSAGE_ID)
 
 
 func _create_message(username, message, group):
@@ -77,6 +80,10 @@ func _create_message(username, message, group):
 	new_message.init(username, message, GROUP_COLORS[group])
 
 	timer.start()
+
+
+func _on_input_text_visibility_changed():
+	get_parent().update_input()
 
 
 func _on_input_text_text_submitted(submitted_text):
@@ -103,10 +110,12 @@ func _update_scrollbar_position():
 		last_known_scroll_max = chat_logs_scrollbar.max_value
 		chat_logs_scroll_container.scroll_vertical = last_known_scroll_max
 
+
 func _open_chat():
 	input_text.grab_focus()
 	input_text.show()
 	chat_logs_scroll_container.modulate.a = 1
+
 
 func _close_chat():
 	input_text.release_focus()

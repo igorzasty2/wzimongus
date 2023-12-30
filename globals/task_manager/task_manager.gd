@@ -1,85 +1,94 @@
 extends Node
 
-
 signal task_completed;
-# TODO: Potrzebuje tutaj załadować minigry jako słownik, aby móc przez nie iterować.
-# Minigre muszą przechowywać swoją lokację i inne metadane potrzebne do zrobienia taska.
-var minigames = {}
 
 # Task ID bieżącego zadania.
 var current_task_id = null
 
+# TODO: Trzeba tutaj dodać minigry do słownika, aby móc przez nie iterować.
+# Minigry muszą przechowywać swoją lokalizację i inne metadane potrzebne do zrobienia taska.
+var _minigames = {}
 
-# Przechowuje wszystkie zadania w słowniku specyficznej dla serwera.
-var tasks_server = {}
+# Przechowuje zadania wszystkich graczy.
+var _tasks = {}
 # Przechowuje zadania bieżącego gracza.
-var tasks_player = {}
+var current_player_tasks = {}
 
 
-# Usuwa task z lokalnego słownika tasków.
-@rpc("any_peer", "call_local")
-func mark_task_as_complete_player():
-	# Usuwa zadanie z listy zadań bieżącego gracza.
-	var player_id = multiplayer.get_unique_id()
-	tasks_player[current_task_id].disable_task()
-	tasks_player.erase(current_task_id)
+## Przypisuje zadania graczom.
+func assign_tasks(task_amount):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
 
-	mark_task_as_complete_server.rpc_id(1, player_id, current_task_id)
-	current_task_id = null
+	# Oczekuje jedną klatkę na wczytanie mapy._active
+	await get_tree().process_frame
 
-
-# Usuwa task z serwerowego słownika tasków.
-@rpc("any_peer", "call_remote")
-func mark_task_as_complete_server(player_id, task_id):
-	# Usuwa zadanie z listy tasków na serwerze.
-	tasks_server[player_id].erase(task_id)
-	
-	# Usuwa gracza ze słowniku tasków jeżeli wszystkie taski są zrobione.
-	if tasks_server[player_id].is_empty():
-		tasks_server.erase(player_id)
-
-	if tasks_server.is_empty():
-		# TODO: zaznacz że crewmate wygrali jeżeli nie ma już tasków do zrobienia.
-		pass
-
-
-# Generuje wszystkie taski dla wszystkich gracze i potem wysyła te taski
-# graczom ze pomocą rpc_id.
-@rpc("authority", "call_local")
-func assign_tasks_server(task_amount):
-	minigames = get_node("/root/lobby_menu/Map/Map/Tasks").get_children()
-#	print(get_node("/root/Map"))
 	# TODO: żeby ten kod działał do końca trzeba stworzyć słownik minigier.
-	if multiplayer.is_server() and tasks_server.is_empty():
-		# Unikalny id dla każdego tasku.
+	_minigames = get_node("/root/Game/Maps/MainMap/Tasks").get_children()
+
+	if multiplayer.is_server() and _tasks.is_empty():
+		# Unikalny id dla każdego zadania.
 		var id_counter = 0
 
 		for i in GameManager.get_registered_players():
-			# true w duplicate oznacza że kopia tego będzie głęboka
-			var available_tasks = minigames.duplicate(true)
+			var available_tasks = _minigames.duplicate(true)
 			var tasks_dict = {}
 			
-			# Tworzy słownik task_amount ilości losowych tasków.
+			# Tworzy słownik task_amount ilości losowych zadań.
 			for task_number in range(task_amount):
-#				var random_key = available_tasks.keys()[randi() % available_tasks.size()]
+				#var random_key = available_tasks.keys()[randi() % available_tasks.size()]
 				var random_key = randi() % available_tasks.size()
 				
 				tasks_dict[id_counter] = available_tasks[random_key].get_path()
 				available_tasks.remove_at(random_key)
-				
-				
-				id_counter += 1
-			
-			# Zapisywania słownika tasków odpowiednemu graczowi w słownik serwerowy.
-			tasks_server[i] = tasks_dict
-			assign_tasks_player.rpc_id(i, tasks_dict)
-				
 
-# Dodaje przesłane przez serwer taski w lokalną listę tasków.
-@rpc("authority", "call_local")
-func assign_tasks_player(tasks):
-	
+				id_counter += 1
+
+			_tasks[i] = tasks_dict
+			_send_tasks.rpc_id(i, tasks_dict)
+
+
+## Oznacza zadanie jako wykonane.
+func mark_task_as_complete():
+	# Usuwa zadanie z listy zadań bieżącego gracza.
+	var player_id = multiplayer.get_unique_id()
+	current_player_tasks[current_task_id].disable_task()
+	current_player_tasks.erase(current_task_id)
+
+	_send_task_completion.rpc_id(1, player_id, current_task_id)
+	current_task_id = null
+
+
+@rpc("call_local", "reliable")
+## Wysyła zadania do graczy.
+func _send_tasks(tasks):
+	await get_tree().process_frame
 	for i in tasks:
 		var task = get_node(tasks[i])
 		task.enable_task(i)
-		tasks_player[i] = task
+		current_player_tasks[i] = task
+
+
+@rpc("any_peer", "reliable")
+## Wysyła infomację do serwera informujące o wykonaniu zadania.
+func _send_task_completion(player_id, task_id):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+
+	# Usuwa zadanie z listy zadań na serwerze.
+	_tasks[player_id].erase(task_id)
+
+	# Usuwa gracza ze słownika zadań jeżeli wszystkie zadania są zrobione.
+	if _tasks[player_id].is_empty():
+		_tasks.erase(player_id)
+
+	if _tasks.is_empty():
+		# TODO: Jeśli wszystkie zadania zostały wykonane oznacz, że studenci wygrali.
+		pass
+
+
+## Resetuje zadania.
+func reset():
+	current_task_id = null
+	_tasks.clear()
+	current_player_tasks.clear()

@@ -1,15 +1,17 @@
 extends Control
 
-
-func _ready():
-	# Dodaje liczby całkowite od 10 do 2 do menu rozwijanego MaxConnectionsInput
-	for i in range(10, 1, -1):
-		$MaxConnectionsInput.add_item("{i}".format({"i": i}))
+@onready var lobby_name_input = $InputsContainer/LobbyNameContainer/LobbyNameInput
+@onready var username_input = $InputsContainer/UsernameContainer/UsernameInput
+@onready var port_input = $InputsContainer/PortContainer/PortInput
 
 
-func _on_host_button_button_down():
-	# Ustawia wybraną nazwę użytkownika w GameManager, korzystając z tekstu wprowadzonego w UsernameInput.
-	GameManager.set_player_key("username", $UsernameInput.text)
+func _on_host_button_pressed():
+	GameManager.set_player_key("username", username_input.text)
 
-	# Inicjuje grę z podanym portem i maksymalną liczbą połączeń, pobranymi z PortInput i MaxConnectionsInput.
-	GameManager.create_game($PortInput.text.to_int(), $MaxConnectionsInput.text.to_int())
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
+
+	GameManager.create_lobby.call_deferred(lobby_name_input.text, port_input.text.to_int())
+
+
+func _on_back_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/ui/play_menu/play_menu.tscn")
