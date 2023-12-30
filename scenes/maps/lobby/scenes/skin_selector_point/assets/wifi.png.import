@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bau8m0wvrashk"
-path="res://.godot/imported/alt_spritesheet.png-43311a062193d601defa99a90dce5986.ctex"
+uid="uid://ge40lyarwi18"
+path="res://.godot/imported/wifi.png-a457c654dbaaff8c0bea5f9595ce96df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/alternatywka/alt_spritesheet.png"
-dest_files=["res://.godot/imported/alt_spritesheet.png-43311a062193d601defa99a90dce5986.ctex"]
+source_file="res://scenes/maps/lobby/scenes/skin_selector_point/assets/wifi.png"
+dest_files=["res://.godot/imported/wifi.png-a457c654dbaaff8c0bea5f9595ce96df.ctex"]
 
 [params]
 
