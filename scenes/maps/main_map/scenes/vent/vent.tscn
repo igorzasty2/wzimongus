@@ -1,12 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://cwapulye6fjyc"]
 
-[ext_resource type="Script" path="res://scenes/sabotages/vent/vent.gd" id="1_16s2l"]
-[ext_resource type="Shader" path="res://scenes/sabotages/vent/vent.gdshader" id="2_cocqu"]
-[ext_resource type="Texture2D" uid="uid://dmxi28j2yqqbi" path="res://scenes/sabotages/vent/temporary_vent.png" id="3_ho44u"]
+[ext_resource type="Script" path="res://scenes/maps/main_map/scenes/vent/vent.gd" id="1_ebero"]
+[ext_resource type="Shader" path="res://scenes/maps/main_map/scenes/vent/assets/vent.gdshader" id="2_i0onp"]
+[ext_resource type="Texture2D" uid="uid://dmxi28j2yqqbi" path="res://scenes/maps/main_map/scenes/vent/assets/temporary_vent.png" id="3_52qcw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d00ip"]
 resource_local_to_scene = true
-shader = ExtResource("2_cocqu")
+shader = ExtResource("2_i0onp")
 shader_parameter/line_color = Color(0.705882, 0, 0, 1)
 shader_parameter/line_thickness = 10.0
 
@@ -15,14 +15,14 @@ radius = 93.3343
 
 [node name="Vent" type="Node2D"]
 scale = Vector2(2.4, 2.4)
-script = ExtResource("1_16s2l")
+script = ExtResource("1_ebero")
 allow_crewmate_vent = true
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_d00ip")
 scale = Vector2(0.09, 0.09)
-texture = ExtResource("3_ho44u")
+texture = ExtResource("3_52qcw")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 2

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bum2mxvabfcb2"]
 
-[ext_resource type="Script" path="res://scenes/sabotages/vent/vent_direction_button/vent_direction_button.gd" id="1_dml2b"]
-[ext_resource type="Texture2D" uid="uid://bjv5hnh4ovu8l" path="res://scenes/sabotages/vent/vent_direction_button/assets/direction_button.png" id="2_f77jn"]
+[ext_resource type="Script" path="res://scenes/maps/main_map/scenes/vent/vent_direction_button/vent_direction_button.gd" id="1_dml2b"]
+[ext_resource type="Texture2D" uid="uid://bjv5hnh4ovu8l" path="res://scenes/maps/main_map/scenes/vent/vent_direction_button/assets/direction_button.png" id="2_f77jn"]
 
 [node name="VentDirectionButton" type="Node2D"]
 scale = Vector2(1.3, 1.3)

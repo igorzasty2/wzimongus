@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmxi28j2yqqbi"
-path="res://.godot/imported/temporary_vent.png-aa46790e9090865c5099ebbbb5c17dc2.ctex"
+path="res://.godot/imported/temporary_vent.png-b6629c9b0d037e1ccc4df4e8d15a275e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/sabotages/vent/temporary_vent.png"
-dest_files=["res://.godot/imported/temporary_vent.png-aa46790e9090865c5099ebbbb5c17dc2.ctex"]
+source_file="res://scenes/maps/main_map/scenes/vent/assets/temporary_vent.png"
+dest_files=["res://.godot/imported/temporary_vent.png-b6629c9b0d037e1ccc4df4e8d15a275e.ctex"]
 
 [params]
 

@@ -5,7 +5,7 @@ extends Node2D
 @export var vent_target_list : Array[Vent] = []
 @onready var sprite_2d = $Sprite2D
 
-var vent_direction_button = preload("res://scenes/sabotages/vent/vent_direction_button/vent_direction_button.tscn")
+var vent_direction_button = preload("res://scenes/maps/main_map/scenes/vent/vent_direction_button/vent_direction_button.tscn")
 var vent_direction_button_list = []
 
 const DIRECTION_BUTTON_DISTANCE_MULTIPLIER = 60
@@ -78,6 +78,7 @@ func change_dir_bttns_visibility(visibility:bool):
 
 # Obsługuje wejście gracza w obszar w którym może ventować
 func _on_area_2d_body_entered(body):
+	print("area entered")
 	if can_use_vent() || allow_crewmate_vent:
 		
 		body.can_player_use_vent = true
@@ -88,6 +89,7 @@ func _on_area_2d_body_entered(body):
 
 # Obsługuje wyjście gracza z obszaru w którym może ventować
 func _on_area_2d_body_exited(body):
+	print("area exited")
 	if can_use_vent() || allow_crewmate_vent:
 		
 		body.can_player_use_vent = false
