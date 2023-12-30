@@ -7,6 +7,9 @@ signal player_registered(id: int, player: Dictionary)
 ## Emitowany po wyrejestrowaniu gracza.
 signal player_deregistered(id: int, player: Dictionary)
 
+## Emitowany po zmianie skina gracza.
+signal skin_changed(id: int, skin: int)
+
 ## Emitowany po zmianie statusu sterowania.
 signal input_status_changed(is_paused: bool)
 
@@ -235,6 +238,38 @@ func set_pause_menu_status(is_paused:bool):
 func set_input_status(state:bool):
 	_current_game["is_input_disabled"] = !state
 	input_status_changed.emit(!get_current_game_key("is_paused") && !get_current_game_key("is_input_disabled"))
+
+
+## Zmienia skin obecnego gracza.
+func change_skin(skin: int):
+	_request_skin_change.rpc_id(1, skin)
+
+
+## Przyjmuje prośbę o zmianę skina gracza.
+@rpc("any_peer", "call_local", "reliable")
+func _request_skin_change(skin: int):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+
+	# Jeśli gra się rozpoczęła, nie można zmienić skina.
+	if get_current_game_key("is_started"):
+		return
+
+	# Jeśli skin jest już wykorzystany, nie można go użyć.
+	for i in get_registered_players():
+		if get_registered_player_key(i, "skin") == skin:
+			return
+
+	var id = multiplayer.get_remote_sender_id()
+
+	_update_skin.rpc(id, skin)
+
+
+## Zmienia skin gracza.
+@rpc("call_local", "reliable")
+func _update_skin(id: int, skin: int):
+	_current_game["registered_players"][id]["skin"] = skin
+	skin_changed.emit(id, skin)
 
 
 ## Obsługuje połączenie z serwerem u klienta.
