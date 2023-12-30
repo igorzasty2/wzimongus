@@ -106,5 +106,4 @@ func toggle_highlight(is_on: bool):
 
 # Sprawdza czy gracz jest impostorem i nie jest martwy
 func can_use_vent():
-	return GameManager._current_player["impostor"] && !GameManager._current_player["died"]
-	
+	return GameManager.get_current_player_key("impostor") && !GameManager.get_current_player_key("died")
