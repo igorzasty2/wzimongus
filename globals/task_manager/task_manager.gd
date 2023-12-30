@@ -1,6 +1,6 @@
 extends Node
 
-signal task_completed;
+signal tasks_change;
 
 # Task ID bieżącego zadania.
 var current_task_id = null
@@ -55,8 +55,9 @@ func mark_task_as_complete():
 	var player_id = multiplayer.get_unique_id()
 	current_player_tasks[current_task_id].disable_task()
 	current_player_tasks.erase(current_task_id)
-
+	
 	_send_task_completion.rpc_id(1, player_id, current_task_id)
+	tasks_change.emit()
 	current_task_id = null
 
 
@@ -68,6 +69,8 @@ func _send_tasks(tasks):
 		var task = get_node(tasks[i])
 		task.enable_task(i)
 		current_player_tasks[i] = task
+		
+	tasks_change.emit()
 
 
 @rpc("any_peer", "reliable")
@@ -100,6 +103,7 @@ func _remove_deregistered_player_tasks(id: int, player: Dictionary):
 	# Czytaj _send_task_completion.
 	if _tasks.is_empty():
 		pass
+
 
 ## Resetuje zadania.
 func reset():
