@@ -22,6 +22,9 @@ signal game_ended()
 ## Emitowany po wystąpieniu błędu.
 signal error_occured(message: String)
 
+## Emitowany po zabiciu gracza.
+signal player_killed(id: int)
+
 # Przechowuje informacje o aktualnym stanie gry.
 var _current_game = {
 	"is_started": false,
@@ -363,3 +366,13 @@ func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
 		if Time.get_ticks_msec() > timeout:
 			return ERR_TIMEOUT
 	return OK
+
+## Funkcja wywoływana przez gracza do zabicia ofiary
+@rpc("call_local","reliable")
+func request_to_kill(victim: int):
+	var killer: int = multiplayer.get_remote_sender_id()
+	_kill.rpc_id(1,killer,victim)
+
+@rpc("reliable")
+func _kill(killer: int, victim: int):
+	pass

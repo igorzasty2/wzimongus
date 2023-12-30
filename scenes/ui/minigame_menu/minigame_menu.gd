@@ -9,7 +9,7 @@ var _minigame_instance: Node2D
 @onready var close_button: TextureButton = minigame_container.get_node("CloseButton")
 
 func _ready():
-	use_button.pressed.connect(_on_use_button_pressed)
+	#use_button.pressed.connect(_on_use_button_pressed)
 	close_button.pressed.connect(close_minigame)
 
 func show_use_button(minigame):

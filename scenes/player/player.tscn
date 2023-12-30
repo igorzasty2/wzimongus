@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=30 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
+[ext_resource type="Shader" path="res://scenes/player/kill_player.gdshader" id="2_7046j"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
@@ -16,7 +17,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AltSprite:frame")
+tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -33,7 +34,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AltSprite:frame")
+tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -50,7 +51,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AltSprite:frame")
+tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -67,7 +68,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AltSprite:frame")
+tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -85,6 +86,12 @@ _data = {
 "walk_left": SubResource("Animation_2d0yq"),
 "walk_right": SubResource("Animation_b832w")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_klla5"]
+resource_local_to_scene = true
+shader = ExtResource("2_7046j")
+shader_parameter/line_color = Color(0.705882, 0, 0, 1)
+shader_parameter/line_thickness = 10.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mw58m"]
 animation = &"idle_left"
@@ -158,10 +165,14 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 radius = 26.3583
 height = 148.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_1koie"]
+radius = 260.0
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(-1, -77)
 collision_layer = 2
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_rovco")
 
@@ -172,14 +183,15 @@ libraries = {
 "": SubResource("AnimationLibrary_0ebfx")
 }
 
-[node name="AltSprite" type="Sprite2D" parent="Skins"]
+[node name="PlayerSprite" type="Sprite2D" parent="Skins"]
+material = SubResource("ShaderMaterial_klla5")
 position = Vector2(4, -48)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_lkot5")
 hframes = 4
 vframes = 4
 
-[node name="AltAnimationTree" type="AnimationTree" parent="Skins"]
+[node name="AnimationTree" type="AnimationTree" parent="Skins"]
 tree_root = SubResource("AnimationNodeStateMachine_gjhch")
 anim_player = NodePath("../AnimationPlayer")
 advance_expression_base_node = NodePath("")
@@ -195,6 +207,14 @@ position = Vector2(0, 60)
 rotation = 1.5708
 scale = Vector2(0.682897, 1)
 shape = SubResource("CapsuleShape2D_st64e")
+
+[node name="KillArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="KillCollisionShape" type="CollisionShape2D" parent="KillArea"]
+position = Vector2(0, 30)
+shape = SubResource("CircleShape2D_1koie")
 
 [node name="UsernameLabel" type="Label" parent="."]
 anchors_preset = 5
@@ -224,3 +244,6 @@ input_properties = Array[String](["Input:direction"])
 script = ExtResource("3_l2yj5")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
+
+[connection signal="body_entered" from="KillArea" to="." method="_on_kill_area_body_entered"]
+[connection signal="body_exited" from="KillArea" to="." method="_on_kill_area_body_exited"]
