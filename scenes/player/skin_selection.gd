@@ -28,6 +28,10 @@ func skin_change():
 			skin = Image.load_from_file("res://scenes/player/assets/skins/alt_spritesheet.png")
 		9:
 			skin = Image.load_from_file("res://scenes/player/assets/skins/nerd_spritesheet.png")
+		10:
+			skin = Image.load_from_file("res://scenes/player/assets/skins/alt_spritesheet.png")
+		11:
+			skin = Image.load_from_file("res://scenes/player/assets/skins/nerd_spritesheet.png")
 
 	foto = ImageTexture.create_from_image(skin)
 	$AltSprite.texture = foto

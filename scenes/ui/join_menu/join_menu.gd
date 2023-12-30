@@ -6,7 +6,7 @@ extends Control
 @onready var server_list = $ServerPanel/Table/ServerListScroll/ServerList
 
 func _on_join_button_pressed():
-	GameManager.set_player_key("username", username_input.text)
+	GameManager.set_current_player_key("username", username_input.text)
 
 	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 

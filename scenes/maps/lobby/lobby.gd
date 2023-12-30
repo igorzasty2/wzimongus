@@ -66,7 +66,7 @@ func _exit_tree():
 
 
 func _update_broadcast_info(_id: int = 0, _player: Dictionary = {}):
-	server_advertiser.serverInfo = GameManager.get_server_settings()
+	server_advertiser.serverInfo = GameManager.get_server_settings().duplicate()
 	server_advertiser.serverInfo["player_count"] = GameManager.get_registered_players().size()
 
 
