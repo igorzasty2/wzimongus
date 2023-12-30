@@ -8,12 +8,13 @@ signal load_finished
 @onready var server_advertiser = $ServerAdvertiser
 @onready var chat = $Chat
 @onready var chat_input = $Chat/ChatContainer/InputText
+@onready var skin_selector = $SkinSelector
 @onready var lobby_settings = $LobbySettings
 
 
 func update_input():
-	if chat_input && lobby_settings:
-		var input_status = !(chat_input.visible || lobby_settings.visible)
+	if chat_input && lobby_settings && skin_selector:
+		var input_status = !(chat_input.visible || lobby_settings.visible || skin_selector.visible)
 		GameManager.set_input_status(input_status)
 
 
