@@ -100,9 +100,9 @@ func _closest_player(victims: Array):
 	var kill_radius = 260
 	if victims.size() > 0:
 		var my_position: Vector2 = get_parent().get_node(str(GameManager.get_current_player_id())).global_position
-		var curr_closest = victims[0]
-		var curr_closest_dist = my_position.distance_squared_to(get_parent().get_node(str(curr_closest)).global_position)
-		for i in range(1,victims.size()):
+		var curr_closest = null
+		var curr_closest_dist = kill_radius**2 + 1
+		for i in range(victims.size()):
 			var temp_position: Vector2 = get_parent().get_node(str(victims[i])).global_position
 			var temp_dist = my_position.distance_squared_to(temp_position)
 			if(temp_dist < curr_closest_dist):
@@ -110,4 +110,3 @@ func _closest_player(victims: Array):
 				curr_closest_dist = temp_dist
 		if curr_closest_dist < (kill_radius**2):
 			return curr_closest
-	return null
