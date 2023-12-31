@@ -80,7 +80,6 @@ func _toggle_highlight(player: int, is_on: bool) -> void:
 
 func _update_highlight() -> void:
 	if GameManager.get_current_player_key("is_lecturer"):
-		var checked_players = []
 		var all_players: Array = GameManager.get_registered_players().keys()
 		var me = GameManager.get_current_player_id()
 		
