@@ -11,7 +11,7 @@ func _ready():
 	GameManager.game_started.connect(_on_game_started)
 	GameManager.game_ended.connect(_on_game_ended)
 	GameManager.error_occured.connect(_on_error_occured)
-	error_pop_up.left_pressed.connect(_on_error_pop_up_closed)
+	error_pop_up.middle_pressed.connect(_on_error_pop_up_closed)
 
 
 func _on_registered_successfully():

@@ -39,7 +39,6 @@ tab_alignment = 1
 script = ExtResource("2_ihltu")
 
 [node name="SoundAndGraphics" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/SoundAndGraphics"]
@@ -120,6 +119,7 @@ size_flags_vertical = 8
 text = "Zastosuj"
 
 [node name="Controls" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/Controls"]

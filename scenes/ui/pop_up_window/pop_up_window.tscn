@@ -56,10 +56,17 @@ custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 text = "left"
 
+[node name="MiddleButton" type="Button" parent="Panel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(165, 40)
+layout_mode = 2
+text = "middle
+"
+
 [node name="RightButton" type="Button" parent="Panel/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 text = "right"
 
 [connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/MiddleButton" to="." method="_on_middle_button_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/RightButton" to="." method="_on_right_button_pressed"]
