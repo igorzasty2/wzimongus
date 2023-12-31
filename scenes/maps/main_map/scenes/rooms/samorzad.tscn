@@ -13,7 +13,7 @@ texture = ExtResource("1_jvvmb")
 [node name="CollisionBox" type="StaticBody2D" parent="Background"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Background/CollisionBox"]
-polygon = PackedVector2Array(-517, 55, -517, -214, -487, -240, 398, -240, 516, -146, 516, 56, 581, 56, 581, -487, -298, -485, -581, -242, -581, 55)
+polygon = PackedVector2Array(-517, 55, -518, -201, 395, -200, 516, -86, 516, 56, 581, 56, 581, -487, -298, -485, -581, -242, -581, 55)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Background/CollisionBox"]
 position = Vector2(-1.5, 455.5)
