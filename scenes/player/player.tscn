@@ -184,7 +184,7 @@ libraries = {
 
 [node name="PlayerSprite" type="Sprite2D" parent="Skins"]
 material = SubResource("ShaderMaterial_klla5")
-position = Vector2(4, -48)
+position = Vector2(4, -23)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_obr1o")
 hframes = 5

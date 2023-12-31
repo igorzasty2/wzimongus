@@ -42,7 +42,13 @@ func _process(_delta):
 	
 	_update_animation_parameters(direction)
 
-	_update_highlight()
+	closest_player()
+	
+	if Input.is_action_just_pressed("ui_home"):
+		var victim = closest_player()
+		print(victim)
+		if victim:
+			GameManager.kill(victim)
 
 func _rollback_tick(_delta, _tick, _is_fresh):
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
@@ -52,7 +58,6 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 	velocity *= NetworkTime.physics_factor
 	move_and_slide()
 	velocity /= NetworkTime.physics_factor
-
 
 ## Aktualizuje parametry animacji postaci.
 func _update_animation_parameters(direction):
@@ -78,7 +83,18 @@ func _toggle_highlight(player: int, is_on: bool) -> void:
 	else:
 		get_parent().get_node(str(player) + "/Skins/PlayerSprite").material.set_shader_parameter('line_color', out_of_range_color)
 
-func _update_highlight() -> void:
+func _update_highlight(player: int) -> void:
+		var all_players = GameManager.get_registered_players().keys()
+		
+		for i in all_players:
+			if player != null and i == player:
+				_toggle_highlight(i,true)
+			else:
+				_toggle_highlight(i,false)
+
+## Zwraca id: int najbliższego gracza
+func closest_player():
+	
 	if GameManager.get_current_player_key("is_lecturer"):
 		var all_players: Array = GameManager.get_registered_players().keys()
 		var me = GameManager.get_current_player_id()
@@ -89,27 +105,19 @@ func _update_highlight() -> void:
 			if GameManager.get_registered_player_key(i,"is_lecturer") or GameManager.get_registered_player_key(i,"is_dead"):
 				all_players.erase(i)
 		
-		var player_to_highlight = _closest_player(all_players)
-		all_players = GameManager.get_registered_players().keys()
-		
-		for i in all_players:
-			if player_to_highlight != null and i == player_to_highlight:
-				_toggle_highlight(i,true)
-			else:
-				_toggle_highlight(i,false)
-
-## Zwraca id: int najbliższego gracza
-func _closest_player(victims: Array):
-	var kill_radius = 260
-	if victims.size() > 0:
-		var my_position: Vector2 = get_parent().get_node(str(GameManager.get_current_player_id())).global_position
-		var curr_closest = null
-		var curr_closest_dist = kill_radius**2 + 1
-		for i in range(victims.size()):
-			var temp_position: Vector2 = get_parent().get_node(str(victims[i])).global_position
-			var temp_dist = my_position.distance_squared_to(temp_position)
-			if(temp_dist < curr_closest_dist):
-				curr_closest = victims[i]
-				curr_closest_dist = temp_dist
-		if curr_closest_dist < (kill_radius**2):
-			return curr_closest
+		var kill_radius = 260
+		if all_players.size() > 0:
+			var my_position: Vector2 = get_parent().get_node(str(GameManager.get_current_player_id())).global_position
+			var curr_closest = null
+			var curr_closest_dist = kill_radius**2 + 1
+			for i in range(all_players.size()):
+				var temp_position: Vector2 = get_parent().get_node(str(all_players[i])).global_position
+				var temp_dist = my_position.distance_squared_to(temp_position)
+				if(temp_dist < curr_closest_dist):
+					curr_closest = all_players[i]
+					curr_closest_dist = temp_dist
+			if curr_closest_dist < (kill_radius**2):
+				_update_highlight(curr_closest)
+				return curr_closest
+			_update_highlight(0)
+		_update_highlight(0)

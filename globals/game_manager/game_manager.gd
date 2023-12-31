@@ -483,12 +483,29 @@ func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
 			return ERR_TIMEOUT
 	return OK
 
-## Funkcja wywoływana przez gracza do zabicia ofiary
-@rpc("call_local","reliable")
-func request_to_kill(victim: int):
-	var killer: int = multiplayer.get_remote_sender_id()
-	_kill.rpc_id(1,killer,victim)
+## Zabija ofiarę
+func kill(victim: int):
+	_request_kill.rpc_id(1, victim)
 
-@rpc("reliable")
-func _kill(killer: int, victim: int):
-	pass
+
+## Przyjmuje prośbę o zabicie gracza.
+@rpc("any_peer", "call_local", "reliable")
+func _request_kill(victim: int):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+		
+	# Jeśli gra się nie rozpoczęła, nie można zabić gracza.
+	if !get_current_game_key("is_started"):
+		return ERR_UNAVAILABLE		
+		
+	var me = multiplayer.get_remote_sender_id()
+	var my_node = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(me))
+	if my_node.closest_player() == victim:
+		_current_game["registered_players"][victim]["is_dead"] = true
+		_kill_server.rpc(victim)
+
+
+## Zmienia skin gracza.
+@rpc("call_local", "reliable")
+func _kill_server(victim: int):
+	player_killed.emit(victim)
