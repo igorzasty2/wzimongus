@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqjrgcofdp21m"]
+[gd_scene load_steps=6 format=3 uid="uid://cqjrgcofdp21m"]
 
 [ext_resource type="Script" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.gd" id="1_sk1a7"]
+[ext_resource type="Texture2D" uid="uid://deb3p1x24o063" path="res://scenes/minigames/reactor_memory_answer/assets/grid.png" id="3_4h6k3"]
 [ext_resource type="PackedScene" uid="uid://d10w530fs7vtr" path="res://scenes/minigames/reactor_memory_answer/button.tscn" id="3_lvsqn"]
 [ext_resource type="PackedScene" uid="uid://cgexmsp7251so" path="res://scenes/minigames/reactor_memory_answer/flash.tscn" id="4_wdxkn"]
 [ext_resource type="PackedScene" uid="uid://cc3kuyaqojlob" path="res://scenes/minigames/reactor_memory_answer/indicator.tscn" id="5_mmqq7"]
@@ -97,6 +98,10 @@ layout_mode = 2
 
 [node name="Flash19" parent="Console" instance=ExtResource("4_wdxkn")]
 layout_mode = 2
+
+[node name="ConsoleGrid" type="Sprite2D" parent="."]
+position = Vector2(532.25, 360.25)
+texture = ExtResource("3_4h6k3")
 
 [node name="ButtonIndicators" type="GridContainer" parent="."]
 offset_left = 683.5
