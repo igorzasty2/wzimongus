@@ -66,7 +66,8 @@ func move_to_vent_server(id):
 	for player in player_list:
 		if player.name.to_int()==multiplayer.get_remote_sender_id():
 			player.can_player_use_vent = false
-			player.teleport_position = vent_target_list[id].position - Vector2(0,50)
+			player.is_teleport = true
+			player.move_toward_position = vent_target_list[id].position - Vector2(0,50)
 			return
 
 

@@ -33,7 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://dtke4a6qdlm03" path="res://scenes/maps/main_map/scenes/corridors/korytarz_sala_2_serwerownia_aula.tscn" id="26_tqpop"]
 [ext_resource type="PackedScene" uid="uid://bodsrjrylxs0s" path="res://scenes/maps/main_map/scenes/corridors/korytarz_serwerownia_pielegniarka.tscn" id="27_71qtx"]
 [ext_resource type="PackedScene" uid="uid://1nb6uwps5542" path="res://scenes/maps/main_map/scenes/corridors/korytarz_willy_sala_1_bufet_pokoj_wykladowcow.tscn" id="28_00vjh"]
-[ext_resource type="PackedScene" uid="uid://cwapulye6fjyc" path="res://scenes/sabotages/vent/vent.tscn" id="33_q8paj"]
+[ext_resource type="PackedScene" uid="uid://cwapulye6fjyc" path="res://scenes/maps/main_map/scenes/vent/vent.tscn" id="33_q8paj"]
 [ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_menu.tscn" id="34_5r0ro"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="34_b878o"]
 [ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_menu.gd" id="35_23714"]

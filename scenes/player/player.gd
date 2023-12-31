@@ -10,10 +10,11 @@ var last_direction_x: float = -1
 @onready var animation_tree = $Skins/AltAnimationTree
 
 # Zmienne do obsługi ventów
-var teleport_position = null
 var move_toward_position = null
+var is_teleport = false
 var can_player_use_vent = false
 var is_in_vent = false
+var venting_speed = 15
 
 func _ready():
 	# Gracz jest własnością serwera.
@@ -51,25 +52,28 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 	move_and_slide()
 	velocity /= NetworkTime.physics_factor
 	
-	# Odpowiada za przesunięcie gracza do venta
+	# Odpowiada za przesunięcie gracza do venta i za przeniesienie z venta do innego venta
 	if move_toward_position != null:
-		input.direction = move_toward_position - position
-		position = position.move_toward(move_toward_position, _delta*speed)
-		if position == move_toward_position:
-			# do zrobienia: włączyć animacje wejścia do venta
-			
-			vent_toggle_dir_bttns.rpc_id(name.to_int(),true)
-			toggle_visible.rpc(false)
-			move_toward_position = null
-	
-	# Odpowiada za przeniesienie gracza z venta do innego venta
-	if teleport_position != null:
-		position = teleport_position
-		teleport_position = null
+		# Przenosi gracza z venta do innego venta
+		if is_teleport==true:
+			position = position.move_toward(move_toward_position, _delta*speed*venting_speed)
+			if position == move_toward_position:
+				vent_toggle_dir_bttns.rpc_id(name.to_int(),true)
+				move_toward_position = null
+				is_teleport = false
+				# Poprawia błędne dane (vent.gd - _on_area_2d_body_entered, _on_area_2d_body_exited czasem działają w złej kolejności przy przenoszeniu się z venta do venta) - możliwe że już nie potrzebne
+				#can_player_use_vent = true
 		
-	# Obsługuje sytuację w której gracz wyjdzie z venta i ventuje w tym samym momencie
-	if visible == true && is_in_vent == false && can_player_use_vent == true:
-		vent_toggle_dir_bttns.rpc_id(name.to_int(), false)
+		# Przesuwa gracza do venta
+		else:
+			input.direction = move_toward_position - position
+			position = position.move_toward(move_toward_position, _delta*speed)
+			if position == move_toward_position:
+				# do zrobienia: włączyć animacje wejścia do venta
+				
+				vent_toggle_dir_bttns.rpc_id(name.to_int(),true)
+				toggle_visible.rpc(false)
+				move_toward_position = null
 
 
 ## Aktualizuje parametry animacji postaci.
@@ -97,15 +101,9 @@ func _update_animation_parameters(direction):
 #
 # VENT - TO DO:
 # - naprawić ruch gracza w kierunku venta - nie widać animacji na serwerze (przesunięcie gracza do venta już działa) 
-# - poprawić błędy związane z area antered/exited
 #
 
 func _input(event):
-	# Poprawia błędne dane (vent.gd - _on_area_2d_body_entered, _on_area_2d_body_exited czasem działają w złej kolejności przy przenoszeniu się z venta do venta)
-	if get_parent().get_parent().name=="MainMap":
-		if get_closest_vent()!=null && can_use_vent():
-			can_player_use_vent = true
-
 	# Obsługuje użycie venta
 	if can_player_use_vent && event.is_action_pressed("use_vent") && !GameManager.get_current_game_key("paused"):
 		use_vent()
@@ -119,7 +117,7 @@ func toggle_visible(is_visible:bool):
 
 ## Sprawdza czy gracz jest impostorem i nie jest martwy lub czy jest włączone ventowanie crewmate
 func can_use_vent():
-	var vent = get_closest_vent()
+	var vent = get_nearest_vent()
 	if vent!=null:
 		return vent.can_use_vent() || vent.allow_crewmate_vent
 	return null
@@ -136,16 +134,19 @@ func use_vent():
 ## Obsługuje wejście do venta lokalnie
 func enter_vent():
 	if name.to_int()==GameManager.get_current_player_id():
-		var vent = get_closest_vent()
+		var vent = get_nearest_vent()
 		
 		if vent != null:
 
 			GameManager.set_input_status(false)
 			is_in_vent = true
 			
+			collision_mask = 0
+			
 			enter_vent_server.rpc(vent.position)
 			
 			# do zrobienia: w tym miejscu wyłączyć możliwość zabicia
+			# do zrobienia: w tym miejscu wyłączyć możliwość reportowania
 
 
 ## Obsługuje wejście do venta na serwerze
@@ -157,7 +158,7 @@ func enter_vent_server(vent_position):
 
 ## Obsługuje wyjście z venta
 func exit_vent():
-	var vent = get_closest_vent()
+	var vent = get_nearest_vent()
 	if vent!=null:
 		if position == vent.position - Vector2(0,50):
 			# do zrobienia: włączyć animacje wyjścia z venta
@@ -167,13 +168,16 @@ func exit_vent():
 			GameManager.set_input_status(true)
 			is_in_vent = false
 			
+			collision_mask = 1
+			
 			toggle_visible.rpc(true)
 			
 			# do zrobienia: w tym miejscu włączyć możliwość zabicia
+			# do zrobienia: w tym miejscu włączyć możliwość reportowania
 
 
 ## Zwraca vent najbliżej gracza w odległości mniejszej niz 300
-func get_closest_vent():
+func get_nearest_vent():
 	var vent_system_amount = get_parent().get_parent().get_node("Vents").get_child_count()
 	
 	for i in range(0,vent_system_amount):
@@ -188,7 +192,7 @@ func get_closest_vent():
 ## Przełącza widoczność przycisków kierunkowych venta - wywoływane lokalnie w _rollback_tick
 @rpc("any_peer", "call_local", "reliable")
 func vent_toggle_dir_bttns(is_on:bool):
-	var vent = get_closest_vent()
+	var vent = get_nearest_vent()
 	if vent != null:
 		vent.change_dir_bttns_visibility(is_on)
 	
