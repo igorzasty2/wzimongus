@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyuj3stgg8wl4"]
+
+[ext_resource type="Script" path="res://scenes/maps/lobby/scenes/lobby_ui/lobby_ui.gd" id="1_x2ran"]
+
+[node name="LobbyUi" type="CanvasLayer"]
+script = ExtResource("1_x2ran")
+
+[node name="CurrentPlayersCounter" type="Label" parent="."]
+offset_left = 1144.0
+offset_top = 24.0
+offset_right = 1248.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 36
+text = "0/0"
+horizontal_alignment = 2
+
+[node name="LobbySettingsButton" type="Button" parent="."]
+offset_left = 1152.0
+offset_top = 480.0
+offset_right = 1248.0
+offset_bottom = 576.0
+text = "Ustawienia
+lobby"
+
+[node name="StartGameButton" type="Button" parent="."]
+offset_left = 1152.0
+offset_top = 600.0
+offset_right = 1248.0
+offset_bottom = 696.0
+text = "Rozpocznij
+grę"
+
+[connection signal="pressed" from="LobbySettingsButton" to="." method="_on_lobby_settings_button_pressed"]
+[connection signal="pressed" from="StartGameButton" to="." method="_on_start_game_button_pressed"]

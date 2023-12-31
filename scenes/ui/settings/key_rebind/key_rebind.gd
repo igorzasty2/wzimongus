@@ -18,7 +18,7 @@ var user_sett: UserSettingsManager
 var saved_event : InputEventKey
 
 func _ready():
-	# loading user control settings
+	# Wczytuje zapisane ustawienia
 	user_sett = UserSettingsManager.load_or_create()
 	
 	InputMap.action_erase_events(action_project_name)
@@ -30,15 +30,14 @@ func _ready():
 		saved_event = InputEventKey.new()
 		saved_event.physical_keycode = user_sett.controls_dictionary[action_project_name][1]
 		InputMap.action_add_event(action_project_name, saved_event)
-	var xx : InputEventKey = InputMap.action_get_events("ui_accept")[0] as InputEventKey
 
-	# setting label names
+	# Ustawia nazwy etykiet
 	action.text = action_label_name
 	
-	# setting key names
+	# Ustawia nazwy przycisków
 	set_buttons_names()
 
-# sets text inside buttons
+# Ustawia tekst w przyciskach
 func set_buttons_names():
 	if InputMap.has_action(action_project_name) == true:
 		var input_actions = InputMap.action_get_events(action_project_name)
@@ -51,13 +50,13 @@ func set_buttons_names():
 		else:
 			right_button.text = ""
 
-# handles left button pressed
+# Obsługuje wciśnięcie lewego przycisku
 func _on_left_button_pressed():
 	left_button.release_focus()
 	pressed_button = Side.LEFT
 	emit_signal("rebind_button_pressed",action_label_name, action_project_name, Side.LEFT, left_button, right_button)
 
-# handles right button pressed
+# Obsługuje wciśnięcie prawego przycisku
 func _on_right_button_pressed():
 	right_button.release_focus()
 	pressed_button = Side.RIGHT

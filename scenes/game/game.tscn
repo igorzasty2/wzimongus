@@ -13,6 +13,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b20el")
 
+[node name="PauseMenu" parent="." instance=ExtResource("2_knil8")]
+visible = false
+
 [node name="Connecting" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 1280.0
@@ -62,8 +65,5 @@ color = Color(0.352941, 0.352941, 0.443137, 1)
 
 [node name="ErrorPopUp" parent="Error" instance=ExtResource("2_66ag0")]
 layout_mode = 1
-left_button_text = "Ok"
-right_button_text = ""
-
-[node name="PauseMenu" parent="." instance=ExtResource("2_knil8")]
-visible = false
+one_button = true
+middle_button_text = "Ok"
