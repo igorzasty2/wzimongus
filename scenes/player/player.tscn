@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=29 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Shader" path="res://scenes/player/kill_player.gdshader" id="2_7046j"]
@@ -165,9 +165,6 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 radius = 26.3583
 height = 148.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1koie"]
-radius = 260.0
-
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(-1, -77)
@@ -208,14 +205,6 @@ rotation = 1.5708
 scale = Vector2(0.682897, 1)
 shape = SubResource("CapsuleShape2D_st64e")
 
-[node name="KillArea" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 2
-
-[node name="KillCollisionShape" type="CollisionShape2D" parent="KillArea"]
-position = Vector2(0, 30)
-shape = SubResource("CircleShape2D_1koie")
-
 [node name="UsernameLabel" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
@@ -244,6 +233,3 @@ input_properties = Array[String](["Input:direction"])
 script = ExtResource("3_l2yj5")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
-
-[connection signal="body_entered" from="KillArea" to="." method="_on_kill_area_body_entered"]
-[connection signal="body_exited" from="KillArea" to="." method="_on_kill_area_body_exited"]
