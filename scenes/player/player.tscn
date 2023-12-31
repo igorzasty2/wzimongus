@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=26 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
@@ -154,15 +154,13 @@ states/walk/node = SubResource("AnimationNodeBlendSpace2D_fnme7")
 states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_st64e"]
-radius = 26.3583
-height = 148.0
-
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(-1, -77)
 collision_layer = 2
 motion_mode = 1
+wall_min_slide_angle = 0.0349066
+safe_margin = 5.0
 script = ExtResource("1_rovco")
 
 [node name="Skins" type="Node2D" parent="."]
@@ -190,11 +188,11 @@ parameters/conditions/is_moving = false
 parameters/idle/blend_position = Vector2(-0.992939, 0.982759)
 parameters/walk/blend_position = Vector2(0, 0)
 
-[node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, 60)
+[node name="CollisionShape" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, 43)
 rotation = 1.5708
 scale = Vector2(0.682897, 1)
-shape = SubResource("CapsuleShape2D_st64e")
+polygon = PackedVector2Array(43.9305, 9.99989, 43.9304, -16.0001, 38.0728, -50.0001, 24.8936, -62.0001, 8.78575, -66, -7.3221, -66, -19.0369, -60, -26.3586, -47.9999, -30.7515, -30.9999, -33.6801, -2.99992, -29.2868, 31.0001, -13.1789, 53, 4.39334, 55, 23.4299, 50.9999, 32.2159, 43.9999, 39.5376, 33.9999, 42.4663, 21.9999)
 
 [node name="UsernameLabel" type="Label" parent="."]
 anchors_preset = 5
