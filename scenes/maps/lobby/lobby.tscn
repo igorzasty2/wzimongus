@@ -20,6 +20,7 @@ script = ExtResource("1_dytr5")
 [node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
 position = Vector2(147, -276)
 sprite = ExtResource("4_643ea")
+scale_factor = 1.0
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
@@ -74,8 +75,8 @@ script = ExtResource("3_4702b")
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
 
+[node name="LobbyUi" parent="." instance=ExtResource("5_7r85o")]
+
 [node name="SkinSelector" parent="." instance=ExtResource("8_hy1jx")]
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
-
-[node name="LobbyUi" parent="." instance=ExtResource("5_7r85o")]

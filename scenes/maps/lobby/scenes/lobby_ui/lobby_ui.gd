@@ -45,7 +45,7 @@ func _on_start_game_button_button_down():
 
 
 func _on_interact_button_button_down():
-	pass # Replace with function body.
+	execute_action("interact")
 
 
 func _on_chat_button_button_down():
