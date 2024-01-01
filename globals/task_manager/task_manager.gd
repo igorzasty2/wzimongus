@@ -32,6 +32,9 @@ func assign_tasks(task_amount):
 		var id_counter = 0
 
 		for i in GameManager.get_registered_players():
+			if GameManager.get_registered_players()[i]["is_lecturer"]:
+				continue
+				
 			var available_tasks = _minigames.duplicate(true)
 			var tasks_dict = {}
 			
