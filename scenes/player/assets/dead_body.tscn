@@ -4,15 +4,17 @@
 
 [node name="DeadBody" type="Node2D"]
 
-[node name="DeadBodySprite" type="Sprite2D" parent="."]
-rotation = -0.844739
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("1_coj6s")
-
 [node name="DeadBodyLabel" type="Label" parent="."]
+z_index = 1
 offset_left = -38.0
 offset_top = -56.0
 offset_right = 38.0
 offset_bottom = -33.0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DeadBodySprite" type="Sprite2D" parent="."]
+z_index = 1
+rotation = -0.844739
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("1_coj6s")
