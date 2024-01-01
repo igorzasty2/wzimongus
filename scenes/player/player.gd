@@ -35,6 +35,8 @@ func _ready():
 	animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, 0)
 
 	_toggle_highlight($".".name.to_int(),false)
+	
+	GameManager.player_killed.connect(_on_killed_player)
 
 func _process(_delta):
 	# Aktualizuje parametry animacji postaci.
@@ -46,8 +48,8 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("ui_home"):
 		var victim = closest_player()
-		print(victim)
 		if victim:
+			print("zabij: "+str(victim))
 			GameManager.kill(victim)
 
 func _rollback_tick(_delta, _tick, _is_fresh):
@@ -121,3 +123,17 @@ func closest_player():
 				return curr_closest
 			_update_highlight(0)
 		_update_highlight(0)
+
+
+func _on_killed_player(victim: int):
+	if GameManager.get_registered_player_key(victim,"is_dead"):
+		get_parent().get_node(str(victim)).visible = false
+		print(str(victim)+" dead")
+		
+		var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
+		dead_body.get_node("DeadBodySprite").texture = load("res://icon.svg")
+		dead_body.get_node("DeadBodyLabel").text = str(victim)+" dead body"
+		dead_body.global_position = get_parent().get_node(str(victim)).global_position
+		
+		get_parent().add_child(dead_body)
+		print("dead body dodane na pozycji: "+str(dead_body.global_position))

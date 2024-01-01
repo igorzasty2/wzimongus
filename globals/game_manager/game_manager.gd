@@ -505,7 +505,8 @@ func _request_kill(victim: int):
 		_kill_server.rpc(victim)
 
 
-## Zmienia skin gracza.
+## Zabija gracza i rozsyła tą informację do wszystkich.
 @rpc("call_local", "reliable")
 func _kill_server(victim: int):
+	_current_game["registered_players"][victim]["is_dead"] = true
 	player_killed.emit(victim)

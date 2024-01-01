@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmqr4jq3iw4q2"]
+
+[ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="1_coj6s"]
+
+[node name="DeadBody" type="Node2D"]
+
+[node name="DeadBodySprite" type="Sprite2D" parent="."]
+rotation = -0.844739
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("1_coj6s")
+
+[node name="DeadBodyLabel" type="Label" parent="."]
+offset_left = -38.0
+offset_top = -56.0
+offset_right = 38.0
+offset_bottom = -33.0
+horizontal_alignment = 1
+vertical_alignment = 1
