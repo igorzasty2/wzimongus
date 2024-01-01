@@ -488,8 +488,8 @@ func kill(victim: int):
 	_request_kill.rpc_id(1, victim)
 
 
-## Przyjmuje prośbę o zabicie gracza.
 @rpc("any_peer", "call_local", "reliable")
+## Przyjmuje prośbę o zabicie gracza.
 func _request_kill(victim: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
@@ -505,8 +505,8 @@ func _request_kill(victim: int):
 		_kill_server.rpc(victim)
 
 
-## Zabija gracza i rozsyła tą informację do wszystkich.
 @rpc("call_local", "reliable")
+## Zabija gracza i rozsyła tą informację do wszystkich.
 func _kill_server(victim: int):
 	_current_game["registered_players"][victim]["is_dead"] = true
 	player_killed.emit(victim)

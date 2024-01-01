@@ -46,7 +46,7 @@ func _process(_delta):
 
 	closest_player()
 	
-	if Input.is_action_just_pressed("ui_home"):
+	if Input.is_action_just_pressed("fail"):
 		var victim = closest_player()
 		if victim:
 			print("zabij: "+str(victim))
