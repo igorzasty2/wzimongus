@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8qofnih3r8wy"
-path="res://.godot/imported/temporary_sabotage_button.png-193181e14026985a2ba6f54f550b7c1e.ctex"
+uid="uid://b0wwwpxa645jv"
+path="res://.godot/imported/4_przycisk_zglos.png-8d6b403f7e7f1503ba0517c950b5f5c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/user_interface/assets/temporary_sabotage_button.png"
-dest_files=["res://.godot/imported/temporary_sabotage_button.png-193181e14026985a2ba6f54f550b7c1e.ctex"]
+source_file="res://scenes/ui/user_interface/assets/4_przycisk_zglos.png"
+dest_files=["res://.godot/imported/4_przycisk_zglos.png-8d6b403f7e7f1503ba0517c950b5f5c6.ctex"]
 
 [params]
 

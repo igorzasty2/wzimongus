@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dyuj3stgg8wl4"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/scenes/lobby_ui/lobby_ui.gd" id="1_x2ran"]
-[ext_resource type="Texture2D" uid="uid://bueqlf2ymley7" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_start_button.png" id="2_efse7"]
-[ext_resource type="Texture2D" uid="uid://43efnso8r1f0" path="res://scenes/ui/user_interface/assets/5_przycisk_uzyj.png" id="3_0uyd5"]
+[ext_resource type="Texture2D" uid="uid://irwk5hfqym8q" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/9_przycisk_start.png" id="2_l78cx"]
 [ext_resource type="Texture2D" uid="uid://dqur5bo6n5iob" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_lobby_settings_button.png" id="3_srhgy"]
+[ext_resource type="Texture2D" uid="uid://j016m335ll88" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/3_przycisk_avatar.png" id="3_wnle0"]
 [ext_resource type="Texture2D" uid="uid://cnox6721edy8e" path="res://scenes/ui/user_interface/assets/temporary_settings_button.png" id="5_a0wmq"]
 [ext_resource type="Texture2D" uid="uid://cbycws50ikr4y" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_chat_button.png" id="6_0dsnu"]
 
@@ -28,32 +28,35 @@ vertical_alignment = 1
 [node name="StartGameButton" type="TextureButton" parent="."]
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.965
+anchor_top = 0.98
 anchor_right = 0.5
-anchor_bottom = 0.965
-offset_left = -250.0
-offset_top = -276.0
-offset_right = 250.0
+anchor_bottom = 0.98
+offset_left = -270.0
+offset_top = -360.0
+offset_right = 270.0
 grow_horizontal = 2
 grow_vertical = 0
-pivot_offset = Vector2(250, 276)
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(270, 360)
 size_flags_horizontal = 4
 size_flags_vertical = 8
-texture_normal = ExtResource("2_efse7")
+texture_normal = ExtResource("2_l78cx")
 
 [node name="InteractButton" type="TextureButton" parent="."]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -120.0
+anchors_preset = -1
+anchor_left = 0.99
+anchor_top = 0.99
+anchor_right = 0.99
+anchor_bottom = 0.99
+offset_left = -360.0
+offset_top = -360.0
 grow_horizontal = 0
 grow_vertical = 0
+scale = Vector2(0.35, 0.35)
+pivot_offset = Vector2(360, 360)
 size_flags_horizontal = 8
 size_flags_vertical = 8
-texture_normal = ExtResource("3_0uyd5")
+texture_normal = ExtResource("3_wnle0")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 anchors_preset = 1

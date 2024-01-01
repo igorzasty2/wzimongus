@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpqkru4xygamv"
-path="res://.godot/imported/temporary_fail_button.png-3a172a31137c612cedddf00d75a79ebf.ctex"
+uid="uid://k4l8qj4f7tog"
+path="res://.godot/imported/zabij.png-a4bc0f3f4653564f9dae5e9fb1f7edd1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/user_interface/assets/temporary_fail_button.png"
-dest_files=["res://.godot/imported/temporary_fail_button.png-3a172a31137c612cedddf00d75a79ebf.ctex"]
+source_file="res://scenes/ui/user_interface/assets/zabij.png"
+dest_files=["res://.godot/imported/zabij.png-a4bc0f3f4653564f9dae5e9fb1f7edd1.ctex"]
 
 [params]
 

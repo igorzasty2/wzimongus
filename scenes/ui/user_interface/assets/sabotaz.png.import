@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsettngrbbnks"
-path="res://.godot/imported/temporary_report_button.png-a49a084476e849fe902ac9f216f4968e.ctex"
+uid="uid://kt7f7dco5fcr"
+path="res://.godot/imported/sabotaz.png-ce9257654f4b792fb371714eb0cfd461.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/user_interface/assets/temporary_report_button.png"
-dest_files=["res://.godot/imported/temporary_report_button.png-a49a084476e849fe902ac9f216f4968e.ctex"]
+source_file="res://scenes/ui/user_interface/assets/sabotaz.png"
+dest_files=["res://.godot/imported/sabotaz.png-ce9257654f4b792fb371714eb0cfd461.ctex"]
 
 [params]
 
