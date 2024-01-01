@@ -1,18 +1,25 @@
-[gd_scene load_steps=9 format=3 uid="uid://l2mxisy85ciw"]
+[gd_scene load_steps=12 format=3 uid="uid://l2mxisy85ciw"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/lobby.gd" id="1_dytr5"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
 [ext_resource type="PackedScene" uid="uid://lfxaubfh4wik" path="res://scenes/maps/lobby/scenes/lobby_background/lobby_background.tscn" id="2_mmhfw"]
 [ext_resource type="Script" path="res://addons/LANServerBroadcast/server_advertiser/ServerAdvertiser.gd" id="3_4702b"]
+[ext_resource type="PackedScene" uid="uid://clyynf7f5bwqv" path="res://scenes/maps/lobby/scenes/skin_selector_point/skin_selector_point.tscn" id="3_xxsdp"]
+[ext_resource type="Texture2D" uid="uid://ge40lyarwi18" path="res://scenes/maps/lobby/scenes/skin_selector_point/assets/wifi.png" id="4_643ea"]
 [ext_resource type="Script" path="res://scenes/maps/shared/camera.gd" id="4_te0gu"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="5_1rfh5"]
 [ext_resource type="PackedScene" uid="uid://dyuj3stgg8wl4" path="res://scenes/maps/lobby/scenes/lobby_ui/lobby_ui.tscn" id="5_7r85o"]
 [ext_resource type="PackedScene" uid="uid://b3e41jcsgj6bl" path="res://scenes/maps/lobby/scenes/lobby_settings/lobby_settings.tscn" id="7_vdntv"]
+[ext_resource type="PackedScene" uid="uid://rh1o32f8llsb" path="res://scenes/maps/lobby/scenes/skin_selector/skin_selector.tscn" id="8_hy1jx"]
 
 [node name="Lobby" type="Node2D"]
 script = ExtResource("1_dytr5")
 
 [node name="LobbyBackground" parent="." instance=ExtResource("2_mmhfw")]
+
+[node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
+position = Vector2(147, -276)
+sprite = ExtResource("4_643ea")
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
@@ -66,6 +73,8 @@ script = ExtResource("3_4702b")
 
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
+
+[node name="SkinSelector" parent="." instance=ExtResource("8_hy1jx")]
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
 
