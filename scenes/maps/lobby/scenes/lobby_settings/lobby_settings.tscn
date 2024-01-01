@@ -1,9 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3e41jcsgj6bl"]
+[gd_scene load_steps=5 format=3 uid="uid://b3e41jcsgj6bl"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/scenes/lobby_settings/lobby_settings.gd" id="1_h5l7u"]
+[ext_resource type="PackedScene" uid="uid://b84ikvrvlejqh" path="res://scenes/maps/lobby/scenes/close/background_button/background_button.tscn" id="2_asrpg"]
+[ext_resource type="PackedScene" uid="uid://b8yh2vysfv24q" path="res://scenes/maps/lobby/scenes/close/close_button/close_button.tscn" id="2_sp5jw"]
+[ext_resource type="PackedScene" uid="uid://dnfvmswm3sk7g" path="res://scenes/ui/window_animation_player/window_animation_player.tscn" id="4_34t22"]
 
 [node name="LobbySettings" type="CanvasLayer"]
 script = ExtResource("1_h5l7u")
+
+[node name="BackgroundButton" parent="." node_paths=PackedStringArray("window") instance=ExtResource("2_asrpg")]
+window = NodePath("..")
 
 [node name="SettingsContainer" type="PanelContainer" parent="."]
 anchors_preset = 8
@@ -17,6 +23,7 @@ offset_right = 249.0
 offset_bottom = 204.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(249, 204)
 
 [node name="MarginContainer" type="MarginContainer" parent="SettingsContainer"]
 layout_mode = 2
@@ -85,6 +92,14 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 text = "Zastosuj"
+
+[node name="CloseButton" parent="SettingsContainer" node_paths=PackedStringArray("window") instance=ExtResource("2_sp5jw")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+window = NodePath("../..")
+
+[node name="WindowAnimationPlayer" parent="SettingsContainer" instance=ExtResource("4_34t22")]
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/MaxConnectionsContainer/MaxConnectionsInput" to="." method="_on_connections_lecturers_item_selected"]

@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://m6q8rh67ru1c"]
 
 [ext_resource type="Script" path="res://scenes/ui/user_interface/user_interface.gd" id="1_vsf4i"]
-[ext_resource type="Texture2D" uid="uid://k4l8qj4f7tog" path="res://scenes/ui/user_interface/assets/zabij.png" id="3_ht8hr"]
+[ext_resource type="Texture2D" uid="uid://cif6s0y35b7xi" path="res://scenes/ui/user_interface/assets/oblej.png" id="3_chfnj"]
 [ext_resource type="Texture2D" uid="uid://cxaevxj4uv5c5" path="res://scenes/ui/user_interface/assets/temporary_vent_button.png" id="4_bo6gn"]
-[ext_resource type="Texture2D" uid="uid://kt7f7dco5fcr" path="res://scenes/ui/user_interface/assets/sabotaz.png" id="4_il3rr"]
+[ext_resource type="Texture2D" uid="uid://b48ctw7i7ayog" path="res://scenes/ui/user_interface/assets/sabotaz.png" id="4_il3rr"]
 [ext_resource type="Texture2D" uid="uid://b0wwwpxa645jv" path="res://scenes/ui/user_interface/assets/4_przycisk_zglos.png" id="5_m7bia"]
 [ext_resource type="Texture2D" uid="uid://djuqvjgi3pbno" path="res://scenes/ui/user_interface/assets/5_przycisk_uzyj.png" id="6_57n6h"]
 [ext_resource type="Texture2D" uid="uid://cnox6721edy8e" path="res://scenes/ui/user_interface/assets/temporary_settings_button.png" id="7_p10qh"]
@@ -44,7 +44,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("3_ht8hr")
+texture_normal = ExtResource("3_chfnj")
 
 [node name="SabotageButton" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(60, 60)

@@ -35,6 +35,7 @@ func _on_save_button_pressed():
 
 func _on_visibility_changed():
 	get_parent().update_input()
+	$SettingsContainer.visible = visible
 
 
 func _on_connections_lecturers_item_selected(_index: int):

@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://5fao6q35e458"]
+[gd_scene load_steps=5 format=3 uid="uid://5fao6q35e458"]
 
+[ext_resource type="PackedScene" uid="uid://dnfvmswm3sk7g" path="res://scenes/ui/window_animation_player/window_animation_player.tscn" id="4_0h12e"]
 [ext_resource type="Texture2D" uid="uid://duof0ela0iipq" path="res://scenes/ui/minigame_menu/assets/close_button1.png" id="11_28kv6"]
 [ext_resource type="Texture2D" uid="uid://pmrgxruihggd" path="res://scenes/ui/minigame_menu/assets/close_button3.png" id="12_k2ue0"]
 [ext_resource type="Texture2D" uid="uid://byv08l1nglh18" path="res://scenes/ui/minigame_menu/assets/close_button2.png" id="13_e3x6e"]
@@ -15,6 +16,8 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(512, 288)
 
 [node name="Background" type="ColorRect" parent="MinigameContainer"]
 layout_mode = 1
@@ -65,3 +68,5 @@ focus_mode = 0
 texture_normal = ExtResource("11_28kv6")
 texture_pressed = ExtResource("12_k2ue0")
 texture_hover = ExtResource("13_e3x6e")
+
+[node name="WindowAnimationPlayer" parent="MinigameContainer" instance=ExtResource("4_0h12e")]
