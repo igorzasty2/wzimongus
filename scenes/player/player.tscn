@@ -192,7 +192,7 @@ parameters/walk/blend_position = Vector2(0, 0)
 position = Vector2(0, 43)
 rotation = 1.5708
 scale = Vector2(0.682897, 1)
-polygon = PackedVector2Array(43.9305, 9.99989, 43.9304, -16.0001, 38.0728, -50.0001, 24.8936, -62.0001, 8.78575, -66, -7.3221, -66, -19.0369, -60, -26.3586, -47.9999, -30.7515, -30.9999, -33.6801, -2.99992, -29.2868, 31.0001, -13.1789, 53, 4.39334, 55, 23.4299, 50.9999, 32.2159, 43.9999, 39.5376, 33.9999, 42.4663, 21.9999)
+polygon = PackedVector2Array(43.9305, 9.99989, 43.9304, -16.0001, 38.0728, -50.0001, 24.8936, -62.0001, 8.78575, -66, -7.3221, -66, -19.0369, -60, -26.3585, -46.9999, -32.2158, -26.9999, -36.6088, -1.99991, -29.2868, 31.0001, -13.1789, 50, 4.39333, 54, 20.5012, 51, 29.2872, 44.9999, 36.6089, 34.9999, 41.0019, 23.9999)
 
 [node name="UsernameLabel" type="Label" parent="."]
 anchors_preset = 5
@@ -222,3 +222,5 @@ input_properties = Array[String](["Input:direction"])
 script = ExtResource("3_l2yj5")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
