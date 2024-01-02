@@ -100,6 +100,7 @@ texture = ExtResource("4_364p8")
 polygon = PackedVector2Array(-177, -4, -328, 73, 327, 74, 178, -5)
 
 [node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
+z_index = 1
 position = Vector2(147, -276)
 sprite = ExtResource("4_643ea")
 
