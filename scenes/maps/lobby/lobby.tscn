@@ -1,16 +1,19 @@
-[gd_scene load_steps=22 format=3 uid="uid://l2mxisy85ciw"]
+[gd_scene load_steps=25 format=3 uid="uid://l2mxisy85ciw"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/lobby.gd" id="1_dytr5"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
 [ext_resource type="PackedScene" uid="uid://lfxaubfh4wik" path="res://scenes/maps/lobby/scenes/lobby_background/lobby_background.tscn" id="2_mmhfw"]
 [ext_resource type="Script" path="res://addons/LANServerBroadcast/server_advertiser/ServerAdvertiser.gd" id="3_4702b"]
 [ext_resource type="Texture2D" uid="uid://d0wxtt4qauao1" path="res://scenes/maps/lobby/assets/lampa.png" id="3_h0oaw"]
+[ext_resource type="PackedScene" uid="uid://clyynf7f5bwqv" path="res://scenes/maps/lobby/scenes/skin_selector_point/skin_selector_point.tscn" id="3_xxsdp"]
 [ext_resource type="Texture2D" uid="uid://ccpiiwi5tsiuw" path="res://scenes/maps/lobby/assets/kamien.png" id="4_364p8"]
+[ext_resource type="Texture2D" uid="uid://ge40lyarwi18" path="res://scenes/maps/lobby/scenes/skin_selector_point/assets/wifi.png" id="4_643ea"]
 [ext_resource type="Script" path="res://scenes/maps/shared/camera.gd" id="4_te0gu"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="5_1rfh5"]
 [ext_resource type="PackedScene" uid="uid://dyuj3stgg8wl4" path="res://scenes/maps/lobby/scenes/lobby_ui/lobby_ui.tscn" id="5_7r85o"]
 [ext_resource type="Texture2D" uid="uid://c7y7ff03ym4j4" path="res://scenes/maps/lobby/assets/slupy.png" id="5_cauck"]
 [ext_resource type="PackedScene" uid="uid://b3e41jcsgj6bl" path="res://scenes/maps/lobby/scenes/lobby_settings/lobby_settings.tscn" id="7_vdntv"]
+[ext_resource type="PackedScene" uid="uid://rh1o32f8llsb" path="res://scenes/maps/lobby/scenes/skin_selector/skin_selector.tscn" id="8_hy1jx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0cw4k"]
 size = Vector2(962, 16)
@@ -96,6 +99,10 @@ texture = ExtResource("4_364p8")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Kamien2/StaticBody2D"]
 polygon = PackedVector2Array(-177, -4, -328, 73, 327, 74, 178, -5)
 
+[node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
+position = Vector2(147, -276)
+sprite = ExtResource("4_643ea")
+
 [node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="SpawnPoints"]
@@ -148,6 +155,8 @@ script = ExtResource("3_4702b")
 
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
+
+[node name="SkinSelector" parent="." instance=ExtResource("8_hy1jx")]
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
 

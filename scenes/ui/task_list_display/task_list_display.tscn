@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://blfakmqxo172y"]
+
+[ext_resource type="Script" path="res://scenes/ui/task_list_display/task_list_display.gd" id="1_dgkoj"]
+
+[node name="TaskListDisplay" type="CanvasLayer"]
+script = ExtResource("1_dgkoj")
+
+[node name="TaskList" type="RichTextLabel" parent="."]
+offset_right = 515.0
+offset_bottom = 553.0
+bbcode_enabled = true
+fit_content = true

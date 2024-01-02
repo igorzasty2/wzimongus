@@ -6,7 +6,7 @@ extends Control
 
 
 func _on_host_button_pressed():
-	GameManager.set_player_key("username", username_input.text)
+	GameManager.set_current_player_key("username", username_input.text)
 
 	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 
