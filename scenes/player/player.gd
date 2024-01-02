@@ -101,29 +101,27 @@ func _update_highlight(player: int) -> void:
 			else:
 				_toggle_highlight(i,false)
 
-## Zwraca id: int najbliższego gracza, który nie jest impostorem
+## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje
 func closest_player(to_who: int) -> int:
-	var all_players: Array = GameManager.get_registered_players().keys()
-	var me = to_who
+	var players: Array = GameManager.get_registered_players().keys()
+	players.erase(to_who)
 	
-	all_players.erase(me)
-	
-	for i in all_players:
+	for i in players:
 		if GameManager.get_registered_player_key(i,"is_lecturer") or GameManager.get_registered_player_key(i,"is_dead"):
-			all_players.erase(i)
+			players.erase(i)
 	
-	if all_players.size() > 0:
+	if players.size() > 0:
 		var kill_radius = 260
-		var my_position: Vector2 = get_parent().get_node(str(GameManager.get_current_player_id())).global_position
+		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(to_who)).global_position
 		var curr_closest = null
 		var curr_closest_dist = kill_radius**2 + 1
 		
-		for i in range(all_players.size()):
-			var temp_position: Vector2 = get_parent().get_node(str(all_players[i])).global_position
+		for i in range(players.size()):
+			var temp_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(players[i])).global_position
 			var temp_dist = my_position.distance_squared_to(temp_position)
 			
 			if(temp_dist < curr_closest_dist):
-				curr_closest = all_players[i]
+				curr_closest = players[i]
 				curr_closest_dist = temp_dist
 				
 		if curr_closest_dist < (kill_radius**2):
@@ -131,22 +129,20 @@ func closest_player(to_who: int) -> int:
 		return 0
 	return 0
 
-
 func _on_killed_player(victim: int):
 	if GameManager.get_registered_player_key(victim,"is_dead"):
 		if GameManager.get_current_player_id() != victim:
 			get_parent().get_node(str(victim)).visible = false
 		else:
-			get_parent().get_node(str(victim)+"/UsernameLabel").text = "(DEAD) "+ str(victim)
+			pass
 			#get_parent().get_node(str(victim)+"/UsernameLabel").theme_override_colors.font_color = dead_username_color
 	if GameManager.get_current_player_key("is_dead"):
 		for i in GameManager.get_registered_players().keys():
 			get_parent().get_node(str(i)).visible = true
 		
-		var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
-		dead_body.get_node("DeadBodySprite").texture = load("res://icon.svg")
-		dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
-		dead_body.global_position = get_parent().get_node(str(victim)).global_position
-		
-		get_parent().add_child(dead_body)
-
+	var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
+	dead_body.get_node("DeadBodySprite").texture = load("res://icon.svg")
+	dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
+	dead_body.global_position = get_parent().get_node(str(victim)).global_position
+	
+	get_parent().add_child(dead_body)

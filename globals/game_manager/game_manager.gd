@@ -500,7 +500,7 @@ func _request_kill(victim: int):
 		return ERR_UNAVAILABLE		
 		
 	var me = multiplayer.get_remote_sender_id()
-	if _closest_player_server(me) == victim:
+	if get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(me)).closest_player(me) == victim:
 		_current_game["registered_players"][victim]["is_dead"] = true
 		_kill_server.rpc(victim)
 
@@ -510,31 +510,3 @@ func _request_kill(victim: int):
 func _kill_server(victim: int):
 	_current_game["registered_players"][victim]["is_dead"] = true
 	player_killed.emit(victim)
-
-## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje
-func _closest_player_server(to_who: int) -> int:
-	var players: Array = get_registered_players().keys()
-	players.erase(to_who)
-	
-	for i in players:
-		if get_registered_player_key(i,"is_lecturer") or get_registered_player_key(i,"is_dead"):
-			players.erase(i)
-	
-	if players.size() > 0:
-		var kill_radius = 260
-		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(to_who)).global_position
-		var curr_closest = null
-		var curr_closest_dist = kill_radius**2 + 1
-		
-		for i in range(players.size()):
-			var temp_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(players[i])).global_position
-			var temp_dist = my_position.distance_squared_to(temp_position)
-			
-			if(temp_dist < curr_closest_dist):
-				curr_closest = players[i]
-				curr_closest_dist = temp_dist
-				
-		if curr_closest_dist < (kill_radius**2):
-			return curr_closest
-		return 0
-	return 0
