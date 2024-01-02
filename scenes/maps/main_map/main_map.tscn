@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://cwjp3351iq2cg" path="res://scenes/maps/main_map/scenes/rooms/sala_2.tscn" id="5_ehcuo"]
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_pwcjb"]
 [ext_resource type="PackedScene" uid="uid://t3ayjy0eflf" path="res://scenes/maps/main_map/scenes/rooms/sala_3.tscn" id="6_j2fhe"]
-[ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="6_slh3o"]
 [ext_resource type="PackedScene" uid="uid://q56d4alpaarl" path="res://scenes/maps/main_map/scenes/rooms/xero.tscn" id="7_htmn5"]
 [ext_resource type="PackedScene" uid="uid://db74hr2yilxel" path="res://scenes/maps/main_map/scenes/rooms/aula.tscn" id="8_ckisu"]
 [ext_resource type="PackedScene" uid="uid://deoe0yhjya0it" path="res://scenes/maps/main_map/scenes/rooms/willy.tscn" id="9_r6nh5"]
@@ -85,6 +84,7 @@
 [ext_resource type="Texture2D" uid="uid://cbxi1n610rgci" path="res://scenes/maps/main_map/assets/objects/xero_polka_na_dokumenty.png" id="71_yvo4d"]
 [ext_resource type="Texture2D" uid="uid://rmo5fhilsda3" path="res://scenes/maps/main_map/assets/objects/xero_stos_kartek.png" id="72_vb4gs"]
 [ext_resource type="Texture2D" uid="uid://lqlctfob53ns" path="res://scenes/maps/main_map/assets/objects/xero_szafa.png" id="73_g7t2a"]
+[ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="79_x26x2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -939,14 +939,19 @@ shape = SubResource("RectangleShape2D_f8ggq")
 [node name="Tasks" type="Node2D" parent="."]
 
 [node name="Task1" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(473, -918)
+position = Vector2(7, -982)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("5_pwcjb")
 
 [node name="Task2" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(67, -894)
-sprite = ExtResource("6_slh3o")
+position = Vector2(374, -975)
+sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("4_6s3my")
+
+[node name="Task3" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(735, -973)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("79_x26x2")
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true

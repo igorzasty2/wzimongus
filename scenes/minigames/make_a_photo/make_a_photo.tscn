@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmjx2shy2ugc2"]
+[gd_scene load_steps=7 format=3 uid="uid://dmjx2shy2ugc2"]
 
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/make_a_photo.gd" id="1_ho2i0"]
 [ext_resource type="Texture2D" uid="uid://bacbpfbdjckd4" path="res://scenes/minigames/make_a_photo/sprites/table.jpg" id="1_uns0w"]
 [ext_resource type="Texture2D" uid="uid://bq4pawvs27u3m" path="res://scenes/minigames/make_a_photo/sprites/papers.png" id="2_t5i8c"]
 [ext_resource type="PackedScene" uid="uid://cr8va0m83uusp" path="res://scenes/minigames/make_a_photo/active_objects/take_the_phone.tscn" id="3_nsmec"]
@@ -7,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d3t3d48a8862t" path="res://scenes/minigames/make_a_photo/active_objects/to_make_a_photo.tscn" id="5_yej6x"]
 
 [node name="make_a_photo" type="Node2D"]
+script = ExtResource("1_ho2i0")
 
 [node name="Table" type="Sprite2D" parent="."]
 position = Vector2(562, 312)
