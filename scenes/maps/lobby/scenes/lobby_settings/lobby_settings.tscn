@@ -93,11 +93,28 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 text = "Zastosuj"
 
-[node name="CloseButton" parent="SettingsContainer" node_paths=PackedStringArray("window") instance=ExtResource("2_sp5jw")]
+[node name="Control" type="Control" parent="SettingsContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-window = NodePath("../..")
+
+[node name="CloseButton" parent="SettingsContainer/Control" node_paths=PackedStringArray("window") instance=ExtResource("2_sp5jw")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -360.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 360.0
+grow_horizontal = 0
+grow_vertical = 1
+pivot_offset = Vector2(360, 0)
+size_flags_horizontal = 8
+size_flags_vertical = 0
+window = NodePath("../../..")
 
 [node name="WindowAnimationPlayer" parent="SettingsContainer" instance=ExtResource("4_34t22")]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxaevxj4uv5c5"
-path="res://.godot/imported/temporary_vent_button.png-2a9251529d6cb82324caaa00c9a140e9.ctex"
+uid="uid://ds2c374kw2h50"
+path="res://.godot/imported/nowy_vent.png-d2c5f4161d0d589514d7ecb03041f52b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/user_interface/assets/temporary_vent_button.png"
-dest_files=["res://.godot/imported/temporary_vent_button.png-2a9251529d6cb82324caaa00c9a140e9.ctex"]
+source_file="res://scenes/ui/user_interface/assets/nowy_vent.png"
+dest_files=["res://.godot/imported/nowy_vent.png-d2c5f4161d0d589514d7ecb03041f52b.ctex"]
 
 [params]
 

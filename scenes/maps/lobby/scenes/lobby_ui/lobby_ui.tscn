@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://irwk5hfqym8q" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/9_przycisk_start.png" id="2_l78cx"]
 [ext_resource type="Texture2D" uid="uid://dqur5bo6n5iob" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_lobby_settings_button.png" id="3_srhgy"]
 [ext_resource type="Texture2D" uid="uid://j016m335ll88" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/3_przycisk_avatar.png" id="3_wnle0"]
-[ext_resource type="Texture2D" uid="uid://cnox6721edy8e" path="res://scenes/ui/user_interface/assets/temporary_settings_button.png" id="5_a0wmq"]
+[ext_resource type="Texture2D" uid="uid://x0dursxgvvly" path="res://scenes/ui/user_interface/assets/nowy_setting_v1.png" id="5_esjlh"]
 [ext_resource type="Texture2D" uid="uid://cbycws50ikr4y" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_chat_button.png" id="6_0dsnu"]
 
 [node name="LobbyUi" type="CanvasLayer"]
@@ -59,14 +59,16 @@ size_flags_vertical = 8
 texture_normal = ExtResource("3_wnle0")
 
 [node name="GridContainer" type="GridContainer" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
+anchors_preset = -1
+anchor_left = 0.99
+anchor_top = 0.02
+anchor_right = 0.99
+anchor_bottom = 0.02
 offset_left = -250.0
 offset_bottom = 250.0
 grow_horizontal = 0
-scale = Vector2(0.7, 0.7)
-pivot_offset = Vector2(250, 0)
+scale = Vector2(0.18, 0.18)
+pivot_offset = Vector2(730, 0)
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_constants/h_separation = 10
@@ -82,9 +84,10 @@ custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("5_a0wmq")
+texture_normal = ExtResource("5_esjlh")
 
 [node name="Filler" type="Control" parent="GridContainer"]
+custom_minimum_size = Vector2(360, 360)
 layout_mode = 2
 
 [node name="LobbySettingsButton" type="TextureButton" parent="GridContainer"]

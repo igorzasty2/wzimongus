@@ -66,12 +66,13 @@ anchor_left = 1.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.0
-offset_left = -40.0
+offset_left = -360.0
 offset_top = 0.0
 offset_right = 0.0
-offset_bottom = 40.0
+offset_bottom = 360.0
 grow_horizontal = 0
 grow_vertical = 1
+pivot_offset = Vector2(360, 0)
 window = NodePath("../..")
 
 [node name="WindowAnimationPlayer" parent="Panel" instance=ExtResource("4_51umu")]

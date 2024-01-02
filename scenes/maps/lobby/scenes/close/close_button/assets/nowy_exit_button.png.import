@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnox6721edy8e"
-path="res://.godot/imported/temporary_settings_button.png-9570c7a05340824c8b61b208fbff30a3.ctex"
+uid="uid://y0sk7am2xf1o"
+path="res://.godot/imported/nowy_exit_button.png-18d93f21f2e0cc9c93a711f072a5563c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/user_interface/assets/temporary_settings_button.png"
-dest_files=["res://.godot/imported/temporary_settings_button.png-9570c7a05340824c8b61b208fbff30a3.ctex"]
+source_file="res://scenes/maps/lobby/scenes/close/close_button/assets/nowy_exit_button.png"
+dest_files=["res://.godot/imported/nowy_exit_button.png-18d93f21f2e0cc9c93a711f072a5563c.ctex"]
 
 [params]
 
