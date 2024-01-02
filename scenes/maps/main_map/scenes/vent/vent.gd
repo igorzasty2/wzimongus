@@ -79,10 +79,10 @@ func change_dir_bttns_visibility(visibility:bool):
 
 # Obsługuje wejście gracza w obszar w którym może ventować
 func _on_area_2d_body_entered(body):
-	print("area entered")
 	if can_use_vent() || allow_crewmate_vent:
 		
-		body.can_player_use_vent = true
+		if body.is_in_vent != true:
+			body.can_player_use_vent = true
 		
 		if body.name.to_int() == multiplayer.get_unique_id():
 			toggle_highlight(true)
@@ -90,7 +90,6 @@ func _on_area_2d_body_entered(body):
 
 # Obsługuje wyjście gracza z obszaru w którym może ventować
 func _on_area_2d_body_exited(body):
-	print("area exited")
 	if can_use_vent() || allow_crewmate_vent:
 		
 		body.can_player_use_vent = false
