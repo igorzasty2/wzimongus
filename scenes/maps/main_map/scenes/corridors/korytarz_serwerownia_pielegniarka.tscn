@@ -11,6 +11,7 @@ size = Vector2(461, 190)
 [node name="korytarz_serwerownia_pielegniarka" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
+position = Vector2(27, 0)
 texture = ExtResource("1_y501d")
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
