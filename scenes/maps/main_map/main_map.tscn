@@ -676,17 +676,19 @@ position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_8j1br")
 
 [node name="Sala3Biurko" type="Node2D" parent="Objects"]
-position = Vector2(-2950, -2753)
+position = Vector2(-2952, -2784)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/Sala3Biurko"]
+position = Vector2(0, 32)
 texture = ExtResource("55_n1e6j")
 
 [node name="Sprite2" type="Sprite2D" parent="Objects/Sala3Biurko"]
-position = Vector2(0, -112)
+position = Vector2(0, -72)
 texture = ExtResource("56_7h2gl")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala3Biurko"]
+position = Vector2(0, 32)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala3Biurko/CollisionBox"]
 polygon = PackedVector2Array(150, -24.8, 145.4, -11, 143.9, -11, 136.9, -3, 134.5, -3, 124.5, 2, 79, 2, -1, 0, -13, 4.39999, -13, 5, -25, 14, -25, 15.6, -29, 21.6, -29, 26.1, -36.2, 100, -37.6, 100, -46.6, 126, -48.4, 126, -56.3, 131, -138, 131, -138, 130, -149, 122, -149, 119.5, -150, 117.9, -150, -131, 150, -131)
@@ -718,7 +720,7 @@ position = Vector2(0, -120)
 polygon = PackedVector2Array(30.5, 118.8, 117.5, 163.8, 117.5, 173, 115, 175.4, 112.5, 174.3, 112.5, 173.2, 59.3, 146.2, 112.5, 195.1, 112.5, 199.4, 110.7, 200, 102.5, 200, 24.1, 129.2, -52.5, 200, -62.3, 200, -63.5, 198.8, -63.5, 195.1, -11.7, 146.7, -66, 176, -68.3, 176, -72.5, 171.8, -72.5, 167.2, -70.3, 165, -68, 165, 19.5, 118.8)
 
 [node name="SamorzadKanapa" type="Node2D" parent="Objects"]
-position = Vector2(1743, 85)
+position = Vector2(1775, 85)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/SamorzadKanapa"]
@@ -730,7 +732,7 @@ texture = ExtResource("59_s1cnf")
 polygon = PackedVector2Array(177, -76.8, 177, -75.4, 189, -71.4, 189, -69.7, 198, -59.8, 198, -57, 198.9, -38, 165, 97, -213.5, 46, -215.7, 46, -225, 46, -230, 43, -202.6, -103, -201, -103, -192, -116, -189.4, -116, -180.7, -120, -149.9, -120)
 
 [node name="SamorzadStol" type="Node2D" parent="Objects"]
-position = Vector2(1702, 297)
+position = Vector2(1734, 297)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/SamorzadStol"]
@@ -743,28 +745,28 @@ position = Vector2(0, -10)
 shape = SubResource("CircleShape2D_8454v")
 
 [node name="SamorzadRoslina" type="Node2D" parent="Objects"]
-position = Vector2(1373, 26)
+position = Vector2(1390, 161)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/SamorzadRoslina"]
+position = Vector2(-13, -104)
 texture = ExtResource("61_hrurh")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadRoslina"]
-position = Vector2(13, 104)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SamorzadRoslina/CollisionBox"]
 position = Vector2(0, 11.5)
 shape = SubResource("RectangleShape2D_bkfev")
 
 [node name="SamorzadRoslina2" type="Node2D" parent="Objects"]
-position = Vector2(2122, -105)
+position = Vector2(2115, 31)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/SamorzadRoslina2"]
+position = Vector2(-13, -104)
 texture = ExtResource("61_hrurh")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadRoslina2"]
-position = Vector2(13, 104)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SamorzadRoslina2/CollisionBox"]
 position = Vector2(0, 11.5)
