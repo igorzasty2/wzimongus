@@ -6,7 +6,7 @@
 size = Vector2(60, 344)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0rg1l"]
-size = Vector2(1671, 249.5)
+size = Vector2(1671, 291.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jorn5"]
 size = Vector2(59, 630)
@@ -25,7 +25,7 @@ size = Vector2(691, 60)
 
 [node name="aula" type="Node2D"]
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="aula" type="Sprite2D" parent="."]
 texture = ExtResource("1_q5m8s")
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
@@ -35,7 +35,7 @@ position = Vector2(-806, -680)
 shape = SubResource("RectangleShape2D_wywl7")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(-0.5, -726.75)
+position = Vector2(-0.5, -705.75)
 shape = SubResource("RectangleShape2D_0rg1l")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="CollisionBox"]

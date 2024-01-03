@@ -35,15 +35,15 @@ func _on_button_pressed():
 	
 	if decision.visible:
 		decision.visible = false
-		GameManager.set_player_key("preselected", false)
+		GameManager.set_current_player_key("preselected", false)
 		return
 	
 	decision.visible = true
-	GameManager.set_player_key("preselected", true)
+	GameManager.set_current_player_key("preselected", true)
 
 func _on_decision_no_pressed():
 	decision.visible = false
-	GameManager.set_player_key("preselected", false)
+	GameManager.set_current_player_key("preselected", false)
 
 func _on_decision_yes_pressed():
 	decision.visible = false

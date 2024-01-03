@@ -14,7 +14,7 @@ config/name="WZiMong Us"
 run/main_scene="res://scenes/ui/start_menu/start_menu.tscn"
 config/features=PackedStringArray("4.1")
 boot_splash/show_image=false
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
@@ -122,6 +122,9 @@ chat_change_group={
 events/enabled=false
 logging/log_level=4
 logging/netfox_log_level=4
+time/max_ticks_per_frame=5
+time/recalibrate_threshold=0.5
+time/sync_samples=5
 
 [rendering]
 

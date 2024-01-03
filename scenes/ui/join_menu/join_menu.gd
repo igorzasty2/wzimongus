@@ -6,11 +6,11 @@ extends Control
 @onready var server_list = $ServerPanel/Table/ServerListScroll/ServerList
 
 func _on_join_button_pressed():
-	GameManager.set_player_key("username", username_input.text)
+	GameManager.set_current_player_key("username", username_input.text)
 
 	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 
-	GameManager.join_game.call_deferred(address_input.text, port_input.text.to_int())
+	GameManager.join_lobby.call_deferred(address_input.text, port_input.text.to_int())
 
 
 func _on_server_listener_new_server(server_info):

@@ -43,7 +43,7 @@ func _process(delta):
 
 func _on_player_voted(voted_player_key):
 	skip_button.disabled = true
-	GameManager.set_player_key("voted", true)
+	GameManager.set_current_player_key("voted", true)
 
 	#Dodaje głos do listy głosów na serwerze
 	if multiplayer.is_server():
@@ -63,18 +63,18 @@ func _on_skip_button_pressed():
 		return
 	
 	skip_decision.visible = true
-	GameManager.set_player_key("preselected", true)
+	GameManager.set_current_player_key("preselected", true)
 
 
 #Zamyka decyzję o skipowaniu
 func _on_decision_yes_pressed():
-	GameManager.set_player_key("voted", true)
+	GameManager.set_current_player_key("voted", true)
 	skip_decision.visible = false
 	skip_button.disabled = true
 
 
 func _on_decision_no_pressed():
-	GameManager.set_player_key("preselected", false)
+	GameManager.set_current_player_key("preselected", false)
 	skip_decision.visible = false
 
 
@@ -100,7 +100,7 @@ func _render_player_boxes():
 #Zamyka głosowanie
 func _on_end_voting_timer_timeout():
 	if !GameManager.get_current_player_key("voted"):
-		GameManager.set_player_key("voted", true)
+		GameManager.set_current_player_key("voted", true)
 
 	end_vote_text.text = "[center]Głosowanie zakończone![/center]"
 	
