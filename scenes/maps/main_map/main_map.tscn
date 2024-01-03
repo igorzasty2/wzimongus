@@ -974,9 +974,9 @@ script = ExtResource("34_b878o")
 root = NodePath("..")
 properties = Array[String]([":global_position"])
 
+[node name="TaskListDisplay" parent="." instance=ExtResource("38_l1f3e")]
+
 [node name="MinigameMenu" parent="." instance=ExtResource("34_5r0ro")]
 script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
-
-[node name="TaskListDisplay" parent="." instance=ExtResource("38_l1f3e")]
