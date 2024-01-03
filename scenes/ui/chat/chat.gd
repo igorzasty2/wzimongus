@@ -83,7 +83,7 @@ func _create_message(username, message, group):
 
 
 func _on_input_text_visibility_changed():
-	get_parent().update_input()
+	visibility_changed.emit()
 
 
 func _on_input_text_text_submitted(submitted_text):

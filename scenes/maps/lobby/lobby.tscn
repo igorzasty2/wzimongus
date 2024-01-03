@@ -212,3 +212,7 @@ unique_name_in_owner = true
 [node name="SkinSelector" parent="." instance=ExtResource("8_hy1jx")]
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
+
+[connection signal="visibility_changed" from="Chat" to="." method="update_input"]
+[connection signal="visibility_changed" from="SkinSelector" to="." method="update_input"]
+[connection signal="visibility_changed" from="LobbySettings" to="." method="update_input"]

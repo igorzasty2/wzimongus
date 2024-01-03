@@ -13,8 +13,8 @@ signal load_finished
 
 
 func update_input():
-	if chat_input && lobby_settings && skin_selector:
-		var input_status = !(chat_input.visible || lobby_settings.visible || skin_selector.visible)
+	if chat_input && skin_selector && lobby_settings:
+		var input_status = !(chat_input.visible || skin_selector.visible || lobby_settings.visible)
 		GameManager.set_input_status(input_status)
 
 

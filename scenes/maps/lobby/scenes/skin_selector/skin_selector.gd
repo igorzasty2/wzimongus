@@ -117,5 +117,4 @@ func _on_skin_option_button_item_selected(index):
 
 
 func _on_visibility_changed():
-	get_parent().update_input()
 	$Panel.visible = visible
