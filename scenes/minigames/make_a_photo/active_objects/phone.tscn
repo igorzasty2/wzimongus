@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://clh52hsf4nrk5"]
+
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/scripts/phone.gd" id="1_5hu63"]
+[ext_resource type="Texture2D" uid="uid://cyd8kjes00046" path="res://scenes/minigames/make_a_photo/sprites/phone.png" id="1_nugkl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cj1nl"]
+size = Vector2(473, 216)
+
+[node name="Phone" type="CharacterBody2D"]
+script = ExtResource("1_5hu63")
+
+[node name="Phone" type="Sprite2D" parent="."]
+scale = Vector2(0.220186, 0.235727)
+texture = ExtResource("1_nugkl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-14, 0)
+shape = SubResource("RectangleShape2D_cj1nl")

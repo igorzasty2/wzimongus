@@ -11,6 +11,7 @@ size = Vector2(1460, 254)
 texture = ExtResource("1_gfual")
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
+position = Vector2(0, 13)
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="CollisionBox"]
 position = Vector2(0, -369)
