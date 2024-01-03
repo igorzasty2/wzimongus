@@ -476,6 +476,7 @@ func _kick_player(reason: String):
 ## Obsługuje rozpoczęcie gry u graczy.
 func _on_game_started():
 	_current_game["is_started"] = true
+	check_winning_conditions()
 	game_started.emit()
 
 
@@ -515,3 +516,38 @@ func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
 		if Time.get_ticks_msec() > timeout:
 			return ERR_TIMEOUT
 	return OK
+
+
+## Sprawdza kto wygrał w tym momencie i kończy grę na korzyść wykładowcom lub crewmatom, jeżeli nikt, to nic nie robi.
+func check_winning_conditions():
+	# TODO: zrobić sygnał z informacją o ludzi które wygrali.
+	if _count_alive_lecturers() == 0:
+		pass
+
+	if _count_alive_crewmates() <= _count_alive_lecturers():
+		pass
+	
+	if TaskManager.get_tasks_server().is_empty():
+		pass
+
+
+## Liczy żyjących wykładowców.
+func _count_alive_lecturers():
+	var lecturer_counter = 0
+	
+	for i in get_registered_players():
+		if get_registered_player_key(i, "is_alive") and get_registered_player_key(i, "is_lecturer"):
+			lecturer_counter += 1
+
+	return lecturer_counter
+
+
+## Liczy żyjących crewmatów.
+func _count_alive_crewmates():
+	var crewmate_counter = 0
+	
+	for i in get_registered_players():
+		if get_registered_player_key(i, "is_alive") and not get_registered_player_key(i, "is_lecturer"):
+			crewmate_counter += 1
+
+	return crewmate_counter

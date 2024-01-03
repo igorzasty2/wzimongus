@@ -42,10 +42,10 @@
 [ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_menu.tscn" id="34_5r0ro"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="34_b878o"]
 [ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_menu.gd" id="35_23714"]
-[ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
 [ext_resource type="Texture2D" uid="uid://lv5k5yskqtbw" path="res://scenes/maps/main_map/assets/objects/kanapa.png" id="35_ryots"]
 [ext_resource type="PackedScene" uid="uid://ct2plxemq2ft5" path="res://scenes/ui/loading_screen/loading_screen.tscn" id="36_4x0df"]
 [ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_1.png" id="36_k0n1h"]
+[ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
 [ext_resource type="Texture2D" uid="uid://bps64glp2uv7u" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_2.png" id="37_mklhi"]
 [ext_resource type="PackedScene" uid="uid://blfakmqxo172y" path="res://scenes/ui/task_list_display/task_list_display.tscn" id="38_l1f3e"]
 [ext_resource type="Texture2D" uid="uid://2l0wseh5bnat" path="res://scenes/maps/main_map/assets/objects/dziekanat_biurko.png" id="38_u8dgm"]
@@ -983,5 +983,3 @@ properties = Array[String]([":global_position"])
 script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
-
-[connection signal="timeout" from="Camera/Timer" to="Camera" method="_on_timer_timeout"]

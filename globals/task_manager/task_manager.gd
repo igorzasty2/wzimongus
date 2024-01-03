@@ -116,3 +116,8 @@ func reset():
 	
 	# Nie jestem pewien czy to będzie działać.
 	GameManager.player_deregistered.disconnect(_remove_deregistered_player_tasks)
+
+
+# Zwraca słownik wszystkich niezakończonych zadań przepisanych do wszystkich graczę.
+func get_tasks_server():
+	return _tasks
