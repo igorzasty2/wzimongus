@@ -36,6 +36,8 @@ var _current_game = {
 	"is_started": false,
 	"is_paused": false,
 	"is_input_disabled": false,
+	"is_voted": false,
+	"is_vote_preselected": false,
 	"registered_players": {},
 }
 
@@ -47,9 +49,7 @@ var _most_voted_player = null
 
 ## Przechowuje zmienialne dane o obecnym graczu.
 var _current_player = {
-	"username": "",
-	"voted": false,
-	"preselected": false
+	"username": ""
 }
 
 ## Przechowuje ustawienia serwera.
@@ -61,7 +61,7 @@ var _server_settings = {
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
-var _player_fillable = ["username", "voted", "preselected"]
+var _player_fillable = ["username"]
 
 ## Lista atrybutów gracza, których klient nie może widzieć.
 var _player_hidden = ["is_lecturer"]
@@ -151,13 +151,15 @@ func join_lobby(address:String, port:int):
 		_handle_error("Nie udało się połączyć z " + str(address) + ":" + str(port) + "!")
 		return
 
+
 ## Rozpoczyna następną rundę
 func next_round():
-	GameManager.set_current_player_key("voted", false)
-	GameManager.set_current_player_key("preselected", false)
+	_current_game["is_voted"] = false
+	_current_game["is_vote_preselected"] = false
 	GameManager.set_input_status(true)
 	_votes = {}
 	_most_voted_player = null
+
 
 ## Rozpoczyna grę.
 func start_game():
@@ -184,6 +186,8 @@ func end_game():
 	_current_game["is_started"] = false
 	_current_game["is_paused"] = false
 	_current_game["is_input_disabled"] = false
+	_current_game["is_voted"] = false
+	_current_game["is_vote_preselected"] = false
 	_current_game["registered_players"].clear()
 
 	_current_player["username"] = ""
@@ -198,6 +202,12 @@ func end_game():
 func get_current_game_key(key:String):
 	if _current_game.has(key):
 		return _current_game[key]
+
+
+## Zmienia informację o grze, która jest przechowywana pod danym kluczem.
+func set_current_game_key(key:String, value):
+	if _current_game.has(key):
+		_current_game[key] = value
 
 
 ## Zwraca tablicę głosów
