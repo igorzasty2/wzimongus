@@ -1,0 +1,111 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfdk7562ehhtp"]
+
+[ext_resource type="Script" path="res://scenes/ui/voting_screen/voting_screen.gd" id="1_kta77"]
+
+[node name="VotingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kta77")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14902, 0.14902, 0.14902, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -116.0
+offset_top = 42.0
+offset_right = 134.0
+offset_bottom = 82.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 24
+text = "Kto jest wykładowcą?"
+
+[node name="Players" type="GridContainer" parent="Background"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.162
+anchor_top = 0.171
+anchor_right = 0.859
+anchor_bottom = 0.676
+offset_left = 0.376007
+offset_top = 0.192001
+offset_right = -0.568054
+offset_bottom = -0.0480347
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="EndVoteText" type="RichTextLabel" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.733686
+anchor_top = 0.810345
+anchor_right = 0.929453
+anchor_bottom = 0.899687
+grow_horizontal = 0
+grow_vertical = 0
+bbcode_enabled = true
+text = "Głosowanie zakończy się za [time] sekund"
+metadata/_edit_use_anchors_ = true
+
+[node name="SkipDecision" type="VBoxContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = -119.0
+offset_right = 278.0
+offset_bottom = -33.0
+grow_vertical = 0
+
+[node name="SkipButton" type="Button" parent="Background/SkipDecision"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "POMIŃ GŁOS"
+
+[node name="Decision" type="HBoxContainer" parent="Background/SkipDecision"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="DecisionText" type="RichTextLabel" parent="Background/SkipDecision/Decision"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Is this your final vote?"
+fit_content = true
+
+[node name="DecisionYes" type="Button" parent="Background/SkipDecision/Decision"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "YES"
+
+[node name="DecisionNo" type="Button" parent="Background/SkipDecision/Decision"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "NO"
+
+[connection signal="pressed" from="Background/SkipDecision/SkipButton" to="." method="_on_skip_button_pressed"]
+[connection signal="pressed" from="Background/SkipDecision/Decision/DecisionYes" to="." method="_on_decision_yes_pressed"]
+[connection signal="pressed" from="Background/SkipDecision/Decision/DecisionNo" to="." method="_on_decision_no_pressed"]
