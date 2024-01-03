@@ -87,7 +87,7 @@ func _render_player_boxes():
 
 	var registered_players = GameManager.get_registered_players()
 
-	var votes = GameManager.get_votes()
+	var votes = GameManager.get_current_game_key("votes")
 
 	for key in registered_players.keys():
 		var new_player_box = player_box.instantiate()
@@ -110,8 +110,8 @@ func _on_end_voting_timer_timeout():
 	if multiplayer.is_server():
 		var most_voted_player_id = get_most_voted_player_id()
 
-		for player_id in GameManager.get_votes().keys():
-			var voted_by_players = GameManager.get_votes()[player_id]
+		for player_id in GameManager.get_current_game_key("votes").keys():
+			var voted_by_players = GameManager.get_current_game_key("votes")[player_id]
 			for voted_by in voted_by_players:
 				_add_player_vote.rpc(player_id, voted_by)
 		
@@ -139,8 +139,8 @@ func get_most_voted_player_id():
 	var most_voted_players = []
 	var max_vote = 0
 
-	for vote_key in GameManager.get_votes().keys():
-		var votes_count = GameManager.get_votes()[vote_key].size()
+	for vote_key in GameManager.get_current_game_key("votes").keys():
+		var votes_count = GameManager.get_current_game_key("votes")[vote_key].size()
 		if votes_count > max_vote:
 			max_vote = votes_count
 			most_voted_players = [vote_key]

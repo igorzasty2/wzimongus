@@ -1,12 +1,12 @@
 extends Control
 
 @onready var ejection_message = get_node("%EjectionMessage")
-@onready var votes = GameManager.get_votes()
+@onready var votes = GameManager.get_current_game_key("votes")
 
 @export var NEXT_ROUND_TIME = 5
 @onready var next_round_timer = Timer.new()
 
-@onready var most_voted_player = GameManager.get_most_voted_player()
+@onready var most_voted_player = GameManager.get_current_game_key("most_voted_player")
 
 
 func _ready():

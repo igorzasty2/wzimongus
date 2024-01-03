@@ -39,13 +39,9 @@ var _current_game = {
 	"is_voted": false,
 	"is_vote_preselected": false,
 	"registered_players": {},
+	"votes": {},
+	"most_voted_player": null
 }
-
-## Przechowuje informacje o głosach
-var _votes = {}
-
-## Przechowuje informacje o graczu z największą ilością głosów
-var _most_voted_player = null
 
 ## Przechowuje zmienialne dane o obecnym graczu.
 var _current_player = {
@@ -152,15 +148,6 @@ func join_lobby(address:String, port:int):
 		return
 
 
-## Rozpoczyna następną rundę
-func next_round():
-	_current_game["is_voted"] = false
-	_current_game["is_vote_preselected"] = false
-	GameManager.set_input_status(true)
-	_votes = {}
-	_most_voted_player = null
-
-
 ## Rozpoczyna grę.
 func start_game():
 	if !multiplayer.is_server():
@@ -176,6 +163,15 @@ func start_game():
 	TaskManager.assign_tasks(1)
 
 
+## Rozpoczyna następną rundę
+func next_round():
+	_current_game["is_voted"] = false
+	_current_game["is_vote_preselected"] = false
+	_current_game["votes"].clear()
+	_current_game["most_voted_player"] = null
+	GameManager.set_input_status(true)
+
+
 ## Kończy grę.
 func end_game():
 	# Zamyka połączenie i przywraca domyślny peer.
@@ -189,6 +185,8 @@ func end_game():
 	_current_game["is_voted"] = false
 	_current_game["is_vote_preselected"] = false
 	_current_game["registered_players"].clear()
+	_current_game["votes"].clear()
+	_current_game["most_voted_player"] = null
 
 	_current_player["username"] = ""
 
@@ -210,28 +208,18 @@ func set_current_game_key(key:String, value):
 		_current_game[key] = value
 
 
-## Zwraca tablicę głosów
-func get_votes():
-	return _votes
-
-
 ## Dodaje głos do tablicy głosów
 func add_vote(id:int, voted_by:int):
-	if _votes.has(id):
-		_votes[id].append(voted_by)
+	if _current_game["votes"].has(id):
+		_current_game["votes"][id].append(voted_by)
 	else:
-		_votes[id] = [voted_by]
+		_current_game["votes"][id] = [voted_by]
 
 
 @rpc("call_local", "reliable")
 ## Ustawia gracza z największą ilością głosów
 func set_most_voted_player(player):
-	_most_voted_player = player
-
-
-## Zwraca gracza z największą ilością głosów
-func get_most_voted_player():
-	return _most_voted_player
+	_current_game["most_voted_player"] = player
 
 
 ## Zwraca słownik zarejestrowanych graczy.
