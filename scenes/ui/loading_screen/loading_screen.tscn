@@ -188,7 +188,7 @@ color = Color(0.0980392, 0.0980392, 0.0980392, 1)
 [node name="ShhhLogo" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(640, 220)
-scale = Vector2(0.07, 0.07)
+scale = Vector2(0.21, 0.21)
 texture = ExtResource("1_62pxn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -219,8 +219,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 64.0
-offset_bottom = 147.0
+offset_top = 123.0
+offset_bottom = 206.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.807843, 0, 0, 1)
