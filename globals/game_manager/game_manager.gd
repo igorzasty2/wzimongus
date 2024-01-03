@@ -28,6 +28,12 @@ signal error_occured(message: String)
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
 
+## Emitowany za każdym razem kiedy pojawiają się przypadki w których może skończyć się gra(zakończenie zadania, eliminacja gracza po głosowaniu, itd).
+signal winning_condition()
+
+## Emitowany kiedy jeden z warunków zakończenia gry jest spełniony(wszystkie zadania są zrobione, wszystkie impostory są wyeliminowane).
+signal winner_determined(winning_role: String)
+
 ## Przechowuje dane innych graczy z momentu rejestracji, w celu zespawnowania ich w lobby.
 var lobby_data_at_registration = {}
 
@@ -520,15 +526,17 @@ func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
 
 ## Sprawdza kto wygrał w tym momencie i kończy grę na korzyść wykładowcom lub crewmatom, jeżeli nikt, to nic nie robi.
 func check_winning_conditions():
-	# TODO: zrobić sygnał z informacją o ludzi które wygrali.
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+	
 	if _count_alive_lecturers() == 0:
-		pass
+		winner_determined.emit("Studenci")
 
 	if _count_alive_crewmates() <= _count_alive_lecturers():
-		pass
+		winner_determined.emit("Wykładowcy")
 	
 	if TaskManager.get_tasks_server().is_empty():
-		pass
+		winner_determined.emit("Studenci")
 
 
 ## Liczy żyjących wykładowców.
