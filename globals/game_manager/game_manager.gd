@@ -40,7 +40,11 @@ var _current_game = {
 	"is_started": false,
 	"is_paused": false,
 	"is_input_disabled": false,
-	"registered_players": {}
+	"is_voted": false,
+	"is_vote_preselected": false,
+	"registered_players": {},
+	"votes": {},
+	"most_voted_player": null
 }
 
 ## Przechowuje zmienialne dane o obecnym graczu.
@@ -163,6 +167,15 @@ func start_game():
 	TaskManager.assign_tasks(1)
 
 
+## Rozpoczyna następną rundę
+func next_round():
+	_current_game["is_voted"] = false
+	_current_game["is_vote_preselected"] = false
+	_current_game["votes"].clear()
+	_current_game["most_voted_player"] = null
+	GameManager.set_input_status(true)
+
+
 ## Kończy grę.
 func end_game():
 	# Zamyka połączenie i przywraca domyślny peer.
@@ -173,7 +186,11 @@ func end_game():
 	_current_game["is_started"] = false
 	_current_game["is_paused"] = false
 	_current_game["is_input_disabled"] = false
+	_current_game["is_voted"] = false
+	_current_game["is_vote_preselected"] = false
 	_current_game["registered_players"].clear()
+	_current_game["votes"].clear()
+	_current_game["most_voted_player"] = null
 
 	_current_player["username"] = ""
 
@@ -187,6 +204,26 @@ func end_game():
 func get_current_game_key(key:String):
 	if _current_game.has(key):
 		return _current_game[key]
+
+
+## Zmienia informację o grze, która jest przechowywana pod danym kluczem.
+func set_current_game_key(key:String, value):
+	if _current_game.has(key):
+		_current_game[key] = value
+
+
+## Dodaje głos do tablicy głosów
+func add_vote(id:int, voted_by:int):
+	if _current_game["votes"].has(id):
+		_current_game["votes"][id].append(voted_by)
+	else:
+		_current_game["votes"][id] = [voted_by]
+
+
+@rpc("call_local", "reliable")
+## Ustawia gracza z największą ilością głosów
+func set_most_voted_player(player):
+	_current_game["most_voted_player"] = player
 
 
 ## Zwraca słownik zarejestrowanych graczy.
