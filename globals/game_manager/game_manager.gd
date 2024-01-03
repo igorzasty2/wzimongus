@@ -167,6 +167,9 @@ func start_game():
 
 	# Przypisuje zadania.
 	TaskManager.assign_tasks(1)
+	
+	# Sprawdza warunki zakończenia gry.
+	winning_condition.connect(check_winning_conditions)
 
 
 ## Rozpoczyna następną rundę
@@ -200,6 +203,9 @@ func end_game():
 	TaskManager.reset()
 
 	game_ended.emit()
+	
+	if winning_condition.is_connected(check_winning_conditions):
+		winning_condition.disconnect(check_winning_conditions)
 
 
 ## Zwraca informację o grze, która jest przechowywana pod danym kluczem.
