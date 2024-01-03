@@ -986,3 +986,5 @@ properties = Array[String]([":global_position"])
 script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
+
+[connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]

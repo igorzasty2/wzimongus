@@ -56,6 +56,7 @@ size_flags_horizontal = 8
 size_flags_stretch_ratio = 0.0
 
 [node name="LecturersAmountAlert" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0, 1)
 text = "Zbyt wielu wykładowców na liczbę graczy!"

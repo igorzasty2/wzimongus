@@ -6,20 +6,11 @@ extends CanvasLayer
 
 
 func _ready():
-	hide()
-	lecturers_amount_alert.hide()
-
 	# Ustawia aktualizacje ilości maksymalnych połączeń
 	if multiplayer.is_server():
 		_update_max_connections()
 		GameManager.player_registered.connect(_update_max_connections)
 		GameManager.player_deregistered.connect(_update_max_connections)
-
-
-func _exit_tree():
-	if multiplayer.is_server():
-		GameManager.server_settings_changed.disconnect(_update_max_connections)
-		GameManager.player_deregistered.disconnect(_update_max_connections)
 
 
 func _input(event):

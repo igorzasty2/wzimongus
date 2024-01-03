@@ -7,6 +7,7 @@ signal load_finished
 @onready var camera = $Camera
 @onready var server_advertiser = $ServerAdvertiser
 @onready var chat = $Chat
+@onready var lobby_ui = $LobbyUi
 @onready var chat_input = $Chat/ChatContainer/InputText
 @onready var skin_selector = $SkinSelector
 @onready var lobby_settings = $LobbySettings
@@ -48,22 +49,16 @@ func _ready():
 		await NetworkTime.after_sync
 
 	show()
+	chat.show()
+	lobby_ui.show()
 	camera.enabled = true
-	GameManager.set_input_status(true)
 	load_finished.emit()
+	update_input()
 
 
 func _exit_tree():
 	# Zatrzymuje synchronizację czasu.
 	NetworkTime.stop()
-
-	GameManager.player_registered.disconnect(_on_player_registered)
-	GameManager.player_deregistered.disconnect(_on_player_deregistered)
-
-	if multiplayer.is_server():
-		GameManager.player_registered.disconnect(_update_broadcast_info)
-		GameManager.player_deregistered.disconnect(_update_broadcast_info)
-		GameManager.server_settings_changed.disconnect(_update_broadcast_info)
 
 
 func _update_broadcast_info(_id: int = 0, _player: Dictionary = {}):

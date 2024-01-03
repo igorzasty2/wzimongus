@@ -206,12 +206,16 @@ script = ExtResource("3_4702b")
 
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
+visible = false
 
 [node name="LobbyUi" parent="." instance=ExtResource("5_7r85o")]
+visible = false
 
 [node name="SkinSelector" parent="." instance=ExtResource("8_hy1jx")]
+visible = false
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
+visible = false
 
 [connection signal="visibility_changed" from="Chat" to="." method="update_input"]
 [connection signal="visibility_changed" from="SkinSelector" to="." method="update_input"]

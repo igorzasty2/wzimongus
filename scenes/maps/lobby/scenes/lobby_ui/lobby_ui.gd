@@ -12,6 +12,7 @@ extends CanvasLayer
 
 var is_chat_open = false
 
+
 func _ready():
 	if !multiplayer.is_server():
 		lobby_settings_button.hide()
@@ -24,12 +25,6 @@ func _ready():
 	GameManager.server_settings_changed.connect(_update_current_players_counter)
 	
 	toggle_interact_button_active(false)
-
-
-func _exit_tree():
-	GameManager.player_registered.disconnect(_update_current_players_counter)
-	GameManager.player_deregistered.disconnect(_update_current_players_counter)
-	GameManager.server_settings_changed.disconnect(_update_current_players_counter)
 
 
 func _update_current_players_counter(_id: int = 0, _player: Dictionary = {}):
