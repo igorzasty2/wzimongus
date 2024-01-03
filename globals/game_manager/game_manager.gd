@@ -28,9 +28,6 @@ signal error_occured(message: String)
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
 
-## Emitowany za każdym razem kiedy pojawiają się przypadki w których może skończyć się gra(zakończenie zadania, eliminacja gracza po głosowaniu, itd).
-signal winning_condition()
-
 ## Emitowany kiedy jeden z warunków zakończenia gry jest spełniony(wszystkie zadania są zrobione, wszystkie impostory są wyeliminowane).
 signal winner_determined(winning_role: String)
 
@@ -167,9 +164,6 @@ func start_game():
 
 	# Przypisuje zadania.
 	TaskManager.assign_tasks(1)
-	
-	# Sprawdza warunki zakończenia gry.
-	winning_condition.connect(check_winning_conditions)
 
 
 ## Rozpoczyna następną rundę
@@ -203,9 +197,6 @@ func end_game():
 	TaskManager.reset()
 
 	game_ended.emit()
-	
-	if winning_condition.is_connected(check_winning_conditions):
-		winning_condition.disconnect(check_winning_conditions)
 
 
 ## Zwraca informację o grze, która jest przechowywana pod danym kluczem.
@@ -488,7 +479,6 @@ func _kick_player(reason: String):
 ## Obsługuje rozpoczęcie gry u graczy.
 func _on_game_started():
 	_current_game["is_started"] = true
-	check_winning_conditions()
 	game_started.emit()
 
 

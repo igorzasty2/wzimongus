@@ -89,7 +89,7 @@ func _send_task_completion(player_id, task_id):
 	if _tasks[player_id].is_empty():
 		_tasks.erase(player_id)
 
-	GameManager.winning_condition.emit()
+	GameManager.check_winning_conditions()
 
 
 ## Usuwa wszystkie zadania przypisane do tego gracza na serwerowej liście zadań.
@@ -99,7 +99,7 @@ func _remove_deregistered_player_tasks(id: int, player: Dictionary):
 	
 	_tasks.erase(id)
 	
-	GameManager.winning_condition.emit()
+	GameManager.check_winning_conditions()
 
 
 ## Resetuje zadania.
