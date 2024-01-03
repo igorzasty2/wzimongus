@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=3 uid="uid://hdbqyphtfste"]
+
+[ext_resource type="Texture2D" uid="uid://bjct6kxmgyau0" path="res://scenes/ui/chat/assets/man.png" id="1_o2nr2"]
+[ext_resource type="Script" path="res://scenes/ui/voting_screen/player_box/player_box.gd" id="1_sv2tq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_an2b4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0fre4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsaou"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c2mqc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kkgkn"]
+
+[node name="PlayerBox" type="Control"]
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 395.0
+offset_bottom = 107.0
+size_flags_horizontal = 3
+script = ExtResource("1_sv2tq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Player" type="HBoxContainer" parent="VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_right = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Avatar" type="TextureRect" parent="VBoxContainer/Panel/Player"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("1_o2nr2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Username" type="RichTextLabel" parent="VBoxContainer/Panel/Player"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "[username]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="VotedBy" type="HBoxContainer" parent="VBoxContainer/Panel/Player"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+alignment = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_an2b4")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0fre4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_jsaou")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_c2mqc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kkgkn")
+
+[node name="Decision" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="DecisionText" type="RichTextLabel" parent="VBoxContainer/Decision"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Jesteś pewny?"
+fit_content = true
+
+[node name="DecisionYes" type="Button" parent="VBoxContainer/Decision"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "TAK"
+
+[node name="DecisionNo" type="Button" parent="VBoxContainer/Decision"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "NIE"
+
+[connection signal="pressed" from="VBoxContainer/Panel/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Decision/DecisionYes" to="." method="_on_decision_yes_pressed"]
+[connection signal="pressed" from="VBoxContainer/Decision/DecisionNo" to="." method="_on_decision_no_pressed"]
