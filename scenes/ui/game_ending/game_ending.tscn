@@ -1,17 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://blkno546eohsw"]
+[gd_scene load_steps=3 format=3 uid="uid://blkno546eohsw"]
 
 [ext_resource type="Script" path="res://scenes/ui/game_ending/game_ending.gd" id="1_jsh54"]
+[ext_resource type="Texture2D" uid="uid://f4fpoxgakh8h" path="res://scenes/ui/game_ending/assets/game_ending_background.png" id="2_s21bv"]
 
 [node name="GameEnding" type="CanvasLayer"]
+layer = 128
 script = ExtResource("1_jsh54")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 1280.0
-offset_bottom = 721.0
-color = Color(0, 0, 0, 1)
+[node name="GameEndingBackground" type="Sprite2D" parent="."]
+position = Vector2(642, 372)
+scale = Vector2(1.39551, 1.39551)
+texture = ExtResource("2_s21bv")
 
 [node name="WinnerText" type="Label" parent="."]
 offset_left = 509.0
 offset_top = 288.0
 offset_right = 815.0
 offset_bottom = 387.0
+
+[node name="PressAnyKeyText" type="Label" parent="."]
+offset_left = 497.0
+offset_top = 555.0
+offset_right = 845.0
+offset_bottom = 596.0
+text = "Naciśnij na klawisz żeby kontynuować..."

@@ -30,6 +30,7 @@ func display_winner(winning_role: String):
 	ending_scene.set_winning_role(winning_role)
 	
 	get_tree().get_root().add_child(ending_scene)
+	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
 	
 
 func _on_game_started():
