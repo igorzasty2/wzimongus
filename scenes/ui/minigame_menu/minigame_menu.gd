@@ -73,6 +73,8 @@ func end_minigame():
 
 func close_minigame():
 	if _minigame_instance != null:
+		print("closed deeper")
+		
 		_minigame_instance.queue_free()
 
 		minigame_container.visible = false

@@ -28,6 +28,6 @@ func _ready():
 #Następna runda
 func _on_next_round_timer_timeout():
 	self.queue_free()
-	self.get_parent().get_node("%Button").show()
+#	self.get_parent().get_node("%Button").show()
 
 	GameManager.next_round()

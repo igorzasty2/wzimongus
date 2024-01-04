@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=107 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -42,7 +42,6 @@
 [ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_menu.tscn" id="34_5r0ro"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="34_b878o"]
 [ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_menu.gd" id="35_23714"]
-[ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
 [ext_resource type="Texture2D" uid="uid://lv5k5yskqtbw" path="res://scenes/maps/main_map/assets/objects/kanapa.png" id="35_ryots"]
 [ext_resource type="PackedScene" uid="uid://ct2plxemq2ft5" path="res://scenes/ui/loading_screen/loading_screen.tscn" id="36_4x0df"]
 [ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_1.png" id="36_k0n1h"]
@@ -85,7 +84,9 @@
 [ext_resource type="Texture2D" uid="uid://cbxi1n610rgci" path="res://scenes/maps/main_map/assets/objects/xero_polka_na_dokumenty.png" id="71_yvo4d"]
 [ext_resource type="Texture2D" uid="uid://rmo5fhilsda3" path="res://scenes/maps/main_map/assets/objects/xero_stos_kartek.png" id="72_vb4gs"]
 [ext_resource type="Texture2D" uid="uid://lqlctfob53ns" path="res://scenes/maps/main_map/assets/objects/xero_szafa.png" id="73_g7t2a"]
+[ext_resource type="PackedScene" uid="uid://dp2sfegsvyvqy" path="res://scenes/maps/main_map/scenes/report/report_button/emergency_button.tscn" id="75_6ekxd"]
 [ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="79_x26x2"]
+[ext_resource type="PackedScene" uid="uid://dposexvk3a7mv" path="res://scenes/maps/main_map/scenes/report/report_area/report_area.tscn" id="80_67vd4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -939,6 +940,10 @@ texture = ExtResource("73_g7t2a")
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_f8ggq")
 
+[node name="EmergencyButton" parent="Objects" instance=ExtResource("75_6ekxd")]
+z_index = 1
+position = Vector2(1733, 284)
+
 [node name="Tasks" type="Node2D" parent="."]
 
 [node name="Task1" parent="Tasks" instance=ExtResource("3_e0rk4")]
@@ -959,6 +964,9 @@ minigame_scene = ExtResource("79_x26x2")
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="ReportArea" parent="." instance=ExtResource("80_67vd4")]
+position = Vector2(-22, 189)
+
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
 zoom = Vector2(0.45, 0.45)
@@ -977,11 +985,7 @@ properties = Array[String]([":global_position"])
 
 [node name="TaskListDisplay" parent="." instance=ExtResource("38_l1f3e")]
 
-[node name="ReportButton" parent="." instance=ExtResource("36_xfee5")]
-
 [node name="MinigameMenu" parent="." instance=ExtResource("34_5r0ro")]
 script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
-
-[connection signal="timeout" from="Camera/Timer" to="Camera" method="_on_timer_timeout"]

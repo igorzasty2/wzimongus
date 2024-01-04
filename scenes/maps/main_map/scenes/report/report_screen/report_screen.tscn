@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://djoj4kykfho2y"]
+
+[ext_resource type="Script" path="res://scenes/maps/main_map/scenes/report/report_screen/report_screen.gd" id="1_woxjr"]
+[ext_resource type="Texture2D" uid="uid://dy8j6jl7efkn1" path="res://icon.png" id="2_y8u8h"]
+
+[node name="ReportScreen" type="CanvasLayer"]
+script = ExtResource("1_woxjr")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.290196, 0.290196, 0.290196, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_y8u8h")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.882
+anchor_right = 0.5
+anchor_bottom = 0.882
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 60
+text = "tekst"

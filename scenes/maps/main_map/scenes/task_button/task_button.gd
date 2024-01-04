@@ -62,3 +62,8 @@ func disable_task():
 	sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
 	sprite_node.material.set_shader_parameter('line_thickness', _disabled_line_thickness)
 	disabled = true
+
+## Zamyka taska, potrzebne do reportowania
+func close_minigame():
+	minigame_menu.close_minigame()
+	print("closed")

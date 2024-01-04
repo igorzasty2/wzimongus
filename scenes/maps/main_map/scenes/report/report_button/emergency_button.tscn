@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dp2sfegsvyvqy"]
+
+[ext_resource type="Texture2D" uid="uid://dby2erkw2g2r7" path="res://scenes/maps/main_map/scenes/report/report_button/assets/emergency_meeting.png" id="1_fq4xm"]
+[ext_resource type="PackedScene" uid="uid://dposexvk3a7mv" path="res://scenes/maps/main_map/scenes/report/report_area/report_area.tscn" id="2_12m0c"]
+
+[node name="EmergencyButton" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_fq4xm")
+
+[node name="ReportArea" parent="." instance=ExtResource("2_12m0c")]
+area_radius = 200
+is_button = true
