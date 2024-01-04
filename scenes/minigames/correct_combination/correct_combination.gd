@@ -42,6 +42,8 @@ func _ready():
 	for i in range(TOTAL_BUTTONS):
 		var check_button = CheckButton.new()
 
+		check_button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+
 		var switch_on = TextureRect.new()
 		switch_on.texture = switch_on_sprite
 
