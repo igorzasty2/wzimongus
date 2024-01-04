@@ -1,11 +1,11 @@
 extends CanvasLayer
 
 @onready var current_players_counter = $CurrentPlayersCounter
+
 @onready var start_game_button = $StartGameButton
 
-@onready var lobby_settings_button = $GridContainer/LobbySettingsButton
-
-@onready var interact_button = $InteractButton
+@onready var lobby_settings_button = $GridContainer2/LobbySettingsButton
+@onready var interact_button = $GridContainer2/InteractButton
 
 @onready var pause_button = $GridContainer/PauseButton
 @onready var chat_button = $GridContainer/ChatButton

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbycws50ikr4y"
-path="res://.godot/imported/temporary_chat_button.png-5b79d1f51c853ec361c27ec2676d709c.ctex"
+uid="uid://blrk7daia54ig"
+path="res://.godot/imported/ustawienia_gry.png-e2630769a52dd79131c9ea6ce13578e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_chat_button.png"
-dest_files=["res://.godot/imported/temporary_chat_button.png-5b79d1f51c853ec361c27ec2676d709c.ctex"]
+source_file="res://scenes/maps/lobby/scenes/lobby_ui/assets/ustawienia_gry.png"
+dest_files=["res://.godot/imported/ustawienia_gry.png-e2630769a52dd79131c9ea6ce13578e3.ctex"]
 
 [params]
 

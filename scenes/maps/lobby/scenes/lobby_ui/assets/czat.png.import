@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqur5bo6n5iob"
-path="res://.godot/imported/temporary_lobby_settings_button.png-ba1df2cad7378467f8a6c3fb7145b4f7.ctex"
+uid="uid://hswv2jyjcnaq"
+path="res://.godot/imported/czat.png-a2810414bf281e0ee49b8cd438679d46.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_lobby_settings_button.png"
-dest_files=["res://.godot/imported/temporary_lobby_settings_button.png-ba1df2cad7378467f8a6c3fb7145b4f7.ctex"]
+source_file="res://scenes/maps/lobby/scenes/lobby_ui/assets/czat.png"
+dest_files=["res://.godot/imported/czat.png-a2810414bf281e0ee49b8cd438679d46.ctex"]
 
 [params]
 
