@@ -57,7 +57,9 @@ var _server_settings = {
 	"lobby_name": "Lobby",
 	"port": 9001,
 	"max_players": 10,
-	"max_lecturers": 3
+	"max_lecturers": 3,
+	"kill_cooldown": 40,
+	"kill_radius": 260
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -112,12 +114,14 @@ func create_lobby(lobby_name: String, port: int):
 
 
 ## Zmienia ustawienia serwera.
-func change_server_settings(max_players: int, max_lecturers: int):
+func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, kill_radius: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
 	_server_settings["max_players"] = max_players
 	_server_settings["max_lecturers"] = max_lecturers
+	_server_settings["kill_cooldown"] = kill_cooldown
+	_server_settings["kill_radius"] = kill_radius
 	_update_server_settings.rpc(_server_settings)
 	server_settings_changed.emit()
 

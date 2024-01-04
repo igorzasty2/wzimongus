@@ -111,7 +111,7 @@ func closest_player(to_who: int) -> int:
 			players.erase(i)
 	
 	if players.size() > 0:
-		var kill_radius = 260
+		var kill_radius = GameManager.get_server_settings()["kill_radius"]
 		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(to_who)).global_position
 		var curr_closest = null
 		var curr_closest_dist = kill_radius**2 + 1
