@@ -525,14 +525,17 @@ func check_winning_conditions():
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 	
+	if TaskManager.get_tasks_server().is_empty():
+		winner_determined.emit("Studenci")
+		return
+	
 	if _count_alive_lecturers() == 0:
 		winner_determined.emit("Studenci")
+		return
 
 	if _count_alive_crewmates() <= _count_alive_lecturers():
 		winner_determined.emit("Wykładowcy")
-	
-	if TaskManager.get_tasks_server().is_empty():
-		winner_determined.emit("Studenci")
+		return
 
 
 ## Liczy żyjących wykładowców.
