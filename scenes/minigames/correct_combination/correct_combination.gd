@@ -6,7 +6,6 @@ extends Control
 @onready var eighty = get_node("%80")
 @onready var hundred = get_node("%100")
 
-@onready var switch_off_sprite = preload("res://scenes/minigames/correct_combination/assets/switch_off.png")
 @onready var switch_on_sprite = preload("res://scenes/minigames/correct_combination/assets/switch_on.png")
 
 @onready var buttons_container = get_node("%Buttons")
@@ -44,21 +43,13 @@ func _ready():
 
 		check_button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 
-		var switch_on = TextureRect.new()
-		switch_on.texture = switch_on_sprite
+		var switch = TextureRect.new()
+		switch.texture = switch_on_sprite
 
-		var switch_off = TextureRect.new()
-		switch_off.texture = switch_off_sprite
+		check_button.add_child(switch)
 
-		check_button.add_child(switch_on)
-		check_button.add_child(switch_off)
+		switch.position.y = -20
 
-		switch_off.position.y = 5
-
-		switch_on.position.y = -14
-		switch_on.position.x = 2
-
-		switch_on.visible = false
 
 		buttons_container.add_child(check_button)
 		all_buttons.append(check_button)
@@ -125,9 +116,5 @@ func _update_indicators():
 
 func _update_button_sprite():
 	for button in all_buttons:
-		if button.button_pressed:
-			button.get_child(0).visible = true
-			button.get_child(1).visible = false
-		else:
-			button.get_child(0).visible = false
-			button.get_child(1).visible = true
+		button.get_child(0).flip_v = button.button_pressed
+		button.get_child(0).position.y = -1 if button.button_pressed else -20
