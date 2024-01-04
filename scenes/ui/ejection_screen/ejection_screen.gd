@@ -8,7 +8,6 @@ extends Control
 
 @onready var most_voted_player = GameManager.get_current_game_key("most_voted_player")
 
-
 func _ready():
 	if  most_voted_player == null:
 		ejection_message.text = "[center]Nikt nie został wyrzucony.[/center]"
@@ -29,5 +28,4 @@ func _ready():
 func _on_next_round_timer_timeout():
 	self.queue_free()
 #	self.get_parent().get_node("%Button").show()
-
 	GameManager.next_round()

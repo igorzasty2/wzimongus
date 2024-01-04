@@ -22,6 +22,9 @@ signal game_started()
 ## Emitowany po zakończeniu gry.
 signal game_ended()
 
+## Emitowany po zaczęciu nowej rundy.
+signal next_round_started()
+
 ## Emitowany po wystąpieniu błędu.
 signal error_occured(message: String)
 
@@ -170,6 +173,7 @@ func next_round():
 	_current_game["votes"].clear()
 	_current_game["most_voted_player"] = null
 	GameManager.set_input_status(true)
+	next_round_started.emit()
 
 
 ## Kończy grę.

@@ -66,4 +66,3 @@ func disable_task():
 ## Zamyka taska, potrzebne do reportowania
 func close_minigame():
 	minigame_menu.close_minigame()
-	print("closed")

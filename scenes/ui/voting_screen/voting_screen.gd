@@ -138,6 +138,10 @@ func _change_scene_to_ejection_screen():
 	self.queue_free()
 
 
+func on_next_round():
+	print("next round")
+
+
 ## Zwraca id gracza z największą ilością głosów, jeśli jest remis zwraca null
 func get_most_voted_player_id():
 	var most_voted_players = []
