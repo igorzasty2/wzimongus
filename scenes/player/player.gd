@@ -46,8 +46,6 @@ func _process(_delta):
 	# Aktualizuje parametry animacji postaci podczas ruchu do venta
 	if is_moving_toward_position==true && move_toward_position!=null:
 		_update_animation_parameters((move_toward_position-position).normalized())
-		if position==move_toward_position:
-			is_moving_toward_position = false
 		return
 
 	# Aktualizuje parametry animacji postaci.
@@ -69,15 +67,12 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 		# Przenosi gracza z venta do innego venta
 		if is_teleport==true:
 			position = position.move_toward(move_toward_position, _delta*speed*venting_speed)
-			can_player_use_vent = false
 			if position == move_toward_position:
-				await get_tree().create_timer(0.1).timeout
+				print("arrived - ",name," | position: ", position," | move_toward_position: ", move_toward_position)
 				nullify_move_toward_position.rpc()
 
 				vent_toggle_dir_bttns.rpc_id(name.to_int(),true)
 				toggle_is_teleport.rpc(false)
-
-				await get_tree().create_timer(0.1).timeout
 				can_player_use_vent = true
 
 		# Przesuwa gracza do venta
@@ -85,12 +80,13 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 			position = position.move_toward(move_toward_position, _delta*speed)
 			if position == move_toward_position:
 				# do zrobienia: w tym miejscu włączyć animacje wejścia do venta
-				
-				toggle_visible.rpc(false)
-				vent_toggle_dir_bttns.rpc_id(name.to_int(),true)
-				
-				await get_tree().create_timer(0.1).timeout
+
+				print("arrived - ",name," | position: ", position," | move_toward_position: ", move_toward_position)
 				nullify_move_toward_position.rpc()
+
+				#toggle_visible.rpc(false) #TYMCZASOWO ZAKOMENTOWANE
+				vent_toggle_dir_bttns.rpc_id(name.to_int(),true)
+				toggle_is_moving.rpc(false)
 
 
 ## Aktualizuje parametry animacji postaci.
@@ -115,24 +111,8 @@ func _input(event):
 	# Obsługuje użycie venta
 	if can_player_use_vent && event.is_action_pressed("use_vent") && !GameManager.get_current_game_key("paused"):
 		use_vent()
-
-
-@rpc("any_peer", "call_local", "reliable")
-## Zmienia widoczność gracza na serwerze
-func toggle_visible(is_visible:bool):
-	visible = is_visible
-
-
-@rpc("any_peer", "call_local", "reliable")
-## Zmienia move_toward_position na null
-func nullify_move_toward_position():
-	move_toward_position = null
-
-
-@rpc("any_peer", "call_local", "reliable")
-## Zmienia is_teleport na true/false
-func toggle_is_teleport(is_true:bool):
-	is_teleport = is_true
+	if event.is_action_pressed("report"):
+		print(name," | position: ",position)
 
 
 ## Sprawdza czy gracz jest impostorem i nie jest martwy lub czy jest włączone ventowanie crewmate
@@ -160,7 +140,7 @@ func enter_vent():
 			GameManager.set_input_status(false)
 			is_in_vent = true
 			
-			collision_mask = 0
+			change_collision_mask.rpc(0)
 			
 			enter_vent_server.rpc(vent.position)
 			
@@ -180,13 +160,14 @@ func enter_vent_server(vent_position):
 func exit_vent():
 	var vent = get_nearest_vent()
 	if vent!=null:
-		if position == vent.position - Vector2(0,50):
+		#if position == vent.position - Vector2(0,50): # TYMCZASOWO ZAKOMENTOWANE
 			# do zrobienia: w tym miejscu włączyć animacje wyjścia z venta
 			
 			vent.change_dir_bttns_visibility(false)
 			GameManager.set_input_status(true)
 			is_in_vent = false
-			collision_mask = initial_collision_mask
+			change_collision_mask.rpc(initial_collision_mask)
+			
 			toggle_visible.rpc(true)
 			
 			# do zrobienia: w tym miejscu włączyć możliwość zabicia
@@ -212,3 +193,33 @@ func vent_toggle_dir_bttns(is_on:bool):
 	var vent = get_nearest_vent()
 	if vent != null:
 		vent.change_dir_bttns_visibility(is_on)
+
+
+@rpc("any_peer", "call_local", "reliable")
+## Zmienia is_moving_toward_position na true/false
+func toggle_is_moving(is_moving:bool):
+	is_moving_toward_position = is_moving
+
+
+@rpc("any_peer", "call_local", "reliable")
+## Zmienia widoczność gracza na serwerze
+func toggle_visible(is_visible:bool):
+	visible = is_visible
+
+
+@rpc("any_peer", "call_local", "reliable")
+## Zmienia move_toward_position na null
+func nullify_move_toward_position():
+	move_toward_position = null
+
+
+@rpc("any_peer", "call_local", "reliable")
+## Zmienia is_teleport na true/false
+func toggle_is_teleport(is_true:bool):
+	is_teleport = is_true
+
+	
+@rpc("any_peer", "call_local", "reliable")
+## Zmienia wartość maski kolizji
+func change_collision_mask(value):
+	collision_mask = value
