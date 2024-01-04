@@ -15,7 +15,8 @@ var is_chat_open = false
 
 func _ready():
 	if !multiplayer.is_server():
-		lobby_settings_button.hide()
+		lobby_settings_button.texture_normal = null
+		lobby_settings_button.disabled = true
 		start_game_button.hide()
 
 	_update_current_players_counter()

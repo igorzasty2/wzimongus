@@ -86,6 +86,7 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 
 [node name="LobbySettingsButton" type="TextureButton" parent="GridContainer2"]
+custom_minimum_size = Vector2(360, 360)
 layout_mode = 2
 texture_normal = ExtResource("5_5m3mp")
 
