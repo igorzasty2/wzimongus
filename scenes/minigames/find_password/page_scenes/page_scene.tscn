@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://0061xw2dlgjt"]
+
+[ext_resource type="Texture2D" uid="uid://cngin2kvmlfyh" path="res://scenes/minigames/find_password/assets/page.png" id="1_7cthj"]
+
+[node name="PageBackground" type="Sprite2D"]
+position = Vector2(642, 343)
+texture = ExtResource("1_7cthj")
+
+[node name="PageText" type="RichTextLabel" parent="."]
+offset_left = -125.0
+offset_top = -248.0
+offset_right = 115.0
+offset_bottom = 260.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet sollicitudin lectus, accumsan semper mauris. Phasellus consectetur arcu justo, non laoreet mauris lacinia a. Vivamus nec nulla et velit dignissim congue. Mauris bibendum enim purus, sit amet pretium ante tincidunt et. Cras lacinia diam vel posuere dictum. Etiam pretium enim at odio posuere lacinia. Aliquam pharetra condimentum lorem, quis vehicula enim dignissim eu. Phasellus libero quam, porttitor ac tortor id, mattis posuere risus. "
+metadata/_edit_use_anchors_ = true
