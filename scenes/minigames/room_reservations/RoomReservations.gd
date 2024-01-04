@@ -4,12 +4,14 @@ extends Control
 @onready var rooms_container = get_node("%Rooms")
 @onready var account = get_node("%Account")
 
+@onready var background = get_node("%Background")
+
 
 var LECTURERS = ["dr inż. Marcin Bator", "dr Marcin Dudziński", "dr inż. Diana Dziewa-Dawidczyk", "dr inż. Alina Jóźwikowska", "dr hab. inż. Arkadiusz Orłowski", "dr inż. Maciej Pankiewicz", "dr hab. Alexander Prokopenya", "dr Piotr Stachura", "dr inż. Robert Stępień", "dr hab. Aleksander Strasburger", "dr Tomasz Świsłocki", "dr inż. Artur Wiliński", "dr inż. Piotr Wrzeciono", "dr Andrzej Zembrzuski", ]
 
-var ROOMS = ["Aula IV", "Aula III", "Aula II", "Aula I", "Sala 3/82", "Sala 3/40", "Sala 3/42", "Sala 3/14,", "Sala 3/19"]
+var ROOMS = ["Aula IV", "Aula III", "Aula II", "Aula I", "Sala 3/82", "Sala 3/40", "Sala 3/42", "Sala 3/14", "Sala 3/19"]
 
-var COLORS = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF", "#FFFFFF", "#000000"]
+var COLORS = ["#00a436", "#076db5", "#b80400", "#5e4943"]
 
 var room_node_scene = preload("res://scenes/minigames/room_reservations/room_node/RoomNode.tscn")
 
@@ -36,7 +38,7 @@ func _ready():
 	for lecturer in assigned_rooms.keys():
 		var lecturer_node = RichTextLabel.new()
 		lecturer_node.bbcode_enabled = true
-		lecturer_node.bbcode_text = "[b][color=\"" + assigned_colors[lecturer] + "\"]" + lecturer
+		lecturer_node.bbcode_text = "[color=\"" + assigned_colors[lecturer] + "\"]" + lecturer
 		lecturer_node.fit_content = true
 		lecturers_containers.add_child(lecturer_node)
 
@@ -68,3 +70,5 @@ func _on_save_button_pressed():
 
 func _close():
 	print("close")
+
+
