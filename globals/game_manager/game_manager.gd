@@ -28,6 +28,58 @@ signal error_occured(message: String)
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
 
+## Udostępnia dane o dostępnych skinach.
+const skins = {
+	0: {
+		"name": "Alternatywka",
+		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+	},
+	1: {
+		"name": "Nerd",
+		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+	},
+	2: {
+		"name": "3",
+		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+	},
+	3: {
+		"name": "4",
+		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+	},
+	4: {
+		"name": "5",
+		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+	},
+	5: {
+		"name": "6",
+		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+	},
+	6: {
+		"name": "7",
+		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+	},
+	7: {
+		"name": "8",
+		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+	},
+	8: {
+		"name": "9",
+		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+	},
+	9: {
+		"name": "10",
+		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+	},
+	10: {
+		"name": "11",
+		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+	},
+	11: {
+		"name": "12",
+		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+	}
+}
+
 ## Przechowuje dane innych graczy z momentu rejestracji, w celu zespawnowania ich w lobby.
 var lobby_data_at_registration = {}
 
