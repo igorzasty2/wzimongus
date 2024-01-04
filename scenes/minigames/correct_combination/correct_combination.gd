@@ -6,7 +6,12 @@ extends Control
 @onready var eighty = get_node("%80")
 @onready var hundred = get_node("%100")
 
+@onready var switch_off_sprite = preload("res://scenes/minigames/correct_combination/assets/switch_off.png")
+@onready var switch_on_sprite = preload("res://scenes/minigames/correct_combination/assets/switch_on.png")
+
 @onready var buttons_container = get_node("%Buttons")
+
+var all_buttons = []
 
 var correct_buttons = []
 var incorrect_buttons = []
@@ -31,11 +36,28 @@ func _ready():
 	eighty.visible = false
 	hundred.visible = false
 
-	var all_buttons = []
+	all_buttons = []
 
 	##Generuje 12 przycisków
 	for i in range(TOTAL_BUTTONS):
 		var check_button = CheckButton.new()
+
+		var switch_on = TextureRect.new()
+		switch_on.texture = switch_on_sprite
+
+		var switch_off = TextureRect.new()
+		switch_off.texture = switch_off_sprite
+
+		check_button.add_child(switch_on)
+		check_button.add_child(switch_off)
+
+		switch_off.position.y = 5
+
+		switch_on.position.y = -14
+		switch_on.position.x = 2
+
+		switch_on.visible = false
+
 		buttons_container.add_child(check_button)
 		all_buttons.append(check_button)
 		check_button.pressed.connect(_on_button_toggled)
@@ -60,6 +82,8 @@ func _ready():
 
 
 func _on_button_toggled():
+	_update_button_sprite()
+
 	correct_pressed_count = 0
 
 	for button in correct_buttons:
@@ -96,3 +120,12 @@ func _update_indicators():
 		for button in incorrect_buttons:
 			button.disabled = true
 
+
+func _update_button_sprite():
+	for button in all_buttons:
+		if button.button_pressed:
+			button.get_child(0).visible = true
+			button.get_child(1).visible = false
+		else:
+			button.get_child(0).visible = false
+			button.get_child(1).visible = true
