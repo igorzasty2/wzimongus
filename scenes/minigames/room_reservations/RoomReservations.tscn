@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://2cqm2q0xxlpq"]
+
+[ext_resource type="Script" path="res://scenes/minigames/room_reservations/RoomReservations.gd" id="1_u0f26"]
+
+[node name="RoomReservations" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u0f26")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 114.0
+offset_right = 1146.0
+offset_bottom = 546.0
+color = Color(0.92549, 0.964706, 0.901961, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 47.0
+grow_horizontal = 2
+color = Color(0, 0.196078, 0.156863, 1)
+
+[node name="Account" type="RichTextLabel" parent="ColorRect"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 754.0
+offset_top = 14.0
+offset_right = 994.0
+offset_bottom = 39.0
+theme_override_font_sizes/normal_font_size = 11
+text = "[username] ([student id])"
+
+[node name="Title" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 546.0
+offset_bottom = 35.0
+text = "SZKOŁA GŁÓWNA GOSPODARSTWA WIEJSKIEGO | Rezerwacja Pokoi"
+
+[node name="Lecturers" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.068
+anchor_bottom = 0.097
+offset_left = 360.0
+offset_top = 192.0
+offset_right = 576.96
+offset_bottom = 442.16
+alignment = 1
+
+[node name="Rooms" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 752.0
+offset_top = 192.0
+offset_right = 1031.0
+offset_bottom = 512.0
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 960.0
+offset_top = 480.0
+offset_right = 1040.0
+offset_bottom = 511.0
+text = "ZAPISZ"
+
+[connection signal="pressed" from="SaveButton" to="." method="_on_save_button_pressed"]

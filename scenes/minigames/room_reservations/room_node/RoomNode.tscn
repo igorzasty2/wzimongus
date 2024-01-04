@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://ci4np1kvjqkts"]
+
+[ext_resource type="Script" path="res://scenes/minigames/room_reservations/room_node/RoomNode.gd" id="1_kwpdo"]
+
+[node name="RoomNode" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -856.0
+offset_bottom = -689.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kwpdo")
+
+[node name="RoomName" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[room name]"
+fit_content = true
+
+[node name="ButtonUp" type="Button" parent="."]
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+text = "↑"
+
+[node name="ButtonDown" type="Button" parent="."]
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+text = "↓"
+
+[connection signal="pressed" from="ButtonUp" to="." method="_on_button_up_pressed"]
+[connection signal="pressed" from="ButtonDown" to="." method="_on_button_down_pressed"]
