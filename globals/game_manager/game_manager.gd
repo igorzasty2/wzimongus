@@ -35,48 +35,48 @@ const skins = {
 		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
 	},
 	1: {
+		"name": "Barbie",
+		"resource": "res://scenes/player/assets/skins/barbie_spritesheet.png"
+	},
+	2: {
+		"name": "Ecoświr",
+		"resource": "res://scenes/player/assets/skins/ecoswir_spritesheet.png"
+	},
+	3: {
+		"name": "Femboy",
+		"resource": "res://scenes/player/assets/skins/femboy_spritesheet.png"
+	},
+	4: {
+		"name": "Gamer",
+		"resource": "res://scenes/player/assets/skins/gamer_spritesheet.png"
+	},
+	5: {
+		"name": "Gymbro",
+		"resource": "res://scenes/player/assets/skins/gymbro_spritesheet.png"
+	},
+	6: {
+		"name": "Hipster",
+		"resource": "res://scenes/player/assets/skins/hipster_spritesheet.png"
+	},
+	7: {
 		"name": "Nerd",
 		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
 	},
-	2: {
-		"name": "3",
-		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
-	},
-	3: {
-		"name": "4",
-		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
-	},
-	4: {
-		"name": "5",
-		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
-	},
-	5: {
-		"name": "6",
-		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
-	},
-	6: {
-		"name": "7",
-		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
-	},
-	7: {
-		"name": "8",
-		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
-	},
 	8: {
-		"name": "9",
-		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+		"name": "Punk",
+		"resource": "res://scenes/player/assets/skins/punk_spritesheet.png"
 	},
 	9: {
-		"name": "10",
-		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+		"name": "Rasta",
+		"resource": "res://scenes/player/assets/skins/rasta_spritesheet.png"
 	},
 	10: {
-		"name": "11",
-		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+		"name": "TikToker",
+		"resource": "res://scenes/player/assets/skins/tiktoker_spritesheet.png"
 	},
 	11: {
-		"name": "12",
-		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+		"name": "Wixiarz",
+		"resource": "res://scenes/player/assets/skins/wixiarz_spritesheet.png"
 	}
 }
 
