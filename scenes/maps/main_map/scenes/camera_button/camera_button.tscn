@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0b1dhp1ua11w"]
+
+[ext_resource type="Script" path="res://scenes/maps/main_map/scenes/camera_button/camera_button.gd" id="1_mecxc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ykn66"]
+radius = 256.29
+
+[node name="CameraButton" type="Area2D"]
+position = Vector2(-1, 0)
+disable_mode = 2
+collision_mask = 2
+monitorable = false
+priority = 1
+script = ExtResource("1_mecxc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ykn66")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

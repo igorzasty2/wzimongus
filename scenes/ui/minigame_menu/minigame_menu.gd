@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 var _minigame: PackedScene
-var _minigame_instance: Node2D
+var _minigame_instance: Node
 
 @onready var minigame_container = $MinigameContainer
 @onready var viewport = minigame_container.get_node("ViewportContainer/Viewport")
@@ -59,8 +59,8 @@ func summon_window():
 	use_button.disabled = true
 
 	GameManager.set_input_status(false)
-
-	_minigame_instance.minigame_end.connect(end_minigame)
+	if _minigame_instance is Node2D:
+		_minigame_instance.minigame_end.connect(end_minigame)
 
 func end_minigame():
 	_minigame_instance.queue_free()
