@@ -13,6 +13,7 @@ var last_direction_x: float = -1
 var in_range_color = [180, 0, 0, 255]
 var out_of_range_color = [0, 0, 0, 0]
 var dead_username_color = Color.CADET_BLUE
+var can_kill: bool = false
 
 func _ready():
 	# Gracz jest własnością serwera.
@@ -37,6 +38,9 @@ func _ready():
 	_toggle_highlight($".".name.to_int(),false)
 	
 	GameManager.player_killed.connect(_on_killed_player)
+	
+	if GameManager.get_current_player_key("is_lecturer"):
+		can_kill = true
 
 func _process(_delta):
 	# Aktualizuje parametry animacji postaci.
@@ -54,19 +58,33 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 	move_and_slide()
 	velocity /= NetworkTime.physics_factor
 	
-	## Podświetla najbliższego gracza jako potencjalną ofiarę do oblania jeśli jestem impostorem.
+	# Podświetla najbliższego gracza jako potencjalną ofiarę do oblania jeśli jestem impostorem,
+	# żyje i cooldown na funcji zabij nie jest aktywny.
 	if GameManager.get_current_player_key("is_lecturer"):
 		if !GameManager.get_current_player_key("is_dead"):
-			_update_highlight(closest_player(GameManager.get_current_player_id()))
+			if can_kill:
+				_update_highlight(closest_player(GameManager.get_current_player_id()))
+			else:
+				_update_highlight(0)
 
 ## Sprawdza, czy nie naciśnięto fail button. Jeśli tak to sprawdza, czy jesteśmy lecturerem
 ## i prosi serwer o oblanie najbliższego gracza w promieniu oblania.
 func _input(event):
 	if event is InputEventKey:
-		if event.is_action_pressed("fail") and GameManager.get_current_player_key("is_lecturer"):
-			var victim = closest_player(GameManager.get_current_player_id())
-			if victim:
-				GameManager.kill(victim)
+		if event.is_action_pressed("fail"):
+			if GameManager.get_current_player_key("is_lecturer"):
+				if can_kill:
+					var victim = closest_player(GameManager.get_current_player_id())
+					if victim:
+						GameManager.kill(victim)
+						var timer = Timer.new()
+						timer.timeout.connect(_on_timer_timeout)
+						timer.one_shot = true
+						timer.wait_time = 5 #GameManager.get_server_settings()["kill_cooldown"]
+						add_child(timer)
+						timer.start()
+						can_kill = false
+
 
 ## Aktualizuje parametry animacji postaci.
 func _update_animation_parameters(direction):
@@ -125,6 +143,7 @@ func closest_player(to_who: int) -> int:
 				curr_closest_dist = temp_dist
 				
 		if curr_closest_dist < (kill_radius**2):
+			print(curr_closest)
 			return curr_closest
 		return 0
 	return 0
@@ -141,8 +160,15 @@ func _on_killed_player(victim: int):
 			get_parent().get_node(str(i)).visible = true
 		
 	var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
-	dead_body.get_node("DeadBodySprite").texture = load("res://icon.svg")
+	#dead_body.get_node("DeadBodySprite").texture = load("res://icon.svg")
 	dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
 	dead_body.global_position = get_parent().get_node(str(victim)).global_position
 	
 	get_parent().add_child(dead_body)
+
+func _on_timer_timeout():
+	can_kill = true
+	for i in range($".".get_child_count()):
+		var child: Node = $".".get_child(i)
+		if child.is_class("Timer"):
+			child.queue_free()

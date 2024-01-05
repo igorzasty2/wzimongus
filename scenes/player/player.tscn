@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=29 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Shader" path="res://scenes/player/kill_player.gdshader" id="2_7046j"]
@@ -184,7 +184,7 @@ libraries = {
 
 [node name="PlayerSprite" type="Sprite2D" parent="Skins"]
 material = SubResource("ShaderMaterial_klla5")
-position = Vector2(4, -23)
+position = Vector2(2, 32)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_obr1o")
 offset = Vector2(0, -250)
