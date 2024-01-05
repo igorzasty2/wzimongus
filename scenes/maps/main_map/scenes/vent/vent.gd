@@ -64,7 +64,7 @@ func _request_moving_to_vent(vent_id: int):
 	var player_id = multiplayer.get_remote_sender_id()
 	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 
-	if !player.has_vent_permission() && !allow_student_venting:
+	if !player.has_vent_permission(self):
 		return
 
 	if player_id != 1:
@@ -92,7 +92,7 @@ func _on_area_2d_body_entered(body):
 	if !body.name.to_int() == multiplayer.get_unique_id() && !multiplayer.is_server():
 		return
 
-	if !body.has_vent_permission() && !allow_student_venting:
+	if !body.has_vent_permission(self):
 		return
 
 	if body.is_in_vent != true:
@@ -107,7 +107,7 @@ func _on_area_2d_body_exited(body):
 	if !body.name.to_int() == multiplayer.get_unique_id() && !multiplayer.is_server():
 		return
 
-	if !body.has_vent_permission() && !allow_student_venting:
+	if !body.has_vent_permission(self):
 		return
 
 	if body.is_in_vent != true:

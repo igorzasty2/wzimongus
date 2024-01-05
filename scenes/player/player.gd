@@ -46,8 +46,14 @@ func get_nearest_vent() -> Vent:
 
 
 ## Zwraca czy gracz może używać ventów.
-func has_vent_permission() -> bool:
-	return GameManager.get_registered_player_key(name.to_int(), "is_lecturer") && !GameManager.get_registered_player_key(name.to_int(), "is_dead")
+func has_vent_permission(vent: Vent) -> bool:
+	if GameManager.get_registered_player_key(name.to_int(), "is_dead"):
+		return false
+
+	if !GameManager.get_registered_player_key(name.to_int(), "is_lecturer") && !vent.allow_student_venting:
+		return false
+
+	return true
 
 
 @rpc("call_local", "reliable")
@@ -177,7 +183,7 @@ func _request_vent_entering():
 	if vent == null:
 		return
 
-	if !has_vent_permission() && !vent.allow_student_venting:
+	if !has_vent_permission(vent):
 		return
 
 	if name.to_int() != 1:
@@ -212,7 +218,7 @@ func _request_vent_exiting():
 	if vent == null:
 		return
 
-	if !has_vent_permission() && !vent.allow_student_venting:
+	if !has_vent_permission(vent):
 		return
 
 	if position != vent.global_position - Vector2(0, 50):
