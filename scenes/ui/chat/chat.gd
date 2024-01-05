@@ -102,7 +102,7 @@ func _on_input_text_text_submitted(submitted_text):
 	send_message.rpc_id(1, submitted_text, current_group, multiplayer.get_unique_id())	
 
 	input_text.text = ""
-
+	_close_chat()
 
 func _on_timer_timeout():
 	if input_text.has_focus():
