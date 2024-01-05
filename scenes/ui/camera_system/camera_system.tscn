@@ -1,4 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://mtrc2q6rpyb6"]
+[gd_scene load_steps=19 format=3 uid="uid://mtrc2q6rpyb6"]
+
+[ext_resource type="Script" path="res://scenes/ui/camera_system/camera_system.gd" id="1_j11j8"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_k0cgp"]
 
@@ -82,6 +84,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_j11j8")
 
 [node name="CameraPanel" type="GridContainer" parent="."]
 layout_mode = 1

@@ -1,11 +1,8 @@
 extends Node2D
+## Klasa jest reprezentacją kamery w świecie gry
 
-
-# Called when the node enters the scene tree for the first time.
+## Dodaję kamerę do grupy cameras umożliwia jej odpowiednie wyświetlanie świata gry
 func _ready():
 	add_to_group("cameras")
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	$CameraViewport/CameraProper.position = global_position
+	$CameraViewport.world_2d = get_viewport().world_2d
