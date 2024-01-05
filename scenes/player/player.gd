@@ -1,31 +1,55 @@
-## Główna klasa gracza
+## Główna klasa gracza.
 class_name Player
 extends CharacterBody2D
 
 
-## Prędkość poruszania się gracza.
+## Prędkość poruszania się.
 @export var walking_speed: float = 600.0
-## Prędkość teleportacji gracza do venta.
+## Prędkość teleportacji do venta.
 @export var venting_speed: float = 1500.0
 
 ## Ostatni kierunek poziomego ruchu gracza.
 var direction_last_x: float = -1
 
-## Czy gracz jest sterowany automatycznie.
-var is_walking_to_destination: bool = false
-## Pozycja docelowa do której gracz się automatycznie porusza.
-var destination_position: Vector2 = Vector2.ZERO
-
+## Czy może używać venta.
 var can_use_vent: bool = false
+## Czy jest w vencie.
 var is_in_vent: bool = false
+## Czy jest w trakcie poruszania się przez venta lub do venta.
 var is_moving_through_vent: bool = false
 
+## Referencja do wejścia gracza.
 @onready var input: InputSynchronizer = $Input
+## Referencja do synchronizatora rollbacku.
 @onready var rollback_synchronizer: RollbackSynchronizer = $RollbackSynchronizer
+## Referencja do etykiety z nazwą gracza.
 @onready var username_label: Label = $UsernameLabel
+## Referencja do drzewa animacji postaci.
 @onready var animation_tree: AnimationTree = $Skins/AltAnimationTree
 
+## Początkowa maska kolizji.
 @onready var initial_collision_mask: int = collision_mask
+
+
+## Zwraca najbliższy vent.
+func get_nearest_vent() -> Vent:
+	var vent_systems = get_tree().root.get_node("Game/Maps/MainMap/Vents").get_children()
+
+	for i in vent_systems:
+		var vents = i.get_children()
+
+		for j in vents:
+			if position.distance_to(j.global_position - Vector2(0, 50)) < 300:
+				return j
+
+	return null
+
+
+@rpc("call_local", "reliable")
+## Zmienia widoczność gracza.
+func toggle_visibility(is_enabled: bool):
+	visible = is_enabled
+
 
 func _ready():
 	# Gracz jest własnością serwera.
@@ -34,7 +58,7 @@ func _ready():
 	# Wejście gracza jest własnością gracza.
 	input.set_multiplayer_authority(name.to_int())
 
-	# Konfiguruje synchronizację.
+	# Konfiguruje synchronizator rollbacku.
 	rollback_synchronizer.process_settings()
 
 	# Ustawia etykietę z nazwą gracza.
@@ -54,33 +78,42 @@ func _process(_delta):
 	_update_animation_parameters(direction)
 
 
-func _rollback_tick(delta, _tick, _is_fresh):
-	# Odpowiada za przesunięcie gracza do venta i za przeniesienie z venta do innego venta
-	if is_moving_through_vent && _is_fresh:
-		if is_walking_to_destination:
-			if global_position.distance_to(destination_position) <= walking_speed / NetworkTime.tickrate:
-				global_position = destination_position
+func _rollback_tick(delta, _tick, is_fresh):
+	# Odpowiada za poruszanie się przez venta.
+	if is_moving_through_vent && is_fresh:
+		# Jeśli gracz wchodzi do venta.
+		if input.is_walking_to_destination:
+			# Jeśli gracz jest w granicy błędu wejścia do venta.
+			if global_position.distance_to(input.destination_position) <= walking_speed / NetworkTime.tickrate:
+				# Przesuwa gracza do środka venta.
+				global_position = input.destination_position
 				input.direction = Vector2.ZERO
 
-				for i in GameManager.get_registered_players():
-					if name.to_int() == i:
-						continue
-					
-					toggle_visible.rpc_id(i, false)
+				# Wyłącza widoczność gracza.
+				if multiplayer.is_server():
+					for i in GameManager.get_registered_players():
+						if name.to_int() == i:
+							continue
 
-				# do zrobienia: w tym miejscu włączyć animacje wejścia do venta
+						toggle_visibility.rpc_id(i, false)
 
+				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
-					vent_toggle_dir_bttns(true)
+					_toggle_vent_buttons(true)
 
+				input.is_walking_to_destination = false
 				is_moving_through_vent = false
-				is_walking_to_destination = false
-		else:
-			global_position = global_position.move_toward(destination_position, delta * venting_speed * NetworkTime.physics_factor)
 
-			if global_position == destination_position:
+		# Jeśli gracz przemieszcza się między ventami.
+		else:
+			# Przesuwa gracza w kierunku docelowego venta.
+			global_position = global_position.move_toward(input.destination_position, delta * venting_speed * NetworkTime.physics_factor)
+
+			# Jeśli gracz dotał do docelowego venta.
+			if global_position == input.destination_position:
+				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
-					vent_toggle_dir_bttns(true)
+					_toggle_vent_buttons(true)
 
 				is_moving_through_vent = false
 				can_use_vent = true
@@ -95,7 +128,7 @@ func _rollback_tick(delta, _tick, _is_fresh):
 
 
 ## Aktualizuje parametry animacji postaci.
-func _update_animation_parameters(direction):
+func _update_animation_parameters(direction: Vector2):
 	# Ustawia parametry animacji w zależności od stanu ruchu.
 	if direction == Vector2.ZERO:
 		animation_tree["parameters/conditions/idle"] = true
@@ -113,116 +146,107 @@ func _update_animation_parameters(direction):
 
 
 func _input(event):
-	# Obsługuje użycie venta
-	if event.is_action_pressed("use_vent") && !GameManager.get_current_game_key("paused") && can_use_vent:
-		use_vent()
-	if event.is_action_pressed("report"):
-		print(name," | position: ",position)
+	# Obsługuje użycie venta.
+	if event.is_action_pressed("use_vent") && can_use_vent && !GameManager.get_current_game_key("paused"):
+		_use_vent()
 
 
-## Sprawdza czy gracz jest impostorem i nie jest martwy lub czy jest włączone ventowanie crewmate
-func can_use_vent():
-	var vent = get_nearest_vent()
-	if vent != null:
-		return vent.can_use_vent() || vent.allow_crewmate_vent
-	return null
-
-
-## Obsługuje użycie venta
-func use_vent():
-	if is_in_vent:
-		exit_vent_server.rpc_id(1)
+## Używa venta.
+func _use_vent():
+	if !is_in_vent:
+		_request_vent_entering.rpc_id(1)
 	else:
-		enter_vent_server.rpc_id(1)
+		_request_vent_exiting.rpc_id(1)
 
 
 @rpc("any_peer", "call_local", "reliable")
-## Obsługuje wejście do venta
-func enter_vent_server():
-	if !name.to_int() == multiplayer.get_remote_sender_id():
+## Obsługuje żądanie wejścia do venta.
+func _request_vent_entering():
+	var id = multiplayer.get_remote_sender_id()
+
+	if !name.to_int() == id:
 		return
 
 	var vent = get_nearest_vent()
 
-	if vent != null:
-		enter_vent.rpc_id(name.to_int(), vent.global_position)
-		enter_vent(vent.global_position)
+	if vent == null:
+		return
+
+	if !vent.can_use_vent(id) && !vent.allow_crewmate_vent:
+		return
+
+	if name.to_int() != 1:
+		_enter_vent(vent.global_position)
+
+	_enter_vent.rpc_id(name.to_int(), vent.global_position)
 
 
 @rpc("call_local", "reliable")
-## Obsługuje wejście do venta na serwerze
-func enter_vent(vent_position):
-	# Przesuwa gracza do venta
-	# do zrobienia: w tym miejscu wyłączyć możliwość zabicia
-	# do zrobienia: w tym miejscu wyłączyć możliwość reportowania
+## Wchodzi do venta.
+func _enter_vent(vent_position: Vector2):
 	if name.to_int() == GameManager.get_current_player_id():
 		GameManager.set_input_status(false)
 
 	is_in_vent = true
 	collision_mask = 0
-	destination_position = vent_position - Vector2(0, 50)
 	is_moving_through_vent = true
-	is_walking_to_destination = true
+	input.destination_position = vent_position - Vector2(0, 50)
+	input.is_walking_to_destination = true
 
 
 @rpc("any_peer", "call_local", "reliable")
-func exit_vent_server():
-	if !name.to_int() == multiplayer.get_remote_sender_id():
+## Obsługuje żądanie wyjścia z venta.
+func _request_vent_exiting():
+	var id = multiplayer.get_remote_sender_id()
+
+	if !name.to_int() == id:
 		return
 
 	var vent = get_nearest_vent()
-	if vent!=null:
-		#if position == vent.position - Vector2(0,50): # TYMCZASOWO ZAKOMENTOWANE
-			# do zrobienia: w tym miejscu włączyć animacje wyjścia z venta
-			exit_vent.rpc_id(name.to_int())
-			exit_vent()
+
+	if vent == null:
+		return
+
+	if !vent.can_use_vent(id) && !vent.allow_crewmate_vent:
+		return
+
+	if position != vent.global_position - Vector2(0, 50):
+		return
+
+	if name.to_int() != 1:
+		_exit_vent()
+
+	_exit_vent.rpc_id(name.to_int())
 
 
 @rpc("call_local", "reliable")
-## Obsługuje wyjście z venta
-func exit_vent():
+## Obsługuje wyjście z venta.
+func _exit_vent():
 	var vent = get_nearest_vent()
-	if vent!=null:
-		if name.to_int() == GameManager.get_current_player_id():
-			vent.change_dir_bttns_visibility(false)
-			GameManager.set_input_status(true)
 
-		is_in_vent = false
-		collision_mask = initial_collision_mask
+	if vent == null:
+		return
 
-		toggle_visible.rpc(true)
-				
-		# do zrobienia: w tym miejscu włączyć możliwość zabicia
-		# do zrobienia: w tym miejscu włączyć możliwość reportowania
+	if name.to_int() == GameManager.get_current_player_id():
+		vent.change_dir_bttns_visibility(false)
+		GameManager.set_input_status(true)
 
+	is_in_vent = false
+	collision_mask = initial_collision_mask
 
-## Zwraca vent najbliżej gracza w odległości mniejszej niz 300
-func get_nearest_vent():
-	var vent_system_amount = get_parent().get_parent().get_node("Vents").get_child_count()
-	
-	for i in range(0,vent_system_amount):
-		var vent_list = get_parent().get_parent().get_node("Vents").get_child(i).get_children()
-		for vent in vent_list:
-			# Sprawdza czy odległość mniejsza niż 300
-			if position.distance_to(vent.position- Vector2(0,50)) < 300:
-				return vent
-	return null
+	if multiplayer.is_server():
+		for i in GameManager.get_registered_players():
+			if name.to_int() == i:
+				continue
+
+			toggle_visibility.rpc_id(i, true)
 
 
-## Przełącza widoczność przycisków kierunkowych venta - wywoływane lokalnie w _rollback_tick
-func vent_toggle_dir_bttns(is_on:bool):
+## Zmienia widoczność przycisków kierunkowych venta.
+func _toggle_vent_buttons(is_enabled: bool):
 	var vent = get_nearest_vent()
-	if vent != null:
-		vent.change_dir_bttns_visibility(is_on)
 
+	if vent == null:
+		return
 
-@rpc("any_peer", "call_local", "reliable")
-## Zmienia widoczność gracza na serwerze
-func toggle_visible(is_visible: bool):
-	visible = is_visible
-
-	
-@rpc("any_peer", "call_local", "reliable")
-## Zmienia wartość maski kolizji
-func change_collision_mask(value):
-	collision_mask = value
+	vent.change_dir_bttns_visibility(is_enabled)

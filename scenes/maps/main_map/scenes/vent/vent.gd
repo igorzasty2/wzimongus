@@ -1,8 +1,13 @@
+## Klasa venta
 class_name Vent
 extends Node2D
 
+
+## Czy student może użyć venta.
 @export var allow_crewmate_vent: bool = false
+## Lista docelowych ventów
 @export var vent_target_list : Array[Vent] = []
+## Przycisk do przeniesienia się do innego venta
 @onready var sprite_2d = $Sprite2D
 
 var vent_direction_button = preload("res://scenes/maps/main_map/scenes/vent/vent_direction_button/vent_direction_button.tscn")
@@ -58,7 +63,7 @@ func move_to_vent(id):
 	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(GameManager.get_current_player_id()))
 	player.can_use_vent = false
 	player.is_moving_through_vent = true
-	player.destination_position = vent_target_list[id].position - Vector2(0, 50)
+	player.input.destination_position = vent_target_list[id].position - Vector2(0, 50)
 	
 	# Zmienia widoczność przycisków ventu docelowego
 	vent_target_list[id].change_dir_bttns_visibility(true)
@@ -70,7 +75,7 @@ func move_to_vent_server(id):
 	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(multiplayer.get_remote_sender_id()))
 	player.can_use_vent = false
 	player.is_moving_through_vent = true
-	player.destination_position = vent_target_list[id].position - Vector2(0, 50)
+	player.input.destination_position = vent_target_list[id].position - Vector2(0, 50)
 
 
 # Zmienia vidoczność przycisków kierunkowych
@@ -81,24 +86,32 @@ func change_dir_bttns_visibility(visibility:bool):
 
 # Obsługuje wejście gracza w obszar w którym może ventować
 func _on_area_2d_body_entered(body):
-	if can_use_vent() || allow_crewmate_vent:
-		
-		if body.is_in_vent != true:
-			body.can_use_vent = true
-		
-		if body.name.to_int() == multiplayer.get_unique_id():
-			toggle_highlight(true)
+	if !body.name.to_int() == multiplayer.get_unique_id() && !multiplayer.is_server():
+		return
+
+	if !can_use_vent(body.name.to_int()) && !allow_crewmate_vent:
+		return
+
+	if body.is_in_vent != true:
+		body.can_use_vent = true
+
+	if body.name.to_int() == multiplayer.get_unique_id():
+		toggle_highlight(true)
 
 
 # Obsługuje wyjście gracza z obszaru w którym może ventować
 func _on_area_2d_body_exited(body):
-	if can_use_vent() || allow_crewmate_vent:
-		
-		if body.is_in_vent != true:
-			body.can_use_vent = false
-		
-		if body.name.to_int() == multiplayer.get_unique_id():
-			toggle_highlight(false)
+	if !body.name.to_int() == multiplayer.get_unique_id() && !multiplayer.is_server():
+		return
+
+	if !can_use_vent(body.name.to_int()) && !allow_crewmate_vent:
+		return
+
+	if body.is_in_vent != true:
+		body.can_use_vent = false
+	
+	if body.name.to_int() == multiplayer.get_unique_id():
+		toggle_highlight(false)
 
 
 # Włącza i wyłącza podświetlenie venta
@@ -110,5 +123,5 @@ func toggle_highlight(is_on: bool):
 
 
 # Sprawdza czy gracz jest impostorem i nie jest martwy
-func can_use_vent():
-	return GameManager.get_current_player_key("impostor") && !GameManager.get_current_player_key("died")
+func can_use_vent(id: int):
+	return GameManager.get_registered_player_key(id, "is_lecturer") && !GameManager.get_registered_player_key(id, "is_dead")
