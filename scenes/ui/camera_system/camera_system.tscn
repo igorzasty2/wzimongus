@@ -1,8 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://mtrc2q6rpyb6"]
+[gd_scene load_steps=18 format=3 uid="uid://mtrc2q6rpyb6"]
 
 [ext_resource type="Script" path="res://scenes/ui/camera_system/camera_system.gd" id="1_j11j8"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_k0cgp"]
 
 [sub_resource type="Gradient" id="Gradient_27dqk"]
 
@@ -97,11 +95,9 @@ columns = 3
 
 [node name="camera1" type="TextureRect" parent="CameraPanel"]
 layout_mode = 2
-texture = SubResource("ViewportTexture_k0cgp")
 
 [node name="camera2" type="TextureRect" parent="CameraPanel"]
 layout_mode = 2
-texture = SubResource("ViewportTexture_k0cgp")
 
 [node name="camera3" type="TextureRect" parent="CameraPanel"]
 layout_mode = 2
@@ -113,15 +109,12 @@ texture = SubResource("AnimatedTexture_uk3yl")
 
 [node name="camera5" type="TextureRect" parent="CameraPanel"]
 layout_mode = 2
-texture = SubResource("ViewportTexture_k0cgp")
 
 [node name="camera6" type="TextureRect" parent="CameraPanel"]
 layout_mode = 2
-texture = SubResource("ViewportTexture_k0cgp")
 
 [node name="camera7" type="TextureRect" parent="CameraPanel"]
 layout_mode = 2
-texture = SubResource("ViewportTexture_k0cgp")
 
 [node name="camera8" type="TextureRect" parent="CameraPanel"]
 layout_mode = 2
