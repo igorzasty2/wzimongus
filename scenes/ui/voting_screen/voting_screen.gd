@@ -4,6 +4,9 @@ extends Control
 @onready var end_vote_text = get_node("%EndVoteText")
 @onready var skip_decision = get_node("%Decision")
 @onready var skip_button = get_node("%SkipButton")
+@onready var chat = get_node("%Chat")
+@onready var chat_background = get_node("%ChatBackground")
+@onready var chat_input = $Chat/ChatContainer/InputText
 
 @export var VOTING_TIME = 10
 @onready var voting_timer = Timer.new()
@@ -22,6 +25,8 @@ var is_selected = false
 func _ready():
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
+
+	chat.visible = false
 
 	# END VOTING TIMER
 	add_child(voting_timer)
@@ -134,6 +139,11 @@ func _change_scene_to_ejection_screen():
 	self.queue_free()
 
 
+func update_input():
+	if chat_input:
+		var input_status = !chat_input.visible
+		GameManager.set_input_status(input_status)
+
 ## Zwraca id gracza z największą ilością głosów, jeśli jest remis zwraca null
 func get_most_voted_player_id():
 	var most_voted_players = []
@@ -151,3 +161,15 @@ func get_most_voted_player_id():
 		return null
 	else:
 		return most_voted_players[0]
+
+
+func _on_open_chat_pressed():
+	chat.visible = true
+	chat._open_chat()
+	chat_background.visible = true
+
+
+func _on_close_chat_pressed():
+	chat.visible = false
+	chat_background.visible = false
+	chat._close_chat()

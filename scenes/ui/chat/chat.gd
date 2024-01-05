@@ -56,6 +56,10 @@ func send_message(message, group, id):
 			chat_logs_container.add_child(system_message_instance)
 			system_message_instance.init(message)
 			chat_logs_scroll_container.modulate.a = 1
+			
+			if get_parent().name == "VotingScreen":
+				return
+
 			timer.start()
 		_:
 			_create_message(GameManager.get_registered_player_key(id, "username"), message, current_group)
@@ -79,6 +83,9 @@ func _create_message(username, message, group):
 
 	new_message.init(username, message, GROUP_COLORS[group])
 
+	if get_parent().name == "VotingScreen":
+		return
+
 	timer.start()
 
 
@@ -95,7 +102,7 @@ func _on_input_text_text_submitted(submitted_text):
 	send_message.rpc_id(1, submitted_text, current_group, multiplayer.get_unique_id())	
 
 	input_text.text = ""
-
+	_close_chat()
 
 func _on_timer_timeout():
 	if input_text.has_focus():
@@ -120,5 +127,10 @@ func _open_chat():
 func _close_chat():
 	input_text.release_focus()
 	input_text.hide()
-	timer.start()
 	input_text.text = ""
+
+	if get_parent().name == "VotingScreen":
+		return
+
+	timer.start()
+	
