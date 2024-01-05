@@ -84,7 +84,7 @@
 [ext_resource type="Texture2D" uid="uid://cbxi1n610rgci" path="res://scenes/maps/main_map/assets/objects/xero_polka_na_dokumenty.png" id="71_yvo4d"]
 [ext_resource type="Texture2D" uid="uid://rmo5fhilsda3" path="res://scenes/maps/main_map/assets/objects/xero_stos_kartek.png" id="72_vb4gs"]
 [ext_resource type="Texture2D" uid="uid://lqlctfob53ns" path="res://scenes/maps/main_map/assets/objects/xero_szafa.png" id="73_g7t2a"]
-[ext_resource type="PackedScene" uid="uid://dp2sfegsvyvqy" path="res://scenes/maps/main_map/scenes/report/report_button/emergency_button.tscn" id="75_6ekxd"]
+[ext_resource type="PackedScene" uid="uid://dp2sfegsvyvqy" path="res://scenes/maps/main_map/scenes/report/emergency_button/emergency_button.tscn" id="75_vik5d"]
 [ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="79_x26x2"]
 [ext_resource type="PackedScene" uid="uid://dposexvk3a7mv" path="res://scenes/maps/main_map/scenes/report/report_area/report_area.tscn" id="80_67vd4"]
 
@@ -940,9 +940,9 @@ texture = ExtResource("73_g7t2a")
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_f8ggq")
 
-[node name="EmergencyButton" parent="Objects" instance=ExtResource("75_6ekxd")]
-z_index = 1
-position = Vector2(1733, 284)
+[node name="EmergencyButton" parent="Objects" instance=ExtResource("75_vik5d")]
+z_index = 2
+position = Vector2(1734, 286)
 
 [node name="Tasks" type="Node2D" parent="."]
 
