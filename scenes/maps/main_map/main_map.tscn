@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=107 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -42,10 +42,10 @@
 [ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_menu.tscn" id="34_5r0ro"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="34_b878o"]
 [ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_menu.gd" id="35_23714"]
-[ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
 [ext_resource type="Texture2D" uid="uid://lv5k5yskqtbw" path="res://scenes/maps/main_map/assets/objects/kanapa.png" id="35_ryots"]
 [ext_resource type="PackedScene" uid="uid://ct2plxemq2ft5" path="res://scenes/ui/loading_screen/loading_screen.tscn" id="36_4x0df"]
 [ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_1.png" id="36_k0n1h"]
+[ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
 [ext_resource type="Texture2D" uid="uid://bps64glp2uv7u" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_2.png" id="37_mklhi"]
 [ext_resource type="PackedScene" uid="uid://blfakmqxo172y" path="res://scenes/ui/task_list_display/task_list_display.tscn" id="38_l1f3e"]
 [ext_resource type="Texture2D" uid="uid://2l0wseh5bnat" path="res://scenes/maps/main_map/assets/objects/dziekanat_biurko.png" id="38_u8dgm"]
@@ -86,6 +86,7 @@
 [ext_resource type="Texture2D" uid="uid://rmo5fhilsda3" path="res://scenes/maps/main_map/assets/objects/xero_stos_kartek.png" id="72_vb4gs"]
 [ext_resource type="Texture2D" uid="uid://lqlctfob53ns" path="res://scenes/maps/main_map/assets/objects/xero_szafa.png" id="73_g7t2a"]
 [ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="79_x26x2"]
+[ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -956,6 +957,11 @@ position = Vector2(735, -973)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("79_x26x2")
 
+[node name="Task5" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(735, -973)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("80_b7854")
+
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -983,5 +989,3 @@ properties = Array[String]([":global_position"])
 script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
-
-[connection signal="timeout" from="Camera/Timer" to="Camera" method="_on_timer_timeout"]

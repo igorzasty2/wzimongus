@@ -1,4 +1,5 @@
 extends Control
+signal minigame_end
 
 @onready var zero = get_node("%0")
 @onready var thirty = get_node("%30")
@@ -112,7 +113,7 @@ func _update_indicators():
 		
 		for button in incorrect_buttons:
 			button.disabled = true
-
+		minigame_end.emit()
 
 func _update_button_sprite():
 	for button in all_buttons:

@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 var _minigame: PackedScene
-var _minigame_instance: Node2D
+var _minigame_instance: Node
 
 @onready var minigame_container = $MinigameContainer
 @onready var viewport = minigame_container.get_node("ViewportContainer/Viewport")
