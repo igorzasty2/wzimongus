@@ -1,9 +1,7 @@
 extends Node2D
+## Klasa reprezuntuje instancję minigry
 
-# Scena ta przechowuje główną logikę minigry oraz główne jej skrypty wymagane
-# do jej działania
-
-# FORMULAS przechowuje listę możliwych do wylosowania wzorów do uzupełnienia
+## Lista możliwych do wylosowania wzorów
 const FORMULAS = {
 	0:"F=m*v", 
 	1:"v=s/t", 
@@ -13,35 +11,32 @@ const FORMULAS = {
 	5:"P=π*r²", 
 	6:"P=a*h½",
 	}
-# Zmianna how_many_formulas decyduje o tym ile razy losowany ma być wzró 
-# max = 3 min = 1
 @export
+## Ilość losowanych wzorów
 var how_many_formulas = 3
-
+## Sygnał emitowany w momencie ukończenia minigry
 signal minigame_end
 
-# Zmienna mówi o tym, czy przesuwane jest obecnie pole z literą
+## Informacja czy pole jest obecnie przesuwane
 var is_moving = false
-# moving przechowuje referencję do obecnie przesuwanego pola
+## Referencja do przesuwanego pola
 var moving
-# generated jest tablicą przechowującą wcześniej wylosowane wzory aby się nie
-# powtarzały
+## Wcześniej wylosowane wzory
 var generated = []
-# times_generated służy do przesunięcia nowo wygenerowanych wzorów w osi y oraz
-# do zakończenia minigry
+## Informacja ile wzorów zostało uzupełnionych
 var times_generated = 0
-# point przechowuje liczbę już uzupełnionych luk we wzorze
+## Liczba uzupełnonych luk we wzorze
 var point = 0
-# wanted_points przechowuje liczbę luk w obecnie uzupełnianym wzorze
+## Liczba luk w uzupełnianym wzorze
 var wanted_points = 0
-# Informuje czy uzupełniono już wszystkie wymagane wzory
+## Informuje czy minigra została ukończona
 var finished = false
 
 
 func _ready():
 	_random_generate()
 
-
+## Kontroluje przebieg minigry
 func _process(delta):
 	var letters = _get_letters()
 	var spaces = _get_spaces()
@@ -93,7 +88,7 @@ func _process(delta):
 			finished = true
 
 
-# Funkcja generująca pola z literami w przyborniku u dołu ekranu
+## Generuje pola z literami
 func _generate_letters(formula:String):
 	# number_of_letters przechowuje liczbę liter które muszą zostać wygenerowane
 	var number_of_letters = ceil(formula.length()/2.0)
@@ -132,8 +127,7 @@ func _generate_letters(formula:String):
 		add_child(Letter)
 
 
-# Dodaje do sekwencji kolejności wygenerowanych liter dodatkowe miejsca w których
-# umieszczone zostaną litery pełniące rolę hałasu
+## Dodaje niepotrzebne litery do wygenerowanych
 func _add_noise(sequence:Array):
 	var count_of_noise = 6 - sequence.size()
 	var noise_indexes = []
@@ -154,9 +148,7 @@ func _add_noise(sequence:Array):
 	return new_sequence
 
 
-# Funkcja generująca puste pola na litery oraz tekst przedstawiający uzupełnione
-# elementy równania np. P=a*h, pustymi polami będą 'P' 'a' 'h' a '=' oraz '*'
-# będą wyświetlone w postaci tekstu
+## Generuje wzór który należy uzupełnić
 func _generate_formula(formula:String):
 	# X_SHIFT odpowiada za stałe przesunięcie w osi x przy generowaniu kolejnych
 	# elementów wzoru, Y_SHIFT odpowiada za przesunięcie w osi y przy generowaniu
@@ -191,7 +183,7 @@ func _generate_formula(formula:String):
 	$Hint.text += "[center][font_size={23}][color=white]" + formula + "[/color][/font_size][/center]\n"
 
 
-# Funkcja zwraca tablicę zawierającą wszystkie instancje klasy Letter w tej scenie
+## Zwraca tablicę wygenerowanych pól z literami
 func _get_letters():
 	var children = [] 
 	for child in get_children():
@@ -200,7 +192,7 @@ func _get_letters():
 	return children
 
 
-# Funkcja zwraca tablicę zawierającą wszystkie instancje klasy Space w tej scenie
+## Zwraca tablicę pustych pól
 func _get_spaces():
 	var spaces = []
 	for child in get_children():
@@ -209,16 +201,14 @@ func _get_spaces():
 	return spaces
 
 
-# Funkcja zwraca referencję do objektu space z danej tabeli spaces wymagającego
-# danej litery letter
+## Zwraca referencję do pustego pola wymagającego danej litery
 func _get_correct_space(letter, spaces):
 	for space in spaces:
 		if space.wanted_letter == letter:
 			return space
 
 
-# Jest to funkcja losująca wcześniej nie wylosowany wzór i wywołująca funkcje
-# odpowiedzialne za generowanie pól pustych i pól z literami
+## Losuje wcześniej nie wylosowany wzór
 func _random_generate():
 	var r = randi_range(0, FORMULAS.size()-1)
 	if !generated.has(FORMULAS[r]):
