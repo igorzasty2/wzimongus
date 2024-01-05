@@ -56,9 +56,9 @@ func move_to_vent(id):
 	move_to_vent_server.rpc_id(1, id)
 
 	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(GameManager.get_current_player_id()))
-	player.can_player_use_vent = false
-	player.is_vent_moving = true
-	player.vent_final_position = vent_target_list[id].position - Vector2(0, 50)
+	player.can_use_vent = false
+	player.is_moving_through_vent = true
+	player.destination_position = vent_target_list[id].position - Vector2(0, 50)
 	
 	# Zmienia widoczność przycisków ventu docelowego
 	vent_target_list[id].change_dir_bttns_visibility(true)
@@ -68,9 +68,9 @@ func move_to_vent(id):
 @rpc("any_peer", "call_local", "reliable")
 func move_to_vent_server(id):
 	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(multiplayer.get_remote_sender_id()))
-	player.can_player_use_vent = false
-	player.is_vent_moving = true
-	player.vent_final_position = vent_target_list[id].position - Vector2(0, 50)
+	player.can_use_vent = false
+	player.is_moving_through_vent = true
+	player.destination_position = vent_target_list[id].position - Vector2(0, 50)
 
 
 # Zmienia vidoczność przycisków kierunkowych
@@ -84,7 +84,7 @@ func _on_area_2d_body_entered(body):
 	if can_use_vent() || allow_crewmate_vent:
 		
 		if body.is_in_vent != true:
-			body.can_player_use_vent = true
+			body.can_use_vent = true
 		
 		if body.name.to_int() == multiplayer.get_unique_id():
 			toggle_highlight(true)
@@ -95,7 +95,7 @@ func _on_area_2d_body_exited(body):
 	if can_use_vent() || allow_crewmate_vent:
 		
 		if body.is_in_vent != true:
-			body.can_player_use_vent = false
+			body.can_use_vent = false
 		
 		if body.name.to_int() == multiplayer.get_unique_id():
 			toggle_highlight(false)

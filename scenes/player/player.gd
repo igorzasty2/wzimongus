@@ -1,26 +1,31 @@
+## Główna klasa gracza
+class_name Player
 extends CharacterBody2D
 
-@export var speed = 600.0
 
-var last_direction_x: float = -1
+## Prędkość poruszania się gracza.
+@export var walking_speed: float = 600.0
+## Prędkość teleportacji gracza do venta.
+@export var venting_speed: float = 1500.0
 
-@onready var input = $Input
-@onready var rollback_synchronizer = $RollbackSynchronizer
-@onready var username_label = $UsernameLabel
-@onready var animation_tree = $Skins/AltAnimationTree
+## Ostatni kierunek poziomego ruchu gracza.
+var direction_last_x: float = -1
 
-# Zmienne do obsługi ventów
-var is_vent_moving = false
-var is_vent_moving_to_vent = false
-var vent_final_position = Vector2.ZERO
+## Czy gracz jest sterowany automatycznie.
+var is_walking_to_destination: bool = false
+## Pozycja docelowa do której gracz się automatycznie porusza.
+var destination_position: Vector2 = Vector2.ZERO
 
+var can_use_vent: bool = false
+var is_in_vent: bool = false
+var is_moving_through_vent: bool = false
 
-var can_player_use_vent = false
-var is_in_vent = false
-var venting_speed = 3
-var initial_collision_mask
-var is_moving_toward_position = false
+@onready var input: InputSynchronizer = $Input
+@onready var rollback_synchronizer: RollbackSynchronizer = $RollbackSynchronizer
+@onready var username_label: Label = $UsernameLabel
+@onready var animation_tree: AnimationTree = $Skins/AltAnimationTree
 
+@onready var initial_collision_mask: int = collision_mask
 
 func _ready():
 	# Gracz jest własnością serwera.
@@ -39,18 +44,11 @@ func _ready():
 	animation_tree.active = true
 
 	# Aktualizuje parametry animacji postaci.
-	animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, 0)
-	animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, 0)
-	
-	initial_collision_mask = collision_mask
+	animation_tree["parameters/idle/blend_position"] = Vector2(direction_last_x, 0)
+	animation_tree["parameters/walk/blend_position"] = Vector2(direction_last_x, 0)
 
 
 func _process(_delta):
-	# Aktualizuje parametry animacji postaci podczas ruchu do venta
-	if is_moving_toward_position==true && vent_final_position!=null:
-		_update_animation_parameters((vent_final_position-position).normalized())
-		return
-
 	# Aktualizuje parametry animacji postaci.
 	var direction = input.direction.normalized()
 	_update_animation_parameters(direction)
@@ -58,11 +56,12 @@ func _process(_delta):
 
 func _rollback_tick(delta, _tick, _is_fresh):
 	# Odpowiada za przesunięcie gracza do venta i za przeniesienie z venta do innego venta
-	if is_vent_moving && _is_fresh:
-		if is_vent_moving_to_vent:
-			global_position = global_position.move_toward(vent_final_position, delta * speed * NetworkTime.physics_factor)
+	if is_moving_through_vent && _is_fresh:
+		if is_walking_to_destination:
+			if global_position.distance_to(destination_position) <= walking_speed / NetworkTime.tickrate:
+				global_position = destination_position
+				input.direction = Vector2.ZERO
 
-			if global_position == vent_final_position:
 				for i in GameManager.get_registered_players():
 					if name.to_int() == i:
 						continue
@@ -74,20 +73,20 @@ func _rollback_tick(delta, _tick, _is_fresh):
 				if name.to_int() == GameManager.get_current_player_id():
 					vent_toggle_dir_bttns(true)
 
-				is_vent_moving = false
-				is_vent_moving_to_vent = false
+				is_moving_through_vent = false
+				is_walking_to_destination = false
 		else:
-			global_position = global_position.move_toward(vent_final_position, delta * speed * venting_speed * NetworkTime.physics_factor)
+			global_position = global_position.move_toward(destination_position, delta * venting_speed * NetworkTime.physics_factor)
 
-			if global_position == vent_final_position:
+			if global_position == destination_position:
 				if name.to_int() == GameManager.get_current_player_id():
 					vent_toggle_dir_bttns(true)
 
-				is_vent_moving = false
-				can_player_use_vent = true
+				is_moving_through_vent = false
+				can_use_vent = true
 
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
-	velocity = input.direction.normalized() * speed
+	velocity = input.direction.normalized() * walking_speed
 
 	# Porusza postacią i obsługuje kolizje.
 	velocity *= NetworkTime.physics_factor
@@ -107,15 +106,15 @@ func _update_animation_parameters(direction):
 		if direction.x != 0:
 			animation_tree["parameters/idle/blend_position"] = direction
 			animation_tree["parameters/walk/blend_position"] = direction
-			last_direction_x = direction.x
+			direction_last_x = direction.x
 		else:
-			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, direction.y)
-			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, direction.y)
+			animation_tree["parameters/idle/blend_position"] = Vector2(direction_last_x, direction.y)
+			animation_tree["parameters/walk/blend_position"] = Vector2(direction_last_x, direction.y)
 
 
 func _input(event):
 	# Obsługuje użycie venta
-	if event.is_action_pressed("use_vent") && !GameManager.get_current_game_key("paused") && can_player_use_vent:
+	if event.is_action_pressed("use_vent") && !GameManager.get_current_game_key("paused") && can_use_vent:
 		use_vent()
 	if event.is_action_pressed("report"):
 		print(name," | position: ",position)
@@ -161,9 +160,9 @@ func enter_vent(vent_position):
 
 	is_in_vent = true
 	collision_mask = 0
-	vent_final_position = vent_position - Vector2(0, 50)
-	is_vent_moving = true
-	is_vent_moving_to_vent = true
+	destination_position = vent_position - Vector2(0, 50)
+	is_moving_through_vent = true
+	is_walking_to_destination = true
 
 
 @rpc("any_peer", "call_local", "reliable")

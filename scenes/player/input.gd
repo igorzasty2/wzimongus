@@ -1,8 +1,17 @@
-extends Node
+## Synchronizer wejścia gracza z serwerem.
 class_name InputSynchronizer
+extends Node
 
+
+## Wektor kierunku poruszania się gracza.
 @export var direction: Vector2 = Vector2.ZERO
-var is_disabled: bool = false
+
+## Czy synchronizacja wejścia jest wyłączona.
+var _is_disabled: bool = false
+
+## Referencja do gracza.
+@onready var _player: Player = get_parent()
+
 
 func _ready():
 	NetworkTime.before_tick_loop.connect(_gather)
@@ -18,7 +27,11 @@ func _gather():
 	if !is_multiplayer_authority():
 		return
 
-	if is_disabled:
+	if _player.is_walking_to_destination:
+		direction = (_player.destination_position - _player.global_position).normalized()
+		return
+
+	if _is_disabled:
 		direction = Vector2.ZERO
 		return
 
@@ -26,4 +39,4 @@ func _gather():
 
 
 func _on_input_status_changed(state: bool):
-	is_disabled = !state
+	_is_disabled = !state
