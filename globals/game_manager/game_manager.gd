@@ -29,7 +29,10 @@ signal error_occured(message: String)
 signal server_settings_changed()
 
 ## Emitowany kiedy jeden z warunków zakończenia gry jest spełniony(wszystkie zadania są zrobione, wszystkie impostory są wyeliminowane).
-signal winner_determined(winning_role: String)
+signal winner_determined(winning_role: Role)
+
+## Rola gracza
+enum Role {STUDENT, LECTURER}
 
 ## Przechowuje dane innych graczy z momentu rejestracji, w celu zespawnowania ich w lobby.
 var lobby_data_at_registration = {}
@@ -526,15 +529,15 @@ func check_winning_conditions():
 		return ERR_UNAUTHORIZED
 	
 	if TaskManager.get_tasks_server().is_empty():
-		winner_determined.emit("Studenci")
+		winner_determined.emit(Role.STUDENT)
 		return
 	
 	if _count_alive_lecturers() == 0:
-		winner_determined.emit("Studenci")
+		winner_determined.emit(Role.STUDENT)
 		return
 
 	if _count_alive_crewmates() <= _count_alive_lecturers():
-		winner_determined.emit("Wykładowcy")
+		winner_determined.emit(Role.LECTURER)
 		return
 
 
@@ -543,7 +546,7 @@ func _count_alive_lecturers():
 	var lecturer_counter = 0
 	
 	for i in get_registered_players():
-		if get_registered_player_key(i, "is_alive") and get_registered_player_key(i, "is_lecturer"):
+		if not get_registered_player_key(i, "is_dead") and get_registered_player_key(i, "is_lecturer"):
 			lecturer_counter += 1
 
 	return lecturer_counter
@@ -554,7 +557,7 @@ func _count_alive_crewmates():
 	var crewmate_counter = 0
 	
 	for i in get_registered_players():
-		if get_registered_player_key(i, "is_alive") and not get_registered_player_key(i, "is_lecturer"):
+		if not get_registered_player_key(i, "is_dead") and not get_registered_player_key(i, "is_lecturer"):
 			crewmate_counter += 1
 
 	return crewmate_counter

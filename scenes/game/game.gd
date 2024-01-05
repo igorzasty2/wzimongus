@@ -19,13 +19,12 @@ func _on_registered_successfully():
 	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
 
 
-func _on_winner_determined(winning_role):
+func _on_winner_determined(winning_role: GameManager.Role):
 	display_winner.rpc(winning_role)
 
 
 @rpc("reliable", "authority", "call_local")
-func display_winner(winning_role: String):
-	print("onwinnerdetermined")
+func display_winner(winning_role: GameManager.Role):
 	var ending_scene = preload('res://scenes/ui/game_ending/game_ending.tscn').instantiate()
 	ending_scene.set_winning_role(winning_role)
 	
