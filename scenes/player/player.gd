@@ -45,6 +45,11 @@ func get_nearest_vent() -> Vent:
 	return null
 
 
+## Zwraca czy gracz może używać ventów.
+func has_vent_permission() -> bool:
+	return GameManager.get_registered_player_key(name.to_int(), "is_lecturer") && !GameManager.get_registered_player_key(name.to_int(), "is_dead")
+
+
 @rpc("call_local", "reliable")
 ## Zmienia widoczność gracza.
 func toggle_visibility(is_enabled: bool):
@@ -172,7 +177,7 @@ func _request_vent_entering():
 	if vent == null:
 		return
 
-	if !vent.can_use_vent(id) && !vent.allow_crewmate_vent:
+	if !has_vent_permission() && !vent.allow_student_venting:
 		return
 
 	if name.to_int() != 1:
@@ -207,7 +212,7 @@ func _request_vent_exiting():
 	if vent == null:
 		return
 
-	if !vent.can_use_vent(id) && !vent.allow_crewmate_vent:
+	if !has_vent_permission() && !vent.allow_student_venting:
 		return
 
 	if position != vent.global_position - Vector2(0, 50):
@@ -228,7 +233,7 @@ func _exit_vent():
 		return
 
 	if name.to_int() == GameManager.get_current_player_id():
-		vent.change_dir_bttns_visibility(false)
+		vent.set_direction_buttons_visibility(false)
 		GameManager.set_input_status(true)
 
 	is_in_vent = false
@@ -249,4 +254,4 @@ func _toggle_vent_buttons(is_enabled: bool):
 	if vent == null:
 		return
 
-	vent.change_dir_bttns_visibility(is_enabled)
+	vent.set_direction_buttons_visibility(is_enabled)

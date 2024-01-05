@@ -141,17 +141,17 @@ minigame_scene = ExtResource("4_6s3my")
 
 [node name="Vent" parent="Vents/VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
 position = Vector2(-527, -443)
-allow_crewmate_vent = false
+allow_student_venting = false
 vent_target_list = [NodePath("../Vent2"), NodePath("../Vent3")]
 
 [node name="Vent2" parent="Vents/VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
 position = Vector2(-1217, 5)
-allow_crewmate_vent = false
+allow_student_venting = false
 vent_target_list = [NodePath("../Vent"), NodePath("../Vent3")]
 
 [node name="Vent3" parent="Vents/VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
 position = Vector2(-199, 353)
-allow_crewmate_vent = false
+allow_student_venting = false
 vent_target_list = [NodePath("../Vent"), NodePath("../Vent2")]
 
 [node name="VentSystem2" type="Node2D" parent="Vents"]

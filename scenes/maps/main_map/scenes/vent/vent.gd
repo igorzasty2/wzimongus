@@ -1,127 +1,122 @@
-## Klasa venta
+## Klasa venta.
 class_name Vent
 extends Node2D
 
 
-## Czy student może użyć venta.
-@export var allow_crewmate_vent: bool = false
-## Lista docelowych ventów
+## Lista docelowych ventów.
 @export var vent_target_list : Array[Vent] = []
-## Przycisk do przeniesienia się do innego venta
-@onready var sprite_2d = $Sprite2D
+## Dystans przycisku kierunkowego od venta.
+@export var direction_button_distance: int = 60
+## Czy student może użyć venta.
+@export var allow_student_venting: bool = false
 
-var vent_direction_button = preload("res://scenes/maps/main_map/scenes/vent/vent_direction_button/vent_direction_button.tscn")
-var vent_direction_button_list = []
+var _vent_direction_button = preload("res://scenes/maps/main_map/scenes/vent/vent_direction_button/vent_direction_button.tscn")
+var _vent_direction_button_list = []
 
-const DIRECTION_BUTTON_DISTANCE_MULTIPLIER = 60
+var _in_range_color = [180, 0, 0, 255]
+var _out_of_range_color = [0, 0, 0, 0]
 
-var in_range_color = [180, 0, 0, 255]
-var out_of_range_color = [0, 0, 0, 0]
+@onready var _sprite_2d = $Sprite2D
+
+
+## Ustawia widoczność przycisków kierunkowych.
+func set_direction_buttons_visibility(visibility:bool):
+	for dir_butt in _vent_direction_button_list:
+		dir_butt.visible = visibility
 
 
 func _ready():
 	# Ukrywa podświetlenie venta
-	toggle_highlight(false)
-	
-	var dir_id = 0
-	# Instancjonuje przycisk dla każdego docelowego venta
+	_toggle_highlight(false)
+
+	var idx = 0
+	# Instancjonuje przycisk dla każdego docelowego venta.
 	for target_vent in vent_target_list:
 		# Oblicza kierunek przycisku
 		var direction_button_pos : Vector2 = (target_vent.position - position).normalized()
-		instantiante_direction_button(direction_button_pos * DIRECTION_BUTTON_DISTANCE_MULTIPLIER)
-		vent_direction_button_list[-1].id = dir_id
-		dir_id += 1
+		_instantiante_direction_button(direction_button_pos * direction_button_distance)
+		_vent_direction_button_list[-1].id = idx
+		idx += 1
 
 
-# Instancjonuje przycisk kierunkowy w danym miejscu
-func instantiante_direction_button(pos : Vector2):
-	var vent_dir_bttn_instance = vent_direction_button.instantiate()
-	# Łączy instancje przycisku
+## Instancjonuje przycisk kierunkowy.
+func _instantiante_direction_button(pos : Vector2):
+	var vent_dir_bttn_instance = _vent_direction_button.instantiate()
+
+	# Łączy instancje przycisku.
 	vent_dir_bttn_instance.direction_button_pressed.connect(_on_direction_button_pressed)
-	
-	# Ustawia pozycję przycisku
+
 	vent_dir_bttn_instance.position = pos
-	# Ustawia rotację przycisku w kierunku docelowego venta
 	vent_dir_bttn_instance.rotation = pos.angle()
-	
+
 	add_child(vent_dir_bttn_instance)
-	vent_direction_button_list.append(vent_dir_bttn_instance)
+	_vent_direction_button_list.append(vent_dir_bttn_instance)
 
 
-# Obsługuje naciśnięcie przyciku kierunkowego
+## Obsługuje wciśnięcie przycisku kierunkowego.
 func _on_direction_button_pressed(id):
-	move_to_vent(id)
+	_request_moving_to_vent.rpc_id(1, id)
 
 
-# Obsługuje przeniesienie gracza do innego venta
-func move_to_vent(id):
-	# Zmienia widoczność przycisków ventu startowego
-	change_dir_bttns_visibility(false)
-	
-	move_to_vent_server.rpc_id(1, id)
-
-	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(GameManager.get_current_player_id()))
-	player.can_use_vent = false
-	player.is_moving_through_vent = true
-	player.input.destination_position = vent_target_list[id].position - Vector2(0, 50)
-	
-	# Zmienia widoczność przycisków ventu docelowego
-	vent_target_list[id].change_dir_bttns_visibility(true)
-
-
-# Obsługuje przeniesienie gracza do innego venta od strony serwera
 @rpc("any_peer", "call_local", "reliable")
-func move_to_vent_server(id):
-	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(multiplayer.get_remote_sender_id()))
+## Obsługuje zapytanie o przeniesienie się do innego venta.
+func _request_moving_to_vent(vent_id: int):
+	var player_id = multiplayer.get_remote_sender_id()
+	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
+
+	if !player.has_vent_permission() && !allow_student_venting:
+		return
+
+	if player_id != 1:
+		_move_to_vent(player_id, vent_id)
+
+	_move_to_vent.rpc_id(player_id, player_id, vent_id)
+
+
+@rpc("call_local", "reliable")
+## Przenosi gracza do innego venta.
+func _move_to_vent(player_id: int, vent_id: int):
+	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	player.can_use_vent = false
 	player.is_moving_through_vent = true
-	player.input.destination_position = vent_target_list[id].position - Vector2(0, 50)
+	player.input.destination_position = vent_target_list[vent_id].global_position - Vector2(0, 50)
+
+	# Zmienia widoczność przycisków ventu startowego i docelowego.
+	if player_id == GameManager.get_current_player_id():
+		set_direction_buttons_visibility(false)
+		vent_target_list[vent_id].set_direction_buttons_visibility(true)
 
 
-# Zmienia vidoczność przycisków kierunkowych
-func change_dir_bttns_visibility(visibility:bool):
-	for dir_butt in vent_direction_button_list:
-		dir_butt.visible = visibility
-
-
-# Obsługuje wejście gracza w obszar w którym może ventować
+## Obsługuje wejście gracza do obszaru w którym może ventować.
 func _on_area_2d_body_entered(body):
 	if !body.name.to_int() == multiplayer.get_unique_id() && !multiplayer.is_server():
 		return
 
-	if !can_use_vent(body.name.to_int()) && !allow_crewmate_vent:
+	if !body.has_vent_permission() && !allow_student_venting:
 		return
 
 	if body.is_in_vent != true:
 		body.can_use_vent = true
 
 	if body.name.to_int() == multiplayer.get_unique_id():
-		toggle_highlight(true)
+		_toggle_highlight(true)
 
 
-# Obsługuje wyjście gracza z obszaru w którym może ventować
+## Obsługuje wyjście gracza z obszaru w którym może ventować.
 func _on_area_2d_body_exited(body):
 	if !body.name.to_int() == multiplayer.get_unique_id() && !multiplayer.is_server():
 		return
 
-	if !can_use_vent(body.name.to_int()) && !allow_crewmate_vent:
+	if !body.has_vent_permission() && !allow_student_venting:
 		return
 
 	if body.is_in_vent != true:
 		body.can_use_vent = false
-	
+
 	if body.name.to_int() == multiplayer.get_unique_id():
-		toggle_highlight(false)
+		_toggle_highlight(false)
 
 
-# Włącza i wyłącza podświetlenie venta
-func toggle_highlight(is_on: bool):
-	if is_on:
-		sprite_2d.material.set_shader_parameter('line_color', in_range_color)
-	else:
-		sprite_2d.material.set_shader_parameter('line_color', out_of_range_color)
-
-
-# Sprawdza czy gracz jest impostorem i nie jest martwy
-func can_use_vent(id: int):
-	return GameManager.get_registered_player_key(id, "is_lecturer") && !GameManager.get_registered_player_key(id, "is_dead")
+## Zmienia kolor podświetlenia venta.
+func _toggle_highlight(is_on: bool):
+	_sprite_2d.material.set_shader_parameter('line_color', _in_range_color if is_on else _out_of_range_color)
