@@ -102,11 +102,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 
 				# Wyłącza widoczność gracza.
 				if multiplayer.is_server():
-					for i in GameManager.get_registered_players():
-						if name.to_int() == i:
-							continue
-
-						toggle_visibility.rpc_id(i, false)
+					toggle_visibility.rpc(false)
 
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
@@ -246,11 +242,7 @@ func _exit_vent():
 	collision_mask = initial_collision_mask
 
 	if multiplayer.is_server():
-		for i in GameManager.get_registered_players():
-			if name.to_int() == i:
-				continue
-
-			toggle_visibility.rpc_id(i, true)
+		toggle_visibility.rpc(true)
 
 
 ## Zmienia widoczność przycisków kierunkowych venta.

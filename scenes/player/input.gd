@@ -21,7 +21,7 @@ var _is_disabled: bool = false
 func _ready():
 	NetworkTime.before_tick_loop.connect(_gather)
 
-	# Oczekuje jedną klatkę, aby autorytet inputu był na pewno ustawiony
+	# Oczekuje jedną klatkę, aby autorytet inputu był na pewno ustawiony.
 	await get_tree().process_frame
 
 	if is_multiplayer_authority():

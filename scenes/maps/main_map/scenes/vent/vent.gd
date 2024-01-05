@@ -26,13 +26,13 @@ func set_direction_buttons_visibility(visibility:bool):
 
 
 func _ready():
-	# Ukrywa podświetlenie venta
+	# Ukrywa podświetlenie venta.
 	_toggle_highlight(false)
 
 	var idx = 0
 	# Instancjonuje przycisk dla każdego docelowego venta.
 	for target_vent in vent_target_list:
-		# Oblicza kierunek przycisku
+		# Oblicza kierunek przycisku.
 		var direction_button_pos : Vector2 = (target_vent.position - position).normalized()
 		_instantiante_direction_button(direction_button_pos * direction_button_distance)
 		_vent_direction_button_list[-1].id = idx
