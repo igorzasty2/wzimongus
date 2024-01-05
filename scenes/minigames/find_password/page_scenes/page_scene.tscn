@@ -1,16 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://0061xw2dlgjt"]
+[gd_scene load_steps=3 format=3 uid="uid://0061xw2dlgjt"]
 
-[ext_resource type="Texture2D" uid="uid://cngin2kvmlfyh" path="res://scenes/minigames/find_password/assets/page.png" id="1_7cthj"]
+[ext_resource type="Texture2D" uid="uid://cv3ianlwy7e28" path="res://scenes/minigames/find_password/page_scenes/assets/page_scene.png" id="1_6vn3q"]
+[ext_resource type="Script" path="res://scenes/minigames/find_password/page_scenes/page_scene.gd" id="2_gbhic"]
 
-[node name="PageBackground" type="Sprite2D"]
+[node name="Page" type="Sprite2D"]
 position = Vector2(642, 343)
-texture = ExtResource("1_7cthj")
+texture = ExtResource("1_6vn3q")
+script = ExtResource("2_gbhic")
 
 [node name="PageText" type="RichTextLabel" parent="."]
-offset_left = -125.0
-offset_top = -248.0
-offset_right = 115.0
-offset_bottom = 260.0
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = -61.5
+offset_right = 3.0
+offset_bottom = -33.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet sollicitudin lectus, accumsan semper mauris. Phasellus consectetur arcu justo, non laoreet mauris lacinia a. Vivamus nec nulla et velit dignissim congue. Mauris bibendum enim purus, sit amet pretium ante tincidunt et. Cras lacinia diam vel posuere dictum. Etiam pretium enim at odio posuere lacinia. Aliquam pharetra condimentum lorem, quis vehicula enim dignissim eu. Phasellus libero quam, porttitor ac tortor id, mattis posuere risus. "
-metadata/_edit_use_anchors_ = true
+text = "[password]"
