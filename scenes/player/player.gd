@@ -160,7 +160,7 @@ func _on_killed_player(victim: int):
 			get_parent().get_node(str(i)).visible = true
 		
 	var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
-	#dead_body.get_node("DeadBodySprite").texture = load("res://icon.svg")
+	dead_body.get_node("DeadBodySprite").texture = load("res://icon.png")
 	dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
 	dead_body.global_position = get_parent().get_node(str(victim)).global_position
 	

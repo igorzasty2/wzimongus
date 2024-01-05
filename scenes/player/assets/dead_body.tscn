@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cmqr4jq3iw4q2"]
 
-[ext_resource type="Texture2D" uid="uid://c8p4e7u58fy7n" path="res://icon.svg" id="1_coj6s"]
+[ext_resource type="Texture2D" uid="uid://dy8j6jl7efkn1" path="res://icon.png" id="1_cfdau"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tgfrb"]
 radius = 600.0
@@ -13,14 +13,14 @@ offset_left = -38.0
 offset_top = -56.0
 offset_right = 38.0
 offset_bottom = -33.0
+theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DeadBodySprite" type="Sprite2D" parent="."]
 z_index = 1
-rotation = -0.844739
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("1_coj6s")
+scale = Vector2(0.275, 0.275)
+texture = ExtResource("1_cfdau")
 
 [node name="ReportRadius" type="Area2D" parent="."]
 
