@@ -8,6 +8,9 @@ var last_direction_x: float = -1
 @onready var rollback_synchronizer = $RollbackSynchronizer
 @onready var username_label = $UsernameLabel
 @onready var animation_tree = $Skins/AltAnimationTree
+@onready var clipping_light = $LightsContainer/ClippingLight
+@onready var light = $LightsContainer/Light
+@onready var lights_container = $LightsContainer
 
 func _ready():
 	# Gracz jest własnością serwera.
@@ -62,3 +65,9 @@ func _update_animation_parameters(direction):
 		else:
 			animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, direction.y)
 			animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, direction.y)
+
+func activate_lights():
+	lights_container.show()
+	
+func deactivate_lights():
+	lights_container.hide()

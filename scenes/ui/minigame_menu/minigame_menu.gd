@@ -69,8 +69,8 @@ func end_minigame():
 
 	GameManager.set_input_status(true)
 
-	TaskManager.mark_task_as_complete()
 
+	TaskManager.mark_task_as_complete()
 func close_minigame():
 	if _minigame_instance != null:
 		_minigame_instance.queue_free()

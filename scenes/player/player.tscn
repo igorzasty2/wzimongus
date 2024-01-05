@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=29 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
 [ext_resource type="Texture2D" uid="uid://dtls6wyj0nyjq" path="res://scenes/player/assets/skins/alt_spritesheet.png" id="3_obr1o"]
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
+[ext_resource type="Texture2D" uid="uid://p2dwhg2urcog" path="res://scenes/player/assets/light.png" id="7_o01wc"]
 
 [sub_resource type="Animation" id="Animation_fqt5r"]
 length = 0.001
@@ -167,6 +168,9 @@ states/walk/node = SubResource("AnimationNodeBlendSpace2D_fnme7")
 states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pafr0"]
+blend_mode = 1
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
@@ -239,3 +243,19 @@ input_properties = Array[String](["Input:direction"])
 script = ExtResource("3_l2yj5")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
+
+[node name="LightsContainer" type="Node2D" parent="."]
+visible = false
+
+[node name="Light" type="PointLight2D" parent="LightsContainer"]
+material = SubResource("CanvasItemMaterial_pafr0")
+position = Vector2(0, -68)
+scale = Vector2(0.96875, 0.96875)
+energy = 0.43
+shadow_enabled = true
+texture = ExtResource("7_o01wc")
+texture_scale = 2.08
+
+[node name="ClippingLight" type="CanvasGroup" parent="LightsContainer"]
+clip_children = 1
+light_mask = 2
