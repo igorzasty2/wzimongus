@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dp2sfegsvyvqy"]
+[gd_scene load_steps=6 format=3 uid="uid://dp2sfegsvyvqy"]
 
+[ext_resource type="Script" path="res://scenes/maps/main_map/scenes/report/emergency_button/emergency_button.gd" id="1_48x8y"]
 [ext_resource type="Shader" path="res://scenes/maps/main_map/scenes/report/emergency_button/emergency_button.gdshader" id="1_f7l5k"]
 [ext_resource type="Texture2D" uid="uid://dby2erkw2g2r7" path="res://scenes/maps/main_map/scenes/report/emergency_button/assets/emergency_meeting.png" id="2_dlmgd"]
 [ext_resource type="PackedScene" uid="uid://dposexvk3a7mv" path="res://scenes/maps/main_map/scenes/report/report_area/report_area.tscn" id="3_6fy7m"]
@@ -10,6 +11,7 @@ shader_parameter/line_color = Color(1, 1, 1, 1)
 shader_parameter/line_thickness = 10.0
 
 [node name="EmergencyButton" type="Node2D"]
+script = ExtResource("1_48x8y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_eovgj")
@@ -30,3 +32,6 @@ theme_override_font_sizes/font_size = 30
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="body_entered" from="ReportArea" to="." method="_on_report_area_body_entered"]
+[connection signal="body_exited" from="ReportArea" to="." method="_on_report_area_body_exited"]
