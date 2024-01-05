@@ -167,6 +167,7 @@ grow_vertical = 2
 alignment = 1
 
 [node name="Label" type="Label" parent="RoomBackground"]
+layout_mode = 0
 offset_left = 17.0
 offset_top = 11.0
 offset_right = 114.0

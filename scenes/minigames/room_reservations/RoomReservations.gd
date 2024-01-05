@@ -1,4 +1,5 @@
 extends Control
+signal minigame_end
 
 @onready var lecturers_containers = get_node("%Lecturers")
 @onready var rooms_container = get_node("%Rooms")
@@ -34,20 +35,22 @@ func _ready():
 		var color = COLORS[i]
 		assigned_rooms[lecturer] = room
 		assigned_colors[lecturer] = color
-
+	
 	for lecturer in assigned_rooms.keys():
 		var lecturer_node = RichTextLabel.new()
 		lecturer_node.bbcode_enabled = true
 		lecturer_node.bbcode_text = "[color=\"" + assigned_colors[lecturer] + "\"]" + lecturer
 		lecturer_node.fit_content = true
 		lecturers_containers.add_child(lecturer_node)
-
+		
+	var random_rooms = assigned_rooms.keys()
+	random_rooms.shuffle()
+	for lecturer in random_rooms:
 		var room_node = room_node_scene.instantiate()
 		room_node.init(assigned_rooms[lecturer], assigned_colors[lecturer])
 		rooms_container.add_child(room_node)
 		room_node.button_up.connect(_on_button_up_pressed)
 		room_node.button_down.connect(_on_button_down_pressed)
-
 
 func _on_button_down_pressed(child):
 	if child.get_index() < rooms_container.get_child_count() - 1:
@@ -63,12 +66,11 @@ func _on_save_button_pressed():
 		var lecturer = assigned_rooms.keys()[index]
 		var room = rooms_container.get_child(index).get_room_name()
 
-		if room == assigned_rooms[lecturer]:
-			_close()
-		else:
-			_close()
+		if room != assigned_rooms[lecturer]:
+			return
+	_close()
 
 func _close():
-	print("close")
+	minigame_end.emit()
 
 
