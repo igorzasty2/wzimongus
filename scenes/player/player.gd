@@ -71,7 +71,7 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 ## i prosi serwer o oblanie najbliższego gracza w promieniu oblania.
 func _input(event):
 	if event is InputEventKey:
-		if event.is_action_pressed("fail"):
+		if event.is_action("fail") and event.is_pressed() and not event.is_echo():#event.is_action_pressed("fail"):
 			if GameManager.get_current_player_key("is_lecturer"):
 				if can_kill:
 					var victim = closest_player(GameManager.get_current_player_id())
@@ -80,7 +80,7 @@ func _input(event):
 						var timer = Timer.new()
 						timer.timeout.connect(_on_timer_timeout)
 						timer.one_shot = true
-						timer.wait_time = 5 #GameManager.get_server_settings()["kill_cooldown"]
+						timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
 						add_child(timer)
 						timer.start()
 						can_kill = false
