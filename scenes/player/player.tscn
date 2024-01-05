@@ -163,7 +163,8 @@ states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
 [node name="Player" type="CharacterBody2D"]
-z_index = 1
+top_level = true
+z_index = 2
 y_sort_enabled = true
 position = Vector2(-1, -47)
 collision_layer = 2
@@ -184,7 +185,7 @@ libraries = {
 
 [node name="PlayerSprite" type="Sprite2D" parent="Skins"]
 material = SubResource("ShaderMaterial_klla5")
-position = Vector2(2, 32)
+position = Vector2(3, 30)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_obr1o")
 offset = Vector2(0, -250)

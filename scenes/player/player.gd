@@ -8,12 +8,14 @@ var last_direction_x: float = -1
 @onready var username_label = $UsernameLabel
 @onready var animation_tree = $Skins/AnimationTree
 @onready var player_sprite = $Skins/PlayerSprite
+@onready var player_node = $"."
 
 # zmienne do funkcji zabijania
 var in_range_color = [180, 0, 0, 255]
 var out_of_range_color = [0, 0, 0, 0]
-var dead_username_color = Color.CADET_BLUE
+var dead_username_color = Color.DARK_GOLDENROD
 var can_kill: bool = false
+
 
 func _ready():
 	# Gracz jest własnością serwera.
@@ -35,7 +37,7 @@ func _ready():
 	animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, 0)
 	animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, 0)
 
-	_toggle_highlight($".".name.to_int(),false)
+	_toggle_highlight(player_node.name.to_int(),false)
 	
 	GameManager.player_killed.connect(_on_killed_player)
 	
@@ -71,7 +73,7 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 ## i prosi serwer o oblanie najbliższego gracza w promieniu oblania.
 func _input(event):
 	if event is InputEventKey:
-		if event.is_action("fail") and event.is_pressed() and not event.is_echo():#event.is_action_pressed("fail"):
+		if event.is_action("fail") and event.is_pressed() and not event.is_echo():
 			if GameManager.get_current_player_key("is_lecturer"):
 				if can_kill:
 					var victim = closest_player(GameManager.get_current_player_id())
@@ -87,7 +89,7 @@ func _input(event):
 
 
 ## Aktualizuje parametry animacji postaci.
-func _update_animation_parameters(direction):
+func _update_animation_parameters(direction) -> void:
 	# Ustawia parametry animacji w zależności od stanu ruchu.
 	if direction == Vector2.ZERO:
 		animation_tree["parameters/conditions/idle"] = true
@@ -148,17 +150,17 @@ func closest_player(to_who: int) -> int:
 		return 0
 	return 0
 
-func _on_killed_player(victim: int):
+func _on_killed_player(victim: int) -> void:
 	if GameManager.get_registered_player_key(victim,"is_dead"):
+		_update_dead_player(victim)
+		
 		if GameManager.get_current_player_id() != victim:
 			get_parent().get_node(str(victim)).visible = false
-		else:
-			pass
-			#get_parent().get_node(str(victim)+"/UsernameLabel").theme_override_colors.font_color = dead_username_color
+	
 	if GameManager.get_current_player_key("is_dead"):
 		for i in GameManager.get_registered_players().keys():
 			get_parent().get_node(str(i)).visible = true
-		
+	
 	var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
 	dead_body.get_node("DeadBodySprite").texture = load("res://icon.png")
 	dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
@@ -166,9 +168,16 @@ func _on_killed_player(victim: int):
 	
 	get_parent().add_child(dead_body)
 
-func _on_timer_timeout():
+func _on_timer_timeout() -> void:
 	can_kill = true
-	for i in range($".".get_child_count()):
-		var child: Node = $".".get_child(i)
+	for i in range(player_node.get_child_count()):
+		var child: Node = player_node.get_child(i)
 		if child.is_class("Timer"):
 			child.queue_free()
+			return
+
+func _update_dead_player(victim: int):
+	var victim_node: Node = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))
+	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
+	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.2)
+	print(victim_node.get_node("Skins/PlayerSprite").modulate)
