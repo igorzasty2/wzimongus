@@ -10,11 +10,17 @@ var last_direction_x: float = -1
 @onready var player_sprite = $Skins/PlayerSprite
 @onready var player_node = $"."
 
-# zmienne do funkcji zabijania
+## Kolor gracza do zabicia
 var in_range_color = [180, 0, 0, 255]
+
+## Kolor gracza, którego nie możemy zabić
 var out_of_range_color = [0, 0, 0, 0]
+
+## Kolor nicku martwego gracza
 var dead_username_color = Color.DARK_GOLDENROD
-var can_kill: bool = false
+
+## 
+var can_kill_cooldown: bool = false
 
 
 func _ready():
@@ -42,7 +48,7 @@ func _ready():
 	GameManager.player_killed.connect(_on_killed_player)
 	
 	if GameManager.get_current_player_key("is_lecturer"):
-		can_kill = true
+		can_kill_cooldown = true
 
 func _process(_delta):
 	# Aktualizuje parametry animacji postaci.
@@ -63,7 +69,7 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 	# żyje i cooldown na funcji zabij nie jest aktywny.
 	if GameManager.get_current_player_key("is_lecturer"):
 		if !GameManager.get_current_player_key("is_dead"):
-			if can_kill:
+			if can_kill_cooldown:
 				_update_highlight(closest_player(GameManager.get_current_player_id()))
 			else:
 				_update_highlight(0)
@@ -74,10 +80,10 @@ func _input(event):
 	if event.is_action("fail") and event.is_pressed() and not event.is_echo():
 		if name.to_int() == GameManager.get_current_player_id():
 			if GameManager.get_registered_player_key(name.to_int(),"is_lecturer"):
-				if can_kill:
+				if can_kill_cooldown:
 					var victim = closest_player(GameManager.get_current_player_id())
 					if victim:
-						can_kill = false
+						can_kill_cooldown = false
 						GameManager.kill(victim)
 						var timer = Timer.new()
 						timer.timeout.connect(_on_timer_timeout)
@@ -125,6 +131,7 @@ func _update_highlight(player: int) -> void:
 
 ## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje
 func closest_player(to_who: int) -> int:
+	## Tablica graczy do przeszukiwania najbliższego gracza
 	var players: Array = GameManager.get_registered_players().keys()
 	players.erase(to_who)
 	
@@ -133,6 +140,7 @@ func closest_player(to_who: int) -> int:
 			players.erase(i)
 	
 	if players.size() > 0:
+		## 
 		var kill_radius = GameManager.get_server_settings()["kill_radius"]
 		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(to_who)).global_position
 		var curr_closest = null
@@ -168,12 +176,14 @@ func _on_killed_player(victim: int) -> void:
 	dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
 
 func _on_timer_timeout() -> void:
-	can_kill = true
-	for i in range(player_node.get_child_count()):
-		var child: Node = player_node.get_child(i)
-		if child.is_class("Timer"):
-			child.queue_free()
-			return
+	if GameManager.get_current_player_id() == name.to_int():
+		if GameManager.get_current_player_key("is_lecturer"):
+			can_kill_cooldown = true
+			for i in range(player_node.get_child_count()):
+				var child: Node = player_node.get_child(i)
+				if child.is_class("Timer"):
+					child.queue_free()
+					return
 
 func _update_dead_player(victim: int):
 	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))
