@@ -4,9 +4,10 @@ extends Control
 @onready var end_vote_text = get_node("%EndVoteText")
 @onready var skip_decision = get_node("%Decision")
 @onready var skip_button = get_node("%SkipButton")
-@onready var chat = get_node("%Chat")
-@onready var chat_background = get_node("%ChatBackground")
-@onready var chat_input = $Chat/ChatContainer/InputText
+@onready var chat_container = get_node("%ChatContainer")
+@onready var chat = get_node("%ChatContainer/Chat")
+@onready var chat_background = get_node("%ChatContainer/ChatBackground")
+@onready var chat_input = %ChatContainer/Chat/ChatContainer/InputText
 
 @export var VOTING_TIME = 10
 @onready var voting_timer = Timer.new()
@@ -21,6 +22,8 @@ var time = 0
 
 var is_selected = false
 
+## Określa czy czat jest otwarty
+var is_chat_open:bool = false
 
 func _ready():
 	set_process(false)
@@ -30,7 +33,7 @@ func start_voting():
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
 
-	chat.visible = false
+	chat_container.visible = false
 
 	# END VOTING TIMER
 	add_child(voting_timer)
@@ -169,13 +172,15 @@ func get_most_voted_player_id():
 		return most_voted_players[0]
 
 
-func _on_open_chat_pressed():
-	chat.visible = true
-	chat._open_chat()
-	chat_background.visible = true
-
-
-func _on_close_chat_pressed():
-	chat.visible = false
-	chat_background.visible = false
-	chat._close_chat()
+## Obsługuje otwarcie/zamknięcie czatu
+func _on_chat_button_button_down():
+	if is_chat_open:
+		chat_container.visible = false
+		chat._close_chat()
+		chat.visible = false
+		is_chat_open = false
+	else:
+		chat_container.visible = true
+		chat._open_chat()
+		chat.visible = true
+		is_chat_open = true

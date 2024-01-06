@@ -25,22 +25,36 @@ var emergency_button
 # Określa czy czas oczekiwania się skończył
 var is_wait_time_over:bool = false
 
+var user_interface
+var task_list
+
+signal button_active(button_name:String, is_active:bool)
+
 func _ready():
 	GameManager.next_round_started.connect(on_next_round_started)
 	
 	if is_button:
 		emergency_button = $".."
 		emergency_button.emergency_timer_timeout.connect(_on_end_emergency_timer_timeout)
+		
 		player_array = get_parent().get_parent().get_parent().get_node("Players").get_children()
 		task_array = get_parent().get_parent().get_parent().get_node("Tasks").get_children()
+		user_interface = get_parent().get_parent().get_parent().get_node("UserInterface")
+		task_list = get_parent().get_parent().get_parent().get_node("TaskListDisplay")
+		
+
 	else:
-		player_array = get_parent().get_node("Players").get_children()	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej razy get_parent()
-		task_array = get_parent().get_node("Tasks").get_children()	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej razy get_parent()
+		player_array = get_parent().get_node("Players").get_children()	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej/mniej razy get_parent()
+		task_array = get_parent().get_node("Tasks").get_children()	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej/mniej razy get_parent()
+		user_interface = get_parent().get_node("UserInterface")	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej/mniej razy get_parent()
+		task_list = get_parent().get_node("TaskListDisplay")	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej/mniej razy get_parent()
+	
+	button_active.connect(user_interface.toggle_button_active)
 
 
 func _input(event):
 	# Obłsuguje odpowiednio naciśnięcie przycisku do zebrania lub do reportowania
-	if ((event.is_action_pressed("report") && !is_button) || (event.is_action_pressed("interact") && is_button && is_wait_time_over)) && is_player_inside && !GameManager.get_current_player_key("is_dead"):
+	if !GameManager.get_current_game_key("is_input_disabled") && ((event.is_action_pressed("report") && !is_button) || (event.is_action_pressed("interact") && is_button && is_wait_time_over)) && is_player_inside && !GameManager.get_current_player_key("is_dead"):
 		print("reported")
 		# Aktualizuje tablice
 		if is_button:
@@ -48,8 +62,9 @@ func _input(event):
 			task_array = get_parent().get_parent().get_parent().get_node("Tasks").get_children()
 			# zaktualizowac tez tablice ciał
 		
-		# Chowa przyciski z interfejsu - zrobić jak będzie interfejs
-		
+		# Chowa przyciski z interfejsu i liste tasków
+		user_interface.bottom_buttons_toggle_visiblity.rpc(false)
+		toggle_task_list_visibility.rpc(false)
 		
 		# Zamyka taski
 		close_tasks.rpc()
@@ -59,9 +74,6 @@ func _input(event):
 		
 		# Pokazuje ekran z ciałem/spotkaniem, po czym rozpoczyna głosowanie
 		show_hide_report_screen.rpc()
-		
-		# Pokazuje przycisk pauzy i czatu z interfejsu - zrobić jak będzie interfejs
-		
 		
 		# Wyłącza ruch gracza - później włącza się przez voting_screen w game_manager
 		GameManager.set_input_status(false)
@@ -76,18 +88,23 @@ func _input(event):
 ## Obsługuje zakończenie emergeny_timer
 func _on_end_emergency_timer_timeout(is_over: bool):
 	is_wait_time_over = is_over
+	if is_player_inside:
+		button_active.emit("InteractButton", true)
 
 
 ## Chowa wszystkie ciała na mapie, pokazuje interfejs, usuwa wszystkie ciała - zrobić jak będą ciała
 func on_next_round_started():
 	print("next round")
-	# Pokazuje pozostałe przyciski z interfejsu, zamyka czat, chowa przycisk czatu - zrobić jak będzie interfejs
-	
+	# Pokazuje przyciski z interfejsu i liste zadań
+	user_interface.bottom_buttons_toggle_visiblity.rpc(true)
+	toggle_task_list_visibility.rpc(true)
 	
 	# Usuwa ciała z mapy - zrobić jak będą ciała
 #	for body in body_array:
+#		if body==self:
+#			continue
 #		body.queue_free()
-	
+
 	if !is_button:
 		queue_free()
 
@@ -97,13 +114,24 @@ func _on_body_entered(body):
 	if body.name.to_int() == GameManager.get_current_player_id() && !GameManager.get_current_player_key("is_dead"):
 		print("report area entered")
 		is_player_inside = true
+		
+		if is_button:
+			if is_wait_time_over:
+				button_active.emit("InteractButton", true)
+		else:
+			button_active.emit("ReportButton", true)
 
 
 ## Obsługuje wyjście gracza
-func _on_body_exited(body):
+func _on_body_exited(body):		# TUTAJ JEST PROBLEM JAK SIE WYJDZIE PODCZAS BYCIA W ŚRODKU BO CURRENT PLATER CHYBA NIE ISTNIE
 	if body.name.to_int() == GameManager.get_current_player_id() && !GameManager.get_current_player_key("is_dead"):
 		print("report area exited")
 		is_player_inside = false
+		
+		if is_button:
+			button_active.emit("InteractButton", false)
+		else:
+			button_active.emit("ReportButton", false)
 
 
 @rpc("call_local", "any_peer")
@@ -133,3 +161,9 @@ func show_hide_report_screen():
 func close_tasks():
 	for task in task_array:
 		task.close_minigame()
+
+
+@rpc("call_local", "any_peer")
+## Przełącza widoczność listy zadań
+func toggle_task_list_visibility(is_visible:bool):
+	task_list.visible = is_visible

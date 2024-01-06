@@ -1007,6 +1007,7 @@ allow_student_venting = true
 y_sort_enabled = true
 
 [node name="ReportArea" parent="." instance=ExtResource("84_2x0sy")]
+position = Vector2(140, 909)
 
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfdk7562ehhtp"]
+[gd_scene load_steps=4 format=3 uid="uid://dfdk7562ehhtp"]
 
 [ext_resource type="Script" path="res://scenes/ui/voting_screen/voting_screen.gd" id="1_kta77"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_u4dx5"]
+[ext_resource type="Texture2D" uid="uid://x3hb3b3rrfa1" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/_czat.png" id="3_3moby"]
 
 [node name="VotingScreen" type="Control"]
 layout_mode = 3
@@ -13,17 +14,32 @@ grow_vertical = 2
 script = ExtResource("1_kta77")
 metadata/_edit_use_anchors_ = true
 
-[node name="Chat" parent="." instance=ExtResource("2_u4dx5")]
+[node name="ChatContainer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Chat" parent="ChatContainer" instance=ExtResource("2_u4dx5")]
 unique_name_in_owner = true
 layer = 2
 
-[node name="CloseChat" type="Button" parent="Chat"]
-offset_left = 1071.0
-offset_top = 29.0
-offset_right = 1112.0
-offset_bottom = 73.0
-theme_override_font_sizes/font_size = 26
-text = "X"
+[node name="ChatBackground" type="ColorRect" parent="ChatContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 136.0
+offset_right = -149.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.14902, 0.14902, 0.14902, 1)
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -119,33 +135,30 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "NO"
 
-[node name="OpenChat" type="Button" parent="Background"]
+[node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -447.0
-offset_top = 46.0
-offset_right = -342.0
-offset_bottom = 77.0
+anchors_preset = -1
+anchor_left = 0.99
+anchor_top = 0.01
+anchor_right = 0.99
+anchor_bottom = 0.01
+offset_left = -360.0
+offset_bottom = 356.0
 grow_horizontal = 0
-text = "OTWÓRZ CHAT"
+scale = Vector2(0.18, 0.18)
+pivot_offset = Vector2(740, 0)
+theme_override_constants/h_separation = 20
+columns = 2
 
-[node name="ChatBackground" type="ColorRect" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 136.0
-offset_right = -149.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.14902, 0.14902, 0.14902, 1)
+[node name="ChatButton" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_3moby")
 
-[connection signal="pressed" from="Chat/CloseChat" to="." method="_on_close_chat_pressed"]
+[node name="Filler" type="Control" parent="GridContainer"]
+custom_minimum_size = Vector2(360, 360)
+layout_mode = 2
+
 [connection signal="pressed" from="Background/SkipDecision/SkipButton" to="." method="_on_skip_button_pressed"]
 [connection signal="pressed" from="Background/SkipDecision/Decision/DecisionYes" to="." method="_on_decision_yes_pressed"]
 [connection signal="pressed" from="Background/SkipDecision/Decision/DecisionNo" to="." method="_on_decision_no_pressed"]
-[connection signal="pressed" from="Background/OpenChat" to="." method="_on_open_chat_pressed"]
+[connection signal="button_down" from="GridContainer/ChatButton" to="." method="_on_chat_button_button_down"]

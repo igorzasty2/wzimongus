@@ -20,6 +20,7 @@ var out_of_range_color = [0, 0, 0, 0]
 
 signal emergency_timer_timeout(is_over:bool)
 
+
 func _ready():
 	GameManager.next_round_started.connect(on_next_round_started)
 	
