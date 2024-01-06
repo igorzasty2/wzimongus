@@ -39,7 +39,7 @@ func get_nearest_vent() -> Vent:
 		var vents = i.get_children()
 
 		for j in vents:
-			if position.distance_to(j.global_position - Vector2(0, 50)) < 300:
+			if position.distance_to(j.global_position) < 300:
 				return j
 
 	return null
@@ -197,7 +197,7 @@ func _enter_vent(vent_position: Vector2):
 	is_in_vent = true
 	collision_mask = 0
 	is_moving_through_vent = true
-	input.destination_position = vent_position - Vector2(0, 50)
+	input.destination_position = vent_position
 	input.is_walking_to_destination = true
 
 
@@ -217,7 +217,7 @@ func _request_vent_exiting():
 	if !has_vent_permission(vent):
 		return
 
-	if position != vent.global_position - Vector2(0, 50):
+	if position != vent.global_position:
 		return
 
 	if name.to_int() != 1:

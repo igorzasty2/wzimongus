@@ -26,14 +26,11 @@ func set_direction_buttons_visibility(visibility:bool):
 
 
 func _ready():
-	# Ukrywa podświetlenie venta.
-	_toggle_highlight(false)
-
 	var idx = 0
 	# Instancjonuje przycisk dla każdego docelowego venta.
 	for target_vent in vent_target_list:
 		# Oblicza kierunek przycisku.
-		var direction_button_pos : Vector2 = (target_vent.position - position).normalized()
+		var direction_button_pos : Vector2 = (target_vent.global_position - position).normalized()
 		_instantiante_direction_button(direction_button_pos * direction_button_distance)
 		_vent_direction_button_list[-1].id = idx
 		idx += 1
@@ -79,7 +76,7 @@ func _move_to_vent(player_id: int, vent_id: int):
 	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	player.can_use_vent = false
 	player.is_moving_through_vent = true
-	player.input.destination_position = vent_target_list[vent_id].global_position - Vector2(0, 50)
+	player.input.destination_position = vent_target_list[vent_id].global_position
 
 	# Zmienia widoczność przycisków ventu startowego i docelowego.
 	if player_id == GameManager.get_current_player_id():
@@ -119,4 +116,4 @@ func _on_area_2d_body_exited(body):
 
 ## Zmienia kolor podświetlenia venta.
 func _toggle_highlight(is_on: bool):
-	_sprite_2d.material.set_shader_parameter('line_color', _in_range_color if is_on else _out_of_range_color)
+	_sprite_2d.material.set_shader_parameter('color', _in_range_color if is_on else _out_of_range_color)

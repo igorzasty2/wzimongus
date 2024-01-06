@@ -1,14 +1,16 @@
 [gd_scene load_steps=6 format=3 uid="uid://cwapulye6fjyc"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/scenes/vent/vent.gd" id="1_ebero"]
-[ext_resource type="Shader" path="res://scenes/maps/main_map/scenes/vent/assets/vent.gdshader" id="2_i0onp"]
-[ext_resource type="Texture2D" uid="uid://dmxi28j2yqqbi" path="res://scenes/maps/main_map/scenes/vent/assets/temporary_vent.png" id="3_52qcw"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_cbfkx"]
+[ext_resource type="Texture2D" uid="uid://di4xiqnkybme3" path="res://scenes/maps/main_map/scenes/vent/assets/vent.png" id="3_gku1q"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d00ip"]
-resource_local_to_scene = true
-shader = ExtResource("2_i0onp")
-shader_parameter/line_color = Color(0.705882, 0, 0, 1)
-shader_parameter/line_thickness = 10.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wkw5n"]
+shader = ExtResource("2_cbfkx")
+shader_parameter/color = Color(0, 0, 0, 0)
+shader_parameter/width = 4.0
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kp4xp"]
 radius = 93.3343
@@ -16,19 +18,17 @@ radius = 93.3343
 [node name="Vent" type="Node2D"]
 scale = Vector2(2.4, 2.4)
 script = ExtResource("1_ebero")
-allow_student_venting = true
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_d00ip")
-scale = Vector2(0.09, 0.09)
-texture = ExtResource("3_52qcw")
+material = SubResource("ShaderMaterial_wkw5n")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_gku1q")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_kp4xp")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

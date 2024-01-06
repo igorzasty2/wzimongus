@@ -965,32 +965,31 @@ minigame_scene = ExtResource("80_j2qov")
 
 [node name="Vents" type="Node2D" parent="."]
 
-[node name="VentSystem" type="Node2D" parent="Vents"]
+[node name="VentSystem1" type="Node2D" parent="Vents"]
 
-[node name="Vent" parent="Vents/VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(-527, -443)
+[node name="Vent1" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-1092, 147)
 vent_target_list = [NodePath("../Vent2"), NodePath("../Vent3")]
-allow_student_venting = false
 
-[node name="Vent2" parent="Vents/VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(-1217, 5)
-vent_target_list = [NodePath("../Vent"), NodePath("../Vent3")]
-allow_student_venting = false
+[node name="Vent2" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-3279, 1172)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent3")]
 
-[node name="Vent3" parent="Vents/VentSystem" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(-199, 353)
-vent_target_list = [NodePath("../Vent"), NodePath("../Vent2")]
-allow_student_venting = false
+[node name="Vent3" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-2701, -2818)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent2")]
 
 [node name="VentSystem2" type="Node2D" parent="Vents"]
 
-[node name="Vent" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(2048, 129)
+[node name="Vent1" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(2158, 154)
 vent_target_list = [NodePath("../Vent2")]
+allow_student_venting = true
 
 [node name="Vent2" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(416, 790)
-vent_target_list = [NodePath("../Vent")]
+position = Vector2(4372, -1366)
+vent_target_list = [NodePath("../Vent1")]
+allow_student_venting = true
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
