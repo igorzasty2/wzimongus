@@ -16,6 +16,8 @@ var player_array
 var task_array
 ## Tablica wszystkich ciał
 var body_array
+## Tablica z pozycjami do spotkania podczas głosowania
+var meeting_positions
 
 ## Określa czy gracz jest w zasięgu
 var is_player_inside:bool = false
@@ -36,31 +38,31 @@ func _ready():
 	if is_button:
 		emergency_button = $".."
 		emergency_button.emergency_timer_timeout.connect(_on_end_emergency_timer_timeout)
-		
-		player_array = get_parent().get_parent().get_parent().get_node("Players").get_children()
-		task_array = get_parent().get_parent().get_parent().get_node("Tasks").get_children()
-		user_interface = get_parent().get_parent().get_parent().get_node("UserInterface")
-		task_list = get_parent().get_parent().get_parent().get_node("TaskListDisplay")
-		
-
-	else:
-		player_array = get_parent().get_node("Players").get_children()	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej/mniej razy get_parent()
-		task_array = get_parent().get_node("Tasks").get_children()	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej/mniej razy get_parent()
-		user_interface = get_parent().get_node("UserInterface")	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej/mniej razy get_parent()
-		task_list = get_parent().get_node("TaskListDisplay")	# tu tez jak bedzie jako dziecko ciala trzeba bedzie dac wiecej/mniej razy get_parent()
+	
+	player_array = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
+	task_array = get_tree().root.get_node("Game/Maps/MainMap/Tasks").get_children()
+	meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
+	
+	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
+	task_list = get_tree().root.get_node("Game/Maps/MainMap/TaskListDisplay")
 	
 	button_active.connect(user_interface.toggle_button_active)
+	
 
 
 func _input(event):
 	# Obłsuguje odpowiednio naciśnięcie przycisku do zebrania lub do reportowania
-	if !GameManager.get_current_game_key("is_input_disabled") && ((event.is_action_pressed("report") && !is_button) || (event.is_action_pressed("interact") && is_button && is_wait_time_over)) && is_player_inside && !GameManager.get_current_player_key("is_dead"):
+	if !GameManager.get_current_game_key("is_input_disabled") && ((event.is_action_pressed("report") && !is_button) || (event.is_action_pressed("interact") && is_button && is_wait_time_over)) && is_player_inside && !GameManager.get_current_player_key("is_dead") && !GameManager.is_meeting_called:
+		
 		print("reported")
+		
+		GameManager.is_meeting_called = true
+		
 		# Aktualizuje tablice
-		if is_button:
-			player_array = get_parent().get_parent().get_parent().get_node("Players").get_children()
-			task_array = get_parent().get_parent().get_parent().get_node("Tasks").get_children()
-			# zaktualizowac tez tablice ciał
+		player_array = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
+		task_array = get_tree().root.get_node("Game/Maps/MainMap/Tasks").get_children()
+		# body_array = ...
+		
 		
 		# Chowa przyciski z interfejsu i liste tasków
 		user_interface.bottom_buttons_toggle_visiblity.rpc(false)
@@ -82,8 +84,7 @@ func _input(event):
 		
 		
 		# Przenosi graczy na start - zrobić jak będą venty
-		
-		
+
 
 ## Obsługuje zakończenie emergeny_timer
 func _on_end_emergency_timer_timeout(is_over: bool):
@@ -95,6 +96,8 @@ func _on_end_emergency_timer_timeout(is_over: bool):
 ## Chowa wszystkie ciała na mapie, pokazuje interfejs, usuwa wszystkie ciała - zrobić jak będą ciała
 func on_next_round_started():
 	print("next round")
+	GameManager.is_meeting_called = false
+	
 	# Pokazuje przyciski z interfejsu i liste zadań
 	user_interface.bottom_buttons_toggle_visiblity.rpc(true)
 	toggle_task_list_visibility.rpc(true)

@@ -71,6 +71,8 @@ var _player_attributes = {
 	"is_dead": false
 }
 
+## Okrśla czy jest zwołane alarmowe zebranie
+var is_meeting_called: bool = false
 
 func _ready():
 	multiplayer.peer_disconnected.connect(_delete_deregistered_player)

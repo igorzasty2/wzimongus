@@ -945,8 +945,8 @@ position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_f8ggq")
 
 [node name="ReportButton" parent="Objects" instance=ExtResource("36_xfee5")]
-z_index = 2
-position = Vector2(1736, 292)
+z_index = 1
+position = Vector2(1732, 288)
 
 [node name="Tasks" type="Node2D" parent="."]
 
@@ -1008,6 +1008,41 @@ y_sort_enabled = true
 
 [node name="ReportArea" parent="." instance=ExtResource("84_2x0sy")]
 position = Vector2(140, 909)
+
+[node name="ReportArea2" parent="." instance=ExtResource("84_2x0sy")]
+position = Vector2(0, 859)
+
+[node name="MeetingPositions" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1511, 185)
+
+[node name="Marker2D2" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1490, 269)
+
+[node name="Marker2D3" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1489, 348)
+
+[node name="Marker2D4" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1523, 426)
+
+[node name="Marker2D5" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1599, 489)
+
+[node name="Marker2D6" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1714, 519)
+
+[node name="Marker2D7" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1824, 497)
+
+[node name="Marker2D8" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1905, 436)
+
+[node name="Marker2D9" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1942, 346)
+
+[node name="Marker2D10" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1951, 245)
 
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
