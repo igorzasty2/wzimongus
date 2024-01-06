@@ -21,10 +21,13 @@ var initial_grid_container_scale
 
 var initial_grid_container_2_scale
 
+var initial_current_players_counter_scale
+
 func _ready():
 	initial_start_game_button_scale = start_game_button.scale
 	initial_grid_container_scale = grid_container.scale
 	initial_grid_container_2_scale = grid_container_2.scale
+	initial_current_players_counter_scale = current_players_counter.scale
 	
 	user_sett = UserSettingsManager.load_or_create()
 	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
@@ -48,6 +51,7 @@ func on_interface_scale_changed(value:float):
 	start_game_button.scale = initial_start_game_button_scale * value
 	grid_container.scale = initial_grid_container_scale * value
 	grid_container_2.scale = initial_grid_container_2_scale * value
+	current_players_counter.scale = initial_current_players_counter_scale * value
 
 
 func _update_current_players_counter(_id: int = 0, _player: Dictionary = {}):

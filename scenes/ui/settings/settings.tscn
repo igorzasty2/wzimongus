@@ -56,7 +56,7 @@ theme_override_constants/margin_bottom = 90
 [node name="GridContainer" type="GridContainer" parent="TabContainer/SoundAndGraphics/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/h_separation = 30
+theme_override_constants/h_separation = 25
 theme_override_constants/v_separation = 20
 columns = 3
 
@@ -64,26 +64,23 @@ columns = 3
 layout_mode = 2
 size_flags_vertical = 1
 text = "Głośność"
-vertical_alignment = 1
 
 [node name="VolumeSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
 [node name="VolumeOutput" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 text = "00"
-vertical_alignment = 1
 
 [node name="InterfaceScale" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Skala interfejsu"
-vertical_alignment = 1
+text = "Skala nakładki"
 
 [node name="InterfaceScaleSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 min_value = 0.5
 max_value = 1.5
@@ -94,13 +91,11 @@ value = 0.5
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 text = "00"
-vertical_alignment = 1
 
 [node name="FullScreen" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Pełny ekran"
-vertical_alignment = 1
 
 [node name="FullScreenCheckBox" type="CheckBox" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -114,7 +109,6 @@ layout_mode = 2
 [node name="VSync" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
 text = "V-Sync"
-vertical_alignment = 1
 
 [node name="VSyncCheckBox" type="CheckBox" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
