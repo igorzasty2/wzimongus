@@ -31,6 +31,8 @@ z_index = 1
 scale = Vector2(0.275, 0.275)
 
 [node name="ReportRadius" type="Area2D" parent="."]
+collision_layer = 9
+collision_mask = 2
 
 [node name="ReportRadiusShape" type="CollisionShape2D" parent="ReportRadius"]
 shape = SubResource("CircleShape2D_tgfrb")
