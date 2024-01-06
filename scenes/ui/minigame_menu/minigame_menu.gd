@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 var _minigame: PackedScene
-var _minigame_instance: Node2D
+var _minigame_instance: Node
 var use_button_disabled: bool = true
 
 @onready var minigame_container = $MinigameContainer
