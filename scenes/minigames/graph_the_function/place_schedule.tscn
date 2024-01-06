@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://bi28r0gvgtj1e"]
+
+[ext_resource type="Script" path="res://scenes/minigames/place_schedule/assets/scripts/place_schedule.gd" id="1_787ye"]
+[ext_resource type="Texture2D" uid="uid://r0o8dl0qh7i4" path="res://scenes/minigames/place_schedule/assets/gui_elemenets/pngegg.png" id="2_2eje0"]
+[ext_resource type="Texture2D" uid="uid://yv3xaenxjdnd" path="res://scenes/minigames/place_schedule/assets/gui_elemenets/bigger_background.png" id="2_aj4wh"]
+
+[node name="place_schedule" type="Node2D"]
+script = ExtResource("1_787ye")
+
+[node name="TextEdit" type="TextEdit" parent="." groups=["TextNode"]]
+offset_left = 1.0
+offset_right = 1276.0
+offset_bottom = 159.0
+theme_override_font_sizes/font_size = 30
+editable = false
+
+[node name="BiggerBackground" type="Sprite2D" parent="."]
+position = Vector2(635, 403)
+texture = ExtResource("2_aj4wh")
+
+[node name="Pngegg" type="Sprite2D" parent="."]
+position = Vector2(632, 410)
+scale = Vector2(0.0697425, 0.0691748)
+texture = ExtResource("2_2eje0")
+
+[node name="HSlider" type="HSlider" parent="." groups=["HSlider"]]
+offset_left = 186.0
+offset_top = 635.0
+offset_right = 1082.0
+offset_bottom = 694.0
+min_value = -7.0
+max_value = 7.0
+
+[node name="VSlider" type="VSlider" parent="." groups=["VSlider"]]
+offset_left = 163.0
+offset_top = 162.0
+offset_right = 179.0
+offset_bottom = 643.0
+min_value = -4.0
+max_value = 4.0
+
+[node name="VText" type="TextEdit" parent="." groups=["VText"]]
+offset_left = 81.0
+offset_top = 364.0
+offset_right = 139.0
+offset_bottom = 440.0
+theme_override_font_sizes/font_size = 45
+text = "0"
+editable = false
+
+[node name="HText" type="TextEdit" parent="." groups=["HText"]]
+offset_left = 608.0
+offset_top = 672.0
+offset_right = 660.0
+offset_bottom = 751.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+editable = false
+
+[connection signal="drag_ended" from="HSlider" to="." method="_on_h_slider_drag_ended"]
+[connection signal="drag_ended" from="VSlider" to="." method="_on_v_slider_drag_ended"]
