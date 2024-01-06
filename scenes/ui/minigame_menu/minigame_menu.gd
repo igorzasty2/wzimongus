@@ -2,7 +2,7 @@ extends CanvasLayer
 
 var _minigame: PackedScene
 var _minigame_instance: Node2D
-var use_button_diabled: bool = true
+var use_button_disabled: bool = true
 
 @onready var minigame_container = $MinigameContainer
 @onready var viewport = minigame_container.get_node("ViewportContainer/Viewport")
@@ -20,12 +20,12 @@ func _ready():
 func show_use_button(minigame):
 	_minigame = minigame
 	emit_signal("use_button_active", "InteractButton", true)
-	use_button_diabled = false
+	use_button_disabled = false
 
 func hide_use_button():
 	_minigame = null
 	emit_signal("use_button_active", "InteractButton", false)
-	use_button_diabled = false
+	use_button_disabled = false
 
 # connect in user interface to this
 func _on_use_button_pressed():
@@ -47,7 +47,7 @@ func _input(event):
 	if viewport.get_child_count() != 0:
 		return
 	
-	if use_button_diabled:
+	if use_button_disabled:
 		return
 	
 	if GameManager.get_current_game_key("is_paused"):
@@ -62,7 +62,7 @@ func summon_window():
 	_minigame_instance = viewport.get_child(0)
 	
 	emit_signal("use_button_active", "InteractButton", false)
-	use_button_diabled = true
+	use_button_disabled = true
 
 	GameManager.set_input_status(false)
 

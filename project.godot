@@ -120,6 +120,7 @@ chat_change_group={
 
 2d_physics/layer_1="static_objects"
 2d_physics/layer_2="players"
+2d_physics/layer_3="vents"
 
 [netfox]
 
