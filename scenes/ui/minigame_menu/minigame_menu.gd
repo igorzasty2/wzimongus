@@ -65,7 +65,6 @@ func summon_window():
 	use_button_disabled = true
 
 	GameManager.set_input_status(false)
-
 	_minigame_instance.minigame_end.connect(end_minigame)
 
 func end_minigame():

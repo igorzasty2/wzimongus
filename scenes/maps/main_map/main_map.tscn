@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=112 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -90,6 +90,8 @@
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="79_xtlh3"]
 [ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
 [ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
+[ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/maps/main_map/scenes/camera/camera.tscn" id="81_mexjh"]
+[ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -998,6 +1000,28 @@ position = Vector2(4372, -1366)
 vent_target_list = [NodePath("../Vent1")]
 allow_student_venting = true
 
+[node name="TaskButton" parent="." instance=ExtResource("3_e0rk4")]
+position = Vector2(4016, -1329)
+is_minigame = false
+minigame_scene = ExtResource("89_58eb3")
+
+[node name="Cameras" type="Node2D" parent="."]
+
+[node name="Camera" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-2602, -277)
+
+[node name="Camera2" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-1390, -1450)
+
+[node name="Camera3" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(36, 476)
+
+[node name="Camera4" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(3036, 352)
+
+[node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(2848, -1132)
+
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -1027,5 +1051,3 @@ properties = Array[String]([":global_position"])
 script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
-
-[connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
