@@ -26,7 +26,7 @@ var is_moving_through_vent: bool = false
 @onready var username_label: Label = $UsernameLabel
 ## Referencja do drzewa animacji postaci.
 @onready var animation_tree: AnimationTree = $Skins/AltAnimationTree
-@onready var clipping_light = $LightsContainer/ClippingLight
+##
 @onready var light = $LightsContainer/Light
 @onready var lights_container = $LightsContainer
 
@@ -257,8 +257,19 @@ func _toggle_vent_buttons(is_enabled: bool):
 
 	vent.set_direction_buttons_visibility(is_enabled)
 
+
 func activate_lights():
 	lights_container.show()
 	
+
 func deactivate_lights():
 	lights_container.hide()
+
+
+func activate_hide_players_in_shadows():
+	$Skins.get_parent().material = load("res://scenes/player/assets/light_only_canvas_material.tres")
+	
+	
+func deactivate_hide_players_in_shadows():
+	$Skins.get_parent().material = null
+	

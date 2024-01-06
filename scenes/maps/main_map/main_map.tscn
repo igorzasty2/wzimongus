@@ -1028,7 +1028,7 @@ script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
 
-[connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
-
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.411765, 0.411765, 0.411765, 1)
+
+[connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]

@@ -59,8 +59,10 @@ func _spawn_player(id: int):
 	# Ustawia startową pozycję gracza.
 	if multiplayer.is_server():
 		player.position = Vector2(randi_range(0, 100), randi_range(0, 100))
-
+	
 	players.add_child(player)
+	
+	player.activate_hide_players_in_shadows()
 
 	if GameManager.get_current_player_id() == id:
 		# Ustawia kamerę.
@@ -68,8 +70,8 @@ func _spawn_player(id: int):
 		camera.global_position = player.global_position
 	
 		# Włącza światło
-		player.activate_lights()	
-	
+		player.activate_lights()
+		player.deactivate_hide_players_in_shadows()
 
 
 ## Usuwa gracza z mapy.
