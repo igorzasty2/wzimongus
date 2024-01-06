@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=109 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -37,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://dbf7s5lxyo0tg" path="res://scenes/maps/main_map/assets/objects/aula_tablica.png" id="31_dhdh4"]
 [ext_resource type="Texture2D" uid="uid://5n0jedd1cmxk" path="res://scenes/maps/main_map/assets/objects/bufet_automat.png" id="32_jc7lc"]
 [ext_resource type="Texture2D" uid="uid://dmy20om8608ff" path="res://scenes/maps/main_map/assets/objects/bufet_stol.png" id="33_fxkqp"]
+[ext_resource type="PackedScene" uid="uid://cwapulye6fjyc" path="res://scenes/maps/main_map/scenes/vent/vent.tscn" id="33_q8paj"]
 [ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_menu.tscn" id="34_5r0ro"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="34_b878o"]
 [ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_menu.gd" id="35_23714"]
@@ -86,8 +87,8 @@
 [ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="77_1ivr1"]
 [ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="78_pc37b"]
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="79_xtlh3"]
-[ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
 [ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
+[ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -944,29 +945,57 @@ shape = SubResource("RectangleShape2D_f8ggq")
 [node name="Tasks" type="Node2D" parent="."]
 
 [node name="Task1" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(735, -973)
+position = Vector2(2.08165e-12, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("77_1ivr1")
 
 [node name="Task2" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(427, -951)
+position = Vector2(350, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("78_pc37b")
 
 [node name="Task3" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(11, -459)
+position = Vector2(700, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("79_xtlh3")
 
 [node name="Task4" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(123, -962)
+position = Vector2(1050, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("80_j2qov")
 
 [node name="Task5" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(735, -973)
+position = Vector2(1400, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("80_b7854")
+
+[node name="Vents" type="Node2D" parent="."]
+
+[node name="VentSystem1" type="Node2D" parent="Vents"]
+
+[node name="Vent1" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-1092, 147)
+vent_target_list = [NodePath("../Vent2"), NodePath("../Vent3")]
+
+[node name="Vent2" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-3279, 1172)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent3")]
+
+[node name="Vent3" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-2701, -2818)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent2")]
+
+[node name="VentSystem2" type="Node2D" parent="Vents"]
+
+[node name="Vent1" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(2158, 154)
+vent_target_list = [NodePath("../Vent2")]
+allow_student_venting = true
+
+[node name="Vent2" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(4372, -1366)
+vent_target_list = [NodePath("../Vent1")]
+allow_student_venting = true
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true

@@ -98,7 +98,7 @@ func _spawn_player(id: int):
 	# Ustawia pozycję i animację gracza na podstawie aktualnych danych.
 	if GameManager.lobby_data_at_registration.has(id):
 		player.position = GameManager.lobby_data_at_registration[id]["position"]
-		player.last_direction_x = GameManager.lobby_data_at_registration[id]["last_direction_x"]
+		player.direction_last_x = GameManager.lobby_data_at_registration[id]["direction_last_x"]
 		GameManager.lobby_data_at_registration.erase(id)
 
 	players.add_child(player)
