@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjct6kxmgyau0"
-path="res://.godot/imported/man.png-e6e8c9ac04899129d7193cc995117c51.ctex"
+uid="uid://bjv5hnh4ovu8l"
+path="res://.godot/imported/direction_button.png-f9325ba107e6ffb874b0feb7e380ff5f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/chat/assets/man.png"
-dest_files=["res://.godot/imported/man.png-e6e8c9ac04899129d7193cc995117c51.ctex"]
+source_file="res://scenes/maps/main_map/scenes/vent/vent_direction_button/assets/direction_button.png"
+dest_files=["res://.godot/imported/direction_button.png-f9325ba107e6ffb874b0feb7e380ff5f.ctex"]
 
 [params]
 

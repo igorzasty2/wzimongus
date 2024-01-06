@@ -1,0 +1,24 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://u0gqomrh4hmh"]
+
+[ext_resource type="FontFile" uid="uid://dawbyxq2b3pcv" path="res://themes/default/itim/itim_regular.ttf" id="1_mhe6y"]
+
+[resource]
+Button/font_sizes/font_size = 18
+Button/fonts/font = ExtResource("1_mhe6y")
+Label/font_sizes/font_size = 18
+Label/fonts/font = ExtResource("1_mhe6y")
+LineEdit/font_sizes/font_size = 18
+LineEdit/fonts/font = ExtResource("1_mhe6y")
+PopupMenu/font_sizes/font_separator_size = 18
+PopupMenu/font_sizes/font_size = 18
+PopupMenu/fonts/font = ExtResource("1_mhe6y")
+PopupMenu/fonts/font_separator = ExtResource("1_mhe6y")
+ProgressBar/font_sizes/font_size = 18
+ProgressBar/fonts/font = ExtResource("1_mhe6y")
+RichTextLabel/font_sizes/normal_font_size = 18
+RichTextLabel/fonts/normal_font = ExtResource("1_mhe6y")
+TabContainer/font_sizes/font_size = 18
+TabContainer/fonts/font = ExtResource("1_mhe6y")
+Tree/font_sizes/font_size = 18
+Tree/fonts/font = ExtResource("1_mhe6y")
+Tree/fonts/title_button_font = ExtResource("1_mhe6y")

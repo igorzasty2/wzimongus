@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl74edcckhnd"
-path="res://.godot/imported/use1.png-d1238273a590674429983f6e00f1b050.ctex"
+uid="uid://blrk7daia54ig"
+path="res://.godot/imported/ustawienia_gry.png-e2630769a52dd79131c9ea6ce13578e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/minigame_menu/assets/use1.png"
-dest_files=["res://.godot/imported/use1.png-d1238273a590674429983f6e00f1b050.ctex"]
+source_file="res://scenes/maps/lobby/scenes/lobby_ui/assets/ustawienia_gry.png"
+dest_files=["res://.godot/imported/ustawienia_gry.png-e2630769a52dd79131c9ea6ce13578e3.ctex"]
 
 [params]
 

@@ -39,6 +39,10 @@ project/assembly_name="WZiMong Us"
 
 enabled=PackedStringArray("res://addons/LANServerBroadcast/plugin.cfg", "res://addons/netfox.internals/plugin.cfg", "res://addons/netfox/plugin.cfg")
 
+[gui]
+
+theme/custom="res://themes/default/default.tres"
+
 [input]
 
 pause_menu={
@@ -116,6 +120,7 @@ chat_change_group={
 
 2d_physics/layer_1="static_objects"
 2d_physics/layer_2="players"
+2d_physics/layer_3="vents"
 
 [netfox]
 

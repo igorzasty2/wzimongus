@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://locq7yfyj43v"
-path="res://.godot/imported/in_ your_face_joffrey.ttf-a823bee834814ab4b5010fbdcfbb4110.fontdata"
+uid="uid://dawbyxq2b3pcv"
+path="res://.godot/imported/itim_regular.ttf-897434a885797cce714164f05a814c99.fontdata"
 
 [deps]
 
-source_file="res://scenes/ui/loading_screen/in_ your_face_joffrey.ttf"
-dest_files=["res://.godot/imported/in_ your_face_joffrey.ttf-a823bee834814ab4b5010fbdcfbb4110.fontdata"]
+source_file="res://themes/default/itim/itim_regular.ttf"
+dest_files=["res://.godot/imported/itim_regular.ttf-897434a885797cce714164f05a814c99.fontdata"]
 
 [params]
 
