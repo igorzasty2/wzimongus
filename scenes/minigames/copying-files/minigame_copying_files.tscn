@@ -9,7 +9,7 @@ load_path = "res://.godot/imported/czyChceszSkopiowac.png-dbd070c7ed067d107aff33
 position = Vector2(1, 2)
 
 [node name="CzyChceszSkopiowac" type="Sprite2D" parent="."]
-position = Vector2(556, 310)
+position = Vector2(556, 308)
 texture = SubResource("CompressedTexture2D_fgdas")
 
 [node name="Kontrola" type="Control" parent="CzyChceszSkopiowac"]
