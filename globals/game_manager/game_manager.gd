@@ -532,7 +532,6 @@ func kill(victim: int):
 @rpc("any_peer", "call_local", "reliable")
 ## Przyjmuje prośbę o zabicie gracza.
 func _request_kill(victim: int):
-	pass
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 		
@@ -542,7 +541,6 @@ func _request_kill(victim: int):
 		
 	var me = multiplayer.get_remote_sender_id()
 	if get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(me)).closest_player(me) == victim:
-		_current_game["registered_players"][victim]["is_dead"] = true
 		_kill_server.rpc(victim)
 
 
