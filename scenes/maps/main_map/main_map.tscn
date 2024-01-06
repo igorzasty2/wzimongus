@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=109 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -87,6 +87,7 @@
 [ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="77_1ivr1"]
 [ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="78_pc37b"]
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="79_xtlh3"]
+[ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
 [ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
@@ -944,24 +945,29 @@ shape = SubResource("RectangleShape2D_f8ggq")
 [node name="Tasks" type="Node2D" parent="."]
 
 [node name="Task1" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(735, -973)
+position = Vector2(2.08165e-12, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("77_1ivr1")
 
 [node name="Task2" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(427, -951)
+position = Vector2(350, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("78_pc37b")
 
 [node name="Task3" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(11, -459)
+position = Vector2(700, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("79_xtlh3")
 
 [node name="Task4" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(123, -962)
+position = Vector2(1050, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("80_j2qov")
+
+[node name="Task5" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(1400, -1000)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("80_b7854")
 
 [node name="Vents" type="Node2D" parent="."]
 
