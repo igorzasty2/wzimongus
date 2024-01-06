@@ -56,7 +56,7 @@ metadata/_edit_lock_ = true
 z_index = 1
 y_sort_enabled = true
 
-[node name="Lampa" type="Sprite2D" parent="Objects"]
+[node name="Lampa1" type="Sprite2D" parent="Objects"]
 position = Vector2(-1544, 616)
 scale = Vector2(1.122, 1.055)
 texture = ExtResource("3_h0oaw")
@@ -86,23 +86,24 @@ scale = Vector2(1.122, 1.055)
 texture = ExtResource("5_cauck")
 offset = Vector2(0, -100)
 
-[node name="Kamien2" type="Node2D" parent="Objects"]
+[node name="Kamien" type="Node2D" parent="Objects"]
 position = Vector2(191, 1042)
 
-[node name="Kamien" type="Sprite2D" parent="Objects/Kamien2"]
+[node name="Kamien" type="Sprite2D" parent="Objects/Kamien"]
 position = Vector2(0, -350)
 scale = Vector2(1.122, 1.055)
 texture = ExtResource("4_364p8")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Objects/Kamien2"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Objects/Kamien"]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Kamien2/StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Kamien/StaticBody2D"]
 polygon = PackedVector2Array(-177, -4, -328, 73, 327, 74, 178, -5)
 
 [node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
 z_index = 1
 position = Vector2(147, -276)
 sprite = ExtResource("4_643ea")
+scale_factor = 1.0
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
@@ -139,6 +140,55 @@ position = Vector2(1350, 2.08165e-12)
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(159, 1204)
+shape = SubResource("RectangleShape2D_0cw4k")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-313, 866.75)
+shape = SubResource("RectangleShape2D_08y4x")
+
+[node name="CollisionShape3" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(631, 864.5)
+shape = SubResource("RectangleShape2D_08y4x")
+
+[node name="CollisionShape4" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(1204.5, 523.5)
+shape = SubResource("RectangleShape2D_akstl")
+
+[node name="CollisionShape5" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(1779.5, -36)
+shape = SubResource("RectangleShape2D_phm5s")
+
+[node name="CollisionShape6" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(1254.5, -594.5)
+shape = SubResource("RectangleShape2D_qgxek")
+
+[node name="CollisionShape7" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-1024, 525)
+shape = SubResource("RectangleShape2D_f5mop")
+
+[node name="CollisionShape8" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-1736, -36)
+shape = SubResource("RectangleShape2D_d1ai7")
+
+[node name="CollisionShape9" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-1089.5, -597)
+shape = SubResource("RectangleShape2D_bnaga")
+
+[node name="CollisionShape10" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-443, -487.5)
+shape = SubResource("RectangleShape2D_22thm")
+
+[node name="CollisionShape11" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(730, -486.5)
+shape = SubResource("RectangleShape2D_n7vlc")
+
+[node name="CollisionPolygon1" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(-451, -371, -258, -318, -64, -283, 146, -267, 355, -276, 561, -314, 738, -371)
+
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
 zoom = Vector2(0.45, 0.45)
@@ -156,58 +206,17 @@ script = ExtResource("3_4702b")
 
 [node name="Chat" parent="." instance=ExtResource("2_kl6mk")]
 unique_name_in_owner = true
-
-[node name="SkinSelector" parent="." instance=ExtResource("8_hy1jx")]
-
-[node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
+visible = false
 
 [node name="LobbyUi" parent="." instance=ExtResource("5_7r85o")]
+visible = false
 
-[node name="CollisionBox" type="StaticBody2D" parent="."]
+[node name="SkinSelector" parent="." instance=ExtResource("8_hy1jx")]
+visible = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(159, 1204)
-shape = SubResource("RectangleShape2D_0cw4k")
+[node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
+visible = false
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(-313, 866.75)
-shape = SubResource("RectangleShape2D_08y4x")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(631, 864.5)
-shape = SubResource("RectangleShape2D_08y4x")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(1204.5, 523.5)
-shape = SubResource("RectangleShape2D_akstl")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(1779.5, -36)
-shape = SubResource("RectangleShape2D_phm5s")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(1254.5, -594.5)
-shape = SubResource("RectangleShape2D_qgxek")
-
-[node name="CollisionShape2D7" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(-1024, 525)
-shape = SubResource("RectangleShape2D_f5mop")
-
-[node name="CollisionShape2D9" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(-1736, -36)
-shape = SubResource("RectangleShape2D_d1ai7")
-
-[node name="CollisionShape2D10" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(-1089.5, -597)
-shape = SubResource("RectangleShape2D_bnaga")
-
-[node name="CollisionShape2D11" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(-443, -487.5)
-shape = SubResource("RectangleShape2D_22thm")
-
-[node name="CollisionShape2D8" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(730, -486.5)
-shape = SubResource("RectangleShape2D_n7vlc")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
-polygon = PackedVector2Array(-451, -371, -258, -318, -64, -283, 146, -267, 355, -276, 561, -314, 738, -371)
+[connection signal="visibility_changed" from="Chat" to="." method="update_input"]
+[connection signal="visibility_changed" from="SkinSelector" to="." method="update_input"]
+[connection signal="visibility_changed" from="LobbySettings" to="." method="update_input"]
