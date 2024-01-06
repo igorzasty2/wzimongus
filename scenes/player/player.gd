@@ -1,25 +1,32 @@
+## Główna klasa gracza.
+class_name Player
 extends CharacterBody2D
 
-@export var speed = 600.0
+## Prędkość poruszania się.
+@export var walking_speed: float = 600.0
+## Ostatni kierunek poziomego ruchu gracza.
 var last_direction_x: float = -1
 
+## Referencja do wejścia gracza.
 @onready var input = $Input
+## Referencja do synchronizatora rollbacku.
 @onready var rollback_synchronizer = $RollbackSynchronizer
+## Referencja do etykiety z nazwą gracza.
 @onready var username_label = $UsernameLabel
+## Referencja do drzewa animacji postaci.
 @onready var animation_tree = $Skins/AnimationTree
+## Referencja do sprite'a postaci.
 @onready var player_sprite = $Skins/PlayerSprite
+## Referencja do node'a postaci.
 @onready var player_node = $"."
 
 ## Kolor gracza do zabicia
 var in_range_color = [180, 0, 0, 255]
-
 ## Kolor gracza, którego nie możemy zabić
 var out_of_range_color = [0, 0, 0, 0]
-
 ## Kolor nicku martwego gracza
 var dead_username_color = Color.DARK_GOLDENROD
-
-## 
+## Przechowuje informację o możliwości użycia funkcji zabicia 
 var can_kill_cooldown: bool = false
 
 
@@ -42,23 +49,26 @@ func _ready():
 	# Aktualizuje parametry animacji postaci.
 	animation_tree["parameters/idle/blend_position"] = Vector2(last_direction_x, 0)
 	animation_tree["parameters/walk/blend_position"] = Vector2(last_direction_x, 0)
-
+	
+	# Wyłącza podświetlenie aktualnego gracza
 	_toggle_highlight(player_node.name.to_int(),false)
 	
+	# Łączy sygnał zabicia postaci z funkcją _on_killed_player
 	GameManager.player_killed.connect(_on_killed_player)
 	
+	# Jeśli gracz jest impostorem to ustawia początkową możliwość zabicia na true
 	if GameManager.get_current_player_key("is_lecturer"):
 		can_kill_cooldown = true
 
 func _process(_delta):
-	# Aktualizuje parametry animacji postaci.
 	var direction = input.direction.normalized()
 	
+	# Aktualizuje parametry animacji postaci.
 	_update_animation_parameters(direction)
 
 func _rollback_tick(_delta, _tick, _is_fresh):
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
-	velocity = input.direction.normalized() * speed
+	velocity = input.direction.normalized() * walking_speed
 
 	# Porusza postacią i obsługuje kolizje.
 	velocity *= NetworkTime.physics_factor
@@ -91,7 +101,6 @@ func _input(event):
 						timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
 						add_child(timer)
 						timer.start()
-
 
 ## Aktualizuje parametry animacji postaci.
 func _update_animation_parameters(direction) -> void:
@@ -140,14 +149,22 @@ func closest_player(to_who: int) -> int:
 			players.erase(i)
 	
 	if players.size() > 0:
-		## 
+		## Pobiera promień zabicia z serwera
 		var kill_radius = GameManager.get_server_settings()["kill_radius"]
+		
+		## Przechowuje wektor pozycji gracza, względem którego szukamy najbliższego gracza
 		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(to_who)).global_position
+		
+		## Przechowuje node najbliższego gracza
 		var curr_closest = null
+		
+		## Przechowuje odległość najbliższego gracza od pozycji 'my_position'
 		var curr_closest_dist = kill_radius**2 + 1
 		
 		for i in range(players.size()):
+			## Pozycja gracza tymczasowego
 			var temp_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(players[i])).global_position
+			## Dystans gracza tymczasowego od pozycji 'my_position'
 			var temp_dist = my_position.distance_squared_to(temp_position)
 			
 			if(temp_dist < curr_closest_dist):
