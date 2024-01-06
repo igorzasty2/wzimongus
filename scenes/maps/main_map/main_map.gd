@@ -35,22 +35,17 @@ func _exit_tree():
 	# Zatrzymuje synchronizację czasu.
 	NetworkTime.stop()
 
-	GameManager.player_deregistered.disconnect(_remove_player)
-
 
 @rpc("call_local", "reliable")
 ## Włącza ekran ładowania.
 func _start_game():
 	show()
 	camera.enabled = true
-	loading_screen.connect("finished", _on_loading_screen_finished)
 	loading_screen.play()
 	load_finished.emit()
 
 
 func _on_loading_screen_finished():
-	loading_screen.disconnect("finished", _on_loading_screen_finished)
-	loading_screen.hide()
 	loading_screen.queue_free()
 	GameManager.set_input_status(true)
 

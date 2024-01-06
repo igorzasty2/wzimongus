@@ -17,7 +17,9 @@ extends Control
 @onready var default_sound_graphics_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton
 @onready var default_controls_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2/DefaultControlsButton
 
-# resolutions array
+@export var can_close:bool = true
+
+# Tablica rozdzielczości
 const RESOLUTIONS = [Vector2i(800,600), Vector2i(1024,768), Vector2i(1152,648), Vector2i(1152,864), Vector2i(1280,720),
 Vector2i(1280,800),Vector2i(1280,960), Vector2i(1360,768), Vector2i(1366,768), Vector2i(1400,1050), Vector2i(1440,900), Vector2i(1600,900),
 Vector2i(1600,1200), Vector2i(1680,1050), Vector2i(1792,1344), Vector2i(1856,1392), Vector2i(1920,1080), Vector2i(1920,1200),
@@ -126,6 +128,7 @@ func _on_cancel_button_pressed():
 	if is_processing_unhandled_key_input():
 		_unhandled_key_input(null)
 	key_rebind_window.visible = false
+	can_close = true
 
 
 # Obsługuje usuwanie przypisania klawiszy
@@ -141,15 +144,18 @@ func _on_delete_button_pressed():
 		save_control_settings(action_project_name, primary_event_backup, null)
 
 	key_rebind_window.visible = false
+	can_close = true
 
 # Obsługuje przypisanie klawisza podczas gdy przypisane klawisze się powtarzają, a gracz wybierze "tak"
 func _on_yes_button_pressed():
 	key_used_window.visible = false
+	can_close = true
 
 # Obsługuje przypisanie klawisza podczas gdy przypisane klawisze się powtarzają, a gracz wybierze "nie"
 func _on_no_button_pressed():
 	save_control_settings(action_project_name, primary_event_backup, secondary_event_backup)
 	key_used_window.visible = false
+	can_close = true
 
 
 # Zmienia przypisanie klawisza
@@ -190,10 +196,12 @@ func rebind_key(event, button):
 		if is_already_used(event):
 			key_rebind_window.visible = false
 			key_used_window.visible = true
+			can_close = false
 			emit_signal("button_rebind", false)
 			return
 
 		key_rebind_window.visible = false
+		can_close = true
 
 # Zapisuje ustawienia sterowania
 func save_control_settings(action_name : String, primary_butt : InputEventKey, secondary_butt : InputEventKey):
@@ -257,6 +265,7 @@ func assign(action_label_name, action_project_name, side, left_button, right_but
 
 	action_name.text = action_label_name
 	key_rebind_window.visible = true
+	can_close = false
 	emit_signal("button_rebind", true)
 	set_process_unhandled_key_input(true)
 

@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var pop_up_window = $PopUpWindow
 @onready var settings_container = $SettingsContainer
+@onready var animation_player = $SettingsContainer/AnimationPlayer
 
 
 func _ready():
@@ -45,6 +46,12 @@ func _on_pop_up_window_right_pressed():
 	pop_up_window.visible = false
 
 
-# prevents from closing pause menu when rebinding controls
+# Zapobiega zamknięciu menu pauzy podczas zmiany przypisania przycisków
 func _on_settings_button_rebind(is_rebinded):
 	set_process_input(!is_rebinded)
+
+
+# Wychodzi z menu pauzy gdy naciśnie się poza oknem
+func _on_button_button_down():
+	if $SettingsContainer/Settings.can_close==true:
+		_on_back_to_game_button_pressed()
