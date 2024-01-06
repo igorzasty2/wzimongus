@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8bfxpp3rpvm7"
-path="res://.godot/imported/distortion.png-bed62a4e28e8455a1f454ba8330e1dd3.ctex"
+uid="uid://d07etmk0h2llv"
+path="res://.godot/imported/new_distortion.png-1fc7ea93dda73812dad90e364c6767b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/start_menu/background/assets/distortion.png"
-dest_files=["res://.godot/imported/distortion.png-bed62a4e28e8455a1f454ba8330e1dd3.ctex"]
+source_file="res://scenes/ui/start_menu/background/assets/new_distortion.png"
+dest_files=["res://.godot/imported/new_distortion.png-1fc7ea93dda73812dad90e364c6767b7.ctex"]
 
 [params]
 
