@@ -23,6 +23,10 @@ var is_selected = false
 
 
 func _ready():
+	set_process(false)
+
+## Zaczyna głosowanie
+func start_voting():
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
 
@@ -38,6 +42,8 @@ func _ready():
 	# EJECT PLAYER TIMER
 	add_child(eject_player_timer)
 	eject_player_timer.connect("timeout", _on_eject_player_timer_timeout)
+	
+	set_process(true)
 
 
 func _process(delta):
