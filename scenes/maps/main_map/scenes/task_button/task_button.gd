@@ -37,7 +37,6 @@ func _ready():
 		
 	if !is_minigame:
 		disabled = false
-		minigame_menu = get_parent().get_node("MinigameMenu")
 
 
 func _on_body_entered(body):
