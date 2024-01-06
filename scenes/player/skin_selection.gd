@@ -1,6 +1,7 @@
+## Skrypt wyboru skórki
 extends Node2D
 
-
+## Referencja do sprite'a postaci.
 @onready var player_sprite = $PlayerSprite
 
 
@@ -20,14 +21,11 @@ func _on_skin_changed(id: int, skin: int):
 
 
 func _update_skin(skin: int):
-	var skin_image: Image
-
 	match skin:
 		0:
 			player_sprite.texture = load("res://scenes/player/assets/skins/alt_spritesheet.png")
 		1:
 			player_sprite.texture = load("res://scenes/player/assets/skins/nerd_spritesheet.png")
-	# Poniższe do uzupełnienia!!!!
 		2:
 			player_sprite.texture = load("res://scenes/player/assets/skins/alt_spritesheet.png")
 		3:
