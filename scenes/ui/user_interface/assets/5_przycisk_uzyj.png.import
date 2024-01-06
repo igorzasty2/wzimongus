@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://donjo23ai4rn6"
-path="res://.godot/imported/use2.png-4d7144cba10465cc759e74eaaccea689.ctex"
+uid="uid://djuqvjgi3pbno"
+path="res://.godot/imported/5_przycisk_uzyj.png-be9aeca2bd51abc9f9abfc8e3dfc3ea3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/minigame_menu/assets/use2.png"
-dest_files=["res://.godot/imported/use2.png-4d7144cba10465cc759e74eaaccea689.ctex"]
+source_file="res://scenes/ui/user_interface/assets/5_przycisk_uzyj.png"
+dest_files=["res://.godot/imported/5_przycisk_uzyj.png-be9aeca2bd51abc9f9abfc8e3dfc3ea3.ctex"]
 
 [params]
 

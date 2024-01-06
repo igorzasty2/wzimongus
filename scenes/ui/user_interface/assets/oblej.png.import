@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjct6kxmgyau0"
-path="res://.godot/imported/man.png-e6e8c9ac04899129d7193cc995117c51.ctex"
+uid="uid://cif6s0y35b7xi"
+path="res://.godot/imported/oblej.png-ad660f83eb06bee64e1777b16599586c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/chat/assets/man.png"
-dest_files=["res://.godot/imported/man.png-e6e8c9ac04899129d7193cc995117c51.ctex"]
+source_file="res://scenes/ui/user_interface/assets/oblej.png"
+dest_files=["res://.godot/imported/oblej.png-ad660f83eb06bee64e1777b16599586c.ctex"]
 
 [params]
 

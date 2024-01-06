@@ -1,39 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://5fao6q35e458"]
+[gd_scene load_steps=5 format=3 uid="uid://5fao6q35e458"]
 
-[ext_resource type="Texture2D" uid="uid://dl74edcckhnd" path="res://scenes/ui/minigame_menu/assets/use1.png" id="8_6xiik"]
-[ext_resource type="Texture2D" uid="uid://cb3uggck81vll" path="res://scenes/ui/minigame_menu/assets/use3.png" id="9_fe7jm"]
-[ext_resource type="Texture2D" uid="uid://donjo23ai4rn6" path="res://scenes/ui/minigame_menu/assets/use2.png" id="10_lwx2h"]
+[ext_resource type="PackedScene" uid="uid://dnfvmswm3sk7g" path="res://scenes/ui/window_animation_player/window_animation_player.tscn" id="4_0h12e"]
 [ext_resource type="Texture2D" uid="uid://duof0ela0iipq" path="res://scenes/ui/minigame_menu/assets/close_button1.png" id="11_28kv6"]
 [ext_resource type="Texture2D" uid="uid://pmrgxruihggd" path="res://scenes/ui/minigame_menu/assets/close_button3.png" id="12_k2ue0"]
 [ext_resource type="Texture2D" uid="uid://byv08l1nglh18" path="res://scenes/ui/minigame_menu/assets/close_button2.png" id="13_e3x6e"]
 
 [node name="MinigameMenu" type="CanvasLayer"]
 
-[node name="UseButton" type="TextureButton" parent="."]
-visible = false
-offset_left = 1152.0
-offset_top = 640.0
-offset_right = 1252.0
-offset_bottom = 690.0
-focus_mode = 0
-disabled = true
-texture_normal = ExtResource("8_6xiik")
-texture_pressed = ExtResource("9_fe7jm")
-texture_hover = ExtResource("10_lwx2h")
-
 [node name="MinigameContainer" type="Control" parent="."]
 visible = false
 layout_mode = 3
-anchors_preset = 0
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 1248.0
-offset_bottom = 690.0
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(512, 288)
 
 [node name="Background" type="ColorRect" parent="MinigameContainer"]
-layout_mode = 0
-offset_right = 1216.0
-offset_bottom = 656.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 color = Color(0.34, 0.34, 0.34, 0.67451)
 
@@ -44,13 +36,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -608.0
-offset_top = -329.0
-offset_right = 672.0
-offset_bottom = 391.0
+offset_left = -512.0
+offset_top = -288.0
+offset_right = 768.0
+offset_bottom = 432.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.95, 0.911)
+scale = Vector2(0.8, 0.8)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 size_flags_stretch_ratio = 0.0
@@ -66,17 +58,15 @@ render_target_update_mode = 0
 
 [node name="CloseButton" type="TextureButton" parent="MinigameContainer"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.959
+anchors_preset = 1
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 9.85601
-offset_bottom = -618.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
 focus_mode = 0
 texture_normal = ExtResource("11_28kv6")
 texture_pressed = ExtResource("12_k2ue0")
 texture_hover = ExtResource("13_e3x6e")
 
-[connection signal="pressed" from="UseButton" to="." method="_on_use_button_pressed"]
+[node name="WindowAnimationPlayer" parent="MinigameContainer" instance=ExtResource("4_0h12e")]
