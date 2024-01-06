@@ -7,16 +7,23 @@ extends CanvasLayer
 
 var is_chat_open = false
 
+var task_list_display
+
 var user_sett: UserSettingsManager
 
 var initial_grid_container_scale
 
 var initial_grid_container_2_scale
 
+var initial_task_list_display_scale
+
 # Na początku gry ustawia odpowiedni interface w zależności czy gracz jest imposotrem czy crewmatem, wyłącza wszystkie przyciski poza ustawieniami
 func _ready():
+	task_list_display = get_parent().get_node("TaskListDisplay")
+	
 	initial_grid_container_scale = grid_container.scale
 	initial_grid_container_2_scale = grid_container_2.scale
+	initial_task_list_display_scale = task_list_display.scale
 	
 	user_sett = UserSettingsManager.load_or_create()
 	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
@@ -52,6 +59,7 @@ func execute_action(action_name:String):
 func on_interface_scale_changed(value:float):
 	grid_container.scale = initial_grid_container_scale * value
 	grid_container_2.scale = initial_grid_container_2_scale * value
+	task_list_display.scale = initial_task_list_display_scale * value
 
 
 # Obsługuje naciśnięcie przycisku do reportowania

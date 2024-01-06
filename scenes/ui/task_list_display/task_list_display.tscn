@@ -8,5 +8,6 @@ script = ExtResource("1_dgkoj")
 [node name="TaskList" type="RichTextLabel" parent="."]
 offset_right = 515.0
 offset_bottom = 553.0
+mouse_filter = 2
 bbcode_enabled = true
 fit_content = true
