@@ -7,20 +7,11 @@ extends CanvasLayer
 @onready var kill_radius = $SettingsContainer/MarginContainer/VBoxContainer/KillRadiusContainer/KillRadiusInput
 
 func _ready():
-	hide()
-	lecturers_amount_alert.hide()
-
 	# Ustawia aktualizacje ilości maksymalnych połączeń
 	if multiplayer.is_server():
 		_update_max_connections()
 		GameManager.player_registered.connect(_update_max_connections)
 		GameManager.player_deregistered.connect(_update_max_connections)
-
-
-func _exit_tree():
-	if multiplayer.is_server():
-		GameManager.server_settings_changed.disconnect(_update_max_connections)
-		GameManager.player_deregistered.disconnect(_update_max_connections)
 
 
 func _input(event):
@@ -35,7 +26,7 @@ func _on_save_button_pressed():
 
 
 func _on_visibility_changed():
-	get_parent().update_input()
+	$SettingsContainer.visible = visible
 
 
 func _on_connections_lecturers_item_selected(_index: int):

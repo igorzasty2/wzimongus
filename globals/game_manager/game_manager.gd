@@ -389,7 +389,7 @@ func _register_player(player:Dictionary):
 		var player_in_lobby = get_tree().root.get_node("Game/Maps/Lobby/Players/" + str(i))
 		var lobby_data = {
 			"position": player_in_lobby.position,
-			"last_direction_x": player_in_lobby.last_direction_x
+			"direction_last_x": player_in_lobby.direction_last_x
 		}
 
 		_add_registered_player.rpc_id(id, i, _filter_hidden(get_registered_players()[i]), lobby_data)

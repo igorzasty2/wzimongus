@@ -7,14 +7,15 @@ signal load_finished
 @onready var camera = $Camera
 @onready var server_advertiser = $ServerAdvertiser
 @onready var chat = $Chat
+@onready var lobby_ui = $LobbyUi
 @onready var chat_input = $Chat/ChatContainer/InputText
 @onready var skin_selector = $SkinSelector
 @onready var lobby_settings = $LobbySettings
 
 
 func update_input():
-	if chat_input && lobby_settings && skin_selector:
-		var input_status = !(chat_input.visible || lobby_settings.visible || skin_selector.visible)
+	if chat_input && skin_selector && lobby_settings:
+		var input_status = !(chat_input.visible || skin_selector.visible || lobby_settings.visible)
 		GameManager.set_input_status(input_status)
 
 
@@ -48,22 +49,16 @@ func _ready():
 		await NetworkTime.after_sync
 
 	show()
+	chat.show()
+	lobby_ui.show()
 	camera.enabled = true
-	GameManager.set_input_status(true)
 	load_finished.emit()
+	update_input()
 
 
 func _exit_tree():
 	# Zatrzymuje synchronizację czasu.
 	NetworkTime.stop()
-
-	GameManager.player_registered.disconnect(_on_player_registered)
-	GameManager.player_deregistered.disconnect(_on_player_deregistered)
-
-	if multiplayer.is_server():
-		GameManager.player_registered.disconnect(_update_broadcast_info)
-		GameManager.player_deregistered.disconnect(_update_broadcast_info)
-		GameManager.server_settings_changed.disconnect(_update_broadcast_info)
 
 
 func _update_broadcast_info(_id: int = 0, _player: Dictionary = {}):
@@ -98,7 +93,7 @@ func _spawn_player(id: int):
 	# Ustawia pozycję i animację gracza na podstawie aktualnych danych.
 	if GameManager.lobby_data_at_registration.has(id):
 		player.position = GameManager.lobby_data_at_registration[id]["position"]
-		player.last_direction_x = GameManager.lobby_data_at_registration[id]["last_direction_x"]
+		player.direction_last_x = GameManager.lobby_data_at_registration[id]["direction_last_x"]
 		GameManager.lobby_data_at_registration.erase(id)
 
 	players.add_child(player)
