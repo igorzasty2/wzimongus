@@ -59,8 +59,7 @@ func summon_window():
 	use_button.disabled = true
 
 	GameManager.set_input_status(false)
-	if _minigame_instance is Node2D:
-		_minigame_instance.minigame_end.connect(end_minigame)
+	_minigame_instance.minigame_end.connect(end_minigame)
 
 func end_minigame():
 	_minigame_instance.queue_free()

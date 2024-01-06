@@ -1,6 +1,9 @@
 extends Control
 ## Klasa jest reprezentacją okna systemu kamer
 
+## Jego obecność naprawia błąd
+signal minigame_end
+
 ## Tablica kamer obecnych na mapie
 @onready var cameras = get_parent().get_parent().get_tree().get_nodes_in_group("cameras")
 

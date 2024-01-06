@@ -10,6 +10,8 @@ extends Area2D
 # czy gracz wylosował tego taska
 @export var disabled = true
 
+@export var is_minigame = true
+
 # minigra która będzie włączona przez ten przecisk
 @export var minigame_scene : PackedScene
 
@@ -33,6 +35,10 @@ func _ready():
 	if not disabled:
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
 		sprite_node.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
+		
+	if !is_minigame:
+		disabled = false
+		minigame_menu = get_parent().get_node("MinigameMenu")
 
 
 func _on_body_entered(body):
