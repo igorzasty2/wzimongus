@@ -179,7 +179,9 @@ func _on_timer_timeout() -> void:
 			return
 
 func _update_dead_player(victim: int):
-	var victim_node: Node = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))
+	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
-	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.2)
+	victim_node.get_node("Skins/PlayerSprite").material = null
+	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
 	print(victim_node.get_node("Skins/PlayerSprite").modulate)
+	victim_node.collision_mask = 0
