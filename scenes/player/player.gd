@@ -78,6 +78,7 @@ func _input(event):
 				if can_kill:
 					var victim = closest_player(GameManager.get_current_player_id())
 					if victim:
+						can_kill = false
 						GameManager.kill(victim)
 						var timer = Timer.new()
 						timer.timeout.connect(_on_timer_timeout)
@@ -85,7 +86,6 @@ func _input(event):
 						timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
 						add_child(timer)
 						timer.start()
-						can_kill = false
 
 
 ## Aktualizuje parametry animacji postaci.
@@ -107,7 +107,7 @@ func _update_animation_parameters(direction) -> void:
 
 ## Włącza i wyłącza podświetlenie możliwości zabicia gracza
 func _toggle_highlight(player: int, is_on: bool) -> void:
-	if GameManager.get_registered_player_key(player,"is_dead"):
+	if !get_parent().get_node(str(player) + "/Skins/PlayerSprite").material:
 		return
 	if is_on:
 		get_parent().get_node(str(player) + "/Skins/PlayerSprite").material.set_shader_parameter('line_color', in_range_color)
@@ -147,7 +147,6 @@ func closest_player(to_who: int) -> int:
 				curr_closest_dist = temp_dist
 				
 		if curr_closest_dist < (kill_radius**2):
-			print(curr_closest)
 			return curr_closest
 		return 0
 	return 0
@@ -164,11 +163,9 @@ func _on_killed_player(victim: int) -> void:
 			get_parent().get_node(str(i)).visible = true
 	
 	var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
-	dead_body.get_node("DeadBodySprite").texture = load("res://icon.png")
-	dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
-	dead_body.global_position = get_parent().get_node(str(victim)).global_position
-	
 	get_parent().add_child(dead_body)
+	dead_body.set_dead_player(victim)
+	dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
 
 func _on_timer_timeout() -> void:
 	can_kill = true
@@ -183,5 +180,4 @@ func _update_dead_player(victim: int):
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
 	victim_node.get_node("Skins/PlayerSprite").material = null
 	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
-	print(victim_node.get_node("Skins/PlayerSprite").modulate)
 	victim_node.collision_mask = 0
