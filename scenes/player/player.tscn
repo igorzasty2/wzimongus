@@ -1,9 +1,9 @@
 [gd_scene load_steps=29 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
-[ext_resource type="Shader" path="res://scenes/player/kill_player.gdshader" id="2_7046j"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
 [ext_resource type="Script" path="res://scenes/player/skin_selection.gd" id="2_mfjlm"]
+[ext_resource type="Shader" path="res://scenes/player/outline.gdshader" id="3_i22fk"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
 [ext_resource type="Texture2D" uid="uid://dtls6wyj0nyjq" path="res://scenes/player/assets/skins/alt_spritesheet.png" id="3_obr1o"]
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
@@ -90,9 +90,12 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_klla5"]
 resource_local_to_scene = true
-shader = ExtResource("2_7046j")
-shader_parameter/line_color = Color(0.705882, 0, 0, 1)
-shader_parameter/line_thickness = 10.0
+shader = ExtResource("3_i22fk")
+shader_parameter/color = Color(1, 0, 0, 1)
+shader_parameter/width = 10.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mw58m"]
 animation = &"idle_left"

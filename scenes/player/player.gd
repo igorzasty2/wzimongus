@@ -50,7 +50,6 @@ func _process(_delta):
 	
 	_update_animation_parameters(direction)
 
-
 func _rollback_tick(_delta, _tick, _is_fresh):
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	velocity = input.direction.normalized() * speed
@@ -72,9 +71,9 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 ## Sprawdza, czy nie naciśnięto fail button. Jeśli tak to sprawdza, czy jesteśmy lecturerem
 ## i prosi serwer o oblanie najbliższego gracza w promieniu oblania.
 func _input(event):
-	if event is InputEventKey:
-		if event.is_action("fail") and event.is_pressed() and not event.is_echo():
-			if GameManager.get_current_player_key("is_lecturer"):
+	if event.is_action("fail") and event.is_pressed() and not event.is_echo():
+		if name.to_int() == GameManager.get_current_player_id():
+			if GameManager.get_registered_player_key(name.to_int(),"is_lecturer"):
 				if can_kill:
 					var victim = closest_player(GameManager.get_current_player_id())
 					if victim:
@@ -107,15 +106,16 @@ func _update_animation_parameters(direction) -> void:
 
 ## Włącza i wyłącza podświetlenie możliwości zabicia gracza
 func _toggle_highlight(player: int, is_on: bool) -> void:
-	if !get_parent().get_node(str(player) + "/Skins/PlayerSprite").material:
-		return
-	if is_on:
-		get_parent().get_node(str(player) + "/Skins/PlayerSprite").material.set_shader_parameter('line_color', in_range_color)
-	else:
-		get_parent().get_node(str(player) + "/Skins/PlayerSprite").material.set_shader_parameter('line_color', out_of_range_color)
+	var player_material = get_parent().get_node(str(player) + "/Skins/PlayerSprite").material
+	if player_material:
+		if is_on:
+			player_material.set_shader_parameter('color', in_range_color)
+		else:
+			player_material.set_shader_parameter('color', out_of_range_color)
 
 func _update_highlight(player: int) -> void:
 		var all_players = GameManager.get_registered_players().keys()
+		all_players.erase(GameManager.get_current_player_id())
 		
 		for i in all_players:
 			if player != null and i == player:
