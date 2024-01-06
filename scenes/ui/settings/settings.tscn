@@ -48,15 +48,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
+theme_override_constants/margin_left = 45
 theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 50
+theme_override_constants/margin_right = 45
 theme_override_constants/margin_bottom = 90
 
 [node name="GridContainer" type="GridContainer" parent="TabContainer/SoundAndGraphics/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/h_separation = 32
+theme_override_constants/h_separation = 30
 theme_override_constants/v_separation = 20
 columns = 3
 
@@ -64,32 +64,43 @@ columns = 3
 layout_mode = 2
 size_flags_vertical = 1
 text = "Głośność"
+vertical_alignment = 1
 
 [node name="VolumeSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 
 [node name="VolumeOutput" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 text = "00"
+vertical_alignment = 1
 
-[node name="Resolution" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+[node name="InterfaceScale" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
-text = "Rozdzielczość"
+size_flags_vertical = 1
+text = "Skala interfejsu"
+vertical_alignment = 1
 
-[node name="ResolutionSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+[node name="InterfaceScaleSlider" type="HSlider" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
-max_value = 1.0
+min_value = 0.5
+max_value = 1.5
+step = 0.05
+value = 0.5
 
-[node name="ResolutionOutput" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(92, 2.08165e-12)
+[node name="InterfaceScaleOutput" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
-text = "0000x0000"
+text = "00"
+vertical_alignment = 1
 
 [node name="FullScreen" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Pełny ekran"
+vertical_alignment = 1
 
 [node name="FullScreenCheckBox" type="CheckBox" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -103,6 +114,7 @@ layout_mode = 2
 [node name="VSync" type="Label" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
 text = "V-Sync"
+vertical_alignment = 1
 
 [node name="VSyncCheckBox" type="CheckBox" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -110,13 +122,6 @@ focus_mode = 0
 
 [node name="Filler2" type="Control" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
-
-[node name="SaveButton" type="Button" parent="TabContainer/SoundAndGraphics/MarginContainer"]
-custom_minimum_size = Vector2(165, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 8
-text = "Zastosuj"
 
 [node name="Controls" type="TabBar" parent="TabContainer"]
 visible = false
@@ -198,6 +203,16 @@ action_project_name = "move_down"
 layout_mode = 2
 action_label_name = "W górę"
 action_project_name = "move_up"
+
+[node name="ChatOpenKeyRebind" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "Otwórz czat"
+action_project_name = "chat_open"
+
+[node name="ChatCloseKeyRebind" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
+layout_mode = 2
+action_label_name = "Zamknij czat"
+action_project_name = "chat_close"
 
 [node name="HSeparator2" type="HSeparator" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -394,14 +409,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Przywróć"
 
-[connection signal="hidden" from="." to="." method="_on_hidden"]
 [connection signal="hidden" from="TabContainer" to="TabContainer" method="_on_hidden"]
 [connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
-[connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/ResolutionSlider" to="." method="_on_resolution_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/InterfaceScaleSlider" to="." method="_on_interface_scale_slider_value_changed"]
 [connection signal="toggled" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/FullScreenCheckBox" to="." method="_on_full_screen_checkbox_toggled"]
 [connection signal="toggled" from="TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VSyncCheckBox" to="." method="_on_v_sync_check_box_toggled"]
-[connection signal="pressed" from="TabContainer/SoundAndGraphics/MarginContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/SabotageKeyRebind" to="." method="_on_sabotage_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/UseVentKeyRebind" to="." method="_on_use_vent_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/InteractKeyRebind" to="." method="_on_interact_key_rebind_rebind_button_pressed"]
@@ -412,6 +425,8 @@ text = "Przywróć"
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveRightKeyRebind" to="." method="_on_move_right_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveDownKeyRebind" to="." method="_on_move_down_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveUpKeyRebind" to="." method="_on_move_up_key_rebind_rebind_button_pressed"]
+[connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/ChatOpenKeyRebind" to="." method="_on_chat_open_key_rebind_rebind_button_pressed"]
+[connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/ChatCloseKeyRebind" to="." method="_on_chat_close_key_rebind_rebind_button_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer2/DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer2/CancelButton" to="." method="_on_cancel_button_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/KeyUsedWindow/Panel/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]

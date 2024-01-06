@@ -1,13 +1,27 @@
 extends CanvasLayer
 
 @onready var grid_container = $GridContainer
+@onready var grid_container_2 = $GridContainer2
 @onready var filler = $GridContainer/Filler
 @onready var chat_button = $GridContainer2/ChatButton
 
 var is_chat_open = false
 
+var user_sett: UserSettingsManager
+
+var initial_grid_container_scale
+
+var initial_grid_container_2_scale
+
 # Na początku gry ustawia odpowiedni interface w zależności czy gracz jest imposotrem czy crewmatem, wyłącza wszystkie przyciski poza ustawieniami
 func _ready():
+	initial_grid_container_scale = grid_container.scale
+	initial_grid_container_2_scale = grid_container_2.scale
+	
+	user_sett = UserSettingsManager.load_or_create()
+	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
+	on_interface_scale_changed(user_sett.interface_scale)
+	
 	toggle_chat_button_active(false)
 	# Gracz jest impostorem
 	if GameManager.get_current_player_key("is_lecturer"):
@@ -33,6 +47,11 @@ func execute_action(action_name:String):
 	event.action = action_name
 	event.pressed = true
 	Input.parse_input_event(event)
+
+
+func on_interface_scale_changed(value:float):
+	grid_container.scale = initial_grid_container_scale * value
+	grid_container_2.scale = initial_grid_container_2_scale * value
 
 
 # Obsługuje naciśnięcie przycisku do reportowania
