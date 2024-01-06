@@ -15,6 +15,7 @@ offset_right = -160.0
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 20
 
 [node name="ChatLogsScrollbar" type="ScrollContainer" parent="ChatContainer"]
 unique_name_in_owner = true
@@ -40,7 +41,7 @@ one_shot = true
 [node name="InputText" type="LineEdit" parent="ChatContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-placeholder_text = "Text your message..."
+placeholder_text = "Napisz wiadomość..."
 flat = true
 
 [connection signal="timeout" from="ChatContainer/ChatLogsScrollbar/ChatLogsContainer/ChatDisappearTimer" to="." method="_on_timer_timeout"]
