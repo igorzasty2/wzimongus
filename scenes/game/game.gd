@@ -4,7 +4,6 @@ extends Control
 @onready var maps = $Maps
 @onready var error = $Error
 @onready var error_pop_up = $Error/ErrorPopUp
-@onready var pause_menu = $PauseMenu
 
 
 func _ready():
@@ -30,9 +29,7 @@ func _on_game_ended():
 
 func _on_error_occured(message: String):
 	if !error.visible:
-		pause_menu.visible = false
-		GameManager.set_pause_menu_status(false)
-		pause_menu.settings_container.visible = false
+		$PauseMenu.queue_free()
 		
 		connecting.hide()
 		_delete_map()
