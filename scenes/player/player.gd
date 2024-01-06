@@ -107,6 +107,8 @@ func _update_animation_parameters(direction) -> void:
 
 ## Włącza i wyłącza podświetlenie możliwości zabicia gracza
 func _toggle_highlight(player: int, is_on: bool) -> void:
+	if GameManager.get_registered_player_key(player,"is_dead"):
+		return
 	if is_on:
 		get_parent().get_node(str(player) + "/Skins/PlayerSprite").material.set_shader_parameter('line_color', in_range_color)
 	else:
