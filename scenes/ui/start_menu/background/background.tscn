@@ -48,7 +48,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_r4e0p"]
-resource_name = "background_animation"
+resource_name = "transition_animation"
 length = 7.0
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -66,7 +66,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g7bf2"]
 _data = {
 "RESET": SubResource("Animation_kjdr6"),
-"background_animation": SubResource("Animation_r4e0p")
+"transition_animation": SubResource("Animation_r4e0p")
 }
 
 [node name="Background" type="Control"]
@@ -115,4 +115,5 @@ libraries = {
 "": SubResource("AnimationLibrary_g7bf2")
 }
 
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="timeout" from="TransitionBackground/ChangeBackgroundTimer" to="." method="_on_change_background_timer_timeout"]

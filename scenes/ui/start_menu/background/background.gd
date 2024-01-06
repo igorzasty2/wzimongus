@@ -3,9 +3,9 @@ extends Control
 ## Timer
 @onready var change_background_timer = $TransitionBackground/ChangeBackgroundTimer
 
-## Tło
+## Node z tłem
 @onready var background = $Background
-## Tło przejścia
+## Node z tłem przejścia
 @onready var transition_background = $TransitionBackground
 
 ## Player aniamcji przejścia
@@ -25,24 +25,39 @@ extends Control
 
 ## Tablica z tłami
 var background_image_array
-## Identyfikator obecnego tła
-var current_background_id = 0
+## Indeks obecnego tła
+var current_background_idx = 0
 
 ## Czas pomiędzy zmianami tła
-var wait_time = 8#30
+var wait_time = 15
 
 func _ready():
 	background_image_array = [background_image1, background_image2, background_image3, background_image4]
-	background.texture = randomize_background()
+	
+	# Przekazuje teksture tła na kolejną scenę
+	if GameManager.current_background_texture != null:
+		background.texture = GameManager.current_background_texture
+		transition_background.texture = GameManager.transition_background_texture
+	else:
+		background.texture = randomize_background()
+	
+	# Puszcza animację w odpowiednim momencie na kolejnej scenie
+	if GameManager.is_animation_playing:
+		transition_animation_player.play("transition_animation")
+		transition_animation_player.advance(GameManager.animation_position)
+		background_animation_player.play("move_animation")
+		background_animation_player.advance(GameManager.animation_position)
 	
 	change_background_timer.start(wait_time)
+
 
 ## Obsługuje przejście między tłami
 func _on_change_background_timer_timeout():
 	transition_background.texture = background.texture
+	GameManager.transition_background_texture = transition_background.texture
 	background.texture = randomize_background()
-	transition_animation_player.play("background_animation")
 	
+	transition_animation_player.play("transition_animation")
 	background_animation_player.play("move_animation")
 	
 	transition_background.material.set_shader_parameter('dissolve_state', 0)
@@ -53,6 +68,15 @@ func _on_change_background_timer_timeout():
 ## Zwraca losowe tło inne niż obecne
 func randomize_background():
 	var background_image_array_duplicate = background_image_array.duplicate(true)
-	background_image_array_duplicate.remove_at(current_background_id)
-	current_background_id = randi_range(0, background_image_array_duplicate.size()-1)
-	return background_image_array_duplicate[current_background_id]
+	background_image_array_duplicate.remove_at(current_background_idx)
+	current_background_idx = randi_range(0, background_image_array_duplicate.size()-1)
+	# Zapisuje wylosowane tło
+	GameManager.current_background_texture = background_image_array_duplicate[current_background_idx]
+	return background_image_array_duplicate[current_background_idx]
+
+
+## Jeżeli animacja gra, to zapisuje jej pozycje podczas wyjścia z drzewa
+func _on_tree_exiting():
+	GameManager.is_animation_playing = transition_animation_player.is_playing()
+	if GameManager.is_animation_playing:
+		GameManager.animation_position = transition_animation_player.current_animation_position

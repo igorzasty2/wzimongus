@@ -68,6 +68,13 @@ var _player_attributes = {
 	"is_dead": false
 }
 
+## Przechowuje infromację o tym czy gra animacja tła
+var is_animation_playing: bool = false
+## Przechowuje pozycję animacji tła
+var animation_position: float
+## Przechowuje teksture obecnego tłą
+var current_background_texture = null
+var transition_background_texture = null
 
 func _ready():
 	multiplayer.peer_disconnected.connect(_delete_deregistered_player)
