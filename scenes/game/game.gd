@@ -23,14 +23,16 @@ func _on_winner_determined(winning_role: GameManager.Role):
 	display_winner.rpc(winning_role)
 
 
-@rpc("reliable", "authority", "call_local")
+@rpc("call_local", "reliable")
 func display_winner(winning_role: GameManager.Role):
 	var ending_scene = preload('res://scenes/ui/game_ending/game_ending.tscn').instantiate()
 	ending_scene.set_winning_role(winning_role)
-	
 	get_tree().get_root().add_child(ending_scene)
+
+	GameManager.reset_game()
+
 	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
-	
+
 
 func _on_game_started():
 	_change_map.call_deferred(load("res://scenes/maps/main_map/main_map.tscn"))

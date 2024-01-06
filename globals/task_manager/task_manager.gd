@@ -88,7 +88,7 @@ func _send_task_completion(player_id, task_id):
 	# Usuwa gracza ze słownika zadań jeżeli wszystkie zadania są zrobione.
 	if _tasks[player_id].is_empty():
 		_tasks.erase(player_id)
-	print("task complete")
+
 	GameManager.check_winning_conditions()
 
 

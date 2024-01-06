@@ -30,4 +30,5 @@ func _on_next_round_timer_timeout():
 	self.queue_free()
 	self.get_parent().get_node("%Button").show()
 
-	GameManager.next_round()
+	GameManager.new_round()
+	GameManager.set_input_status(true)

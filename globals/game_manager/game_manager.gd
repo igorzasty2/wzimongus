@@ -169,15 +169,6 @@ func start_game():
 	TaskManager.assign_tasks(1)
 
 
-## Rozpoczyna następną rundę
-func next_round():
-	_current_game["is_voted"] = false
-	_current_game["is_vote_preselected"] = false
-	_current_game["votes"].clear()
-	_current_game["most_voted_player"] = null
-	GameManager.set_input_status(true)
-
-
 ## Kończy grę.
 func end_game():
 	# Zamyka połączenie i przywraca domyślny peer.
@@ -188,18 +179,47 @@ func end_game():
 	_current_game["is_started"] = false
 	_current_game["is_paused"] = false
 	_current_game["is_input_disabled"] = false
-	_current_game["is_voted"] = false
-	_current_game["is_vote_preselected"] = false
 	_current_game["registered_players"].clear()
-	_current_game["votes"].clear()
-	_current_game["most_voted_player"] = null
 
 	_current_player["username"] = ""
+
+	# Resetuje system głosowania.
+	_reset_votes()
 
 	# Resetuje zadania.
 	TaskManager.reset()
 
 	game_ended.emit()
+
+
+## Resetuje grę.
+func reset_game():
+	# Resetuje stan gry.
+	_current_game["is_started"] = false
+
+	# Nadpisuje atrybuty graczy domyślnymi atrybutami.
+	for i in get_registered_players():
+		_current_game["registered_players"][i].merge(_player_attributes, true)
+
+	# Ukrywa atrybuty graczy, których klienci nie mogą widzieć.
+	if !multiplayer.is_server():
+		for i in get_registered_players():
+			if i == get_current_player_id():
+				continue
+
+			_current_game["registered_players"][i] = _filter_hidden(_current_game["registered_players"][i])
+
+	# Resetuje system głosowania.
+	_reset_votes()
+
+	# Resetuje zadania.
+	TaskManager.reset()
+
+
+## Rozpoczyna nową rundę.
+func new_round():
+	# Resetuje system głosowania.
+	_reset_votes()
 
 
 ## Zwraca informację o grze, która jest przechowywana pod danym kluczem.
@@ -226,6 +246,14 @@ func add_vote(id:int, voted_by:int):
 ## Ustawia gracza z największą ilością głosów
 func set_most_voted_player(player):
 	_current_game["most_voted_player"] = player
+
+
+## Resetuje system głosowania.
+func _reset_votes():
+	_current_game["is_voted"] = false
+	_current_game["is_vote_preselected"] = false
+	_current_game["votes"].clear()
+	_current_game["most_voted_player"] = null
 
 
 ## Zwraca słownik zarejestrowanych graczy.
