@@ -7,6 +7,7 @@
 radius = 170.238
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xwbu7"]
+resource_local_to_scene = true
 shader = ExtResource("2_o3jvt")
 shader_parameter/line_color = Color(1, 1, 1, 1)
 shader_parameter/line_thickness = 0.0
