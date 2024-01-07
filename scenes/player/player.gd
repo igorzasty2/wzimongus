@@ -442,6 +442,11 @@ func activate_player_shaders():
 	shader_material.shader = load("res://shaders/player_outline.gdshader")
 	
 	player_sprite.material = shader_material
+	player_sprite.material.set_shader_parameter("width", 4.0)
+	player_sprite.material.set_shader_parameter("pattern", 1)
+	player_sprite.material.set_shader_parameter("add_margins", true)
+	player_sprite.material.set_shader_parameter("color", "#00000000")
+	
 	username_label.material = load("res://scenes/player/assets/light_only_canvas_material.tres")
 	
 	
