@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=115 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -150,6 +150,12 @@ size = Vector2(28, 47)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f8ggq"]
 size = Vector2(287, 292)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elfmc"]
+size = Vector2(8896, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_apqsq"]
+size = Vector2(48, 6224)
 
 [node name="MainMap" type="Node2D"]
 y_sort_enabled = true
@@ -1064,6 +1070,27 @@ position = Vector2(1971, 377)
 position = Vector2(1977, 256)
 
 [node name="DeadBodies" type="Node2D" parent="."]
+[node name="MapBorder" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MapBorder"]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(584, 2504)
+shape = SubResource("RectangleShape2D_elfmc")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(584, -3560)
+shape = SubResource("RectangleShape2D_elfmc")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(5056, -584)
+shape = SubResource("RectangleShape2D_apqsq")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(-3888, -584)
+shape = SubResource("RectangleShape2D_apqsq")
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true

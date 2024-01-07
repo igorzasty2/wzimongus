@@ -46,6 +46,27 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("3_chfnj")
 
+[node name="Label" type="Label" parent="GridContainer/FailButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 200
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SabotageButton" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
