@@ -119,13 +119,12 @@ func _on_end_voting_timer_timeout():
 			var voted_by_players = GameManager.get_current_game_key("votes")[player_id]
 			for voted_by in voted_by_players:
 				_add_player_vote.rpc(player_id, voted_by)
-		
+
 		_render_player_boxes.rpc()
-		
-		if most_voted_player_id != null:
-			GameManager.set_most_voted_player.rpc(GameManager.get_registered_players()[most_voted_player_id])
-		else:
-			GameManager.set_most_voted_player.rpc(null)
+
+		GameManager.set_most_voted_player.rpc(GameManager.get_registered_players()[most_voted_player_id] if most_voted_player_id != null else null)
+
+		GameManager.kill_player(most_voted_player_id)
 
 
 ## Zmienia scene na ekran wyrzucenia
