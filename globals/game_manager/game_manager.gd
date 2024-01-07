@@ -556,3 +556,20 @@ func _kill_server(victim: int):
 	_current_game["registered_players"][victim]["is_dead"] = true
 	player_killed.emit(victim)
 
+
+## Po rozpoczęciu przejściu na ekran ejection_screen przenosi graczy na miejsce spotkania
+func ejection_started():
+	teleport_players()
+
+
+## Teleportuje wszystkich graczy do miejsca spotkania
+func teleport_players():
+	var players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
+	var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
+	for i in range(0, players.size()):
+		if multiplayer.is_server():
+			players[i].is_teleport = true
+			players[i].teleport_position = meeting_positions[i].global_position
+
+
+

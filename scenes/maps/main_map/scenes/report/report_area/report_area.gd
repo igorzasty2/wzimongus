@@ -59,10 +59,10 @@ func _ready():
 
 func _input(event):
 	# Obłsuguje odpowiednio naciśnięcie przycisku do zebrania lub do reportowania
-	if (!GameManager.get_current_game_key("is_input_disabled") 
-	&& ((event.is_action_pressed("report") && !is_button) || (event.is_action_pressed("interact") 
-	&& is_button 
-	&& is_wait_time_over)) 
+	if (
+	((event.is_action_pressed("report") && !is_button) || ((event.is_action_pressed("interact") && is_button && is_wait_time_over)))
+	&& !GameManager.get_current_game_key("is_input_disabled")
+	&& !GameManager.get_current_game_key("paused") 
 	&& is_player_inside 
 	&& !GameManager.get_current_player_key("is_dead") 
 	&& !GameManager.is_meeting_called):
@@ -87,8 +87,6 @@ func _input(event):
 		# Pokazuje ekran z ciałem/spotkaniem, po czym rozpoczyna głosowanie
 		show_hide_report_screen.rpc()
 		
-		# Wyłącza ruch gracza - później włącza się przez voting_screen w game_manager
-		GameManager.set_input_status(false)
 
 
 ## Obsługuje zakończenie emergeny_timer
@@ -115,7 +113,7 @@ func on_next_round_started():
 
 ## Obsługuje wejście gracza
 func _on_body_entered(body):
-	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(body.name.to_int(), "is_dead"):
+	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(body.name.to_int(), "is_dead") && !body.is_in_vent:
 		is_player_inside = true
 		
 		if is_button:
@@ -128,7 +126,7 @@ func _on_body_entered(body):
 
 ## Obsługuje wyjście gracza
 func _on_body_exited(body):
-	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(body.name.to_int(), "is_dead"):
+	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(body.name.to_int(), "is_dead") && !body.is_in_vent:
 		is_player_inside = false
 		
 		if is_button:
@@ -151,6 +149,8 @@ func on_player_killed(player_id:int):
 func open_voting_screen():
 	var voting_screen_instance = voting_screen.instantiate()
 	get_node("CanvasLayer").add_child(voting_screen_instance)
+	
+	# Wyłącza ruch gracza - później włącza się przez voting_screen w game_manager
 	GameManager.set_input_status(false)
 
 

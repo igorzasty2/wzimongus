@@ -106,13 +106,11 @@ func _ready():
 	# Jeśli gracz jest impostorem to ustawia początkową możliwość zabicia na true
 	if GameManager.get_current_player_key("is_lecturer"):
 		can_kill_cooldown = true
-	
-	GameManager.next_round_started.connect(on_next_round_started)
 
 
 func _process(_delta):
 	var direction = input.direction.normalized()
-	
+
 	# Aktualizuje parametry animacji postaci.
 	_update_animation_parameters(direction)
 
@@ -155,10 +153,11 @@ func _rollback_tick(delta, _tick, is_fresh):
 				
 	# Gracz jest przenoszony na miejsce awaryjnego spotkania
 	elif is_teleport && is_fresh:
-		# Wyciąga impostora z venta - nie działa
-		if GameManager.get_registered_player_key(name.to_int(), "is_lecturer"):
-			if is_in_vent && can_use_vent:
-				_use_vent()
+		# Wyciąga impostora z venta
+		if is_in_vent:
+			if name.to_int() != 1:
+				_exit_vent()
+			_exit_vent.rpc_id(name.to_int())
 		
 		global_position = teleport_position
 		is_teleport = false
@@ -413,11 +412,3 @@ func _toggle_vent_buttons(is_enabled: bool):
 		return
 
 	vent.set_direction_buttons_visibility(is_enabled)
-
-
-## Po rozpoczęciu nowej rundy przenosi gracza nie miejsce spotkania
-func on_next_round_started():
-	var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
-	var idx = randi_range(0, meeting_positions.size()-1)
-	is_teleport = true
-	teleport_position = meeting_positions[idx].global_position
