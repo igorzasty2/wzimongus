@@ -90,6 +90,9 @@
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="79_xtlh3"]
 [ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
 [ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
+[ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/maps/main_map/scenes/camera/camera.tscn" id="81_mexjh"]
+[ext_resource type="PackedScene" uid="uid://br73d5fyt6ecp" path="res://scenes/minigames/copying-files/copying_files.tscn" id="82_rt2pg"]
+[ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -981,6 +984,11 @@ position = Vector2(1400, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("80_b7854")
 
+[node name="Task6" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(1751, -1014)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("82_rt2pg")
+
 [node name="Vents" type="Node2D" parent="."]
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
@@ -1010,6 +1018,28 @@ allow_student_venting = true
 position = Vector2(4372, -1366)
 vent_target_list = [NodePath("../Vent1")]
 allow_student_venting = true
+
+[node name="Cameras" type="Node2D" parent="."]
+
+[node name="CameraSystem" parent="Cameras" instance=ExtResource("3_e0rk4")]
+position = Vector2(4016, -1329)
+is_minigame = false
+minigame_scene = ExtResource("89_58eb3")
+
+[node name="Camera" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-2602, -277)
+
+[node name="Camera2" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-1390, -1450)
+
+[node name="Camera3" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(36, 476)
+
+[node name="Camera4" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(3036, 352)
+
+[node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(2848, -1132)
 
 [node name="LightMap" type="Node2D" parent="."]
 

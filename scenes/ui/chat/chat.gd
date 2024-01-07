@@ -35,7 +35,7 @@ func _input(event):
 	if event.is_action_pressed("chat_open") && !input_text.visible:
 		_open_chat()
 		get_viewport().set_input_as_handled()
-	if event.is_action_pressed("pause_menu") && input_text.visible:
+	if (event.is_action_pressed("chat_close") || event.is_action_pressed("pause_menu")) && input_text.visible:
 		_close_chat()
 		get_viewport().set_input_as_handled()
 

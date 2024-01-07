@@ -20,13 +20,14 @@ anchor_bottom = 0.5
 offset_left = -249.0
 offset_top = -204.0
 offset_right = 249.0
-offset_bottom = 204.0
+offset_bottom = 267.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(249, 204)
 
 [node name="MarginContainer" type="MarginContainer" parent="SettingsContainer"]
 layout_mode = 2
+size_flags_stretch_ratio = 0.0
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
@@ -86,6 +87,70 @@ popup/item_1/text = "2"
 popup/item_1/id = 1
 popup/item_2/text = "3"
 popup/item_2/id = 2
+
+[node name="KillCooldownContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="KillCooldownLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/KillCooldownContainer"]
+layout_mode = 2
+text = "Czas odnowienia oblania"
+
+[node name="KillCooldownInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/KillCooldownContainer"]
+layout_mode = 2
+item_count = 4
+selected = 2
+popup/item_0/text = "15s"
+popup/item_0/id = 15
+popup/item_1/text = "30s"
+popup/item_1/id = 30
+popup/item_2/text = "45s"
+popup/item_2/id = 45
+popup/item_3/text = "60s"
+popup/item_3/id = 60
+
+[node name="KillRadiusContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="KillRadiusLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/KillRadiusContainer"]
+layout_mode = 2
+text = "Promień oblania"
+
+[node name="KillRadiusInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/KillRadiusContainer"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "domyślny"
+popup/item_0/id = 260
+popup/item_1/text = "mniejszy"
+popup/item_1/id = 200
+popup/item_2/text = "większy"
+popup/item_2/id = 350
+
+[node name="TaskAmountContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TaskAmountLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/TaskAmountContainer"]
+layout_mode = 2
+text = "Liczba zadań"
+
+[node name="TaskAmountInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/TaskAmountContainer"]
+custom_minimum_size = Vector2(65, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+item_count = 6
+selected = 2
+popup/item_0/text = "1"
+popup/item_0/id = 1
+popup/item_1/text = "2"
+popup/item_1/id = 2
+popup/item_2/text = "3"
+popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 4
+popup/item_4/text = "5"
+popup/item_4/id = 5
+popup/item_5/text = "6"
+popup/item_5/id = 6
 
 [node name="SaveButton" type="Button" parent="SettingsContainer/MarginContainer"]
 custom_minimum_size = Vector2(165, 40)
