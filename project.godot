@@ -116,6 +116,7 @@ chat_close={
 2d_physics/layer_1="static_objects"
 2d_physics/layer_2="players"
 2d_physics/layer_3="vents"
+2d_physics/layer_4="kill_radius"
 
 [netfox]
 
