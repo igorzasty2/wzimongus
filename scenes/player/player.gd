@@ -295,7 +295,8 @@ func _update_dead_player(victim: int):
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
 	victim_node.get_node("Skins/PlayerSprite").use_parent_material = true
 	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
-	victim_node.collision_mask = 0
+	victim_node.collision_mask = 8
+	victim_node.collision_layer = 16
 
 
 ## Używa venta.
