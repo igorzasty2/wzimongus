@@ -65,11 +65,11 @@ func toggle_button_highlight(is_on: bool):
 
 ## Obsługuje wejście gracza
 func _on_report_area_body_entered(body):
-	if body.name.to_int() == GameManager.get_current_player_id() && !GameManager.get_current_player_key("is_dead"):
+	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(name.to_int(), "is_dead"):
 		toggle_button_highlight(true)
 
 
 ## Obsługuje wyjście gracza
 func _on_report_area_body_exited(body):
-	if body.name.to_int() == GameManager.get_current_player_id() && !GameManager.get_current_player_key("is_dead"):
+	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(name.to_int(), "is_dead"):
 		toggle_button_highlight(false)

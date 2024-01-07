@@ -27,14 +27,16 @@ var emergency_button
 # Określa czy czas oczekiwania się skończył
 var is_wait_time_over:bool = false
 
+## Odniesienie do UserInterface
 var user_interface
+## Odniesienie to TaskListDisplay
 var task_list
 
+## Sygnał aktywujący przyciski w interfejsie
 signal button_active(button_name:String, is_active:bool)
 
 func _ready():
 	GameManager.next_round_started.connect(on_next_round_started)
-	
 	if is_button:
 		emergency_button = $".."
 		emergency_button.emergency_timer_timeout.connect(_on_end_emergency_timer_timeout)
@@ -61,7 +63,7 @@ func _input(event):
 		# Aktualizuje tablice
 		player_array = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
 		task_array = get_tree().root.get_node("Game/Maps/MainMap/Tasks").get_children()
-		# body_array = ...
+		# body_array = get_tree().root.get_node("Game/Maps/MainMap/Bodies").get_children()
 		
 		
 		# Chowa przyciski z interfejsu i liste tasków
@@ -80,10 +82,21 @@ func _input(event):
 		# Wyłącza ruch gracza - później włącza się przez voting_screen w game_manager
 		GameManager.set_input_status(false)
 		
-		# Wyciąga impostorów z ventów - zrobić jak będą venty
-		
-		
-		# Przenosi graczy na start - zrobić jak będą venty
+		# Wyciąga impostorów z ventów i przenosi graczy na start - nie działa
+		var player_id = multiplayer.get_remote_sender_id()
+
+		if player_id != 1:
+			move_players_to_position()
+
+		move_players_to_position.rpc_id(player_id)
+
+
+@rpc("call_local", "reliable")
+## Przenosi graczy na miejsce spotkania
+func move_players_to_position():
+	for i in range(0, player_array.size()):
+		player_array[i].is_teleport = true
+		player_array[i].teleport_position = meeting_positions[i].global_position
 
 
 ## Obsługuje zakończenie emergeny_timer
@@ -93,7 +106,7 @@ func _on_end_emergency_timer_timeout(is_over: bool):
 		button_active.emit("InteractButton", true)
 
 
-## Chowa wszystkie ciała na mapie, pokazuje interfejs, usuwa wszystkie ciała - zrobić jak będą ciała
+## Pokazuje interfejs, usuwa wszystkie ciała - zrobić jak będą ciała
 func on_next_round_started():
 	print("next round")
 	GameManager.is_meeting_called = false
@@ -101,21 +114,15 @@ func on_next_round_started():
 	# Pokazuje przyciski z interfejsu i liste zadań
 	user_interface.bottom_buttons_toggle_visiblity.rpc(true)
 	toggle_task_list_visibility.rpc(true)
-	
-	# Usuwa ciała z mapy - zrobić jak będą ciała
-#	for body in body_array:
-#		if body==self:
-#			continue
-#		body.queue_free()
 
+	# Usuwa ciało z mapy
 	if !is_button:
 		queue_free()
 
 
 ## Obsługuje wejście gracza
 func _on_body_entered(body):
-	if body.name.to_int() == GameManager.get_current_player_id() && !GameManager.get_current_player_key("is_dead"):
-		print("report area entered")
+	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(name.to_int(), "is_dead"):
 		is_player_inside = true
 		
 		if is_button:
@@ -126,9 +133,8 @@ func _on_body_entered(body):
 
 
 ## Obsługuje wyjście gracza
-func _on_body_exited(body):		# TUTAJ JEST PROBLEM JAK SIE WYJDZIE PODCZAS BYCIA W ŚRODKU BO CURRENT PLATER CHYBA NIE ISTNIE
-	if body.name.to_int() == GameManager.get_current_player_id() && !GameManager.get_current_player_key("is_dead"):
-		print("report area exited")
+func _on_body_exited(body):
+	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(name.to_int(), "is_dead"):
 		is_player_inside = false
 		
 		if is_button:
@@ -146,7 +152,7 @@ func open_voting_screen():
 
 
 @rpc("call_local", "any_peer")
-## Pokazuje, po czym chowa ekran reporta, rozpoczyna głosowanie
+## Pokazuje ekran reporta, po czym go chowa, rozpoczyna głosowanie
 func show_hide_report_screen():
 	var report_screen_instance = report_screen.instantiate()
 	report_screen_instance.is_meeting = is_button

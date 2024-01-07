@@ -18,6 +18,9 @@ var is_in_vent: bool = false
 ## Czy jest w trakcie poruszania się przez venta lub do venta.
 var is_moving_through_vent: bool = false
 
+var is_teleport: bool = false
+var teleport_position = null
+
 ## Referencja do wejścia gracza.
 @onready var input: InputSynchronizer = $Input
 ## Referencja do synchronizatora rollbacku.
@@ -124,6 +127,22 @@ func _rollback_tick(delta, _tick, is_fresh):
 
 				is_moving_through_vent = false
 				can_use_vent = true
+	
+	# Gracz jest przenoszony na miejsce awaryjnego spotkania - nie skończone
+	elif is_teleport && is_fresh:
+		# Wyciąga impostora z venta
+#		if GameManager.get_registered_player_key(name.to_int(), "is_lecturer"):
+#			is_moving_through_vent = false
+#			if can_use_vent:
+#				can_use_vent = false
+		
+		
+		global_position = teleport_position
+		is_teleport = false
+		teleport_position = null
+		
+		print("player teleported")
+
 
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	velocity = input.direction.normalized() * walking_speed
