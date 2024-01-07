@@ -44,5 +44,5 @@ offset_top = -23.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 60
-text = "tekst"
+theme_override_font_sizes/font_size = 70
+text = "tekst tekst tekst tekst"

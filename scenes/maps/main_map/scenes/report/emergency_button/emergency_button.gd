@@ -8,7 +8,7 @@ extends Node2D
 @onready var sprite_2d = $Sprite2D
 
 # Czas oczekiwania od początku rundy na aktywację przycisku
-var wait_time = 20
+var wait_time = GameManager.get_server_settings()["emergency_cooldown"]
 # Określa czy czas oczekiwania się skończył
 var is_wait_time_over: bool = false
 
@@ -51,8 +51,11 @@ func _on_end_emergency_timer_timeout():
 func on_next_round_started():
 	set_process(true)
 	is_wait_time_over = false
+	
 	emergency_timer.start(wait_time)
 	emergency_timer_timeout.emit(false)
+	
+	toggle_button_highlight(false)
 
 
 ## Włącza i wyłącza podświetlenie przycisku awaryjnego

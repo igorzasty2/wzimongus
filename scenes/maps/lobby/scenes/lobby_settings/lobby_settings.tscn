@@ -36,7 +36,7 @@ theme_override_constants/margin_bottom = 60
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 20
+theme_override_constants/separation = 15
 
 [node name="MaxConnectionsContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -151,6 +151,26 @@ popup/item_4/text = "5"
 popup/item_4/id = 5
 popup/item_5/text = "6"
 popup/item_5/id = 6
+
+[node name="EmergencyCooldown" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="EmergencyCooldownLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/EmergencyCooldown"]
+layout_mode = 2
+text = "Czas włączenia przycisku"
+
+[node name="EmergencyCooldownInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/EmergencyCooldown"]
+layout_mode = 2
+item_count = 4
+selected = 1
+popup/item_0/text = "15s"
+popup/item_0/id = 15
+popup/item_1/text = "30s"
+popup/item_1/id = 30
+popup/item_2/text = "45s"
+popup/item_2/id = 45
+popup/item_3/text = "60s"
+popup/item_3/id = 60
 
 [node name="SaveButton" type="Button" parent="SettingsContainer/MarginContainer"]
 custom_minimum_size = Vector2(165, 40)

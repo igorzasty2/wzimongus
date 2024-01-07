@@ -50,10 +50,12 @@ var teleport_position = null
 
 ## Interfejs
 var user_interface
-## Emitowany gdy przycisk oblania powinien być włączony/wyłączony
-signal fail_button_active(button_name:String, is_active:bool)
+## Emitowany gdy przycisk powinien być włączony/wyłączony
+signal button_active(button_name:String, is_active:bool)
 ## Timer z czasem do oblania
 var timer
+## Określa czy gracz może reportować
+var can_report: bool = false
 
 
 ## Zwraca najbliższy vent.
@@ -115,6 +117,7 @@ func _ready():
 		can_kill_cooldown = true
 	
 	GameManager.map_load_finished.connect(_on_map_load_finished)
+	GameManager.next_round_started.connect(_on_next_round_started)
 
 
 func _process(_delta):
@@ -138,7 +141,10 @@ func _rollback_tick(delta, _tick, is_fresh):
 				# Przesuwa gracza do środka venta.
 				global_position = input.destination_position
 				input.direction = Vector2.ZERO
-
+				
+				button_active.emit("ReportButton", !is_in_vent && can_report)
+				button_active.emit("FailButton", false)
+				
 				# Wyłącza widoczność gracza.
 				if multiplayer.is_server():
 					toggle_visibility.rpc(false)
@@ -163,7 +169,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 
 				is_moving_through_vent = false
 				can_use_vent = true
-				
+
 	# Gracz jest przenoszony na miejsce awaryjnego spotkania
 	elif is_teleport && is_fresh:
 		# Wyciąga impostora z venta
@@ -175,8 +181,6 @@ func _rollback_tick(delta, _tick, is_fresh):
 		global_position = teleport_position
 		is_teleport = false
 		teleport_position = null
-		
-		print("player teleported")
 
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	velocity = input.direction.normalized() * walking_speed
@@ -187,9 +191,9 @@ func _rollback_tick(delta, _tick, is_fresh):
 	velocity /= NetworkTime.physics_factor
 	
 	# Podświetla najbliższego gracza jako potencjalną ofiarę do oblania jeśli jestem impostorem,
-	# żyje i cooldown na funcji zabij nie jest aktywny.
+	# żyje i cooldown na funkcji zabij nie jest aktywny.
 	if name.to_int() == GameManager.get_current_player_id():
-		if GameManager.get_current_player_key("is_lecturer"):
+		if GameManager.get_current_player_key("is_lecturer") && !is_in_vent:
 			if !GameManager.get_current_player_key("is_dead"):
 				if can_kill_cooldown:
 					_update_highlight(closest_player(GameManager.get_current_player_id()))
@@ -204,21 +208,14 @@ func _input(event):
 	if event.is_action_pressed("use_vent") && can_use_vent && !GameManager.get_current_game_key("paused"):
 		_use_vent()
 
-	if event.is_action("fail") and event.is_pressed() and not event.is_echo():
+	if event.is_action("fail") and event.is_pressed() and not event.is_echo() and !is_in_vent:
 		if name.to_int() == GameManager.get_current_player_id():
 			if GameManager.get_registered_player_key(name.to_int(),"is_lecturer"):
 				if can_kill_cooldown:
 					var victim = closest_player(GameManager.get_current_player_id())
 					if victim:
-						can_kill_cooldown = false
-						GameManager.kill(victim)
-						timer = Timer.new()
-						timer.timeout.connect(_on_timer_timeout)
-						timer.one_shot = true
-						timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
-						add_child(timer)
-						timer.start()
-						fail_button_active.emit("FailButton", false)
+						_handle_kill_timer()
+						button_active.emit("FailButton", false)
 
 
 ## Aktualizuje parametry animacji postaci.
@@ -242,7 +239,27 @@ func _update_animation_parameters(direction: Vector2) -> void:
 ## W momencie zakończenia wczytywania mapyt przypisuje user_interface i łączy sygnał
 func _on_map_load_finished():
 	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
-	fail_button_active.connect(user_interface.toggle_button_active)
+	button_active.connect(user_interface.toggle_button_active)
+	
+	_on_next_round_started()
+
+
+## W momencie zaczęcia kolejnej rundy restartuje kill cooldown gracza
+func _on_next_round_started():
+	if name.to_int() == GameManager.get_current_player_id() && GameManager.get_registered_player_key(name.to_int(),"is_lecturer"):
+		_handle_kill_timer()
+		button_active.emit("FailButton", false)
+
+
+## Obsługuje timer zabicia
+func _handle_kill_timer():
+	can_kill_cooldown = false
+	timer = Timer.new()
+	timer.timeout.connect(_on_timer_timeout)
+	timer.one_shot = true
+	timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
+	add_child(timer)
+	timer.start()
 
 
 ## Włącza i wyłącza podświetlenie możliwości zabicia gracza
@@ -295,11 +312,11 @@ func closest_player(to_who: int) -> int:
 				curr_closest_dist = temp_dist
 				
 		if curr_closest_dist < (kill_radius**2):
-			fail_button_active.emit("FailButton", true)
+			button_active.emit("FailButton", true)
 			return curr_closest
-		fail_button_active.emit("FailButton", false)
+		button_active.emit("FailButton", false)
 		return 0
-	fail_button_active.emit("FailButton", false)
+	button_active.emit("FailButton", false)
 	return 0
 
 
@@ -344,7 +361,10 @@ func _update_dead_player(victim: int):
 
 ## Używa venta.
 func _use_vent():
+	button_active.emit("ReportButton", !is_in_vent && can_report)
 	if !is_in_vent:
+		button_active.emit("FailButton", false)
+		button_active.emit("InteractButton", false)
 		_request_vent_entering.rpc_id(1)
 	else:
 		_request_vent_exiting.rpc_id(1)

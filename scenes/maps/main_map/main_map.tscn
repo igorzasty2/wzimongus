@@ -1040,36 +1040,37 @@ position = Vector2(2848, -1132)
 [node name="MeetingPositions" type="Node2D" parent="."]
 
 [node name="MeetingPosition1" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1513, 156)
+position = Vector2(1592, 187)
 
 [node name="MeetingPosition2" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1483, 245)
+position = Vector2(1561, 251)
 
 [node name="MeetingPosition3" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1472, 347)
+position = Vector2(1563, 332)
 
 [node name="MeetingPosition4" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1514, 439)
+position = Vector2(1593, 393)
 
 [node name="MeetingPosition5" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1599, 507)
+position = Vector2(1651, 441)
 
 [node name="MeetingPosition6" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1718, 535)
+position = Vector2(1745, 463)
 
 [node name="MeetingPosition7" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1829, 525)
+position = Vector2(1825, 437)
 
 [node name="MeetingPosition8" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1916, 473)
+position = Vector2(1883, 379)
 
 [node name="MeetingPosition9" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1971, 377)
+position = Vector2(1906, 310)
 
 [node name="MeetingPosition10" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1977, 256)
+position = Vector2(1900, 237)
 
 [node name="DeadBodies" type="Node2D" parent="."]
+
 [node name="MapBorder" type="Node2D" parent="."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MapBorder"]

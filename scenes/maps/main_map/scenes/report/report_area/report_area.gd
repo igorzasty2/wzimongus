@@ -18,6 +18,8 @@ var tasks
 var dead_bodies
 ## Tablica z pozycjami do spotkania podczas głosowania
 var meeting_positions
+## System kamer
+var camera_system
 
 ## Określa czy gracz jest w zasięgu
 var is_player_inside:bool = false
@@ -47,9 +49,9 @@ func _ready():
 		emergency_button = get_parent()
 		emergency_button.emergency_timer_timeout.connect(_on_end_emergency_timer_timeout)
 	
-	players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
 	tasks = get_tree().root.get_node("Game/Maps/MainMap/Tasks").get_children()
 	meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
+	camera_system = get_tree().root.get_node("Game/Maps/MainMap/Cameras/CameraSystem")
 	
 	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 	task_list = get_tree().root.get_node("Game/Maps/MainMap/TaskListDisplay")
@@ -78,15 +80,15 @@ func _input(event):
 		user_interface.toggle_visiblity.rpc(false)
 		toggle_task_list_visibility.rpc(false)
 		
-		# Zamyka taski - zrobić jeszcze zamykanie kamer
+		# Zamyka taski i kamery
 		close_tasks.rpc()
+		close_camera_system.rpc()
 		
 		# Instancjonuje ekran głosowania
 		open_voting_screen.rpc()
 		
 		# Pokazuje ekran z ciałem/spotkaniem, po czym rozpoczyna głosowanie
 		show_hide_report_screen.rpc()
-		
 
 
 ## Obsługuje zakończenie emergeny_timer
@@ -97,38 +99,42 @@ func _on_end_emergency_timer_timeout(is_over: bool):
 		toggle_button_highlight.emit(true)
 
 
-## Pokazuje interfejs, usuwa wszystkie ciała - zrobić jak będą ciała
+## Pokazuje interfejs, usuwa wszystkie ciała
 func on_next_round_started():
-	print("next round")
 	GameManager.is_meeting_called = false
 	
-	# Pokazuje przyciski z interfejsu i liste zadań
-	user_interface.toggle_visiblity.rpc(true)
-	toggle_task_list_visibility.rpc(true)
-
 	# Usuwa ciało z mapy
 	if !is_button:
 		get_parent().queue_free()
+		
+	# Pokazuje przyciski z interfejsu i liste zadań
+	user_interface.toggle_visiblity.rpc(true)
+	toggle_task_list_visibility.rpc(true)
+	
+	button_active.emit("ReportButton", false)
+	button_active.emit("InteractButton", false)
 
 
 ## Obsługuje wejście gracza
 func _on_body_entered(body):
 	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(body.name.to_int(), "is_dead") && !body.is_in_vent:
 		is_player_inside = true
-		
+
 		if is_button:
 			if is_wait_time_over:
 				button_active.emit("InteractButton", true)
 				toggle_button_highlight.emit(true)
 		else:
 			button_active.emit("ReportButton", true)
+			body.can_report = true
 
 
 ## Obsługuje wyjście gracza
 func _on_body_exited(body):
 	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(body.name.to_int(), "is_dead") && !body.is_in_vent:
 		is_player_inside = false
-		
+		body.can_report = false
+
 		if is_button:
 			button_active.emit("InteractButton", false)
 			toggle_button_highlight.emit(false)
@@ -175,6 +181,11 @@ func show_hide_report_screen():
 func close_tasks():
 	for task in tasks:
 		task.close_minigame()
+
+@rpc("call_local", "any_peer")
+## Zamyka system kamer
+func close_camera_system():
+	camera_system.close_minigame()
 
 
 @rpc("call_local", "any_peer")
