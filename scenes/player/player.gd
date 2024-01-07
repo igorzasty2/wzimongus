@@ -27,6 +27,11 @@ var dead_username_color = Color.DARK_GOLDENROD
 ## Przechowuje informację o możliwości użycia funkcji zabicia 
 var can_kill_cooldown: bool = false
 
+## Czy jest teleport
+var is_teleport: bool = false
+## Pozycja docelowa teleportacji
+var teleport_position = null
+
 ## Referencja do wejścia gracza.
 @onready var input: InputSynchronizer = $Input
 ## Referencja do synchronizatora rollbacku.
@@ -101,6 +106,8 @@ func _ready():
 	# Jeśli gracz jest impostorem to ustawia początkową możliwość zabicia na true
 	if GameManager.get_current_player_key("is_lecturer"):
 		can_kill_cooldown = true
+	
+	GameManager.next_round_started.connect(on_next_round_started)
 
 
 func _process(_delta):
@@ -145,6 +152,19 @@ func _rollback_tick(delta, _tick, is_fresh):
 
 				is_moving_through_vent = false
 				can_use_vent = true
+				
+	# Gracz jest przenoszony na miejsce awaryjnego spotkania
+	elif is_teleport && is_fresh:
+		# Wyciąga impostora z venta - nie działa
+		if GameManager.get_registered_player_key(name.to_int(), "is_lecturer"):
+			if is_in_vent && can_use_vent:
+				_use_vent()
+		
+		global_position = teleport_position
+		is_teleport = false
+		teleport_position = null
+		
+		print("player teleported")
 
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	velocity = input.direction.normalized() * walking_speed
@@ -274,7 +294,7 @@ func _on_killed_player(victim: int) -> void:
 				get_parent().get_node(str(i)).visible = true
 		
 		var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
-		get_parent().add_child(dead_body)
+		get_tree().root.get_node("Game/Maps/MainMap/DeadBodies").add_child(dead_body)
 		dead_body.set_dead_player(victim)
 		dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
 
@@ -393,3 +413,11 @@ func _toggle_vent_buttons(is_enabled: bool):
 		return
 
 	vent.set_direction_buttons_visibility(is_enabled)
+
+
+## Po rozpoczęciu nowej rundy przenosi gracza nie miejsce spotkania
+func on_next_round_started():
+	var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
+	var idx = randi_range(0, meeting_positions.size()-1)
+	is_teleport = true
+	teleport_position = meeting_positions[idx].global_position

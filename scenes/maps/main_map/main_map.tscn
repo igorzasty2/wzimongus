@@ -44,7 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://lv5k5yskqtbw" path="res://scenes/maps/main_map/assets/objects/kanapa.png" id="35_ryots"]
 [ext_resource type="PackedScene" uid="uid://ct2plxemq2ft5" path="res://scenes/ui/loading_screen/loading_screen.tscn" id="36_4x0df"]
 [ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_1.png" id="36_k0n1h"]
-[ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
+[ext_resource type="PackedScene" uid="uid://dp2sfegsvyvqy" path="res://scenes/maps/main_map/scenes/report/emergency_button/emergency_button.tscn" id="36_xfee5"]
 [ext_resource type="Texture2D" uid="uid://bps64glp2uv7u" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_2.png" id="37_mklhi"]
 [ext_resource type="PackedScene" uid="uid://m6q8rh67ru1c" path="res://scenes/ui/user_interface/user_interface.tscn" id="37_tw5rq"]
 [ext_resource type="PackedScene" uid="uid://blfakmqxo172y" path="res://scenes/ui/task_list_display/task_list_display.tscn" id="38_l1f3e"]
@@ -1028,6 +1028,44 @@ position = Vector2(3036, 352)
 [node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
 position = Vector2(2848, -1132)
 
+[node name="EmergencyButton" parent="." instance=ExtResource("36_xfee5")]
+z_index = 2
+position = Vector2(1731, 287)
+
+[node name="MeetingPositions" type="Node2D" parent="."]
+
+[node name="MeetingPosition1" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1513, 156)
+
+[node name="MeetingPosition2" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1483, 245)
+
+[node name="MeetingPosition3" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1472, 347)
+
+[node name="MeetingPosition4" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1514, 439)
+
+[node name="MeetingPosition5" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1599, 507)
+
+[node name="MeetingPosition6" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1718, 535)
+
+[node name="MeetingPosition7" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1829, 525)
+
+[node name="MeetingPosition8" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1916, 473)
+
+[node name="MeetingPosition9" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1971, 377)
+
+[node name="MeetingPosition10" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1977, 256)
+
+[node name="DeadBodies" type="Node2D" parent="."]
+
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -1048,8 +1086,6 @@ root = NodePath("..")
 properties = Array[String]([":global_position"])
 
 [node name="TaskListDisplay" parent="." instance=ExtResource("38_l1f3e")]
-
-[node name="ReportButton" parent="." instance=ExtResource("36_xfee5")]
 
 [node name="UserInterface" parent="." instance=ExtResource("37_tw5rq")]
 

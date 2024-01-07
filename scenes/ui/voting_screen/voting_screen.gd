@@ -25,7 +25,18 @@ var is_selected = false
 ## Określa czy czat jest otwarty
 var is_chat_open:bool = false
 
+## Zmienna na UserSettingsManager
+var user_sett: UserSettingsManager
+
+## Początkowa skaka siatki z przyciskami
+var initial_grid_container_scale
+
 func _ready():
+	initial_grid_container_scale = $GridContainer.scale
+	user_sett = UserSettingsManager.load_or_create()
+	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
+	on_interface_scale_changed(user_sett.interface_scale)
+	
 	set_process(false)
 
 ## Zaczyna głosowanie
@@ -184,3 +195,16 @@ func _on_chat_button_button_down():
 		chat._open_chat()
 		chat.visible = true
 		is_chat_open = true
+
+
+## Obsługuje naciśnięcie przycisku menu pauzy
+func _on_pause_menu_button_button_down():
+	var event = InputEventAction.new()
+	event.action = "pause_menu"
+	event.pressed = true
+	Input.parse_input_event(event)
+
+
+## Obsługuje zmianę skali nakładki
+func on_interface_scale_changed(value:float):
+	$GridContainer.scale = initial_grid_container_scale * value

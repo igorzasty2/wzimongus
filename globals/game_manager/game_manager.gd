@@ -555,3 +555,4 @@ func _request_kill(victim: int):
 func _kill_server(victim: int):
 	_current_game["registered_players"][victim]["is_dead"] = true
 	player_killed.emit(victim)
+

@@ -5,24 +5,33 @@ extends CanvasLayer
 ## Tesktura znalezionego ciała
 @export var body_texture:Texture
 
-## Tekstura spotkania awaryjnego
-var emergency_meeting_texture = preload("res://scenes/maps/main_map/scenes/report/emergency_button/assets/emergency_meeting.png")
-var body_found_texture = preload("res://scenes/maps/main_map/assets/objects/sala_1_komp.png") # tymczasowo, pozniej usunac
+
+## Odniesienie do Node'a "TextureRect"
+@onready var texture_rect = $TextureRect
+## Odniesienie do Node'a "Label"
+@onready var label = $Label
+## Odniesienie do Node'a "BodySprite"
+@onready var body_sprite = $BodySprite
 
 ## Teskst dla spotkania awaryjnego
 var emergency_meeting_text = "Spotkanie awaryjne"
 ## Tekst dla reporta ciała
 var body_found_text = "Znaleziono oblanego studenta"
 
-## Odniesienie do Node'a "TextureRect"
-@onready var texture_rect = $TextureRect
-## Odniesienie do Node'a "Label"
-@onready var label = $Label
 
 func _ready():
 	if is_meeting:
 		label.text = emergency_meeting_text
-		texture_rect.texture = emergency_meeting_texture
+		body_sprite.visible = false
 	else:
 		label.text = body_found_text
-		texture_rect.texture = body_found_texture # zamienic na body_texture
+		texture_rect.visible = false
+
+		body_sprite.texture = body_texture
+		body_sprite.hframes = 5
+		body_sprite.vframes = 2
+		body_sprite.frame = 0
+
+		body_sprite.modulate = Color(0, 0.275, 1)
+		body_sprite.rotation = PI/2 - PI/12
+		body_sprite.scale *= 0.7

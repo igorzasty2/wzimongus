@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfdk7562ehhtp"]
+[gd_scene load_steps=5 format=3 uid="uid://dfdk7562ehhtp"]
 
 [ext_resource type="Script" path="res://scenes/ui/voting_screen/voting_screen.gd" id="1_kta77"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_u4dx5"]
 [ext_resource type="Texture2D" uid="uid://x3hb3b3rrfa1" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/_czat.png" id="3_3moby"]
+[ext_resource type="Texture2D" uid="uid://c3krnig4q8qwh" path="res://scenes/ui/user_interface/assets/__nowy_setting_v1.png" id="4_k0mfc"]
 
 [node name="VotingScreen" type="Control"]
 layout_mode = 3
@@ -154,11 +155,12 @@ columns = 2
 layout_mode = 2
 texture_normal = ExtResource("3_3moby")
 
-[node name="Filler" type="Control" parent="GridContainer"]
-custom_minimum_size = Vector2(360, 360)
+[node name="PauseMenuButton" type="TextureButton" parent="GridContainer"]
 layout_mode = 2
+texture_normal = ExtResource("4_k0mfc")
 
 [connection signal="pressed" from="Background/SkipDecision/SkipButton" to="." method="_on_skip_button_pressed"]
 [connection signal="pressed" from="Background/SkipDecision/Decision/DecisionYes" to="." method="_on_decision_yes_pressed"]
 [connection signal="pressed" from="Background/SkipDecision/Decision/DecisionNo" to="." method="_on_decision_no_pressed"]
 [connection signal="button_down" from="GridContainer/ChatButton" to="." method="_on_chat_button_button_down"]
+[connection signal="button_down" from="GridContainer/PauseMenuButton" to="." method="_on_pause_menu_button_button_down"]

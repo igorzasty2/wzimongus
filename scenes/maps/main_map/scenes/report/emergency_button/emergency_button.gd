@@ -7,23 +7,23 @@ extends Node2D
 ## Tekstura przycisku
 @onready var sprite_2d = $Sprite2D
 
-# Czas oczekiwania
-var wait_time = 15
+# Czas oczekiwania od początku rundy na aktywację przycisku
+var wait_time = 20
 # Określa czy czas oczekiwania się skończył
 var is_wait_time_over: bool = false
-
 
 ## Kolor podświetlenia przycisku w zasięgu
 var in_range_color = [255, 255, 255, 255]
 ## Kolor podświetlenia przycisku poza zasięgiem
 var out_of_range_color = [0, 0, 0, 0]
 
+## Sygnał informujący o zakończeniu czasu oczekiwania
 signal emergency_timer_timeout(is_over:bool)
-
 
 func _ready():
 	GameManager.next_round_started.connect(on_next_round_started)
-	
+	$ReportArea.toggle_button_highlight.connect(toggle_button_highlight)
+
 	toggle_button_highlight(false)
 	
 	add_child(emergency_timer)
@@ -47,7 +47,7 @@ func _on_end_emergency_timer_timeout():
 	emergency_timer_timeout.emit(true)
 
 
-## Chowa wszystkie ciała na mapie, pokazuje interfejs, usuwa wszystkie ciała - zrobić jak będą ciała
+## Na początku rundy restartuje timer z czasem oczekiwania na aktywację przycisku
 func on_next_round_started():
 	set_process(true)
 	is_wait_time_over = false
@@ -61,15 +61,3 @@ func toggle_button_highlight(is_on: bool):
 		sprite_2d.material.set_shader_parameter('color', in_range_color)
 	else:
 		sprite_2d.material.set_shader_parameter('color', out_of_range_color)
-
-
-## Obsługuje wejście gracza
-func _on_report_area_body_entered(body):
-	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(name.to_int(), "is_dead"):
-		toggle_button_highlight(true)
-
-
-## Obsługuje wyjście gracza
-func _on_report_area_body_exited(body):
-	if body.name.to_int() == multiplayer.get_unique_id() && !GameManager.get_registered_player_key(name.to_int(), "is_dead"):
-		toggle_button_highlight(false)
