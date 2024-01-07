@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
 [ext_resource type="Texture2D" uid="uid://dtls6wyj0nyjq" path="res://scenes/player/assets/skins/alt_spritesheet.png" id="3_obr1o"]
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
-[ext_resource type="Texture2D" uid="uid://p2dwhg2urcog" path="res://scenes/player/assets/light.png" id="7_o01wc"]
+[ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://scenes/player/assets/light_circle.png" id="7_188be"]
 
 [sub_resource type="Animation" id="Animation_fqt5r"]
 length = 0.001
@@ -245,8 +245,8 @@ visible = false
 material = SubResource("CanvasItemMaterial_pafr0")
 position = Vector2(0, -68)
 scale = Vector2(0.96875, 0.96875)
-energy = 0.2
+energy = 0.3
 shadow_enabled = true
 shadow_color = Color(0, 0, 0, 1)
-texture = ExtResource("7_o01wc")
+texture = ExtResource("7_188be")
 texture_scale = 6.98

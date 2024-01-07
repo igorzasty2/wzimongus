@@ -71,7 +71,7 @@ func _spawn_player(id: int):
 	
 		# Włącza światło
 		player.activate_lights()
-		player.deactivate_player_shaders()
+#		player.deactivate_player_shaders()
 
 
 ## Usuwa gracza z mapy.
