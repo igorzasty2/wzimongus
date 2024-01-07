@@ -184,6 +184,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 		teleport_position = null
 		print("teleported")
 
+
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	velocity = input.direction.normalized() * walking_speed
 
@@ -197,7 +198,8 @@ func _rollback_tick(delta, _tick, is_fresh):
 	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer") && !is_in_vent:
 			if !GameManager.get_current_player_key("is_dead"):
-				if can_kill_cooldown:
+				print(can_kill_cooldown)
+				if can_kill_cooldown && !GameManager.is_meeting_called:
 					_update_highlight(closest_player(GameManager.get_current_player_id()))
 				else:
 					_update_highlight(0)

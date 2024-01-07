@@ -94,7 +94,7 @@ func _input(event):
 ## Obsługuje zakończenie emergeny_timer
 func _on_end_emergency_timer_timeout(is_over: bool):
 	is_wait_time_over = is_over
-	if is_player_inside && !GameManager.get_registered_player_key(multiplayer.get_unique_id(), "is_dead"):
+	if is_player_inside && !GameManager.get_registered_player_key(multiplayer.get_unique_id(), "is_dead") && !GameManager.is_meeting_called && is_wait_time_over:
 		button_active.emit("InteractButton", true)
 		toggle_button_highlight.emit(true)
 
@@ -103,16 +103,17 @@ func _on_end_emergency_timer_timeout(is_over: bool):
 func on_next_round_started():
 	GameManager.is_meeting_called = false
 	
-	# Usuwa ciało z mapy
-	if !is_button:
-		get_parent().queue_free()
-		
+	button_active.emit("ReportButton", false)
+	button_active.emit("InteractButton", false)
+	
 	# Pokazuje przyciski z interfejsu i liste zadań
 	user_interface.toggle_visiblity.rpc(true)
 	toggle_task_list_visibility.rpc(true)
-	print("buttons changed")
-	button_active.emit("ReportButton", false)
-	button_active.emit("InteractButton", false)
+	
+	# Usuwa ciało z mapy
+	if !is_button:
+		get_parent().queue_free()
+
 
 
 ## Obsługuje wejście gracza
@@ -121,13 +122,12 @@ func _on_body_entered(body):
 		is_player_inside = true
 
 		if is_button:
-			if is_wait_time_over:
+			if is_wait_time_over && !GameManager.is_meeting_called:
 				button_active.emit("InteractButton", true)
 				toggle_button_highlight.emit(true)
 		else:
 			button_active.emit("ReportButton", true)
 			body.can_report = true
-		print("body entered")
 
 
 ## Obsługuje wyjście gracza
@@ -141,7 +141,6 @@ func _on_body_exited(body):
 			toggle_button_highlight.emit(false)
 		else:
 			button_active.emit("ReportButton", false)
-		print("body exited")
 
 
 func on_player_killed(player_id:int):
@@ -158,8 +157,14 @@ func open_voting_screen():
 	var voting_screen_instance = voting_screen.instantiate()
 	get_node("CanvasLayer").add_child(voting_screen_instance)
 	
-	# Wyłącza ruch gracza - później włącza się przez voting_screen w game_manager
+	# Wyłącza ruch gracza - później włącza się w game_manager
 	GameManager.set_input_status(false)
+	
+	GameManager.is_meeting_called = true
+	is_wait_time_over = false
+	
+	button_active.emit("ReportButton", false)
+	button_active.emit("InteractButton", false)
 
 
 @rpc("call_local", "any_peer")
