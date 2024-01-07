@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0l33b6wgauil"]
+
+[ext_resource type="Script" path="res://scenes/minigames/copying-files/minigame_copying_files_end.gd" id="1_dlwm2"]
+[ext_resource type="Texture2D" uid="uid://ch2les17dltt6" path="res://scenes/minigames/copying-files/assets/kopiowanieZAKONCZONE.png" id="2_7hyuw"]
+
+[node name="minigame-copying-files-end" type="Node2D"]
+script = ExtResource("1_dlwm2")
+
+[node name="KopiowanieZakonczone" type="Sprite2D" parent="."]
+position = Vector2(556, 310)
+texture = ExtResource("2_7hyuw")
+
+[node name="end_button" type="Button" parent="KopiowanieZakonczone"]
+offset_left = -65.0
+offset_top = 78.0
+offset_right = 53.0
+offset_bottom = 124.0
+text = "ZAKOŃCZ"
+
+[node name="ProgressBar" type="ProgressBar" parent="KopiowanieZakonczone"]
+offset_left = -155.0
+offset_top = 1.0
+offset_right = 145.0
+offset_bottom = 50.0
+
+[connection signal="button_down" from="KopiowanieZakonczone/end_button" to="." method="_on_end_button_down"]
