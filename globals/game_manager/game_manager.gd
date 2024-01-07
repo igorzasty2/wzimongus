@@ -26,7 +26,7 @@ signal game_ended()
 signal error_occured(message: String)
 
 ## Emitowany po zabiciu gracza.
-signal player_killed(id: int)
+signal player_killed(player_id: int, is_victim: bool)
 
 # Przechowuje informacje o aktualnym stanie gry.
 ## Emitowany po zmianie ustawień serwera.
@@ -559,31 +559,47 @@ func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
 	return OK
 
 
-## Zabija ofiarę
-func kill(victim: int):
-	_request_kill.rpc_id(1, victim)
+## Zabija ofiarę.
+func kill_victim(victim_id: int):
+	_request_victim_kill.rpc_id(1, victim_id)
 
 
 @rpc("any_peer", "call_local", "reliable")
-## Przyjmuje prośbę o zabicie gracza.
-func _request_kill(victim: int):
+## Przyjmuje prośbę o zabicie ofiary.
+func _request_victim_kill(victim_id: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-		
+
 	# Jeśli gra się nie rozpoczęła, nie można zabić gracza.
 	if !get_current_game_key("is_started"):
-		return ERR_UNAVAILABLE		
-		
+		return ERR_UNAVAILABLE
+
 	var me = multiplayer.get_remote_sender_id()
-	if get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(me)).closest_player(me) == victim:
-		_kill_server.rpc(victim)
+
+	# Jeśli gracz nie jest wykładowcą, nie może zabić.
+	if !get_registered_player_key(me, "is_lecturer"):
+		return ERR_UNAUTHORIZED
+
+	# Jeśli gracz nie jest w zasięgu, nie może zabić.
+	if get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(me)).closest_player(me) != victim_id:
+		return ERR_UNAUTHORIZED
+
+	_send_player_kill.rpc(victim_id, true)
+
+
+## Zabija gracza.
+func kill_player(player_id: int):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+
+	_send_player_kill.rpc(player_id, false)
 
 
 @rpc("call_local", "reliable")
-## Zabija gracza i rozsyła tą informację do wszystkich.
-func _kill_server(victim: int):
-	_current_game["registered_players"][victim]["is_dead"] = true
-	player_killed.emit(victim)
+## Wysyła informacje o zabiciu gracza.
+func _send_player_kill(player_id: int, is_victim: bool = true):
+	_current_game["registered_players"][player_id]["is_dead"] = true
+	player_killed.emit(player_id, is_victim)
 
 
 ## Sprawdza kto wygrał w tym momencie i kończy grę na korzyść wykładowcom lub crewmatom, jeżeli nikt, to nic nie robi.

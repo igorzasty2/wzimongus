@@ -10,7 +10,7 @@ extends Control
 
 
 func _ready():
-	if  most_voted_player == null:
+	if most_voted_player == null:
 		ejection_message.text = "[center]Nikt nie został wyrzucony.[/center]"
 	elif most_voted_player["is_lecturer"]:
 		ejection_message.text = "[center]" + most_voted_player['username'] + " został wyrzucony.[/center]"

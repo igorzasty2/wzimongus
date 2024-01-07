@@ -172,20 +172,22 @@ func _input(event):
 	if event.is_action_pressed("use_vent") && can_use_vent && !GameManager.get_current_game_key("paused"):
 		_use_vent()
 
+	# Obsługuje zabijanie graczy.
 	if event.is_action("fail") and event.is_pressed() and not event.is_echo():
-		if name.to_int() == GameManager.get_current_player_id():
-			if GameManager.get_registered_player_key(name.to_int(),"is_lecturer"):
-				if can_kill_cooldown:
-					var victim = closest_player(GameManager.get_current_player_id())
-					if victim:
-						can_kill_cooldown = false
-						GameManager.kill(victim)
-						var timer = Timer.new()
-						timer.timeout.connect(_on_timer_timeout)
-						timer.one_shot = true
-						timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
-						add_child(timer)
-						timer.start()
+		if name.to_int() == GameManager.get_current_player_id() && GameManager.get_registered_player_key(name.to_int(), "is_lecturer"):
+			if can_kill_cooldown:
+				var victim = closest_player(GameManager.get_current_player_id())
+				if victim:
+					can_kill_cooldown = false
+
+					GameManager.kill_victim(victim)
+
+					var timer = Timer.new()
+					timer.timeout.connect(_on_timer_timeout)
+					timer.one_shot = true
+					timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
+					add_child(timer)
+					timer.start()
 
 
 ## Aktualizuje parametry animacji postaci.
@@ -222,61 +224,63 @@ func _update_highlight(player: int) -> void:
 			_toggle_highlight(i, i == player)
 
 
-## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje
+## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje.
 func closest_player(to_who: int) -> int:
-	## Tablica graczy do przeszukiwania najbliższego gracza
+	# Tablica graczy do przeszukiwania najbliższego gracza.
 	var players: Array = GameManager.get_registered_players().keys()
 	players.erase(to_who)
-	
+
 	for i in players:
-		if GameManager.get_registered_player_key(i,"is_lecturer") or GameManager.get_registered_player_key(i,"is_dead"):
+		if GameManager.get_registered_player_key(i, "is_lecturer") or GameManager.get_registered_player_key(i, "is_dead"):
 			players.erase(i)
-	
+
 	if players.size() > 0:
-		## Pobiera promień zabicia z serwera
+		# Pobiera promień zabicia z serwera.
 		var kill_radius = GameManager.get_server_settings()["kill_radius"]
-		
-		## Przechowuje wektor pozycji gracza, względem którego szukamy najbliższego gracza
-		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(to_who)).global_position
-		
-		## Przechowuje node najbliższego gracza
+
+		# Przechowuje wektor pozycji gracza, względem którego szukamy najbliższego gracza.
+		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(to_who)).global_position
+
+		# Przechowuje node najbliższego gracza.
 		var curr_closest = null
-		
-		## Przechowuje odległość najbliższego gracza od pozycji 'my_position'
+
+		# Przechowuje odległość najbliższego gracza od pozycji 'my_position'.
 		var curr_closest_dist = kill_radius**2 + 1
-		
+
 		for i in range(players.size()):
-			## Pozycja gracza tymczasowego
-			var temp_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(players[i])).global_position
-			## Dystans gracza tymczasowego od pozycji 'my_position'
+			# Pozycja gracza tymczasowego
+			var temp_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(players[i])).global_position
+			# Dystans gracza tymczasowego od pozycji 'my_position'.
 			var temp_dist = my_position.distance_squared_to(temp_position)
-			
-			if(temp_dist < curr_closest_dist):
+
+			if (temp_dist < curr_closest_dist):
 				curr_closest = players[i]
 				curr_closest_dist = temp_dist
-				
+
 		if curr_closest_dist < (kill_radius**2):
 			return curr_closest
 		return 0
 	return 0
 
 
-func _on_killed_player(victim: int) -> void:
-	if name.to_int() == victim:
-		if GameManager.get_registered_player_key(victim,"is_dead"):
-			_update_dead_player(victim)
-			
-			if GameManager.get_current_player_id() != victim:
-				get_parent().get_node(str(victim)).visible = false
-		
+func _on_killed_player(player_id: int, is_victim: bool) -> void:
+	if name.to_int() == player_id:
+		_update_dead_player(player_id)
+
+		# Wyłącza widoczność gracza.
+		if GameManager.get_current_player_id() != player_id:
+			get_parent().get_node(str(player_id)).visible = false
+
+		# Włącza widoczność wszystkich martwych graczy u marwtch graczy.
 		if GameManager.get_current_player_key("is_dead"):
 			for i in GameManager.get_registered_players().keys():
 				get_parent().get_node(str(i)).visible = true
-		
-		var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
-		get_parent().add_child(dead_body)
-		dead_body.set_dead_player(victim)
-		dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
+
+		if is_victim:
+			var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
+			get_parent().add_child(dead_body)
+			dead_body.set_dead_player(player_id)
+			dead_body.get_node("DeadBodyLabel").text = "Oblany student (" + GameManager.get_registered_player_key(player_id, "username") + ")"
 
 
 func _on_timer_timeout() -> void:
@@ -290,8 +294,8 @@ func _on_timer_timeout() -> void:
 					return
 
 
-func _update_dead_player(victim: int):
-	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))
+func _update_dead_player(player_id: int):
+	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
 	victim_node.get_node("Skins/PlayerSprite").use_parent_material = true
 	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
