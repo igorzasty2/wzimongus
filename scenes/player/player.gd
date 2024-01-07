@@ -159,12 +159,13 @@ func _rollback_tick(delta, _tick, is_fresh):
 	
 	# Podświetla najbliższego gracza jako potencjalną ofiarę do oblania jeśli jestem impostorem,
 	# żyje i cooldown na funcji zabij nie jest aktywny.
-	if GameManager.get_current_player_key("is_lecturer"):
-		if !GameManager.get_current_player_key("is_dead"):
-			if can_kill_cooldown:
-				_update_highlight(closest_player(GameManager.get_current_player_id()))
-			else:
-				_update_highlight(0)
+	if name.to_int() == GameManager.get_current_player_id():
+		if GameManager.get_current_player_key("is_lecturer"):
+			if !GameManager.get_current_player_key("is_dead"):
+				if can_kill_cooldown:
+					_update_highlight(closest_player(GameManager.get_current_player_id()))
+				else:
+					_update_highlight(0)
 
 
 ## Sprawdza, czy nie naciśnięto fail button. Jeśli tak to sprawdza, czy jesteśmy lecturerem
@@ -211,6 +212,7 @@ func _update_animation_parameters(direction: Vector2) -> void:
 ## Włącza i wyłącza podświetlenie możliwości zabicia gracza
 func _toggle_highlight(player: int, is_on: bool) -> void:
 	var player_material = get_parent().get_node(str(player) + "/Skins/PlayerSprite").material
+
 	if player_material:
 		if is_on:
 			player_material.set_shader_parameter('color', in_range_color)
@@ -224,9 +226,9 @@ func _update_highlight(player: int) -> void:
 		
 		for i in all_players:
 			if player != null and i == player:
-				_toggle_highlight(i,true)
+				_toggle_highlight(i, true)
 			else:
-				_toggle_highlight(i,false)
+				_toggle_highlight(i, false)
 
 
 ## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje
@@ -269,20 +271,21 @@ func closest_player(to_who: int) -> int:
 
 
 func _on_killed_player(victim: int) -> void:
-	if GameManager.get_registered_player_key(victim,"is_dead"):
-		_update_dead_player(victim)
+	if name.to_int() == victim:
+		if GameManager.get_registered_player_key(victim,"is_dead"):
+			_update_dead_player(victim)
+			
+			if GameManager.get_current_player_id() != victim:
+				get_parent().get_node(str(victim)).visible = false
 		
-		if GameManager.get_current_player_id() != victim:
-			get_parent().get_node(str(victim)).visible = false
-	
-	if GameManager.get_current_player_key("is_dead"):
-		for i in GameManager.get_registered_players().keys():
-			get_parent().get_node(str(i)).visible = true
-	
-	var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
-	get_parent().add_child(dead_body)
-	dead_body.set_dead_player(victim)
-	dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
+		if GameManager.get_current_player_key("is_dead"):
+			for i in GameManager.get_registered_players().keys():
+				get_parent().get_node(str(i)).visible = true
+		
+		var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
+		get_parent().add_child(dead_body)
+		dead_body.set_dead_player(victim)
+		dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
 
 
 func _on_timer_timeout() -> void:
@@ -299,7 +302,7 @@ func _on_timer_timeout() -> void:
 func _update_dead_player(victim: int):
 	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
-	victim_node.get_node("Skins/PlayerSprite").material = null
+	victim_node.get_node("Skins/PlayerSprite").use_parent_material = true
 	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
 	victim_node.collision_mask = 0
 
