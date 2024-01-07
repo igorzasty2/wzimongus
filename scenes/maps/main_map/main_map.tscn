@@ -1000,12 +1000,12 @@ position = Vector2(4372, -1366)
 vent_target_list = [NodePath("../Vent1")]
 allow_student_venting = true
 
-[node name="TaskButton" parent="." instance=ExtResource("3_e0rk4")]
+[node name="Cameras" type="Node2D" parent="."]
+
+[node name="CameraSystem" parent="Cameras" instance=ExtResource("3_e0rk4")]
 position = Vector2(4016, -1329)
 is_minigame = false
 minigame_scene = ExtResource("89_58eb3")
-
-[node name="Cameras" type="Node2D" parent="."]
 
 [node name="Camera" parent="Cameras" instance=ExtResource("81_mexjh")]
 position = Vector2(-2602, -277)
@@ -1051,3 +1051,5 @@ properties = Array[String]([":global_position"])
 script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
+
+[connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]

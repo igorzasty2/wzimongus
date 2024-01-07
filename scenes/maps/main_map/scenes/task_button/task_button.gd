@@ -30,7 +30,6 @@ var _is_player_inside : bool = false
 func _ready():
 	sprite_node.texture = sprite
 	sprite_node.scale = Vector2(scale_factor, scale_factor)
-	sprite_node.material = sprite_node.material.duplicate()
 	
 	if not disabled:
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
@@ -38,7 +37,6 @@ func _ready():
 		
 	if !is_minigame:
 		disabled = false
-		minigame_menu = get_parent().get_node("MinigameMenu")
 
 
 func _on_body_entered(body):
