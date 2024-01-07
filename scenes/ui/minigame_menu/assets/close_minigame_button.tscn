@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2dcvq5rrj3f2"]
+
+[ext_resource type="Texture2D" uid="uid://y0sk7am2xf1o" path="res://scenes/maps/lobby/scenes/close/close_button/assets/nowy_exit_button.png" id="1_k858d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pym8n"]
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.203922, 0.203922, 0.203922, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+
+[node name="CloseMinigameButton" type="TextureButton"]
+anchors_preset = -1
+anchor_right = 0.28
+anchor_bottom = 0.506
+offset_right = -0.399994
+offset_bottom = -0.320038
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_k858d")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 6.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_pym8n")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 79.0
+offset_right = 364.0
+offset_bottom = 113.0
+rotation = 0.785398
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 298.0
+offset_top = 104.0
+offset_right = 563.0
+offset_bottom = 138.0
+rotation = 2.35619
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
