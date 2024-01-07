@@ -62,7 +62,7 @@ func _spawn_player(id: int):
 	
 	players.add_child(player)
 	
-	player.activate_hide_players_in_shadows()
+	player.activate_player_shaders()
 
 	if GameManager.get_current_player_id() == id:
 		# Ustawia kamerę.
@@ -71,7 +71,7 @@ func _spawn_player(id: int):
 	
 		# Włącza światło
 		player.activate_lights()
-		player.deactivate_hide_players_in_shadows()
+		player.deactivate_player_shaders()
 
 
 ## Usuwa gracza z mapy.

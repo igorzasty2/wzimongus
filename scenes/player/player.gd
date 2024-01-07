@@ -406,10 +406,15 @@ func deactivate_lights():
 	lights_container.hide()
 
 
-func activate_hide_players_in_shadows():
-	$Skins.get_parent().material = load("res://scenes/player/assets/light_only_canvas_material.tres")
+func activate_player_shaders():
+	# Domyślnie shadery są wyłaczone w menu bo jeżeli włączyć ich to nie będzie widać graczowi
+	var shader_material = ShaderMaterial.new()
+	shader_material.shader = load("res://shaders/player_outline.gdshader")
+	
+	player_sprite.material = shader_material
+	username_label.material = load("res://scenes/player/assets/light_only_canvas_material.tres")
 	
 	
-func deactivate_hide_players_in_shadows():
-	$Skins.get_parent().material = null
-	
+func deactivate_player_shaders():
+	player_sprite.material = null
+	username_label.material = null
