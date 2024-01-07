@@ -14,6 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_obpcf")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
 offset_left = -272.0
 offset_top = -176.0
 offset_right = 285.0
@@ -21,12 +22,14 @@ offset_bottom = 188.0
 color = Color(0.247059, 0.282353, 0.8, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
 offset_left = -267.0
 offset_top = -133.0
 offset_right = 281.0
 offset_bottom = 184.0
 
 [node name="WindowTitleLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = -263.0
 offset_top = -172.0
 offset_right = 261.0
@@ -35,6 +38,7 @@ theme_override_font_sizes/normal_font_size = 27
 text = "C:/sala_komputerowa/stanowsko4/desktop"
 
 [node name="PromptLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = -200.0
 offset_top = -104.0
 offset_right = 210.0
@@ -45,6 +49,7 @@ text = "Czy na pewno chcesz skopiować plik \"egzamin_rozwiazanie.cs\"?"
 
 [node name="SuccessMessageLabel" type="RichTextLabel" parent="."]
 visible = false
+layout_mode = 0
 offset_left = -208.0
 offset_top = -104.0
 offset_right = 230.0
@@ -54,6 +59,7 @@ theme_override_font_sizes/normal_font_size = 29
 text = "Kopiowanie zakończone pomyślnie"
 
 [node name="Confirm" type="Button" parent="."]
+layout_mode = 0
 offset_left = -62.0
 offset_top = 84.0
 offset_right = 73.0
@@ -63,6 +69,7 @@ text = "SKOPIUJ"
 [node name="ProgressBar" type="ProgressBar" parent="."]
 visible = false
 modulate = Color(0, 1, 0, 1)
+layout_mode = 0
 offset_left = -144.0
 offset_top = 24.0
 offset_right = 156.0
@@ -71,6 +78,7 @@ show_percentage = false
 
 [node name="EndButton" type="Button" parent="."]
 visible = false
+layout_mode = 0
 offset_left = -56.0
 offset_top = 99.0
 offset_right = 62.0
