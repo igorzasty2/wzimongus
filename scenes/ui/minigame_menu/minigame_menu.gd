@@ -23,6 +23,7 @@ func show_use_button(minigame):
 	_minigame = minigame
 	emit_signal("use_button_active", "InteractButton", true)
 	use_button_disabled = false
+	print("showed")
 
 
 func hide_use_button():
@@ -57,6 +58,9 @@ func _input(event):
 	
 	if GameManager.get_current_game_key("is_paused"):
 		return
+	
+	if GameManager.get_current_game_key("is_input_disabled"):
+		return
 
 	summon_window()
 
@@ -72,6 +76,7 @@ func summon_window():
 
 	GameManager.set_input_status(false)
 	_minigame_instance.minigame_end.connect(end_minigame)
+	print("summoned")
 
 
 func end_minigame():

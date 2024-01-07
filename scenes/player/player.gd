@@ -56,7 +56,8 @@ signal button_active(button_name:String, is_active:bool)
 var timer
 ## Określa czy gracz może reportować
 var can_report: bool = false
-
+## System kamer
+var camera_system
 
 ## Zwraca najbliższy vent.
 func get_nearest_vent() -> Vent:
@@ -141,10 +142,10 @@ func _rollback_tick(delta, _tick, is_fresh):
 				# Przesuwa gracza do środka venta.
 				global_position = input.destination_position
 				input.direction = Vector2.ZERO
-				
+
 				button_active.emit("ReportButton", !is_in_vent && can_report)
 				button_active.emit("FailButton", false)
-				
+
 				# Wyłącza widoczność gracza.
 				if multiplayer.is_server():
 					toggle_visibility.rpc(false)
@@ -181,6 +182,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 		global_position = teleport_position
 		is_teleport = false
 		teleport_position = null
+		print("teleported")
 
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
 	velocity = input.direction.normalized() * walking_speed
@@ -214,6 +216,7 @@ func _input(event):
 				if can_kill_cooldown:
 					var victim = closest_player(GameManager.get_current_player_id())
 					if victim:
+						GameManager.kill(victim)
 						_handle_kill_timer()
 						button_active.emit("FailButton", false)
 
@@ -241,6 +244,7 @@ func _on_map_load_finished():
 	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 	button_active.connect(user_interface.toggle_button_active)
 	
+	camera_system = get_tree().root.get_node("Game/Maps/MainMap/Cameras/CameraSystem")
 	_on_next_round_started()
 
 
@@ -362,9 +366,15 @@ func _update_dead_player(victim: int):
 ## Używa venta.
 func _use_vent():
 	button_active.emit("ReportButton", !is_in_vent && can_report)
+	
 	if !is_in_vent:
+		# Wyrzuca gracza z kamer gdy gracz jest w obrębie kamer i ventuje
+		if camera_system.is_player_inside():
+			camera_system.trigger_body_exited(self)
+
 		button_active.emit("FailButton", false)
 		button_active.emit("InteractButton", false)
+
 		_request_vent_entering.rpc_id(1)
 	else:
 		_request_vent_exiting.rpc_id(1)

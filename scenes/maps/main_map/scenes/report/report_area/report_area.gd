@@ -37,7 +37,7 @@ var task_list
 ## Przechowuje grafikę ciała
 var dead_body_sprite
 
-## Sygnał aktywujący przyciski w interfejsie
+## Sygnał aktywujący/deaktywujący przyciski w interfejsie
 signal button_active(button_name:String, is_active:bool)
 ## Sygnał przełączający podświetlenie przycisku awaryjnego
 signal toggle_button_highlight(is_active:bool)
@@ -110,7 +110,7 @@ func on_next_round_started():
 	# Pokazuje przyciski z interfejsu i liste zadań
 	user_interface.toggle_visiblity.rpc(true)
 	toggle_task_list_visibility.rpc(true)
-	
+	print("buttons changed")
 	button_active.emit("ReportButton", false)
 	button_active.emit("InteractButton", false)
 
@@ -127,6 +127,7 @@ func _on_body_entered(body):
 		else:
 			button_active.emit("ReportButton", true)
 			body.can_report = true
+		print("body entered")
 
 
 ## Obsługuje wyjście gracza
@@ -140,6 +141,7 @@ func _on_body_exited(body):
 			toggle_button_highlight.emit(false)
 		else:
 			button_active.emit("ReportButton", false)
+		print("body exited")
 
 
 func on_player_killed(player_id:int):

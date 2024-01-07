@@ -32,8 +32,6 @@ func _ready():
 		toggle_button_active("VentButton", false)
 		toggle_button_active("FailButton", false)
 		toggle_button_active("SabotageButton", false)
-		toggle_button_active("ReportButton", false)
-		toggle_button_active("InteractButton", false)
 		
 		update_time_left("")
 	# Gracz jest crewmatem
@@ -43,8 +41,8 @@ func _ready():
 		remove_button("SabotageButton")
 		fill_grid(3)
 		
-		toggle_button_active("ReportButton", false)
-		toggle_button_active("InteractButton", false)
+	toggle_button_active("ReportButton", false)
+	toggle_button_active("InteractButton", false)
 
 
 # Wykonuje podaną akcję

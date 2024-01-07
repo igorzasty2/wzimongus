@@ -70,3 +70,13 @@ func disable_task():
 ## Zamyka taska, potrzebne do reportowania
 func close_minigame():
 	minigame_menu.close_minigame()
+
+
+## Wywołuje funkcję _on_body_exited
+func trigger_body_exited(body:CharacterBody2D):
+	_on_body_exited(body)
+
+
+## Sprawdza czy gracz jest w środku
+func is_player_inside():
+	return _is_player_inside

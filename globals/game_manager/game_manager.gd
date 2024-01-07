@@ -537,6 +537,7 @@ func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
 			return ERR_TIMEOUT
 	return OK
 
+
 ## Zabija ofiarę
 func kill(victim: int):
 	_request_kill.rpc_id(1, victim)
