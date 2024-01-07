@@ -746,6 +746,9 @@ metadata/_edit_group_ = true
 [node name="Sprite" type="Sprite2D" parent="Objects/SamorzadStol"]
 texture = ExtResource("60_kfep4")
 
+[node name="EmergencyButton" parent="Objects/SamorzadStol" instance=ExtResource("36_xfee5")]
+position = Vector2(0, -11)
+
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadStol"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SamorzadStol/CollisionBox"]
@@ -1027,10 +1030,6 @@ position = Vector2(3036, 352)
 
 [node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
 position = Vector2(2848, -1132)
-
-[node name="EmergencyButton" parent="." instance=ExtResource("36_xfee5")]
-z_index = 2
-position = Vector2(1731, 287)
 
 [node name="MeetingPositions" type="Node2D" parent="."]
 
