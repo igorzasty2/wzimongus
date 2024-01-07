@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmqr4jq3iw4q2"]
+
+[ext_resource type="Script" path="res://scenes/player/assets/dead_body.gd" id="1_p1ew1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tgfrb"]
+radius = 600.0
+
+[node name="DeadBody" type="Node2D"]
+script = ExtResource("1_p1ew1")
+
+[node name="DeadBodyLabel" type="Label" parent="."]
+z_index = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -34.0
+offset_right = 120.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 40
+
+[node name="DeadBodySprite" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(0.275, 0.275)
+
+[node name="ReportRadius" type="Area2D" parent="."]
+collision_layer = 9
+collision_mask = 2
+
+[node name="ReportRadiusShape" type="CollisionShape2D" parent="ReportRadius"]
+shape = SubResource("CircleShape2D_tgfrb")

@@ -57,20 +57,12 @@ const skins = {
 
 
 func _ready():
-	hide()
-
 	_update_skin_texture_rect(GameManager.get_current_player_key("skin"))
 	_populate_skins()
 
 	GameManager.player_registered.connect(_populate_skins)
 	GameManager.player_deregistered.connect(_populate_skins)
 	GameManager.skin_changed.connect(_on_skin_changed)
-
-
-func _exit_tree():
-	GameManager.player_registered.disconnect(_populate_skins)
-	GameManager.player_deregistered.disconnect(_populate_skins)
-	GameManager.skin_changed.disconnect(_on_skin_changed)
 
 
 func _input(event):
@@ -117,4 +109,4 @@ func _on_skin_option_button_item_selected(index):
 
 
 func _on_visibility_changed():
-	get_parent().update_input()
+	$Panel.visible = visible

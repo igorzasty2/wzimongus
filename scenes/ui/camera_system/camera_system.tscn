@@ -1,0 +1,125 @@
+[gd_scene load_steps=18 format=3 uid="uid://mtrc2q6rpyb6"]
+
+[ext_resource type="Script" path="res://scenes/ui/camera_system/camera_system.gd" id="1_j11j8"]
+
+[sub_resource type="Gradient" id="Gradient_27dqk"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8mf0l"]
+noise_type = 0
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_544yy"]
+width = 426
+height = 240
+color_ramp = SubResource("Gradient_27dqk")
+noise = SubResource("FastNoiseLite_8mf0l")
+
+[sub_resource type="Gradient" id="Gradient_vak7w"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_38kqy"]
+seed = 2
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_txtad"]
+width = 426
+height = 240
+color_ramp = SubResource("Gradient_vak7w")
+noise = SubResource("FastNoiseLite_38kqy")
+
+[sub_resource type="Gradient" id="Gradient_ld03x"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hb0lc"]
+seed = 3
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dtowk"]
+width = 426
+height = 240
+color_ramp = SubResource("Gradient_ld03x")
+noise = SubResource("FastNoiseLite_hb0lc")
+
+[sub_resource type="Gradient" id="Gradient_vtsur"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_udmmm"]
+seed = 4
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3q4xi"]
+width = 426
+height = 240
+color_ramp = SubResource("Gradient_vtsur")
+noise = SubResource("FastNoiseLite_udmmm")
+
+[sub_resource type="Gradient" id="Gradient_kayr0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k7vbj"]
+seed = 5
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6jqry"]
+width = 426
+height = 240
+color_ramp = SubResource("Gradient_kayr0")
+noise = SubResource("FastNoiseLite_k7vbj")
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_uk3yl"]
+frames = 5
+frame_0/texture = SubResource("NoiseTexture2D_544yy")
+frame_0/duration = 0.1
+frame_1/texture = SubResource("NoiseTexture2D_txtad")
+frame_1/duration = 0.1
+frame_2/texture = SubResource("NoiseTexture2D_dtowk")
+frame_2/duration = 0.1
+frame_3/texture = SubResource("NoiseTexture2D_3q4xi")
+frame_3/duration = 0.1
+frame_4/texture = SubResource("NoiseTexture2D_6jqry")
+frame_4/duration = 0.1
+
+[node name="CameraSystem" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j11j8")
+
+[node name="CameraPanel" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="camera1" type="TextureRect" parent="CameraPanel"]
+layout_mode = 2
+
+[node name="camera2" type="TextureRect" parent="CameraPanel"]
+layout_mode = 2
+
+[node name="camera3" type="TextureRect" parent="CameraPanel"]
+layout_mode = 2
+texture = SubResource("AnimatedTexture_uk3yl")
+
+[node name="camera4" type="TextureRect" parent="CameraPanel"]
+layout_mode = 2
+texture = SubResource("AnimatedTexture_uk3yl")
+
+[node name="camera5" type="TextureRect" parent="CameraPanel"]
+layout_mode = 2
+
+[node name="camera6" type="TextureRect" parent="CameraPanel"]
+layout_mode = 2
+
+[node name="camera7" type="TextureRect" parent="CameraPanel"]
+layout_mode = 2
+
+[node name="camera8" type="TextureRect" parent="CameraPanel"]
+layout_mode = 2
+texture = SubResource("AnimatedTexture_uk3yl")
+
+[node name="camera9" type="TextureRect" parent="CameraPanel"]
+layout_mode = 2
+texture = SubResource("AnimatedTexture_uk3yl")

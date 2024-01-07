@@ -1,14 +1,12 @@
-[gd_scene load_steps=106 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=113 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
 [ext_resource type="Script" path="res://scenes/maps/shared/camera.gd" id="3_gwvgv"]
 [ext_resource type="PackedScene" uid="uid://dnni64h8l6jcd" path="res://scenes/maps/main_map/scenes/rooms/wc.tscn" id="3_nbyec"]
-[ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="4_6s3my"]
 [ext_resource type="PackedScene" uid="uid://yk57h8tmiha6" path="res://scenes/maps/main_map/scenes/rooms/sala_1.tscn" id="4_dojmv"]
 [ext_resource type="Texture2D" uid="uid://dj1dqmbh77gan" path="res://scenes/maps/main_map/scenes/task_button/assets/wifi.png" id="4_wgy3w"]
 [ext_resource type="PackedScene" uid="uid://cwjp3351iq2cg" path="res://scenes/maps/main_map/scenes/rooms/sala_2.tscn" id="5_ehcuo"]
-[ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="5_pwcjb"]
 [ext_resource type="PackedScene" uid="uid://t3ayjy0eflf" path="res://scenes/maps/main_map/scenes/rooms/sala_3.tscn" id="6_j2fhe"]
 [ext_resource type="PackedScene" uid="uid://q56d4alpaarl" path="res://scenes/maps/main_map/scenes/rooms/xero.tscn" id="7_htmn5"]
 [ext_resource type="PackedScene" uid="uid://db74hr2yilxel" path="res://scenes/maps/main_map/scenes/rooms/aula.tscn" id="8_ckisu"]
@@ -39,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://dbf7s5lxyo0tg" path="res://scenes/maps/main_map/assets/objects/aula_tablica.png" id="31_dhdh4"]
 [ext_resource type="Texture2D" uid="uid://5n0jedd1cmxk" path="res://scenes/maps/main_map/assets/objects/bufet_automat.png" id="32_jc7lc"]
 [ext_resource type="Texture2D" uid="uid://dmy20om8608ff" path="res://scenes/maps/main_map/assets/objects/bufet_stol.png" id="33_fxkqp"]
+[ext_resource type="PackedScene" uid="uid://cwapulye6fjyc" path="res://scenes/maps/main_map/scenes/vent/vent.tscn" id="33_q8paj"]
 [ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_menu.tscn" id="34_5r0ro"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="34_b878o"]
 [ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_menu.gd" id="35_23714"]
@@ -47,6 +46,7 @@
 [ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_1.png" id="36_k0n1h"]
 [ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
 [ext_resource type="Texture2D" uid="uid://bps64glp2uv7u" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_2.png" id="37_mklhi"]
+[ext_resource type="PackedScene" uid="uid://m6q8rh67ru1c" path="res://scenes/ui/user_interface/user_interface.tscn" id="37_tw5rq"]
 [ext_resource type="PackedScene" uid="uid://blfakmqxo172y" path="res://scenes/ui/task_list_display/task_list_display.tscn" id="38_l1f3e"]
 [ext_resource type="Texture2D" uid="uid://2l0wseh5bnat" path="res://scenes/maps/main_map/assets/objects/dziekanat_biurko.png" id="38_u8dgm"]
 [ext_resource type="Texture2D" uid="uid://jrs08rkqr5da" path="res://scenes/maps/main_map/assets/objects/dziekanat_szafka.png" id="39_wtis7"]
@@ -85,7 +85,14 @@
 [ext_resource type="Texture2D" uid="uid://cbxi1n610rgci" path="res://scenes/maps/main_map/assets/objects/xero_polka_na_dokumenty.png" id="71_yvo4d"]
 [ext_resource type="Texture2D" uid="uid://rmo5fhilsda3" path="res://scenes/maps/main_map/assets/objects/xero_stos_kartek.png" id="72_vb4gs"]
 [ext_resource type="Texture2D" uid="uid://lqlctfob53ns" path="res://scenes/maps/main_map/assets/objects/xero_szafa.png" id="73_g7t2a"]
-[ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="79_x26x2"]
+[ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="77_1ivr1"]
+[ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="78_pc37b"]
+[ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="79_xtlh3"]
+[ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
+[ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
+[ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/maps/main_map/scenes/camera/camera.tscn" id="81_mexjh"]
+[ext_resource type="PackedScene" uid="uid://br73d5fyt6ecp" path="res://scenes/minigames/copying-files/copying_files.tscn" id="82_rt2pg"]
+[ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -356,10 +363,10 @@ texture = ExtResource("37_mklhi")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/ChillRoomStol2"]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/ChillRoomStol2/CollisionBox"]
+[node name="CollisionPolygon1" type="CollisionPolygon2D" parent="Objects/ChillRoomStol2/CollisionBox"]
 polygon = PackedVector2Array(55, -128.9, 55, -127.8, 87, -113.8, 87, -112.6, 108, -100.7, 108, -99.5, 127, -85.5, 127, -84.3, 153, -57.3, 153, -55, 169, -24, 169, -19.8, 170, -13.9, 170, -11.5, 168, -11.5, 165, -7.5, 154.8, -7.5, 124, -13.9, 124, -16, 114.9, -32.5, 114.2, -32.5, 107, -39.7, 107, -38.9, 114, -23.9, 114, -19.5, 116.2, 5.5, 114.7, 5.5, 110.7, 31.5, 109.4, 31.5, 104.8, 43.6, 109, 39.6, 109, 37.7, 115, 31.7, 115, 30.1, 121.6, 13.5, 123.3, 13.5, 131.3, 7.5, 136.9, 7.5, 155.7, 2.5, 165.5, 2.5, 169, 4.3, 169, 7.10001, 170, 9.8, 170, 35.7, 155.2, 62.5, 153.8, 62.5, 120.8, 92.5, 118.5, 92.5, 82.6, 114.5, 79.5, 114.5, 58.5, 124.5, 55.3, 124.5, 36.4, 130.5, 26.7, 130.5, 18, 125.7, 18, 122.8, 11, 106.9, 11, 104.1, 14.5, 94.8, -11, 96.7, -11, 95.3, -33, 93.3, -33, 92, -56, 86, -56, 84.7, -84, 69.7, -84, 68.4, -97, 57.4, -97, 55.2, -107, 43.2, -107, 41.1, -112, 33.1, -112, 29.8, -117, 12.8, -117, -1.7, -111.7, -30.5, -110.2, -30.5, -104.9, -41.2, -112, -33.6, -112, -32, -119.8, -16.5, -121.4, -16.5, -127.4, -12.5, -130.8, -12.5, -165, -8.2, -165, -11, -170, -19.8, -170, -20.5, -167.4, -20.5, -155.4, -52.5, -154.1, -52.5, -144.1, -67.5, -142.8, -67.5, -122.8, -87.5, -120.6, -87.5, -88.6, -110.5, -86.5, -110.5, -63.5, -122.5, -60.4, -122.5, -37.4, -130.5, -19.6, -130.5, -14, -127.7, -14, -125, -6, -110, -6, -105.8, -3, -98.9, -3, -95.9, -3.3, -95.5, 9.39999, -95.5, 5.7, -101.4, 6.8, -103.5, 9.3, -116.5, 10.7, -116.5, 16.8, -130.5, 50.2, -130.5)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Objects/ChillRoomStol2/CollisionBox"]
+[node name="CollisionPolygon2" type="CollisionPolygon2D" parent="Objects/ChillRoomStol2/CollisionBox"]
 polygon = PackedVector2Array(-126, 16.8, -126, 18.1, -123, 19.1, -123, 22, -115.7, 37.5, -115.1, 37.5, -92.2, 61.5, -90.4, 61.5, -58.4, 82.5, -55.7, 82.5, -14, 97.1, -14, 99, -7.8, 111.5, -10.6, 111.5, -16.9, 130.5, -50.6, 130.5, -75, 123, -75, 121.8, -111, 104.8, -111, 103.5, -149, 75.5, -149, 74.2, -166, 54.2, -166, 52.1, -170, 44.7, -170, 14.3, -169.6, 12.5, -167.5, 12.5, -167, 12.3, -167, 10.1)
 
 [node name="DziekanatBiurko" type="Node2D" parent="Objects"]
@@ -460,16 +467,16 @@ texture = ExtResource("45_sluy1")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/PokojWykladowcowSzafaPrawa/CollisionBox"]
 shape = SubResource("RectangleShape2D_48hsj")
 
-[node name="Sala1Komputer" type="Node2D" parent="Objects"]
+[node name="Sala1Komputer1" type="Node2D" parent="Objects"]
 position = Vector2(1436, -1350)
 metadata/_edit_group_ = true
 
-[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Komputer"]
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Komputer1"]
 texture = ExtResource("46_on4ml")
 
-[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Komputer"]
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Komputer1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala1Komputer/CollisionBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala1Komputer1/CollisionBox"]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_bgje4")
 
@@ -512,16 +519,16 @@ texture = ExtResource("46_on4ml")
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_bgje4")
 
-[node name="Sala1Krzeslo" type="Node2D" parent="Objects"]
+[node name="Sala1Krzeslo1" type="Node2D" parent="Objects"]
 position = Vector2(1394, -1252)
 metadata/_edit_group_ = true
 
-[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Krzeslo"]
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Krzeslo1"]
 texture = ExtResource("47_btq84")
 
-[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Krzeslo"]
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Krzeslo1"]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala1Krzeslo/CollisionBox"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala1Krzeslo1/CollisionBox"]
 polygon = PackedVector2Array(26, -48.4, 26, -46.8, 33, -43.8, 33, -42.2, 36, -38.2, 36, -25.3, 48, -16.5, 48, -14.1, 50, -11.1, 50, 16.7, 47.4, 24.5, 45.9, 24.5, 39.9, 31.5, 37.6, 31.5, 28.6, 37.5, 24.4, 37.5, 17, 39.1, 17, 42.1, 12.4, 48.5, -12, 48.5, -12, 47.2, -18, 39.5, -19.6, 39.5, -37, 27.6, -37, 25, -50, 1.6, -50, -37.8, -42, -48.2, 24.6, -48.5)
 
 [node name="Sala1Krzeslo2" type="Node2D" parent="Objects"]
@@ -573,16 +580,16 @@ texture = ExtResource("48_3efwf")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala1Stol/CollisionBox"]
 polygon = PackedVector2Array(222, -31.5, 237.5, -23.7, 237.5, -22.2, 244, -11, 244, -7, 245, 63, 242.9, 75.5, 241.5, 75.5, 235.5, 83.5, 233.1, 83.5, 228.9, 86.5, -241.8, 86.5, -254.5, 76.5, -254.5, 74.2, -256.5, 71.7, -256.5, -11.6, -246.6, -26.5, -244, -26.5, -235, -31.5)
 
-[node name="Sala2Krzeslo" type="Node2D" parent="Objects"]
+[node name="Sala2Krzeslo1" type="Node2D" parent="Objects"]
 position = Vector2(-2599, -1116)
 metadata/_edit_group_ = true
 
-[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Krzeslo"]
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Krzeslo1"]
 texture = ExtResource("49_11adn")
 
-[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Krzeslo"]
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Krzeslo1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Krzeslo/CollisionBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Krzeslo1/CollisionBox"]
 shape = SubResource("RectangleShape2D_qkmkj")
 
 [node name="Sala2Krzeslo2" type="Node2D" parent="Objects"]
@@ -611,16 +618,16 @@ flip_h = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Krzeslo3/CollisionBox"]
 shape = SubResource("RectangleShape2D_qkmkj")
 
-[node name="Sala2Lawka" type="Node2D" parent="Objects"]
+[node name="Sala2Lawka1" type="Node2D" parent="Objects"]
 position = Vector2(-2288, -1171)
 metadata/_edit_group_ = true
 
-[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Lawka"]
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Lawka1"]
 texture = ExtResource("50_ybu0o")
 
-[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Lawka"]
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Lawka1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Lawka/CollisionBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Lawka1/CollisionBox"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_bxyos")
 
@@ -680,7 +687,7 @@ shape = SubResource("RectangleShape2D_8j1br")
 position = Vector2(-2952, -2784)
 metadata/_edit_group_ = true
 
-[node name="Sprite" type="Sprite2D" parent="Objects/Sala3Biurko"]
+[node name="Sprite1" type="Sprite2D" parent="Objects/Sala3Biurko"]
 position = Vector2(0, 32)
 texture = ExtResource("55_n1e6j")
 
@@ -745,17 +752,17 @@ texture = ExtResource("60_kfep4")
 position = Vector2(0, -10)
 shape = SubResource("CircleShape2D_8454v")
 
-[node name="SamorzadRoslina" type="Node2D" parent="Objects"]
+[node name="SamorzadRoslina1" type="Node2D" parent="Objects"]
 position = Vector2(1390, 161)
 metadata/_edit_group_ = true
 
-[node name="Sprite" type="Sprite2D" parent="Objects/SamorzadRoslina"]
+[node name="Sprite" type="Sprite2D" parent="Objects/SamorzadRoslina1"]
 position = Vector2(-13, -104)
 texture = ExtResource("61_hrurh")
 
-[node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadRoslina"]
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadRoslina1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SamorzadRoslina/CollisionBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SamorzadRoslina1/CollisionBox"]
 position = Vector2(0, 11.5)
 shape = SubResource("RectangleShape2D_bkfev")
 
@@ -942,19 +949,84 @@ shape = SubResource("RectangleShape2D_f8ggq")
 [node name="Tasks" type="Node2D" parent="."]
 
 [node name="Task1" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(7, -982)
+position = Vector2(2.08165e-12, -1000)
 sprite = ExtResource("4_wgy3w")
-minigame_scene = ExtResource("5_pwcjb")
+minigame_scene = ExtResource("77_1ivr1")
 
 [node name="Task2" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(374, -975)
+position = Vector2(350, -1000)
 sprite = ExtResource("4_wgy3w")
-minigame_scene = ExtResource("4_6s3my")
+minigame_scene = ExtResource("78_pc37b")
 
 [node name="Task3" parent="Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(735, -973)
+position = Vector2(700, -1000)
 sprite = ExtResource("4_wgy3w")
-minigame_scene = ExtResource("79_x26x2")
+minigame_scene = ExtResource("79_xtlh3")
+
+[node name="Task4" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(1050, -1000)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("80_j2qov")
+
+[node name="Task5" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(1400, -1000)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("80_b7854")
+
+[node name="Task6" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(1751, -1014)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("82_rt2pg")
+
+[node name="Vents" type="Node2D" parent="."]
+
+[node name="VentSystem1" type="Node2D" parent="Vents"]
+
+[node name="Vent1" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-1092, 147)
+vent_target_list = [NodePath("../Vent2"), NodePath("../Vent3")]
+
+[node name="Vent2" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-3279, 1172)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent3")]
+
+[node name="Vent3" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-2701, -2818)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent2")]
+
+[node name="VentSystem2" type="Node2D" parent="Vents"]
+
+[node name="Vent1" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(2158, 154)
+vent_target_list = [NodePath("../Vent2")]
+allow_student_venting = true
+
+[node name="Vent2" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(4372, -1366)
+vent_target_list = [NodePath("../Vent1")]
+allow_student_venting = true
+
+[node name="Cameras" type="Node2D" parent="."]
+
+[node name="CameraSystem" parent="Cameras" instance=ExtResource("3_e0rk4")]
+position = Vector2(4016, -1329)
+is_minigame = false
+minigame_scene = ExtResource("89_58eb3")
+
+[node name="Camera" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-2602, -277)
+
+[node name="Camera2" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-1390, -1450)
+
+[node name="Camera3" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(36, 476)
+
+[node name="Camera4" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(3036, 352)
+
+[node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(2848, -1132)
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -979,7 +1051,11 @@ properties = Array[String]([":global_position"])
 
 [node name="ReportButton" parent="." instance=ExtResource("36_xfee5")]
 
+[node name="UserInterface" parent="." instance=ExtResource("37_tw5rq")]
+
 [node name="MinigameMenu" parent="." instance=ExtResource("34_5r0ro")]
 script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
+
+[connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
