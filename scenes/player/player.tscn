@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
 [ext_resource type="Script" path="res://scenes/player/skin_selection.gd" id="2_mfjlm"]
-[ext_resource type="Shader" path="res://scenes/player/outline.gdshader" id="3_i22fk"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
 [ext_resource type="Texture2D" uid="uid://dtls6wyj0nyjq" path="res://scenes/player/assets/skins/alt_spritesheet.png" id="3_obr1o"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_uw8t3"]
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
 
 [sub_resource type="Animation" id="Animation_fqt5r"]
@@ -88,12 +88,12 @@ _data = {
 "walk_right": SubResource("Animation_b832w")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_klla5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_484ic"]
 resource_local_to_scene = true
-shader = ExtResource("3_i22fk")
-shader_parameter/color = Color(1, 0, 0, 1)
-shader_parameter/width = 10.0
-shader_parameter/pattern = 0
+shader = ExtResource("3_uw8t3")
+shader_parameter/color = Color(0, 0, 0, 0)
+shader_parameter/width = 8.0
+shader_parameter/pattern = 1
 shader_parameter/inside = false
 shader_parameter/add_margins = true
 
@@ -186,7 +186,7 @@ libraries = {
 }
 
 [node name="PlayerSprite" type="Sprite2D" parent="Skins"]
-material = SubResource("ShaderMaterial_klla5")
+material = SubResource("ShaderMaterial_484ic")
 position = Vector2(0, 30)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_obr1o")

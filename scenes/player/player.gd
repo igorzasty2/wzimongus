@@ -95,9 +95,6 @@ func _ready():
 	animation_tree["parameters/idle/blend_position"] = Vector2(direction_last_x, 0)
 	animation_tree["parameters/walk/blend_position"] = Vector2(direction_last_x, 0)
 	
-	# Wyłącza podświetlenie aktualnego gracza
-	_toggle_highlight(player_node.name.to_int(),false)
-	
 	# Łączy sygnał zabicia postaci z funkcją _on_killed_player
 	GameManager.player_killed.connect(_on_killed_player)
 	
@@ -214,10 +211,7 @@ func _toggle_highlight(player: int, is_on: bool) -> void:
 	var player_material = get_parent().get_node(str(player) + "/Skins/PlayerSprite").material
 
 	if player_material:
-		if is_on:
-			player_material.set_shader_parameter('color', in_range_color)
-		else:
-			player_material.set_shader_parameter('color', out_of_range_color)
+		player_material.set_shader_parameter('color', in_range_color if is_on else out_of_range_color)
 
 
 func _update_highlight(player: int) -> void:
@@ -225,10 +219,7 @@ func _update_highlight(player: int) -> void:
 		all_players.erase(GameManager.get_current_player_id())
 		
 		for i in all_players:
-			if player != null and i == player:
-				_toggle_highlight(i, true)
-			else:
-				_toggle_highlight(i, false)
+			_toggle_highlight(i, i == player)
 
 
 ## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje
