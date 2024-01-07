@@ -43,6 +43,13 @@ var can_kill_cooldown: bool = false
 ## Początkowa maska kolizji.
 @onready var initial_collision_mask: int = collision_mask
 
+## Interfejs
+var user_interface
+## Emitowany gdy przycisk oblania powinien być włączony/wyłączony
+signal fail_button_active(button_name:String, is_active:bool)
+## Timer z czasem do oblania
+var timer
+
 
 ## Zwraca najbliższy vent.
 func get_nearest_vent() -> Vent:
@@ -101,6 +108,8 @@ func _ready():
 	# Jeśli gracz jest impostorem to ustawia początkową możliwość zabicia na true
 	if GameManager.get_current_player_key("is_lecturer"):
 		can_kill_cooldown = true
+	
+	GameManager.map_load_finished.connect(_on_map_load_finished)
 
 
 func _process(_delta):
@@ -108,6 +117,10 @@ func _process(_delta):
 	
 	# Aktualizuje parametry animacji postaci.
 	_update_animation_parameters(direction)
+	
+	# Aktualizuje czas pozostały do kolejnej możliwości oblania
+	if user_interface!=null && timer!=null && timer.time_left!=0:
+		user_interface.update_time_left(str(int(timer.time_left)))
 
 
 func _rollback_tick(delta, _tick, is_fresh):
@@ -208,10 +221,16 @@ func _update_animation_parameters(direction: Vector2) -> void:
 			animation_tree["parameters/walk/blend_position"] = Vector2(direction_last_x, direction.y)
 
 
+## W momencie zakończenia wczytywania mapyt przypisuje user_interface i łączy sygnał
+func _on_map_load_finished():
+	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
+	fail_button_active.connect(user_interface.toggle_button_active)
+
+
 ## Włącza i wyłącza podświetlenie możliwości zabicia gracza
 func _toggle_highlight(player: int, is_on: bool) -> void:
 	var player_material = get_parent().get_node(str(player) + "/Skins/PlayerSprite").material
-
+	
 	if player_material:
 		player_material.set_shader_parameter('color', in_range_color if is_on else out_of_range_color)
 
@@ -258,8 +277,11 @@ func closest_player(to_who: int) -> int:
 				curr_closest_dist = temp_dist
 
 		if curr_closest_dist < (kill_radius**2):
+			fail_button_active.emit("FailButton", true)
 			return curr_closest
+		fail_button_active.emit("FailButton", false)
 		return 0
+	fail_button_active.emit("FailButton", false)
 	return 0
 
 
@@ -287,6 +309,7 @@ func _on_timer_timeout() -> void:
 	if GameManager.get_current_player_id() == name.to_int():
 		if GameManager.get_current_player_key("is_lecturer"):
 			can_kill_cooldown = true
+			user_interface.update_time_left("")
 			for i in range(player_node.get_child_count()):
 				var child: Node = player_node.get_child(i)
 				if child.is_class("Timer"):
@@ -299,7 +322,8 @@ func _update_dead_player(player_id: int):
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
 	victim_node.get_node("Skins/PlayerSprite").use_parent_material = true
 	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
-	victim_node.collision_mask = 0
+	victim_node.collision_mask = 8
+	victim_node.collision_layer = 16
 
 
 ## Używa venta.

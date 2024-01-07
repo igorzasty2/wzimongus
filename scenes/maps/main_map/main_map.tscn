@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=115 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -151,6 +151,12 @@ size = Vector2(28, 47)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f8ggq"]
 size = Vector2(287, 292)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elfmc"]
+size = Vector2(8896, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_apqsq"]
+size = Vector2(48, 6224)
+
 [node name="MainMap" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_xvngj")
@@ -239,7 +245,7 @@ position = Vector2(3067, -1348)
 position = Vector2(3038, -441)
 
 [node name="Objects" type="Node2D" parent="."]
-z_index = 1
+z_index = 2
 y_sort_enabled = true
 
 [node name="AulaProjektor" type="Node2D" parent="Objects"]
@@ -418,14 +424,16 @@ texture = ExtResource("41_jiu28")
 polygon = PackedVector2Array(340.5, -144, 356.5, -133.1, 356.5, -130.6, 361.5, -122.7, 361.5, 121.7, 355.8, 134, 354.1, 134, 338.9, 145, -329.6, 145, -336.5, 143.6, -336.5, 142.4, -344.5, 139.4, -344.5, 137.9, -355.5, 128.9, -355.5, 126.5, -361.5, 116.8, -361.5, -117.1, -357.9, -127, -356.4, -127, -346.4, -139, -343.9, -139, -330.9, -145, 340.5, -145)
 
 [node name="PielegniarkaZaslona" type="Node2D" parent="Objects"]
-position = Vector2(973, -2617)
+position = Vector2(973, -2657)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/PielegniarkaZaslona"]
 position = Vector2(0, -208)
 texture = ExtResource("42_bsxxq")
+offset = Vector2(0, 20)
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/PielegniarkaZaslona"]
+position = Vector2(0, 20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/PielegniarkaZaslona/CollisionBox"]
 shape = SubResource("RectangleShape2D_g46sc")
@@ -1027,6 +1035,28 @@ position = Vector2(3036, 352)
 
 [node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
 position = Vector2(2848, -1132)
+
+[node name="MapBorder" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MapBorder"]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(584, 2504)
+shape = SubResource("RectangleShape2D_elfmc")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(584, -3560)
+shape = SubResource("RectangleShape2D_elfmc")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(5056, -584)
+shape = SubResource("RectangleShape2D_apqsq")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(-3888, -584)
+shape = SubResource("RectangleShape2D_apqsq")
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true

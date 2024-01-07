@@ -28,6 +28,9 @@ signal error_occured(message: String)
 ## Emitowany po zabiciu gracza.
 signal player_killed(player_id: int, is_victim: bool)
 
+## Emitowany po zakończeniu ładowania mapy głównej.
+signal map_load_finished
+
 # Przechowuje informacje o aktualnym stanie gry.
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
@@ -65,7 +68,8 @@ var _server_settings = {
 	"max_players": 10,
 	"max_lecturers": 3,
 	"kill_cooldown": 40,
-	"kill_radius": 260
+	"kill_radius": 260,
+	"task_amount": 3
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -120,7 +124,7 @@ func create_lobby(lobby_name: String, port: int):
 
 
 ## Zmienia ustawienia serwera.
-func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, kill_radius: int):
+func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, kill_radius: int, task_amount: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
@@ -128,6 +132,7 @@ func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown:
 	_server_settings["max_lecturers"] = max_lecturers
 	_server_settings["kill_cooldown"] = kill_cooldown
 	_server_settings["kill_radius"] = kill_radius
+	_server_settings["task_amount"] = task_amount
 	_update_server_settings.rpc(_server_settings)
 	server_settings_changed.emit()
 
@@ -174,7 +179,7 @@ func start_game():
 	_on_game_started.rpc()
 
 	# Przypisuje zadania.
-	TaskManager.assign_tasks(1)
+	TaskManager.assign_tasks(_server_settings["task_amount"])
 
 
 ## Kończy grę.
@@ -651,3 +656,8 @@ func _count_alive_crewmates():
 			crewmate_counter += 1
 
 	return crewmate_counter
+
+
+## Emituje sygnał informujący o zakończeniu wczytywania mapy głównej
+func main_map_load_finished():
+	map_load_finished.emit()
