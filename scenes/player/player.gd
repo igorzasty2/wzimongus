@@ -195,12 +195,14 @@ func _input(event):
 
 					GameManager.kill_victim(victim)
 
-					var timer = Timer.new()
+					timer = Timer.new()
 					timer.timeout.connect(_on_timer_timeout)
 					timer.one_shot = true
 					timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
 					add_child(timer)
 					timer.start()
+
+					fail_button_active.emit("FailButton", false)
 
 
 ## Aktualizuje parametry animacji postaci.
