@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var grid_container_2 = $GridContainer2
 @onready var filler = $GridContainer/Filler
 @onready var chat_button = $GridContainer2/ChatButton
+@onready var label = $GridContainer/FailButton/Label
 
 var is_chat_open = false
 
@@ -37,6 +38,8 @@ func _ready():
 		toggle_button_active("SabotageButton", false)
 		toggle_button_active("ReportButton", false)
 		toggle_button_active("InteractButton", false)
+		
+		update_time_left("")
 	# Gracz jest crewmatem
 	else: 
 		remove_button("VentButton")
@@ -105,9 +108,9 @@ func _on_chat_button_button_down():
 # Aktywuje i deaktywuje przycisk o danej nazwie
 func toggle_button_active(button_name:String, is_active:bool):
 	var button : TextureButton = get_node("GridContainer").get_node(button_name)
-	
-	button.disabled = !is_active
-	toggle_button_visual(button, is_active)
+	if button != null:
+		button.disabled = !is_active
+		toggle_button_visual(button, is_active)
 
 
 # Zmienia wygląd przycisku
@@ -140,3 +143,8 @@ func toggle_chat_button_active(is_active:bool):
 		$GridContainer2.pivot_offset.x = 740
 	else:
 		$GridContainer2.pivot_offset.x = 360
+
+
+## Aktualizuje zawartość etykiety
+func update_time_left(value:String):
+	label.text = value
