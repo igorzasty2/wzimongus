@@ -506,6 +506,12 @@ func _delete_deregistered_player(id:int):
 	if registered_players.has(id):
 		var player = registered_players[id]
 		_current_game["registered_players"].erase(id)
+
+		if multiplayer.is_server():
+			TaskManager.remove_player_tasks(id)
+
+			check_winning_conditions()
+
 		player_deregistered.emit(id, player)
 
 

@@ -20,7 +20,6 @@ func assign_tasks(task_amount):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
-	GameManager.player_deregistered.connect(_remove_deregistered_player_tasks)
 	# Oczekuje jedną klatkę na wczytanie mapy._active
 	await get_tree().process_frame
 
@@ -93,13 +92,11 @@ func _send_task_completion(player_id, task_id):
 
 
 ## Usuwa wszystkie zadania przypisane do tego gracza na serwerowej liście zadań.
-func _remove_deregistered_player_tasks(id: int, player: Dictionary): 
+func remove_player_tasks(player_id: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-	
-	_tasks.erase(id)
-	
-	GameManager.check_winning_conditions()
+
+	_tasks.erase(player_id)
 
 
 ## Resetuje zadania.
@@ -107,9 +104,6 @@ func reset():
 	current_task_id = null
 	_tasks.clear()
 	current_player_tasks.clear()
-	
-	if GameManager.player_deregistered.is_connected(_remove_deregistered_player_tasks):
-		GameManager.player_deregistered.disconnect(_remove_deregistered_player_tasks)
 
 
 # Zwraca słownik wszystkich niezakończonych zadań przepisanych do wszystkich graczę.
