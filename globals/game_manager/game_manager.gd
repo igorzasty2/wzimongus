@@ -28,6 +28,10 @@ signal next_round_started()
 ## Emitowany po wystąpieniu błędu.
 signal error_occured(message: String)
 
+## Emitowany po zabiciu gracza.
+signal player_killed(id: int)
+
+# Przechowuje informacje o aktualnym stanie gry.
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
 
@@ -56,7 +60,9 @@ var _server_settings = {
 	"lobby_name": "Lobby",
 	"port": 9001,
 	"max_players": 10,
-	"max_lecturers": 3
+	"max_lecturers": 3,
+	"kill_cooldown": 40,
+	"kill_radius": 260
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -113,12 +119,14 @@ func create_lobby(lobby_name: String, port: int):
 
 
 ## Zmienia ustawienia serwera.
-func change_server_settings(max_players: int, max_lecturers: int):
+func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, kill_radius: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
 	_server_settings["max_players"] = max_players
 	_server_settings["max_lecturers"] = max_lecturers
+	_server_settings["kill_cooldown"] = kill_cooldown
+	_server_settings["kill_radius"] = kill_radius
 	_update_server_settings.rpc(_server_settings)
 	server_settings_changed.emit()
 
@@ -521,3 +529,29 @@ func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
 		if Time.get_ticks_msec() > timeout:
 			return ERR_TIMEOUT
 	return OK
+
+## Zabija ofiarę
+func kill(victim: int):
+	_request_kill.rpc_id(1, victim)
+
+
+@rpc("any_peer", "call_local", "reliable")
+## Przyjmuje prośbę o zabicie gracza.
+func _request_kill(victim: int):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+		
+	# Jeśli gra się nie rozpoczęła, nie można zabić gracza.
+	if !get_current_game_key("is_started"):
+		return ERR_UNAVAILABLE		
+		
+	var me = multiplayer.get_remote_sender_id()
+	if get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(me)).closest_player(me) == victim:
+		_kill_server.rpc(victim)
+
+
+@rpc("call_local", "reliable")
+## Zabija gracza i rozsyła tą informację do wszystkich.
+func _kill_server(victim: int):
+	_current_game["registered_players"][victim]["is_dead"] = true
+	player_killed.emit(victim)

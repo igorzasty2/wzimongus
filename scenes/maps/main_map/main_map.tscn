@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=113 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -44,7 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://lv5k5yskqtbw" path="res://scenes/maps/main_map/assets/objects/kanapa.png" id="35_ryots"]
 [ext_resource type="PackedScene" uid="uid://ct2plxemq2ft5" path="res://scenes/ui/loading_screen/loading_screen.tscn" id="36_4x0df"]
 [ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_1.png" id="36_k0n1h"]
-[ext_resource type="PackedScene" uid="uid://dp2sfegsvyvqy" path="res://scenes/maps/main_map/scenes/report/emergency_button/emergency_button.tscn" id="36_xfee5"]
+[ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
 [ext_resource type="Texture2D" uid="uid://bps64glp2uv7u" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_2.png" id="37_mklhi"]
 [ext_resource type="PackedScene" uid="uid://m6q8rh67ru1c" path="res://scenes/ui/user_interface/user_interface.tscn" id="37_tw5rq"]
 [ext_resource type="PackedScene" uid="uid://blfakmqxo172y" path="res://scenes/ui/task_list_display/task_list_display.tscn" id="38_l1f3e"]
@@ -90,7 +90,9 @@
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="79_xtlh3"]
 [ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
 [ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
-[ext_resource type="PackedScene" uid="uid://dposexvk3a7mv" path="res://scenes/maps/main_map/scenes/report/report_area/report_area.tscn" id="84_2x0sy"]
+[ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/maps/main_map/scenes/camera/camera.tscn" id="81_mexjh"]
+[ext_resource type="PackedScene" uid="uid://br73d5fyt6ecp" path="res://scenes/minigames/copying-files/copying_files.tscn" id="82_rt2pg"]
+[ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -944,10 +946,6 @@ texture = ExtResource("73_g7t2a")
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_f8ggq")
 
-[node name="ReportButton" parent="Objects" instance=ExtResource("36_xfee5")]
-z_index = 1
-position = Vector2(1732, 288)
-
 [node name="Tasks" type="Node2D" parent="."]
 
 [node name="Task1" parent="Tasks" instance=ExtResource("3_e0rk4")]
@@ -974,6 +972,11 @@ minigame_scene = ExtResource("80_j2qov")
 position = Vector2(1400, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("80_b7854")
+
+[node name="Task6" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(1751, -1014)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("82_rt2pg")
 
 [node name="Vents" type="Node2D" parent="."]
 
@@ -1003,46 +1006,30 @@ position = Vector2(4372, -1366)
 vent_target_list = [NodePath("../Vent1")]
 allow_student_venting = true
 
+[node name="Cameras" type="Node2D" parent="."]
+
+[node name="CameraSystem" parent="Cameras" instance=ExtResource("3_e0rk4")]
+position = Vector2(4016, -1329)
+is_minigame = false
+minigame_scene = ExtResource("89_58eb3")
+
+[node name="Camera" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-2602, -277)
+
+[node name="Camera2" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-1390, -1450)
+
+[node name="Camera3" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(36, 476)
+
+[node name="Camera4" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(3036, 352)
+
+[node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(2848, -1132)
+
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
-
-[node name="ReportArea" parent="." instance=ExtResource("84_2x0sy")]
-position = Vector2(140, 909)
-
-[node name="ReportArea2" parent="." instance=ExtResource("84_2x0sy")]
-position = Vector2(0, 859)
-
-[node name="MeetingPositions" type="Node2D" parent="."]
-
-[node name="Marker2D" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1511, 185)
-
-[node name="Marker2D2" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1490, 269)
-
-[node name="Marker2D3" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1489, 348)
-
-[node name="Marker2D4" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1523, 426)
-
-[node name="Marker2D5" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1599, 489)
-
-[node name="Marker2D6" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1714, 519)
-
-[node name="Marker2D7" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1824, 497)
-
-[node name="Marker2D8" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1905, 436)
-
-[node name="Marker2D9" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1942, 346)
-
-[node name="Marker2D10" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1951, 245)
 
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
@@ -1061,6 +1048,8 @@ root = NodePath("..")
 properties = Array[String]([":global_position"])
 
 [node name="TaskListDisplay" parent="." instance=ExtResource("38_l1f3e")]
+
+[node name="ReportButton" parent="." instance=ExtResource("36_xfee5")]
 
 [node name="UserInterface" parent="." instance=ExtResource("37_tw5rq")]
 

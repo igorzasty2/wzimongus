@@ -19,8 +19,6 @@ monitorable = false
 priority = 1
 script = ExtResource("1_kee2m")
 scale_factor = null
-task_id = null
-disabled = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ykn66")

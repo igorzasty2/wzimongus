@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @onready var pop_up_window = $PopUpWindow
 @onready var settings_container = $SettingsContainer
-@onready var animation_player = $SettingsContainer/AnimationPlayer
+@onready var animation_player = $SettingsContainer/WindowAnimationPlayer
 
 
 func _ready():

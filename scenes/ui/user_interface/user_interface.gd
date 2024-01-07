@@ -1,11 +1,35 @@
 extends CanvasLayer
 
 @onready var grid_container = $GridContainer
+@onready var grid_container_2 = $GridContainer2
 @onready var filler = $GridContainer/Filler
+@onready var chat_button = $GridContainer2/ChatButton
 
+var is_chat_open = false
+
+var task_list_display
+
+var user_sett: UserSettingsManager
+
+var initial_grid_container_scale
+
+var initial_grid_container_2_scale
+
+var initial_task_list_display_scale
 
 # Na początku gry ustawia odpowiedni interface w zależności czy gracz jest imposotrem czy crewmatem, wyłącza wszystkie przyciski poza ustawieniami
 func _ready():
+	task_list_display = get_parent().get_node("TaskListDisplay")
+	
+	initial_grid_container_scale = grid_container.scale
+	initial_grid_container_2_scale = grid_container_2.scale
+	initial_task_list_display_scale = task_list_display.scale
+	
+	user_sett = UserSettingsManager.load_or_create()
+	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
+	on_interface_scale_changed(user_sett.interface_scale)
+	
+	toggle_chat_button_active(false)
 	# Gracz jest impostorem
 	if GameManager.get_current_player_key("is_lecturer"):
 		toggle_button_active("VentButton", false)
@@ -30,6 +54,12 @@ func execute_action(action_name:String):
 	event.action = action_name
 	event.pressed = true
 	Input.parse_input_event(event)
+
+
+func on_interface_scale_changed(value:float):
+	grid_container.scale = initial_grid_container_scale * value
+	grid_container_2.scale = initial_grid_container_2_scale * value
+	task_list_display.scale = initial_task_list_display_scale * value
 
 
 # Obsługuje naciśnięcie przycisku do reportowania
@@ -62,6 +92,16 @@ func _on_pause_button_button_down():
 	execute_action("pause_menu")
 
 
+# Obsługuje naciśnięcie przycisku do otwierania czatu
+func _on_chat_button_button_down():
+	if is_chat_open:
+		execute_action("pause_menu")
+		is_chat_open = false
+	else:
+		execute_action("chat_open")
+		is_chat_open = true
+
+
 # Aktywuje i deaktywuje przycisk o danej nazwie
 func toggle_button_active(button_name:String, is_active:bool):
 	var button : TextureButton = get_node("GridContainer").get_node(button_name)
@@ -92,7 +132,11 @@ func fill_grid(amount:int):
 		grid_container.move_child(filler_duplicate, 0)
 
 
-@rpc("call_local", "any_peer")
-## Przełącza widoczność przycisków na dole
-func bottom_buttons_toggle_visiblity(is_visible:bool):
-	$GridContainer.visible = is_visible
+# Przełącza widoczność przycisku czatu
+func toggle_chat_button_active(is_active:bool):
+	chat_button.visible = is_active
+	chat_button.disabled = is_active
+	if is_active:
+		$GridContainer2.pivot_offset.x = 740
+	else:
+		$GridContainer2.pivot_offset.x = 360
