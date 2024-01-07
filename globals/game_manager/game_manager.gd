@@ -28,6 +28,9 @@ signal error_occured(message: String)
 ## Emitowany po zabiciu gracza.
 signal player_killed(id: int)
 
+## Emitowany po zakończeniu ładowania mapy głównej.
+signal map_load_finished
+
 # Przechowuje informacje o aktualnym stanie gry.
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
@@ -549,3 +552,8 @@ func _request_kill(victim: int):
 func _kill_server(victim: int):
 	_current_game["registered_players"][victim]["is_dead"] = true
 	player_killed.emit(victim)
+
+
+## Emituje sygnał informujący o zakończeniu wczytywania mapy głównej
+func main_map_load_finished():
+	map_load_finished.emit()
