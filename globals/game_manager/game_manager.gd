@@ -229,6 +229,8 @@ func new_round():
 	# Resetuje system głosowania.
 	_reset_votes()
 
+	check_winning_conditions()
+
 
 ## Zwraca informację o grze, która jest przechowywana pod danym kluczem.
 func get_current_game_key(key:String):
@@ -600,6 +602,9 @@ func kill_player(player_id: int):
 func _send_player_kill(player_id: int, is_victim: bool = true):
 	_current_game["registered_players"][player_id]["is_dead"] = true
 	player_killed.emit(player_id, is_victim)
+
+	if is_victim:
+		check_winning_conditions()
 
 
 ## Sprawdza kto wygrał w tym momencie i kończy grę na korzyść wykładowcom lub crewmatom, jeżeli nikt, to nic nie robi.
