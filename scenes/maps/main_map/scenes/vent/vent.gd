@@ -21,6 +21,8 @@ var _out_of_range_color = [0, 0, 0, 0]
 @onready var vent_light_container = $LightsContainer
 @onready var vent_light = $LightsContainer/Light 
 
+@onready var vent_node = $"."
+
 ## Interfejs
 var user_interface
 ## Emitowany gdy przycisk ventowania powinien być włączony/wyłączony
@@ -45,7 +47,7 @@ func _ready():
 		_vent_direction_button_list[-1].id = idx
 		idx += 1
 	
-	vent_light.texture_scale = GameManager.get_server_settings()["lecturer_light_radius"]
+	vent_light.texture_scale = GameManager.get_server_settings()["lecturer_light_radius"] / vent_node.global_scale.x
 
 ## Instancjonuje przycisk kierunkowy.
 func _instantiante_direction_button(pos : Vector2):

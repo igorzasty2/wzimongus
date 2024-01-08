@@ -40,7 +40,7 @@ visible = false
 
 [node name="Light" type="PointLight2D" parent="LightsContainer"]
 material = SubResource("CanvasItemMaterial_d2wt8")
-position = Vector2(0, -68)
+position = Vector2(0, -27)
 scale = Vector2(0.96875, 0.96875)
 energy = 0.3
 shadow_enabled = true

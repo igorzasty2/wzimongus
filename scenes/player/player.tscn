@@ -245,7 +245,6 @@ visible = false
 [node name="Light" type="PointLight2D" parent="LightsContainer"]
 material = SubResource("CanvasItemMaterial_pafr0")
 position = Vector2(0, -68)
-scale = Vector2(0.96875, 0.96875)
 energy = 0.3
 shadow_enabled = true
 shadow_color = Color(0, 0, 0, 1)

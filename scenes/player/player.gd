@@ -473,4 +473,4 @@ func deactivate_player_shaders():
 
 
 func set_light_texture_scale(texture_scale: float):
-	light.texture_scale = texture_scale
+	light.texture_scale = texture_scale / player_node.global_scale.x
