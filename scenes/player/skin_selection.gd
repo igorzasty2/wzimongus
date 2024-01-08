@@ -23,7 +23,7 @@ func _on_skin_changed(id: int, skin: int):
 func _update_skin(skin: int):
 	match skin:
 		0:
-			player_sprite.texture = load("res://scenes/player/assets/skins/player_spritesheet.png")
+			player_sprite.texture = load("res://scenes/player/assets/skins/alt_spritesheet.png")
 		1:
 			player_sprite.texture = load("res://scenes/player/assets/skins/barbie_spritesheet.png")
 		2:
