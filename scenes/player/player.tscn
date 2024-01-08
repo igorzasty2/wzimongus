@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://scenes/player/skin_selection.gd" id="2_mfjlm"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
 [ext_resource type="Texture2D" uid="uid://dtls6wyj0nyjq" path="res://scenes/player/assets/skins/alt_spritesheet.png" id="3_obr1o"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_uw8t3"]
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
 [ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://scenes/player/assets/light_circle.png" id="7_188be"]
 
@@ -186,7 +187,6 @@ libraries = {
 material = SubResource("ShaderMaterial_vdv6v")
 position = Vector2(0, 30)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_obr1o")
 offset = Vector2(0, -250)
 hframes = 5
 vframes = 2

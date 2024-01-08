@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://hdbqyphtfste"]
+[gd_scene load_steps=7 format=3 uid="uid://hdbqyphtfste"]
 
-[ext_resource type="Texture2D" uid="uid://bjct6kxmgyau0" path="res://scenes/ui/chat/assets/man.png" id="1_o2nr2"]
 [ext_resource type="Script" path="res://scenes/ui/voting_screen/player_box/player_box.gd" id="1_sv2tq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_an2b4"]
@@ -46,10 +45,10 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Avatar" type="TextureRect" parent="VBoxContainer/Panel/Player"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 4
-texture = ExtResource("1_o2nr2")
 expand_mode = 1
 stretch_mode = 5
 

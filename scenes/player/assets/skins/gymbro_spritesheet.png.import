@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c56vvbk8qgtwq"
-path="res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"
+uid="uid://bd51fbroqr6ss"
+path="res://.godot/imported/gymbro_spritesheet.png-0ee1d57220e48c23274986a8ecd5f5cd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/skins/nerd_spritesheet.png"
-dest_files=["res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"]
+source_file="res://scenes/player/assets/skins/gymbro_spritesheet.png"
+dest_files=["res://.godot/imported/gymbro_spritesheet.png-0ee1d57220e48c23274986a8ecd5f5cd.ctex"]
 
 [params]
 

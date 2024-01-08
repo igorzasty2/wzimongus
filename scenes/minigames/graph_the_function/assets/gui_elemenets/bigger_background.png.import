@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c56vvbk8qgtwq"
-path="res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"
+uid="uid://yv3xaenxjdnd"
+path="res://.godot/imported/bigger_background.png-92a88907b9715125118cba4213d1cac3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/skins/nerd_spritesheet.png"
-dest_files=["res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"]
+source_file="res://scenes/minigames/graph_the_function/assets/gui_elemenets/bigger_background.png"
+dest_files=["res://.godot/imported/bigger_background.png-92a88907b9715125118cba4213d1cac3.ctex"]
 
 [params]
 

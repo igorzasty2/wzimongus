@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c56vvbk8qgtwq"
-path="res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"
+uid="uid://wwp54md28pg0"
+path="res://.godot/imported/barbie_spritesheet.png-efdc07775e340fcad8f502fa4eda77b5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/skins/nerd_spritesheet.png"
-dest_files=["res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"]
+source_file="res://scenes/player/assets/skins/barbie_spritesheet.png"
+dest_files=["res://.godot/imported/barbie_spritesheet.png-efdc07775e340fcad8f502fa4eda77b5.ctex"]
 
 [params]
 

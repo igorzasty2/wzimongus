@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c56vvbk8qgtwq"
-path="res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"
+uid="uid://be5tjp7bsx8in"
+path="res://.godot/imported/rasta_spritesheet.png-3ea1409a7845ec9bfcd083bd91ae6239.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/skins/nerd_spritesheet.png"
-dest_files=["res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"]
+source_file="res://scenes/player/assets/skins/rasta_spritesheet.png"
+dest_files=["res://.godot/imported/rasta_spritesheet.png-3ea1409a7845ec9bfcd083bd91ae6239.ctex"]
 
 [params]
 
