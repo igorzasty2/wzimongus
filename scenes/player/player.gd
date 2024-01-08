@@ -158,8 +158,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 			if global_position == input.destination_position:
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
-					_toggle_vent_buttons(true)
-#					get_nearest_vent().set_vent_light_visibility_for(name.to_int(), true)
+					_toggle_vent_buttons(true)\
 
 				is_moving_through_vent = false
 				can_use_vent = true
