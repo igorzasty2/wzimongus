@@ -144,6 +144,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
 					_toggle_vent_buttons(true)
+					_toggle_vent_light(true)
 
 				input.is_walking_to_destination = false
 				is_moving_through_vent = false
@@ -158,6 +159,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
 					_toggle_vent_buttons(true)
+#					get_nearest_vent().set_vent_light_visibility_for(name.to_int(), true)
 
 				is_moving_through_vent = false
 				can_use_vent = true
@@ -356,22 +358,21 @@ func _request_vent_entering():
 		return
 
 	if name.to_int() != 1:
-		_enter_vent(vent)
+		_enter_vent(vent.global_position)
 
-	_enter_vent.rpc_id(name.to_int(), vent)
+	_enter_vent.rpc_id(name.to_int(), vent.global_position)
 
 
 @rpc("call_local", "reliable")
 ## Wchodzi do venta.
-func _enter_vent(vent: Vent):
+func _enter_vent(vent_position):
 	if name.to_int() == GameManager.get_current_player_id():
-		vent.set_vent_light_visibility_for(name.to_int(), true)
 		GameManager.set_input_status(false)
 	
 	is_in_vent = true
 	collision_mask = 0
 	is_moving_through_vent = true
-	input.destination_position = vent.global_position
+	input.destination_position = vent_position
 	input.is_walking_to_destination = true
 
 
@@ -428,6 +429,15 @@ func _toggle_vent_buttons(is_enabled: bool):
 		return
 
 	vent.set_direction_buttons_visibility(is_enabled)
+
+
+func _toggle_vent_light(value: bool):
+	var vent = get_nearest_vent()
+
+	if vent == null:
+		return
+
+	vent.set_vent_light_visibility_for(name.to_int(), value)
 
 
 func activate_lights():
