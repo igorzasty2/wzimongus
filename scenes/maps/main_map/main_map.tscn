@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=116 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -92,6 +92,7 @@
 [ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
 [ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/maps/main_map/scenes/camera/camera.tscn" id="81_mexjh"]
 [ext_resource type="PackedScene" uid="uid://br73d5fyt6ecp" path="res://scenes/minigames/copying-files/copying_files.tscn" id="82_rt2pg"]
+[ext_resource type="PackedScene" uid="uid://dra00by8ikhk4" path="res://scenes/minigames/graph_the_function/graph_the_function.tscn" id="83_7u8vq"]
 [ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
@@ -985,6 +986,11 @@ minigame_scene = ExtResource("80_b7854")
 position = Vector2(1751, -1014)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("82_rt2pg")
+
+[node name="Task7" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(2136, -1012)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("83_7u8vq")
 
 [node name="Vents" type="Node2D" parent="."]
 

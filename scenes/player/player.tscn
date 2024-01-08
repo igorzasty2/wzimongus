@@ -1,10 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=28 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
 [ext_resource type="Script" path="res://scenes/player/skin_selection.gd" id="2_mfjlm"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
-[ext_resource type="Texture2D" uid="uid://dtls6wyj0nyjq" path="res://scenes/player/assets/skins/alt_spritesheet.png" id="3_obr1o"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_uw8t3"]
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
 
