@@ -356,21 +356,22 @@ func _request_vent_entering():
 		return
 
 	if name.to_int() != 1:
-		_enter_vent(vent.global_position)
+		_enter_vent(vent)
 
-	_enter_vent.rpc_id(name.to_int(), vent.global_position)
+	_enter_vent.rpc_id(name.to_int(), vent)
 
 
 @rpc("call_local", "reliable")
 ## Wchodzi do venta.
-func _enter_vent(vent_position: Vector2):
+func _enter_vent(vent: Vent):
 	if name.to_int() == GameManager.get_current_player_id():
+		vent.set_vent_light_visibility_for(name.to_int(), true)
 		GameManager.set_input_status(false)
-
+	
 	is_in_vent = true
 	collision_mask = 0
 	is_moving_through_vent = true
-	input.destination_position = vent_position
+	input.destination_position = vent.global_position
 	input.is_walking_to_destination = true
 
 
@@ -403,12 +404,13 @@ func _request_vent_exiting():
 ## Obsługuje wyjście z venta.
 func _exit_vent():
 	var vent = get_nearest_vent()
-
+	
 	if vent == null:
 		return
 
 	if name.to_int() == GameManager.get_current_player_id():
 		vent.set_direction_buttons_visibility(false)
+		vent.set_vent_light_visibility_for(name.to_int(), false)
 		GameManager.set_input_status(true)
 
 	is_in_vent = false
@@ -433,6 +435,7 @@ func activate_lights():
 		set_light_texture_scale(GameManager.get_server_settings()["lecturer_light_radius"])
 	else:
 		set_light_texture_scale(GameManager.get_server_settings()["student_light_radius"])
+	
 	lights_container.show()
 	
 
@@ -452,8 +455,8 @@ func activate_player_shaders():
 	player_sprite.material.set_shader_parameter("color", "#00000000")
 	
 	username_label.material = load("res://scenes/player/assets/light_only_canvas_material.tres")
-	
-	
+
+
 func deactivate_player_shaders():
 	player_sprite.material = null
 	username_label.material = null

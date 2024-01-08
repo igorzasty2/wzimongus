@@ -18,6 +18,9 @@ var _out_of_range_color = [0, 0, 0, 0]
 
 @onready var _sprite_2d = $Sprite2D
 
+@onready var vent_light_container = $LightsContainer
+@onready var vent_light = $LightsContainer/Light 
+
 ## Interfejs
 var user_interface
 ## Emitowany gdy przycisk ventowania powinien być włączony/wyłączony
@@ -41,7 +44,8 @@ func _ready():
 		_instantiante_direction_button(direction_button_pos * direction_button_distance)
 		_vent_direction_button_list[-1].id = idx
 		idx += 1
-
+	
+	vent_light.texture_scale = GameManager.get_server_settings()["lecturer_light_radius"]
 
 ## Instancjonuje przycisk kierunkowy.
 func _instantiante_direction_button(pos : Vector2):
@@ -88,7 +92,9 @@ func _move_to_vent(player_id: int, vent_id: int):
 	# Zmienia widoczność przycisków ventu startowego i docelowego.
 	if player_id == GameManager.get_current_player_id():
 		set_direction_buttons_visibility(false)
+		set_vent_light_visibility_for(player_id, false)
 		vent_target_list[vent_id].set_direction_buttons_visibility(true)
+		vent_target_list[vent_id].set_vent_light_visibility_for(player_id, true)
 
 
 ## Obsługuje wejście gracza do obszaru w którym może ventować.
@@ -125,3 +131,9 @@ func _on_area_2d_body_exited(body):
 func _toggle_highlight(is_on: bool):
 	_sprite_2d.material.set_shader_parameter('color', _in_range_color if is_on else _out_of_range_color)
 	vent_button_active.emit("VentButton", is_on)
+
+
+## Włącza światło venta kiedy gracz znajduje się wewnątrz.
+func set_vent_light_visibility_for(player_id: int, visibility: bool):
+	if player_id == GameManager.get_current_player_id():
+		vent_light_container.visible = visibility

@@ -250,4 +250,3 @@ energy = 0.3
 shadow_enabled = true
 shadow_color = Color(0, 0, 0, 1)
 texture = ExtResource("7_188be")
-texture_scale = 6.98
