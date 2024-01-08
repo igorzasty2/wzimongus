@@ -121,7 +121,9 @@ var _server_settings = {
 	"max_lecturers": 3,
 	"kill_cooldown": 40,
 	"kill_radius": 260,
-	"task_amount": 3
+	"task_amount": 3,
+	"lecturer_light_radius": 4,
+	"student_light_radius": 2, 
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -136,6 +138,18 @@ var _player_attributes = {
 	"is_dead": false
 }
 
+## Przechowuje infromację o tym czy gra animacja tła
+var is_animation_playing: bool = false
+## Przechowuje pozycję animacji tła
+var animation_position: float
+## Przechowuje czas oczekiwania na animację - potrzebny do przejść między scenami
+var wait_time
+## Przechowuje teksture obecnego tła
+var current_background_texture = null
+## Przechowuje teksture tła przejścia
+var transition_background_texture = null
+## Czy scena jest włączana po raz pierwszy
+var is_first_time: bool = true
 
 func _ready():
 	multiplayer.peer_disconnected.connect(_delete_deregistered_player)

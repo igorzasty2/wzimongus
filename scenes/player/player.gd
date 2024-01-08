@@ -39,6 +39,9 @@ var can_kill_cooldown: bool = false
 @onready var player_sprite = $Skins/PlayerSprite
 ## Referencja do node'a postaci.
 @onready var player_node = $"."
+##
+@onready var light = $LightsContainer/Light
+@onready var lights_container = $LightsContainer
 
 ## Początkowa maska kolizji.
 @onready var initial_collision_mask: int = collision_mask
@@ -141,6 +144,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
 					_toggle_vent_buttons(true)
+					_toggle_vent_light(true)
 
 				input.is_walking_to_destination = false
 				is_moving_through_vent = false
@@ -360,10 +364,10 @@ func _request_vent_entering():
 
 @rpc("call_local", "reliable")
 ## Wchodzi do venta.
-func _enter_vent(vent_position: Vector2):
+func _enter_vent(vent_position):
 	if name.to_int() == GameManager.get_current_player_id():
 		GameManager.set_input_status(false)
-
+	
 	is_in_vent = true
 	collision_mask = 0
 	is_moving_through_vent = true
@@ -400,12 +404,13 @@ func _request_vent_exiting():
 ## Obsługuje wyjście z venta.
 func _exit_vent():
 	var vent = get_nearest_vent()
-
+	
 	if vent == null:
 		return
 
 	if name.to_int() == GameManager.get_current_player_id():
 		vent.set_direction_buttons_visibility(false)
+		vent.set_vent_light_visibility_for(name.to_int(), false)
 		GameManager.set_input_status(true)
 
 	is_in_vent = false
@@ -423,3 +428,48 @@ func _toggle_vent_buttons(is_enabled: bool):
 		return
 
 	vent.set_direction_buttons_visibility(is_enabled)
+
+
+func _toggle_vent_light(value: bool):
+	var vent = get_nearest_vent()
+
+	if vent == null:
+		return
+
+	vent.set_vent_light_visibility_for(name.to_int(), value)
+
+
+func activate_lights():
+	if GameManager.get_current_player_key("is_lecturer"):
+		set_light_texture_scale(GameManager.get_server_settings()["lecturer_light_radius"])
+	else:
+		set_light_texture_scale(GameManager.get_server_settings()["student_light_radius"])
+	
+	lights_container.show()
+	
+
+func deactivate_lights():
+	lights_container.hide()
+
+
+func activate_player_shaders():
+	# Domyślnie shadery są wyłaczone w menu bo jeżeli włączyć ich to nie będzie widać graczowi
+	var shader_material = ShaderMaterial.new()
+	shader_material.shader = load("res://shaders/player_outline.gdshader")
+	
+	player_sprite.material = shader_material
+	player_sprite.material.set_shader_parameter("width", 4.0)
+	player_sprite.material.set_shader_parameter("pattern", 1)
+	player_sprite.material.set_shader_parameter("add_margins", true)
+	player_sprite.material.set_shader_parameter("color", "#00000000")
+	
+	username_label.material = load("res://scenes/player/assets/light_only_canvas_material.tres")
+
+
+func deactivate_player_shaders():
+	player_sprite.material = null
+	username_label.material = null
+
+
+func set_light_texture_scale(texture_scale: float):
+	light.texture_scale = texture_scale / player_node.global_scale.x

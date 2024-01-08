@@ -57,6 +57,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+bbcode_enabled = true
 text = "[username]"
 fit_content = true
 autowrap_mode = 0

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwapulye6fjyc"]
+[gd_scene load_steps=8 format=3 uid="uid://cwapulye6fjyc"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/scenes/vent/vent.gd" id="1_ebero"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_cbfkx"]
 [ext_resource type="Texture2D" uid="uid://di4xiqnkybme3" path="res://scenes/maps/main_map/scenes/vent/assets/vent.png" id="3_gku1q"]
+[ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://scenes/player/assets/light_circle.png" id="4_v6nkv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wkw5n"]
 shader = ExtResource("2_cbfkx")
@@ -14,6 +15,9 @@ shader_parameter/add_margins = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kp4xp"]
 radius = 93.3343
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d2wt8"]
+blend_mode = 1
 
 [node name="Vent" type="Node2D"]
 scale = Vector2(2.4, 2.4)
@@ -30,6 +34,18 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_kp4xp")
+
+[node name="LightsContainer" type="Node2D" parent="."]
+visible = false
+
+[node name="Light" type="PointLight2D" parent="LightsContainer"]
+material = SubResource("CanvasItemMaterial_d2wt8")
+position = Vector2(0, -27)
+scale = Vector2(0.96875, 0.96875)
+energy = 0.3
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 1)
+texture = ExtResource("4_v6nkv")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
