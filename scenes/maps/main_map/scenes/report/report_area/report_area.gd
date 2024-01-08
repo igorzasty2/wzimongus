@@ -5,38 +5,37 @@ extends Area2D
 ## Tekstura znalezionego ciała
 @export var body_texture:Texture
 
+## Pozycjami do spotkania podczas głosowania
+@onready var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
+## Tablica wszystkich tasków
+@onready var tasks = get_tree().root.get_node("Game/Maps/MainMap/Tasks").get_children()
+## System kamer
+@onready var camera_system = get_tree().root.get_node("Game/Maps/MainMap/Cameras/CameraSystem")
+## Interfejs
+@onready var user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
+## Lista zadań
+@onready var task_list = get_tree().root.get_node("Game/Maps/MainMap/TaskListDisplay")
+## Przycisk alarmowy
+@onready var emergency_button = get_tree().root.get_node("Game/Maps/MainMap/Objects/SamorzadStol/EmergencyButton")
+
+## Wszyscy gracze
+var players
+## Wszystkie ciała
+var dead_bodies
+
 ## Ekran głosowania
 var voting_screen = preload("res://scenes/ui/voting_screen/voting_screen.tscn")
 ## Ekran reporta
 var report_screen = preload("res://scenes/maps/main_map/scenes/report/report_screen/report_screen.tscn")
 
-## Tablica wszystkich graczy
-var players
-## Tablica wszystkich tasków
-var tasks
-## Tablica wszystkich ciał
-var dead_bodies
-## Tablica z pozycjami do spotkania podczas głosowania
-var meeting_positions
-## System kamer
-var camera_system
-
 ## Określa czy gracz jest w zasięgu
 var is_player_inside:bool = false
-
-## Przycisk awaryjny
-var emergency_button
-# Określa czy czas oczekiwania się skończył
-var is_wait_time_over:bool = false
-
-## Odniesienie do UserInterface
-var user_interface
-## Odniesienie to TaskListDisplay
-var task_list
-
 ## Przechowuje grafikę ciała
 var dead_body_sprite
 
+# Określa czy czas oczekiwania na włączenie się przycisku alarmowego się skończył
+var is_wait_time_over:bool = false
+ 
 ## Sygnał aktywujący/deaktywujący przyciski w interfejsie
 signal button_active(button_name:String, is_active:bool)
 ## Sygnał przełączający podświetlenie przycisku awaryjnego
@@ -47,18 +46,10 @@ signal button_used()
 
 func _ready():
 	GameManager.next_round_started.connect(on_next_round_started)
-	GameManager.player_killed.connect(on_player_killed)
+	GameManager.player_killed.connect(_on_player_killed)
 	if is_button:
-		emergency_button = get_parent()
 		emergency_button.emergency_timer_timeout.connect(_on_end_emergency_timer_timeout)
 		button_used.connect(emergency_button.on_button_used)
-	
-	tasks = get_tree().root.get_node("Game/Maps/MainMap/Tasks").get_children()
-	meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
-	camera_system = get_tree().root.get_node("Game/Maps/MainMap/Cameras/CameraSystem")
-	
-	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
-	task_list = get_tree().root.get_node("Game/Maps/MainMap/TaskListDisplay")
 	
 	button_active.connect(user_interface.toggle_button_active)
 
@@ -72,31 +63,18 @@ func _input(event):
 	&& is_player_inside 
 	&& !GameManager.get_current_player_key("is_dead") 
 	&& !GameManager.is_meeting_called):
-		print("reported")
-		GameManager.is_meeting_called = true
 		
-		# Aktualizuje tablice
-		players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
-		tasks = get_tree().root.get_node("Game/Maps/MainMap/Tasks").get_children()
-		dead_bodies = get_tree().root.get_node("Game/Maps/MainMap/DeadBodies").get_children()
-		
-		# Chowa przyciski z interfejsu i liste tasków
-		user_interface.toggle_visiblity.rpc(false)
-		toggle_task_list_visibility.rpc(false)
-		
-		# Zamyka taski i kamery
-		close_tasks.rpc()
-		close_camera_system.rpc()
-		
-		# Instancjonuje ekran głosowania
-		open_voting_screen.rpc()
-		
-		# Pokazuje ekran z ciałem/spotkaniem, po czym rozpoczyna głosowanie
-		show_hide_report_screen.rpc()
-		
-		# Wyłącza możliwość ponownego użycia graczowi co nacisnął przycisk
 		if is_button:
 			button_used.emit()
+		
+		GameManager.is_meeting_called = true
+		emergency_button.handle_report(is_button)
+		
+
+## Aktualizuje tablice, które mogły ulec zmianie
+func update_arrays():
+	players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
+	dead_bodies = get_tree().root.get_node("Game/Maps/MainMap/DeadBodies").get_children()
 
 
 ## Obsługuje zakończenie emergeny_timer
@@ -121,7 +99,6 @@ func on_next_round_started():
 	# Usuwa ciało z mapy
 	if !is_button:
 		get_parent().queue_free()
-
 
 
 ## Obsługuje wejście gracza
@@ -151,7 +128,8 @@ func _on_body_exited(body):
 			button_active.emit("ReportButton", false)
 
 
-func on_player_killed(player_id:int):
+## Wywoływane w momencie śmierci gracza
+func _on_player_killed(player_id:int):
 	if player_id == multiplayer.get_unique_id():
 		if is_button:
 			button_active.emit("InteractButton", false)
@@ -161,7 +139,7 @@ func on_player_killed(player_id:int):
 
 @rpc("call_local", "any_peer")
 ## Instancjonuje ekran głosowania
-func open_voting_screen():
+func instantiate_voting_screen():
 	var voting_screen_instance = voting_screen.instantiate()
 	get_node("CanvasLayer").add_child(voting_screen_instance)
 	
@@ -176,7 +154,7 @@ func open_voting_screen():
 
 
 @rpc("call_local", "any_peer")
-## Pokazuje ekran reporta, po czym go chowa, rozpoczyna głosowanie
+## Pokazuje ekran reporta na chwilę, po czym rozpoczyna głosowanie
 func show_hide_report_screen():
 	var report_screen_instance = report_screen.instantiate()
 	report_screen_instance.is_meeting = is_button
@@ -196,6 +174,7 @@ func show_hide_report_screen():
 func close_tasks():
 	for task in tasks:
 		task.close_minigame()
+
 
 @rpc("call_local", "any_peer")
 ## Zamyka system kamer

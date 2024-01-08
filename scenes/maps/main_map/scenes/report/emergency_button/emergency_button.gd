@@ -8,6 +8,7 @@ extends Node2D
 @onready var sprite_2d = $Sprite2D
 ## Label wyświetlający pozostałą ilość użyć
 @onready var uses_left_label = $UsesLeftLabel
+@onready var report_area = $ReportArea
 
 # Czas oczekiwania od początku rundy na aktywację przycisku
 var wait_time = GameManager.get_server_settings()["emergency_cooldown"]
@@ -21,6 +22,26 @@ var out_of_range_color = [0, 0, 0, 0]
 
 ## Sygnał informujący o zakończeniu czasu oczekiwania
 signal emergency_timer_timeout(is_over:bool)
+
+
+## Tablica wszystkich graczy
+var players
+## Tablica wszystkich tasków
+var tasks
+## Tablica wszystkich ciał
+var dead_bodies
+## Tablica z pozycjami do spotkania podczas głosowania
+var meeting_positions
+## System kamer
+var camera_system
+## Odniesienie do UserInterface
+var user_interface
+## Odniesienie to TaskListDisplay
+var task_list
+
+
+
+
 
 
 func _ready():
@@ -88,3 +109,24 @@ func on_button_used():
 	uses_left_label.text = "Pozostało użyć: 0"
 	$ReportArea.monitoring = false
 	$ReportArea.monitorable = false
+
+
+## Obsługuje report/zebranie awaryjne
+func handle_report(is_button: bool):
+	GameManager.is_meeting_called = true
+	
+	report_area.update_arrays()
+	
+	# Chowa przyciski z interfejsu i liste tasków
+	report_area.user_interface.toggle_visiblity.rpc(false)
+	report_area.toggle_task_list_visibility.rpc(false)
+	
+	# Zamyka taski i kamery
+	report_area.close_tasks.rpc()
+	report_area.close_camera_system.rpc()
+	
+	# Instancjonuje ekran głosowania
+	report_area.instantiate_voting_screen.rpc()
+	
+	# Pokazuje ekran z ciałem/spotkaniem, po czym rozpoczyna głosowanie
+	report_area.show_hide_report_screen.rpc()

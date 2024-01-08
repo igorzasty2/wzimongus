@@ -180,7 +180,6 @@ func _rollback_tick(delta, _tick, is_fresh):
 		global_position = teleport_position
 		is_teleport = false
 		teleport_position = null
-		print("teleported")
 
 
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
