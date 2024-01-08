@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://di4xiqnkybme3"
-path="res://.godot/imported/vent.png-ae1c656077e0095fe93d83840bbece80.ctex"
+uid="uid://blrk7daia54ig"
+path="res://.godot/imported/ustawienia_gry.png-e2630769a52dd79131c9ea6ce13578e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/maps/main_map/assets/objects/vent.png"
-dest_files=["res://.godot/imported/vent.png-ae1c656077e0095fe93d83840bbece80.ctex"]
+source_file="res://scenes/maps/lobby/scenes/lobby_ui/assets/ustawienia_gry.png"
+dest_files=["res://.godot/imported/ustawienia_gry.png-e2630769a52dd79131c9ea6ce13578e3.ctex"]
 
 [params]
 

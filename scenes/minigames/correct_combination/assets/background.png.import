@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bueqlf2ymley7"
-path="res://.godot/imported/temporary_start_button.png-1572583a9ff549b8e538f0538c24247d.ctex"
+uid="uid://nihx6hrbmjc1"
+path="res://.godot/imported/background.png-c09550b10f35098747fd4000fe986d10.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_start_button.png"
-dest_files=["res://.godot/imported/temporary_start_button.png-1572583a9ff549b8e538f0538c24247d.ctex"]
+source_file="res://scenes/minigames/correct_combination/assets/background.png"
+dest_files=["res://.godot/imported/background.png-c09550b10f35098747fd4000fe986d10.ctex"]
 
 [params]
 

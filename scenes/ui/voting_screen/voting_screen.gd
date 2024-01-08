@@ -4,6 +4,9 @@ extends Control
 @onready var end_vote_text = get_node("%EndVoteText")
 @onready var skip_decision = get_node("%Decision")
 @onready var skip_button = get_node("%SkipButton")
+@onready var chat = get_node("%Chat")
+@onready var chat_background = get_node("%ChatBackground")
+@onready var chat_input = $Chat/ChatContainer/InputText
 
 @export var VOTING_TIME = 10
 @onready var voting_timer = Timer.new()
@@ -22,6 +25,8 @@ var is_selected = false
 func _ready():
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
+
+	chat.visible = false
 
 	# END VOTING TIMER
 	add_child(voting_timer)
@@ -112,13 +117,12 @@ func _on_end_voting_timer_timeout():
 			var voted_by_players = GameManager.get_current_game_key("votes")[player_id]
 			for voted_by in voted_by_players:
 				_add_player_vote.rpc(player_id, voted_by)
-		
+
 		_render_player_boxes.rpc()
-		
-		if most_voted_player_id != null:
-			GameManager.set_most_voted_player.rpc(GameManager.get_registered_players()[most_voted_player_id])
-		else:
-			GameManager.set_most_voted_player.rpc(null)
+
+		GameManager.set_most_voted_player.rpc(GameManager.get_registered_players()[most_voted_player_id] if most_voted_player_id != null else null)
+
+		GameManager.kill_player(most_voted_player_id)
 
 
 ## Zmienia scene na ekran wyrzucenia
@@ -131,6 +135,11 @@ func _change_scene_to_ejection_screen():
 	self.get_parent().add_child(ejection_screen.instantiate())
 	self.queue_free()
 
+
+func update_input():
+	if chat_input:
+		var input_status = !chat_input.visible
+		GameManager.set_input_status(input_status)
 
 ## Zwraca id gracza z największą ilością głosów, jeśli jest remis zwraca null
 func get_most_voted_player_id():
@@ -149,3 +158,15 @@ func get_most_voted_player_id():
 		return null
 	else:
 		return most_voted_players[0]
+
+
+func _on_open_chat_pressed():
+	chat.visible = true
+	chat._open_chat()
+	chat_background.visible = true
+
+
+func _on_close_chat_pressed():
+	chat.visible = false
+	chat_background.visible = false
+	chat._close_chat()

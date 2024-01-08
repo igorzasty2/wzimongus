@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://dj5vjsk8ajqix"]
+
+[ext_resource type="Script" path="res://scenes/minigames/correct_combination/correct_combination.gd" id="1_y2ahe"]
+[ext_resource type="Texture2D" uid="uid://nihx6hrbmjc1" path="res://scenes/minigames/correct_combination/assets/background.png" id="2_rqdsd"]
+
+[node name="CorrectCombination" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y2ahe")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(-2, 107.5)
+texture = ExtResource("2_rqdsd")
+
+[node name="100" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 150.0
+offset_top = 16.0
+offset_right = 201.0
+offset_bottom = 67.0
+color = Color(0, 0.603922, 0.294118, 1)
+
+[node name="80" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 71.0
+offset_top = 16.5
+offset_right = 122.0
+offset_bottom = 66.5
+color = Color(0.54902, 0.533333, 0, 1)
+
+[node name="50" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -8.0
+offset_top = 17.0
+offset_right = 43.0
+offset_bottom = 67.0
+color = Color(0.678431, 0.52549, 0, 1)
+
+[node name="30" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -87.0
+offset_top = 17.5
+offset_right = -38.0
+offset_bottom = 66.5
+color = Color(0.858824, 0.32549, 0, 1)
+
+[node name="0" type="ColorRect" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.535571, 0.411871, 0.40564, 1)
+layout_mode = 0
+offset_left = -166.0
+offset_top = 16.5
+offset_right = -116.0
+offset_bottom = 66.5
+color = Color(0.533333, 0, 0, 1)
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -339.0
+offset_top = 152.0
+offset_right = 367.0
+offset_bottom = 217.0
+theme_override_constants/separation = 14
+alignment = 1

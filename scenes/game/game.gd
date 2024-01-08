@@ -11,10 +11,26 @@ func _ready():
 	GameManager.game_started.connect(_on_game_started)
 	GameManager.game_ended.connect(_on_game_ended)
 	GameManager.error_occured.connect(_on_error_occured)
+	GameManager.winner_determined.connect(_on_winner_determined)
 	error_pop_up.middle_pressed.connect(_on_error_pop_up_closed)
 
 
 func _on_registered_successfully():
+	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
+
+
+func _on_winner_determined(winning_role: GameManager.Role):
+	display_winner.rpc(winning_role)
+
+
+@rpc("call_local", "reliable")
+func display_winner(winning_role: GameManager.Role):
+	var ending_scene = preload('res://scenes/ui/game_ending/game_ending.tscn').instantiate()
+	ending_scene.set_winning_role(winning_role)
+	get_tree().get_root().add_child(ending_scene)
+
+	GameManager.reset_game()
+
 	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
 
 

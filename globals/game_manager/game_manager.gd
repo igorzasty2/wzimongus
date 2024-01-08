@@ -25,8 +25,21 @@ signal game_ended()
 ## Emitowany po wystąpieniu błędu.
 signal error_occured(message: String)
 
+## Emitowany po zabiciu gracza.
+signal player_killed(player_id: int, is_victim: bool)
+
+## Emitowany po zakończeniu ładowania mapy głównej.
+signal map_load_finished
+
+# Przechowuje informacje o aktualnym stanie gry.
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
+
+## Emitowany kiedy jeden z warunków zakończenia gry jest spełniony(wszystkie zadania są zrobione, wszystkie impostory są wyeliminowane).
+signal winner_determined(winning_role: Role)
+
+## Rola gracza
+enum Role {STUDENT, LECTURER}
 
 ## Udostępnia dane o dostępnych skinach.
 const skins = {
@@ -105,7 +118,10 @@ var _server_settings = {
 	"lobby_name": "Lobby",
 	"port": 9001,
 	"max_players": 10,
-	"max_lecturers": 3
+	"max_lecturers": 3,
+	"kill_cooldown": 40,
+	"kill_radius": 260,
+	"task_amount": 3
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -160,12 +176,15 @@ func create_lobby(lobby_name: String, port: int):
 
 
 ## Zmienia ustawienia serwera.
-func change_server_settings(max_players: int, max_lecturers: int):
+func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, kill_radius: int, task_amount: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
 	_server_settings["max_players"] = max_players
 	_server_settings["max_lecturers"] = max_lecturers
+	_server_settings["kill_cooldown"] = kill_cooldown
+	_server_settings["kill_radius"] = kill_radius
+	_server_settings["task_amount"] = task_amount
 	_update_server_settings.rpc(_server_settings)
 	server_settings_changed.emit()
 
@@ -212,16 +231,7 @@ func start_game():
 	_on_game_started.rpc()
 
 	# Przypisuje zadania.
-	TaskManager.assign_tasks(1)
-
-
-## Rozpoczyna następną rundę
-func next_round():
-	_current_game["is_voted"] = false
-	_current_game["is_vote_preselected"] = false
-	_current_game["votes"].clear()
-	_current_game["most_voted_player"] = null
-	GameManager.set_input_status(true)
+	TaskManager.assign_tasks(_server_settings["task_amount"])
 
 
 ## Kończy grę.
@@ -234,18 +244,49 @@ func end_game():
 	_current_game["is_started"] = false
 	_current_game["is_paused"] = false
 	_current_game["is_input_disabled"] = false
-	_current_game["is_voted"] = false
-	_current_game["is_vote_preselected"] = false
 	_current_game["registered_players"].clear()
-	_current_game["votes"].clear()
-	_current_game["most_voted_player"] = null
 
 	_current_player["username"] = ""
+
+	# Resetuje system głosowania.
+	_reset_votes()
 
 	# Resetuje zadania.
 	TaskManager.reset()
 
 	game_ended.emit()
+
+
+## Resetuje grę.
+func reset_game():
+	# Resetuje stan gry.
+	_current_game["is_started"] = false
+
+	# Nadpisuje atrybuty graczy domyślnymi atrybutami.
+	for i in get_registered_players():
+		_current_game["registered_players"][i].merge(_player_attributes, true)
+
+	# Ukrywa atrybuty graczy, których klienci nie mogą widzieć.
+	if !multiplayer.is_server():
+		for i in get_registered_players():
+			if i == get_current_player_id():
+				continue
+
+			_current_game["registered_players"][i] = _filter_hidden(_current_game["registered_players"][i])
+
+	# Resetuje system głosowania.
+	_reset_votes()
+
+	# Resetuje zadania.
+	TaskManager.reset()
+
+
+## Rozpoczyna nową rundę.
+func new_round():
+	# Resetuje system głosowania.
+	_reset_votes()
+
+	check_winning_conditions()
 
 
 ## Zwraca informację o grze, która jest przechowywana pod danym kluczem.
@@ -272,6 +313,14 @@ func add_vote(id:int, voted_by:int):
 ## Ustawia gracza z największą ilością głosów
 func set_most_voted_player(player):
 	_current_game["most_voted_player"] = player
+
+
+## Resetuje system głosowania.
+func _reset_votes():
+	_current_game["is_voted"] = false
+	_current_game["is_vote_preselected"] = false
+	_current_game["votes"].clear()
+	_current_game["most_voted_player"] = null
 
 
 ## Zwraca słownik zarejestrowanych graczy.
@@ -433,7 +482,7 @@ func _register_player(player:Dictionary):
 		var player_in_lobby = get_tree().root.get_node("Game/Maps/Lobby/Players/" + str(i))
 		var lobby_data = {
 			"position": player_in_lobby.position,
-			"last_direction_x": player_in_lobby.last_direction_x
+			"direction_last_x": player_in_lobby.direction_last_x
 		}
 
 		_add_registered_player.rpc_id(id, i, _filter_hidden(get_registered_players()[i]), lobby_data)
@@ -514,6 +563,12 @@ func _delete_deregistered_player(id:int):
 	if registered_players.has(id):
 		var player = registered_players[id]
 		_current_game["registered_players"].erase(id)
+
+		if multiplayer.is_server():
+			TaskManager.remove_player_tasks(id)
+
+			check_winning_conditions()
+
 		player_deregistered.emit(id, player)
 
 
@@ -567,3 +622,94 @@ func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
 		if Time.get_ticks_msec() > timeout:
 			return ERR_TIMEOUT
 	return OK
+
+
+## Zabija ofiarę.
+func kill_victim(victim_id: int):
+	_request_victim_kill.rpc_id(1, victim_id)
+
+
+@rpc("any_peer", "call_local", "reliable")
+## Przyjmuje prośbę o zabicie ofiary.
+func _request_victim_kill(victim_id: int):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+
+	# Jeśli gra się nie rozpoczęła, nie można zabić gracza.
+	if !get_current_game_key("is_started"):
+		return ERR_UNAVAILABLE
+
+	var me = multiplayer.get_remote_sender_id()
+
+	# Jeśli gracz nie jest wykładowcą, nie może zabić.
+	if !get_registered_player_key(me, "is_lecturer"):
+		return ERR_UNAUTHORIZED
+
+	# Jeśli gracz nie jest w zasięgu, nie może zabić.
+	if get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(me)).closest_player(me) != victim_id:
+		return ERR_UNAUTHORIZED
+
+	_send_player_kill.rpc(victim_id, true)
+
+
+## Zabija gracza.
+func kill_player(player_id: int):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+
+	_send_player_kill.rpc(player_id, false)
+
+
+@rpc("call_local", "reliable")
+## Wysyła informacje o zabiciu gracza.
+func _send_player_kill(player_id: int, is_victim: bool = true):
+	_current_game["registered_players"][player_id]["is_dead"] = true
+	player_killed.emit(player_id, is_victim)
+
+	if is_victim:
+		check_winning_conditions()
+
+
+## Sprawdza kto wygrał w tym momencie i kończy grę na korzyść wykładowcom lub crewmatom, jeżeli nikt, to nic nie robi.
+func check_winning_conditions():
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+	
+	if TaskManager.get_tasks_server().is_empty():
+		winner_determined.emit(Role.STUDENT)
+		return
+	
+	if _count_alive_lecturers() == 0:
+		winner_determined.emit(Role.STUDENT)
+		return
+
+	if _count_alive_crewmates() <= _count_alive_lecturers():
+		winner_determined.emit(Role.LECTURER)
+		return
+
+
+## Liczy żyjących wykładowców.
+func _count_alive_lecturers():
+	var lecturer_counter = 0
+	
+	for i in get_registered_players():
+		if not get_registered_player_key(i, "is_dead") and get_registered_player_key(i, "is_lecturer"):
+			lecturer_counter += 1
+
+	return lecturer_counter
+
+
+## Liczy żyjących crewmatów.
+func _count_alive_crewmates():
+	var crewmate_counter = 0
+	
+	for i in get_registered_players():
+		if not get_registered_player_key(i, "is_dead") and not get_registered_player_key(i, "is_lecturer"):
+			crewmate_counter += 1
+
+	return crewmate_counter
+
+
+## Emituje sygnał informujący o zakończeniu wczytywania mapy głównej
+func main_map_load_finished():
+	map_load_finished.emit()

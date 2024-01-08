@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/scenes/lobby_ui/lobby_ui.gd" id="1_x2ran"]
 [ext_resource type="Texture2D" uid="uid://irwk5hfqym8q" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/9_przycisk_start.png" id="2_l78cx"]
-[ext_resource type="Texture2D" uid="uid://dqur5bo6n5iob" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_lobby_settings_button.png" id="3_srhgy"]
+[ext_resource type="Texture2D" uid="uid://x3hb3b3rrfa1" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/_czat.png" id="3_g5t7e"]
 [ext_resource type="Texture2D" uid="uid://j016m335ll88" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/3_przycisk_avatar.png" id="3_wnle0"]
-[ext_resource type="Texture2D" uid="uid://x0dursxgvvly" path="res://scenes/ui/user_interface/assets/nowy_setting_v1.png" id="5_esjlh"]
-[ext_resource type="Texture2D" uid="uid://cbycws50ikr4y" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/temporary_chat_button.png" id="6_0dsnu"]
+[ext_resource type="Texture2D" uid="uid://c3krnig4q8qwh" path="res://scenes/ui/user_interface/assets/__nowy_setting_v1.png" id="4_gjrj2"]
+[ext_resource type="Texture2D" uid="uid://blrk7daia54ig" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/ustawienia_gry.png" id="5_5m3mp"]
 
 [node name="LobbyUi" type="CanvasLayer"]
 script = ExtResource("1_x2ran")
@@ -18,6 +18,7 @@ offset_left = -29.5
 offset_right = 29.5
 offset_bottom = 47.0
 grow_horizontal = 2
+pivot_offset = Vector2(29, 0)
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 36
@@ -42,60 +43,62 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 texture_normal = ExtResource("2_l78cx")
 
-[node name="InteractButton" type="TextureButton" parent="."]
-anchors_preset = -1
-anchor_left = 0.99
-anchor_top = 0.99
-anchor_right = 0.99
-anchor_bottom = 0.99
-offset_left = -360.0
-offset_top = -360.0
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(0.35, 0.35)
-pivot_offset = Vector2(360, 360)
-size_flags_horizontal = 8
-size_flags_vertical = 8
-texture_normal = ExtResource("3_wnle0")
-
 [node name="GridContainer" type="GridContainer" parent="."]
 anchors_preset = -1
 anchor_left = 0.99
-anchor_top = 0.02
+anchor_top = 0.01
 anchor_right = 0.99
-anchor_bottom = 0.02
-offset_left = -250.0
-offset_bottom = 250.0
+anchor_bottom = 0.01
+offset_left = -490.0
+offset_bottom = 360.0
 grow_horizontal = 0
 scale = Vector2(0.18, 0.18)
-pivot_offset = Vector2(730, 0)
+pivot_offset = Vector2(740, 0)
 size_flags_horizontal = 8
 size_flags_vertical = 0
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 10
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
 columns = 2
 
 [node name="ChatButton" type="TextureButton" parent="GridContainer"]
 layout_mode = 2
-texture_normal = ExtResource("6_0dsnu")
+texture_normal = ExtResource("3_g5t7e")
 
 [node name="PauseButton" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("5_esjlh")
+texture_normal = ExtResource("4_gjrj2")
 
-[node name="Filler" type="Control" parent="GridContainer"]
+[node name="GridContainer2" type="GridContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.99
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_top = -730.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.35, 0.35)
+pivot_offset = Vector2(360, 730)
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+
+[node name="LobbySettingsButton" type="TextureButton" parent="GridContainer2"]
 custom_minimum_size = Vector2(360, 360)
 layout_mode = 2
+texture_normal = ExtResource("5_5m3mp")
 
-[node name="LobbySettingsButton" type="TextureButton" parent="GridContainer"]
+[node name="InteractButton" type="TextureButton" parent="GridContainer2"]
 layout_mode = 2
-texture_normal = ExtResource("3_srhgy")
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture_normal = ExtResource("3_wnle0")
 
 [connection signal="button_down" from="StartGameButton" to="." method="_on_start_game_button_button_down"]
-[connection signal="button_down" from="InteractButton" to="." method="_on_interact_button_button_down"]
 [connection signal="button_down" from="GridContainer/ChatButton" to="." method="_on_chat_button_button_down"]
 [connection signal="button_down" from="GridContainer/PauseButton" to="." method="_on_pause_button_button_down"]
-[connection signal="button_down" from="GridContainer/LobbySettingsButton" to="." method="_on_lobby_settings_button_button_down"]
+[connection signal="button_down" from="GridContainer2/LobbySettingsButton" to="." method="_on_lobby_settings_button_button_down"]
+[connection signal="button_down" from="GridContainer2/InteractButton" to="." method="_on_interact_button_button_down"]

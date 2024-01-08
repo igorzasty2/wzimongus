@@ -1,7 +1,9 @@
 extends CanvasLayer
 
+
 var _minigame: PackedScene
-var _minigame_instance: Node2D
+var _minigame_instance: Node
+var use_button_disabled: bool = true
 
 @onready var minigame_container = $MinigameContainer
 @onready var viewport = minigame_container.get_node("ViewportContainer/Viewport")
@@ -16,13 +18,18 @@ func _ready():
 	close_button.pressed.connect(close_minigame)
 	use_button_active.connect(user_interface.toggle_button_active)
 
+
 func show_use_button(minigame):
 	_minigame = minigame
 	emit_signal("use_button_active", "InteractButton", true)
+	use_button_disabled = false
+
 
 func hide_use_button():
 	_minigame = null
 	emit_signal("use_button_active", "InteractButton", false)
+	use_button_disabled = false
+
 
 # connect in user interface to this
 func _on_use_button_pressed():
@@ -34,6 +41,7 @@ func _on_use_button_pressed():
 	
 	summon_window()
 
+
 func _input(event):
 	if !event.is_action_pressed("interact"):
 		return
@@ -43,11 +51,15 @@ func _input(event):
 
 	if viewport.get_child_count() != 0:
 		return
-
+	
+	if use_button_disabled:
+		return
+	
 	if GameManager.get_current_game_key("is_paused"):
 		return
 
 	summon_window()
+
 
 func summon_window():
 	minigame_container.visible = true
@@ -56,10 +68,11 @@ func summon_window():
 	_minigame_instance = viewport.get_child(0)
 	
 	emit_signal("use_button_active", "InteractButton", false)
+	use_button_disabled = true
 
 	GameManager.set_input_status(false)
-
 	_minigame_instance.minigame_end.connect(end_minigame)
+
 
 func end_minigame():
 	_minigame_instance.queue_free()
@@ -69,6 +82,7 @@ func end_minigame():
 	GameManager.set_input_status(true)
 
 	TaskManager.mark_task_as_complete()
+
 
 func close_minigame():
 	if _minigame_instance != null:
