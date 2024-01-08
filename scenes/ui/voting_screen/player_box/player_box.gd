@@ -17,7 +17,11 @@ var voted_by_scene = preload("res://scenes/ui/voting_screen/voted_by/voted_by.ts
 func init(player_id: int, voted_by: Array):
 	var player = GameManager.get_registered_players()[player_id]
 
-	self.username.text = player.username
+	if GameManager.get_registered_player_key(player_id, "is_dead"):
+		self.username.text = "[s]" + player.username + "[/s]"
+	else:
+		self.username.text = player.username
+	
 	self.player_key = player_id
 	self.avatar.texture = _get_skin_texture(player.skin)
 
@@ -31,9 +35,7 @@ func init(player_id: int, voted_by: Array):
 		display_tween.tween_property(voted_by_instance, "modulate:a", 1, 0.25)
 
 		voted_by_container.add_child(voted_by_instance)
-
-	if GameManager.get_current_player_key("died"):
-		self.disconnect("player_voted", _on_button_pressed)
+	
 
 
 func _get_skin_texture(skin_id: int) -> AtlasTexture:
@@ -44,6 +46,9 @@ func _get_skin_texture(skin_id: int) -> AtlasTexture:
 
 
 func _on_button_pressed():
+	if GameManager.get_registered_player_key(player_key, "is_dead"):
+		return
+
 	if GameManager.get_current_game_key("is_voted") || GameManager.get_current_game_key("is_vote_preselected"):
 		return
 	
