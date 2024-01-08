@@ -316,6 +316,6 @@ func _on_default_controls_button_pressed():
 
 
 # Zapobiega zmianie zakładki podczas przypisywania klawiszy
-func _on_tab_container_tab_changed(tab):
+func _on_tab_container_tab_changed(_tab):
 	if key_rebind_window.visible || key_used_window.visible:
 		$TabContainer.current_tab = 1

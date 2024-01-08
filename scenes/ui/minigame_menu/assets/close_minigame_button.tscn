@@ -1,6 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2dcvq5rrj3f2"]
-
-[ext_resource type="Texture2D" uid="uid://y0sk7am2xf1o" path="res://scenes/maps/lobby/scenes/close/close_button/assets/nowy_exit_button.png" id="1_k858d"]
+[gd_scene load_steps=2 format=3 uid="uid://b2dcvq5rrj3f2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pym8n"]
 border_width_left = 10
@@ -21,7 +19,6 @@ offset_right = -0.399994
 offset_bottom = -0.320038
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("1_k858d")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -46,6 +43,7 @@ mouse_filter = 1
 color = Color(0, 0, 0, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
 offset_left = 298.0
 offset_top = 104.0
 offset_right = 563.0

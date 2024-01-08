@@ -43,6 +43,11 @@ func _on_use_button_pressed():
 
 
 func _input(event):
+	if event.is_action_pressed("pause_menu") && minigame_container.visible:
+		close_minigame()
+		get_viewport().set_input_as_handled()
+		return
+
 	if !event.is_action_pressed("interact"):
 		return
 
