@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://yv3xaenxjdnd"
-path="res://.godot/imported/bigger_background.png-4d2e24d76d2db1b3aabb0afbdb5d04f5.ctex"
+path="res://.godot/imported/bigger_background.png-92a88907b9715125118cba4213d1cac3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/minigames/place_schedule/assets/gui_elemenets/bigger_background.png"
-dest_files=["res://.godot/imported/bigger_background.png-4d2e24d76d2db1b3aabb0afbdb5d04f5.ctex"]
+source_file="res://scenes/minigames/graph_the_function/assets/gui_elemenets/bigger_background.png"
+dest_files=["res://.godot/imported/bigger_background.png-92a88907b9715125118cba4213d1cac3.ctex"]
 
 [params]
 

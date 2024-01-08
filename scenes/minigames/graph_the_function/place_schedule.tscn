@@ -1,27 +1,38 @@
 [gd_scene load_steps=4 format=3 uid="uid://bi28r0gvgtj1e"]
 
-[ext_resource type="Script" path="res://scenes/minigames/place_schedule/assets/scripts/place_schedule.gd" id="1_787ye"]
-[ext_resource type="Texture2D" uid="uid://r0o8dl0qh7i4" path="res://scenes/minigames/place_schedule/assets/gui_elemenets/pngegg.png" id="2_2eje0"]
-[ext_resource type="Texture2D" uid="uid://yv3xaenxjdnd" path="res://scenes/minigames/place_schedule/assets/gui_elemenets/bigger_background.png" id="2_aj4wh"]
+[ext_resource type="Script" path="res://scenes/minigames/graph_the_function/assets/scripts/place_schedule.gd" id="1_787ye"]
+[ext_resource type="Texture2D" uid="uid://r0o8dl0qh7i4" path="res://scenes/minigames/graph_the_function/assets/gui_elemenets/pngegg.png" id="2_2eje0"]
+[ext_resource type="Texture2D" uid="uid://yv3xaenxjdnd" path="res://scenes/minigames/graph_the_function/assets/gui_elemenets/bigger_background.png" id="2_aj4wh"]
 
 [node name="place_schedule" type="Node2D"]
 script = ExtResource("1_787ye")
 
-[node name="TextEdit" type="TextEdit" parent="." groups=["TextNode"]]
+[node name="TextEdit" type="RichTextLabel" parent="." groups=["TextNode"]]
 offset_left = 1.0
+offset_top = 20.0
 offset_right = 1276.0
 offset_bottom = 159.0
-theme_override_font_sizes/font_size = 30
-editable = false
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+
+[node name="TextEdit2" type="RichTextLabel" parent="." groups=["TextNode"]]
+offset_left = 1.0
+offset_top = 94.0
+offset_right = 1276.0
+offset_bottom = 159.0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]f(x) = sin(x - 0) + 0[/center]"
 
 [node name="BiggerBackground" type="Sprite2D" parent="."]
 position = Vector2(635, 403)
 texture = ExtResource("2_aj4wh")
 
 [node name="Pngegg" type="Sprite2D" parent="."]
-position = Vector2(632, 410)
-scale = Vector2(0.0697425, 0.0691748)
+position = Vector2(630.5, 404.5)
+scale = Vector2(0.0705472, 0.0758495)
 texture = ExtResource("2_2eje0")
+flip_v = true
 
 [node name="HSlider" type="HSlider" parent="." groups=["HSlider"]]
 offset_left = 186.0
