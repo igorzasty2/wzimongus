@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c56vvbk8qgtwq"
-path="res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"
+uid="uid://ch6whvl27rts2"
+path="res://.godot/imported/ecoswir_spritesheet.png-9ffc658086681101323582eb247cfb7c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/player/assets/skins/nerd_spritesheet.png"
-dest_files=["res://.godot/imported/nerd_spritesheet.png-7862e5839b33d15252c431c08ac1ab29.ctex"]
+source_file="res://scenes/player/assets/skins/ecoswir_spritesheet.png"
+dest_files=["res://.godot/imported/ecoswir_spritesheet.png-9ffc658086681101323582eb247cfb7c.ctex"]
 
 [params]
 

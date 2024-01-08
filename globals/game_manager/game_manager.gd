@@ -41,6 +41,58 @@ signal winner_determined(winning_role: Role)
 ## Rola gracza
 enum Role {STUDENT, LECTURER}
 
+## Udostępnia dane o dostępnych skinach.
+const skins = {
+	0: {
+		"name": "Alternatywka",
+		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+	},
+	1: {
+		"name": "Barbie",
+		"resource": "res://scenes/player/assets/skins/barbie_spritesheet.png"
+	},
+	2: {
+		"name": "Ecoświr",
+		"resource": "res://scenes/player/assets/skins/ecoswir_spritesheet.png"
+	},
+	3: {
+		"name": "Femboy",
+		"resource": "res://scenes/player/assets/skins/femboy_spritesheet.png"
+	},
+	4: {
+		"name": "Gamer",
+		"resource": "res://scenes/player/assets/skins/gamer_spritesheet.png"
+	},
+	5: {
+		"name": "Gymbro",
+		"resource": "res://scenes/player/assets/skins/gymbro_spritesheet.png"
+	},
+	6: {
+		"name": "Hipster",
+		"resource": "res://scenes/player/assets/skins/hipster_spritesheet.png"
+	},
+	7: {
+		"name": "Nerd",
+		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+	},
+	8: {
+		"name": "Punk",
+		"resource": "res://scenes/player/assets/skins/punk_spritesheet.png"
+	},
+	9: {
+		"name": "Rasta",
+		"resource": "res://scenes/player/assets/skins/rasta_spritesheet.png"
+	},
+	10: {
+		"name": "TikToker",
+		"resource": "res://scenes/player/assets/skins/tiktoker_spritesheet.png"
+	},
+	11: {
+		"name": "Wixiarz",
+		"resource": "res://scenes/player/assets/skins/wixiarz_spritesheet.png"
+	}
+}
+
 ## Przechowuje dane innych graczy z momentu rejestracji, w celu zespawnowania ich w lobby.
 var lobby_data_at_registration = {}
 

@@ -189,7 +189,6 @@ libraries = {
 material = SubResource("ShaderMaterial_484ic")
 position = Vector2(0, 30)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_obr1o")
 offset = Vector2(0, -250)
 hframes = 5
 vframes = 2

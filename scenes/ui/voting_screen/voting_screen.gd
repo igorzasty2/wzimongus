@@ -84,22 +84,20 @@ func _on_decision_no_pressed():
 	skip_decision.visible = false
 
 
-## Renderuje boxy z graczami
 @rpc("call_local", "reliable")
+## Renderuje boxy z graczami
 func _render_player_boxes():
-	for child in players.get_children():
-		child.queue_free()
-
-	var registered_players = GameManager.get_registered_players()
+	for i in players.get_children():
+		i.queue_free()
 
 	var votes = GameManager.get_current_game_key("votes")
 
-	for key in registered_players.keys():
+	for i in GameManager.get_registered_players().keys():
 		var new_player_box = player_box.instantiate()
+
 		players.add_child(new_player_box)
 
-		var player_votes = votes[key] if key in votes else []
-		new_player_box.init(registered_players[key].username, key, player_votes)
+		new_player_box.init(i, votes[i] if i in votes else [])
 		new_player_box.connect("player_voted", _on_player_voted)
 
 
