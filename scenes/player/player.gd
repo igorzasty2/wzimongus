@@ -429,6 +429,10 @@ func _toggle_vent_buttons(is_enabled: bool):
 
 
 func activate_lights():
+	if GameManager.get_current_player_key("is_lecturer"):
+		set_light_texture_scale(GameManager.get_server_settings()["lecturer_light_radius"])
+	else:
+		set_light_texture_scale(GameManager.get_server_settings()["student_light_radius"])
 	lights_container.show()
 	
 
@@ -453,3 +457,7 @@ func activate_player_shaders():
 func deactivate_player_shaders():
 	player_sprite.material = null
 	username_label.material = null
+
+
+func set_light_texture_scale(texture_scale: float):
+	light.texture_scale = texture_scale
