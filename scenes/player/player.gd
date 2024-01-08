@@ -56,8 +56,6 @@ signal button_active(button_name:String, is_active:bool)
 var timer
 ## Określa czy gracz może reportować
 var can_report: bool = false
-## System kamer
-var camera_system
 
 ## Zwraca najbliższy vent.
 func get_nearest_vent() -> Vent:
@@ -245,9 +243,6 @@ func _update_animation_parameters(direction: Vector2) -> void:
 func _on_map_load_finished():
 	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 	button_active.connect(user_interface.toggle_button_active)
-	
-	camera_system = get_tree().root.get_node("Game/Maps/MainMap/Cameras/CameraSystem")
-	_on_next_round_started()
 
 
 ## W momencie zaczęcia kolejnej rundy restartuje kill cooldown gracza
@@ -370,10 +365,6 @@ func _use_vent():
 	button_active.emit("ReportButton", !is_in_vent && can_report)
 	
 	if !is_in_vent:
-		# Wyrzuca gracza z kamer gdy gracz jest w obrębie kamer i ventuje
-		if camera_system.is_player_inside():
-			camera_system.trigger_body_exited(self)
-
 		button_active.emit("FailButton", false)
 		button_active.emit("InteractButton", false)
 

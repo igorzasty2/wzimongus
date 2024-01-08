@@ -48,7 +48,7 @@ func _on_body_entered(body):
 
 
 func _on_body_exited(body):
-	if body.name.to_int() == multiplayer.get_unique_id() && !disabled && !body.is_in_vent:
+	if body.name.to_int() == multiplayer.get_unique_id() && !disabled:
 		_is_player_inside = false
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
 		minigame_menu.hide_use_button()
@@ -70,13 +70,3 @@ func disable_task():
 ## Zamyka taska, potrzebne do reportowania
 func close_minigame():
 	minigame_menu.close_minigame()
-
-
-## Wywołuje funkcję _on_body_exited
-func trigger_body_exited(body:CharacterBody2D):
-	_on_body_exited(body)
-
-
-## Sprawdza czy gracz jest w środku
-func is_player_inside():
-	return _is_player_inside
