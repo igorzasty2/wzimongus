@@ -81,6 +81,7 @@ func end_minigame():
 
 	GameManager.set_input_status(true)
 
+
 	TaskManager.mark_task_as_complete()
 
 

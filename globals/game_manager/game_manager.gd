@@ -121,7 +121,9 @@ var _server_settings = {
 	"max_lecturers": 3,
 	"kill_cooldown": 40,
 	"kill_radius": 260,
-	"task_amount": 3
+	"task_amount": 3,
+	"lecturer_light_radius": 4,
+	"student_light_radius": 2, 
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
