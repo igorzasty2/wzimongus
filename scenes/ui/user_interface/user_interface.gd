@@ -3,7 +3,8 @@ extends CanvasLayer
 @onready var grid_container = $GridContainer
 @onready var grid_container_2 = $GridContainer2
 @onready var filler = $GridContainer/Filler
-@onready var label = $GridContainer/FailButton/Label
+@onready var fail_label = $GridContainer/FailButton/FailLabel
+@onready var sabotage_label = $GridContainer/SabotageButton/SabotageLabel
 
 var task_list_display
 
@@ -33,7 +34,8 @@ func _ready():
 		toggle_button_active("FailButton", false)
 		toggle_button_active("SabotageButton", false)
 		
-		update_time_left("")
+		update_time_left("FailLabel","")
+		update_time_left("SabotageLabel","")
 	# Gracz jest crewmatem
 	else: 
 		remove_button("VentButton")
@@ -126,5 +128,8 @@ func toggle_visiblity(is_visible:bool):
 
 
 ## Aktualizuje zawartość etykiety
-func update_time_left(value:String):
-	label.text = value
+func update_time_left(label_name: String , value:String):
+	if label_name == fail_label.name:
+		fail_label.text = value
+	elif label_name == sabotage_label.name:
+		sabotage_label.text = value

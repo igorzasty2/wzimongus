@@ -6,10 +6,10 @@ signal load_finished
 @onready var camera = $Camera
 @onready var loading_screen = $LoadingScreen
 ## Pozycje do spawnu gracza
-@onready var meeting_positions = $MeetingPositions.get_children()
+@onready var start_positions = $StartPositions.get_children()
 
 ## Indeks aktualnej pozycji spawnu dla gracza
-var positions_idx: int = 0
+var position_idx: int = 0
 
 func _ready():
 	# Uruchamia synchronizację czasu.
@@ -63,8 +63,8 @@ func _spawn_player(id: int):
 
 	# Ustawia startową pozycję gracza.
 	if multiplayer.is_server():
-		player.position = meeting_positions[positions_idx].position
-		positions_idx +=1
+		player.position = start_positions[position_idx].position
+		position_idx +=1
 
 	players.add_child(player)
 

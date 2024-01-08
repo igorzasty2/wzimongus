@@ -72,7 +72,7 @@ func _input(event):
 	&& is_player_inside 
 	&& !GameManager.get_current_player_key("is_dead") 
 	&& !GameManager.is_meeting_called):
-		
+		print("reported")
 		GameManager.is_meeting_called = true
 		
 		# Aktualizuje tablice

@@ -1046,28 +1046,60 @@ position = Vector2(1592, 187)
 position = Vector2(1561, 251)
 
 [node name="MeetingPosition3" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1563, 332)
+position = Vector2(1553, 328)
 
 [node name="MeetingPosition4" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1593, 393)
+position = Vector2(1573, 408)
 
 [node name="MeetingPosition5" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1651, 441)
+position = Vector2(1645, 455)
 
 [node name="MeetingPosition6" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1745, 463)
+position = Vector2(1747, 476)
 
 [node name="MeetingPosition7" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1825, 437)
+position = Vector2(1837, 450)
 
 [node name="MeetingPosition8" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1883, 379)
+position = Vector2(1890, 389)
 
 [node name="MeetingPosition9" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1906, 310)
+position = Vector2(1912, 312)
 
 [node name="MeetingPosition10" type="Marker2D" parent="MeetingPositions"]
 position = Vector2(1900, 237)
+
+[node name="StartPositions" type="Node2D" parent="."]
+
+[node name="StartPosition" type="Marker2D" parent="StartPositions"]
+position = Vector2(-301, 436)
+
+[node name="StartPosition2" type="Marker2D" parent="StartPositions"]
+position = Vector2(-434, 425)
+
+[node name="StartPosition3" type="Marker2D" parent="StartPositions"]
+position = Vector2(-553, 449)
+
+[node name="StartPosition4" type="Marker2D" parent="StartPositions"]
+position = Vector2(-605, 542)
+
+[node name="StartPosition5" type="Marker2D" parent="StartPositions"]
+position = Vector2(-605, 664)
+
+[node name="StartPosition6" type="Marker2D" parent="StartPositions"]
+position = Vector2(-536, 741)
+
+[node name="StartPosition7" type="Marker2D" parent="StartPositions"]
+position = Vector2(-419, 769)
+
+[node name="StartPosition8" type="Marker2D" parent="StartPositions"]
+position = Vector2(-296, 746)
+
+[node name="StartPosition9" type="Marker2D" parent="StartPositions"]
+position = Vector2(-217, 663)
+
+[node name="StartPosition10" type="Marker2D" parent="StartPositions"]
+position = Vector2(-224, 506)
 
 [node name="DeadBodies" type="Node2D" parent="."]
 

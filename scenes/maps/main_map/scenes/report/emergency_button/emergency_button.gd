@@ -25,23 +25,35 @@ signal emergency_timer_timeout(is_over:bool)
 
 func _ready():
 	GameManager.next_round_started.connect(on_next_round_started)
+	GameManager.map_load_finished.connect(_on_map_load_finished)
+	GameManager.player_killed.connect(_on_player_killed)
 	$ReportArea.toggle_button_highlight.connect(toggle_button_highlight)
 	
 	uses_left_label.text = "Pozostało użyć: 1"
 	
 	toggle_button_highlight(false)
-	
-	add_child(emergency_timer)
-	emergency_timer.autostart = true
-	emergency_timer.one_shot = true
-	emergency_timer.timeout.connect(_on_end_emergency_timer_timeout)
-	emergency_timer.start(wait_time)
 
 
 func _process(_delta):
 	# Wyświetla pozostały czas do możliwości użycia przycisku
 	var time_left = int(emergency_timer.get_time_left())
 	time_left_label.text = str(time_left)
+
+
+## Wywoływane po oblaniu gracza
+func _on_player_killed(id:int):
+	if multiplayer.get_unique_id() == id:
+		uses_left_label.text = ""
+		toggle_button_highlight(false)
+
+
+## Wywoływane po zakończeniu ładowania mapy
+func _on_map_load_finished():
+	add_child(emergency_timer)
+	emergency_timer.autostart = true
+	emergency_timer.one_shot = true
+	emergency_timer.timeout.connect(_on_end_emergency_timer_timeout)
+	emergency_timer.start(wait_time)
 
 
 ## Obsługuje zakończenie emergeny_timer

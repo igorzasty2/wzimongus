@@ -127,7 +127,7 @@ func _process(_delta):
 	
 	# Aktualizuje czas pozostały do kolejnej możliwości oblania
 	if user_interface!=null && timer!=null && timer.time_left!=0:
-		user_interface.update_time_left(str(int(timer.time_left)))
+		user_interface.update_time_left("FailLabel", str(int(timer.time_left)))
 
 
 func _rollback_tick(delta, _tick, is_fresh):
@@ -196,7 +196,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer") && !is_in_vent:
 			if !GameManager.get_current_player_key("is_dead"):
-				print(can_kill_cooldown)
+				#print(can_kill_cooldown)
 				if can_kill_cooldown && !GameManager.is_meeting_called:
 					_update_highlight(closest_player(GameManager.get_current_player_id()))
 				else:
@@ -243,6 +243,9 @@ func _update_animation_parameters(direction: Vector2) -> void:
 func _on_map_load_finished():
 	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 	button_active.connect(user_interface.toggle_button_active)
+	
+	# Na początku gry po załadowaniu mapy restartuje kill cooldown
+	_on_next_round_started()
 
 
 ## W momencie zaczęcia kolejnej rundy restartuje kill cooldown gracza
@@ -343,7 +346,7 @@ func _on_timer_timeout() -> void:
 	if GameManager.get_current_player_id() == name.to_int():
 		if GameManager.get_current_player_key("is_lecturer"):
 			can_kill_cooldown = true
-			user_interface.update_time_left("")
+			user_interface.update_time_left("FailLabel", "")
 			for i in range(player_node.get_child_count()):
 				var child: Node = player_node.get_child(i)
 				if child.is_class("Timer"):
