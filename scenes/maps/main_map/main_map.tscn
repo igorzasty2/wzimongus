@@ -1013,12 +1013,10 @@ vent_target_list = [NodePath("../Vent1"), NodePath("../Vent2")]
 [node name="Vent1" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
 position = Vector2(2158, 154)
 vent_target_list = [NodePath("../Vent2")]
-allow_student_venting = true
 
 [node name="Vent2" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
 position = Vector2(4372, -1366)
 vent_target_list = [NodePath("../Vent1")]
-allow_student_venting = true
 
 [node name="Cameras" type="Node2D" parent="."]
 
