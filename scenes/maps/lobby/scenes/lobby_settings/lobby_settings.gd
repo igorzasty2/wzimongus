@@ -3,7 +3,9 @@ extends CanvasLayer
 @onready var max_connections = $SettingsContainer/MarginContainer/VBoxContainer/MaxConnectionsContainer/MaxConnectionsInput
 @onready var lecturers_amount_alert = $SettingsContainer/MarginContainer/VBoxContainer/LecturersAmountAlert
 @onready var max_lecturers = $SettingsContainer/MarginContainer/VBoxContainer/MaxLecturersContainer/MaxLecturersInput
-
+@onready var kill_cooldown = $SettingsContainer/MarginContainer/VBoxContainer/KillCooldownContainer/KillCooldownInput
+@onready var kill_radius = $SettingsContainer/MarginContainer/VBoxContainer/KillRadiusContainer/KillRadiusInput
+@onready var task_amount = $SettingsContainer/MarginContainer/VBoxContainer/TaskAmountContainer/TaskAmountInput
 
 func _ready():
 	# Ustawia aktualizacje ilości maksymalnych połączeń
@@ -19,8 +21,8 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 
-func _on_save_button_pressed():
-	GameManager.change_server_settings(max_connections.text.to_int(), max_lecturers.text.to_int())
+func _on_save_button_pressed():	
+	GameManager.change_server_settings(max_connections.text.to_int(), max_lecturers.text.to_int(), kill_cooldown.get_selected_id(), kill_radius.get_selected_id(), task_amount.get_selected_id())
 	hide()
 
 

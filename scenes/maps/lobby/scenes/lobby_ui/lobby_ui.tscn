@@ -18,6 +18,7 @@ offset_left = -29.5
 offset_right = 29.5
 offset_bottom = 47.0
 grow_horizontal = 2
+pivot_offset = Vector2(29, 0)
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 36

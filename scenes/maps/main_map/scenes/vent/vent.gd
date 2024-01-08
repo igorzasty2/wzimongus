@@ -18,6 +18,10 @@ var _out_of_range_color = [0, 0, 0, 0]
 
 @onready var _sprite_2d = $Sprite2D
 
+## Interfejs
+var user_interface
+## Emitowany gdy przycisk ventowania powinien być włączony/wyłączony
+signal vent_button_active(button_name:String, is_active:bool)
 
 ## Ustawia widoczność przycisków kierunkowych.
 func set_direction_buttons_visibility(visibility:bool):
@@ -26,6 +30,9 @@ func set_direction_buttons_visibility(visibility:bool):
 
 
 func _ready():
+	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
+	vent_button_active.connect(user_interface.toggle_button_active)
+	
 	var idx = 0
 	# Instancjonuje przycisk dla każdego docelowego venta.
 	for target_vent in vent_target_list:
@@ -117,3 +124,4 @@ func _on_area_2d_body_exited(body):
 ## Zmienia kolor podświetlenia venta.
 func _toggle_highlight(is_on: bool):
 	_sprite_2d.material.set_shader_parameter('color', _in_range_color if is_on else _out_of_range_color)
+	vent_button_active.emit("VentButton", is_on)

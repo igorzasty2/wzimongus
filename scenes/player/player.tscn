@@ -1,26 +1,14 @@
-[gd_scene load_steps=27 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=28 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
 [ext_resource type="Script" path="res://scenes/player/skin_selection.gd" id="2_mfjlm"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
-[ext_resource type="Texture2D" uid="uid://dtls6wyj0nyjq" path="res://scenes/player/assets/skins/alt_spritesheet.png" id="3_obr1o"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_uw8t3"]
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
 
 [sub_resource type="Animation" id="Animation_fqt5r"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AltSprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_ybipj"]
 resource_name = "idle_left"
@@ -29,7 +17,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AltSprite:frame_coords")
+tracks/0/path = NodePath("PlayerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -46,7 +34,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AltSprite:frame_coords")
+tracks/0/path = NodePath("PlayerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -63,7 +51,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AltSprite:frame_coords")
+tracks/0/path = NodePath("PlayerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -80,7 +68,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AltSprite:frame_coords")
+tracks/0/path = NodePath("PlayerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -98,6 +86,15 @@ _data = {
 "walk_left": SubResource("Animation_2d0yq"),
 "walk_right": SubResource("Animation_b832w")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_484ic"]
+resource_local_to_scene = true
+shader = ExtResource("3_uw8t3")
+shader_parameter/color = Color(0, 0, 0, 0)
+shader_parameter/width = 8.0
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mw58m"]
 animation = &"idle_left"
@@ -168,10 +165,11 @@ states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
 [node name="Player" type="CharacterBody2D"]
-z_index = 1
+z_index = 2
 y_sort_enabled = true
 position = Vector2(-1, -47)
 collision_layer = 2
+collision_mask = 9
 motion_mode = 1
 wall_min_slide_angle = 0.0349066
 safe_margin = 5.0
@@ -186,15 +184,15 @@ libraries = {
 "": SubResource("AnimationLibrary_0ebfx")
 }
 
-[node name="AltSprite" type="Sprite2D" parent="Skins"]
-position = Vector2(0, 31)
+[node name="PlayerSprite" type="Sprite2D" parent="Skins"]
+material = SubResource("ShaderMaterial_484ic")
+position = Vector2(0, 30)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_obr1o")
 offset = Vector2(0, -250)
 hframes = 5
 vframes = 2
 
-[node name="AltAnimationTree" type="AnimationTree" parent="Skins"]
+[node name="AnimationTree" type="AnimationTree" parent="Skins"]
 tree_root = SubResource("AnimationNodeStateMachine_gjhch")
 anim_player = NodePath("../AnimationPlayer")
 advance_expression_base_node = NodePath("")
@@ -212,6 +210,7 @@ scale = Vector2(0.682897, 1)
 polygon = PackedVector2Array(16.1079, 13, 17.5722, -2.00004, 17.5721, -17, 14.6433, -34, 10.2502, -46, 5.8571, -56, -4.39336, -59, -16.1081, -57, -26.3585, -46.9999, -32.2158, -26.9999, -33.6801, -2.99992, -29.2868, 31.0001, -19.0363, 45, -8.78584, 48, 0.000236511, 45, 5.8576, 39, 10.2506, 32, 13.1793, 25)
 
 [node name="UsernameLabel" type="Label" parent="."]
+z_index = 2
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -225,6 +224,7 @@ theme_override_font_sizes/font_size = 25
 horizontal_alignment = 1
 vertical_alignment = 1
 visible_characters = 18
+metadata/_edit_use_anchors_ = true
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource("4_8ajvt")
