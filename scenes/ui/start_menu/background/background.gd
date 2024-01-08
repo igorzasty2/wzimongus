@@ -28,11 +28,13 @@ var background_image_array
 ## Indeks obecnego tła
 var current_background_idx = 0
 
-## Czas pomiędzy zmianami tła
+## Czas pomiędzy początkami zmian animacji tła
 var wait_time = 15
+
 
 func _ready():
 	background_image_array = [background_image1, background_image2, background_image3, background_image4]
+	GameManager.is_first_time = false
 	
 	# Przekazuje teksture tła na kolejną scenę
 	if GameManager.current_background_texture != null:
@@ -48,7 +50,11 @@ func _ready():
 		background_animation_player.play("move_animation")
 		background_animation_player.advance(GameManager.animation_position)
 	
-	change_background_timer.start(wait_time)
+	if GameManager.wait_time != null && !GameManager.is_first_time:
+		change_background_timer.start(GameManager.wait_time)
+		GameManager.wait_time = null
+	else:
+		change_background_timer.start(wait_time)
 
 
 ## Obsługuje przejście między tłami
@@ -78,5 +84,8 @@ func randomize_background():
 ## Jeżeli animacja gra, to zapisuje jej pozycje podczas wyjścia z drzewa
 func _on_tree_exiting():
 	GameManager.is_animation_playing = transition_animation_player.is_playing()
+	
 	if GameManager.is_animation_playing:
 		GameManager.animation_position = transition_animation_player.current_animation_position
+	else:
+		GameManager.wait_time = change_background_timer.time_left
