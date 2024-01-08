@@ -1,4 +1,5 @@
 extends Node2D
+signal minigame_end
 
 var x_func
 var y_func
@@ -27,7 +28,7 @@ func _ready():
 
 func check_if_all_coincidence():
 	if $HSlider.value == x_func and $VSlider.value == y_func:
-		get_tree().quit()
+		minigame_end.emit()
 
 
 func _on_v_slider_drag_ended(value_changed):
