@@ -32,7 +32,7 @@ signal error_occured(message: String)
 signal player_killed(id: int)
 
 ## Emitowany po zakończeniu ładowania mapy głównej.
-signal map_load_finished
+signal map_load_finished()
 
 # Przechowuje informacje o aktualnym stanie gry.
 ## Emitowany po zmianie ustawień serwera.

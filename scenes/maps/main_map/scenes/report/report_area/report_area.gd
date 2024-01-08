@@ -41,6 +41,9 @@ var dead_body_sprite
 signal button_active(button_name:String, is_active:bool)
 ## Sygnał przełączający podświetlenie przycisku awaryjnego
 signal toggle_button_highlight(is_active:bool)
+## Sygnał emitowany gdy przycisk spotkania awaryjnego zostanie naciśnięty
+signal button_used()
+
 
 func _ready():
 	GameManager.next_round_started.connect(on_next_round_started)
@@ -48,6 +51,7 @@ func _ready():
 	if is_button:
 		emergency_button = get_parent()
 		emergency_button.emergency_timer_timeout.connect(_on_end_emergency_timer_timeout)
+		button_used.connect(emergency_button.on_button_used)
 	
 	tasks = get_tree().root.get_node("Game/Maps/MainMap/Tasks").get_children()
 	meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
@@ -89,6 +93,10 @@ func _input(event):
 		
 		# Pokazuje ekran z ciałem/spotkaniem, po czym rozpoczyna głosowanie
 		show_hide_report_screen.rpc()
+		
+		# Wyłącza możliwość ponownego użycia graczowi co nacisnął przycisk
+		if is_button:
+			button_used.emit()
 
 
 ## Obsługuje zakończenie emergeny_timer

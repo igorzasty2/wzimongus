@@ -6,6 +6,8 @@ extends Node2D
 @onready var time_left_label = $TimeLeftLabel
 ## Tekstura przycisku
 @onready var sprite_2d = $Sprite2D
+## Label wyświetlający pozostałą ilość użyć
+@onready var uses_left_label = $UsesLeftLabel
 
 # Czas oczekiwania od początku rundy na aktywację przycisku
 var wait_time = GameManager.get_server_settings()["emergency_cooldown"]
@@ -24,7 +26,9 @@ signal emergency_timer_timeout(is_over:bool)
 func _ready():
 	GameManager.next_round_started.connect(on_next_round_started)
 	$ReportArea.toggle_button_highlight.connect(toggle_button_highlight)
-
+	
+	uses_left_label.text = "Pozostało użyć: 1"
+	
 	toggle_button_highlight(false)
 	
 	add_child(emergency_timer)
@@ -65,3 +69,10 @@ func toggle_button_highlight(is_on: bool):
 		sprite_2d.material.set_shader_parameter('color', in_range_color)
 	else:
 		sprite_2d.material.set_shader_parameter('color', out_of_range_color)
+
+
+## Wywoływane po naciśnięciu przycisku, wyłącza możliwość ponownego użycia
+func on_button_used():
+	uses_left_label.text = "Pozostało użyć: 0"
+	$ReportArea.monitoring = false
+	$ReportArea.monitorable = false
