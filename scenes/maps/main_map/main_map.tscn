@@ -1061,6 +1061,8 @@ shape = SubResource("RectangleShape2D_apqsq")
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="DeadBodies" type="Node2D" parent="."]
+
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
 zoom = Vector2(0.45, 0.45)
