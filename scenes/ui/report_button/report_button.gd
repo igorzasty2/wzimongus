@@ -4,6 +4,9 @@ var voting_screen = preload("res://scenes/ui/voting_screen/voting_screen.tscn")
 
 
 func _on_pressed():
+	if GameManager.get_current_player_key("is_dead"):
+		return
+
 	_open_voting_screen.rpc()
 
 
