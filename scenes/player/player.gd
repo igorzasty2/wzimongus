@@ -330,6 +330,9 @@ func _update_dead_player(player_id: int):
 	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
 	victim_node.collision_mask = 8
 	victim_node.collision_layer = 16
+	victim_node.z_index += 1
+	victim_node.get_node("LightsContainer/Light").shadow_item_cull_mask = 0
+	victim_node.get_node("LightsContainer/Light").texture_scale = 10000
 
 
 ## Używa venta.
