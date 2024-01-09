@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://0061xw2dlgjt"]
+
+[ext_resource type="Texture2D" uid="uid://cktu08evuaqrt" path="res://scenes/minigames/find_password/page_scenes/assets/page_scene.png" id="1_6vn3q"]
+[ext_resource type="Script" path="res://scenes/minigames/find_password/page_scenes/page_scene.gd" id="2_gbhic"]
+
+[node name="Page" type="Sprite2D"]
+position = Vector2(642, 343)
+texture = ExtResource("1_6vn3q")
+script = ExtResource("2_gbhic")
+
+[node name="PageText" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = -61.5
+offset_right = 3.0
+offset_bottom = -33.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "[password]"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -90.0
+offset_top = -69.0
+offset_right = 89.0
+offset_bottom = -43.0
+text = "Naciśnij ESC, aby wyjść"
