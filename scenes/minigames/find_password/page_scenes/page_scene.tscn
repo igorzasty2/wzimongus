@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://0061xw2dlgjt"]
 
-[ext_resource type="Texture2D" uid="uid://cv3ianlwy7e28" path="res://scenes/minigames/find_password/page_scenes/assets/page_scene.png" id="1_6vn3q"]
+[ext_resource type="Texture2D" uid="uid://cktu08evuaqrt" path="res://scenes/minigames/find_password/page_scenes/assets/page_scene.png" id="1_6vn3q"]
 [ext_resource type="Script" path="res://scenes/minigames/find_password/page_scenes/page_scene.gd" id="2_gbhic"]
 
 [node name="Page" type="Sprite2D"]
@@ -24,3 +24,10 @@ grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "[password]"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -90.0
+offset_top = -69.0
+offset_right = 89.0
+offset_bottom = -43.0
+text = "Naciśnij ESC, aby wyjść"

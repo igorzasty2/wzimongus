@@ -1,11 +1,5 @@
 extends Node2D
 
-@onready var page1 = get_node("%Page1")
-@onready var page2 = get_node("%Page2")
-@onready var page3 = get_node("%Page3")
-@onready var page4 = get_node("%Page4")
-@onready var page5 = get_node("%Page5")
-
 @onready var password_input = get_node("%PasswordInput")
 
 @onready var passwords = _generate_passwords()
@@ -14,13 +8,18 @@ extends Node2D
 
 var correct_password
 
+var page_scenes = []
+
+signal minigame_end
+
 func _ready():
 	correct_password = passwords[randi() % 5]
 	for i in range(5):
 		var page_scene_instance = page_scene.instantiate()
 		page_scene_instance.init(passwords[i])
+		page_scenes.append(page_scene_instance)
 		add_child(page_scene_instance)
-		#page_scene_instance.visible = false
+		page_scene_instance.visible = false
 		page_scene_instance.position = Vector2(400, 400)
 
 func _generate_passwords():
@@ -44,5 +43,24 @@ func _on_button_pressed():
 	pass
 
 func _close():
+	minigame_end.emit()
 	self.queue_free()
 
+func _on_page_1_pressed():
+	page_scenes[0].visible = true
+
+
+func _on_page_2_pressed():
+	page_scenes[1].visible = true
+
+
+func _on_page_3_pressed():
+	page_scenes[2].visible = true
+
+
+func _on_page_4_pressed():
+	page_scenes[3].visible = true
+
+
+func _on_page_5_pressed():
+	page_scenes[4].visible = true
