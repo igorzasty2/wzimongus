@@ -11,7 +11,7 @@ extends Node2D
 ## Area reportu
 @onready var report_area = $ReportArea
 ## Canvas w którym będzie instancjonowane głosowanie
-@onready var voting_canvas = $VotingCanvas
+@onready var voting_canvas = get_tree().root.get_node("Game/Maps/MainMap/VotingCanvas")
 
 ## Pozycje do spotkania podczas głosowania
 @onready var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
@@ -104,8 +104,7 @@ func _on_end_emergency_timer_timeout():
 ## Na początku rundy restartuje timer z czasem oczekiwania na aktywację przycisku, przywraca widoczność elementów interfejsu
 func on_next_round_started():
 	voting_canvas.get_child(0).queue_free()
-	
-	GameManager.set_input_status(true)
+
 	GameManager.is_meeting_called = false
 	
 	button_active.emit("ReportButton", false)
@@ -194,11 +193,10 @@ func close_camera_system():
 func instantiate_voting_screen():
 	var voting_screen_instance = voting_screen.instantiate()
 	voting_canvas.add_child(voting_screen_instance)
-	
-	GameManager.set_input_status(false)
+
 	GameManager.is_meeting_called = true
 	is_wait_time_over = false
-	
+
 	button_active.emit("ReportButton", false)
 	button_active.emit("InteractButton", false)
 

@@ -1158,8 +1158,6 @@ occluder = SubResource("OccluderPolygon2D_f6dli")
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="DeadBodies2" type="Node2D" parent="."]
-
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
 zoom = Vector2(0.45, 0.45)
@@ -1181,11 +1179,17 @@ properties = Array[String]([":global_position"])
 [node name="UserInterface" parent="." instance=ExtResource("37_tw5rq")]
 
 [node name="MinigameMenu" parent="." instance=ExtResource("34_5r0ro")]
+visible = false
 script = ExtResource("35_23714")
+
+[node name="VotingCanvas" type="CanvasLayer" parent="."]
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.411765, 0.411765, 0.411765, 1)
 
+[connection signal="visibility_changed" from="MinigameMenu" to="." method="update_player_input"]
+[connection signal="child_order_changed" from="VotingCanvas" to="." method="update_player_input"]
 [connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
+[connection signal="visibility_changed" from="LoadingScreen" to="." method="update_player_input"]

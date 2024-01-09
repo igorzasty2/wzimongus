@@ -65,7 +65,7 @@ func _input(event):
 
 
 func summon_window():
-	minigame_container.visible = true
+	show()
 
 	viewport.add_child(_minigame.instantiate())
 	_minigame_instance = viewport.get_child(0)
@@ -73,16 +73,13 @@ func summon_window():
 	emit_signal("use_button_active", "InteractButton", false)
 	use_button_disabled = true
 
-	GameManager.set_input_status(false)
 	_minigame_instance.minigame_end.connect(end_minigame)
 
 
 func end_minigame():
 	_minigame_instance.queue_free()
 
-	minigame_container.visible = false
-
-	GameManager.set_input_status(true)
+	hide()
 
 
 	TaskManager.mark_task_as_complete()
@@ -92,8 +89,6 @@ func close_minigame():
 	if _minigame_instance != null:
 		_minigame_instance.queue_free()
 
-		minigame_container.visible = false
-
-		GameManager.set_input_status(true)
+		hide()
 
 		show_use_button(_minigame)
