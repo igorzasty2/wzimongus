@@ -62,7 +62,7 @@ func _on_change_background_timer_timeout():
 	transition_background.texture = background.texture
 	GameManager.transition_background_texture = transition_background.texture
 	background.texture = randomize_background()
-	
+	print(transition_background.texture, "\n",background.texture,"\n")
 	transition_animation_player.play("transition_animation")
 	background_animation_player.play("move_animation")
 	
@@ -75,10 +75,14 @@ func _on_change_background_timer_timeout():
 func randomize_background():
 	var background_image_array_duplicate = background_image_array.duplicate(true)
 	background_image_array_duplicate.remove_at(current_background_idx)
-	current_background_idx = randi_range(0, background_image_array_duplicate.size()-1)
+	
+	# Losuje tło
+	var current_background = background_image_array_duplicate[randi_range(0, background_image_array_duplicate.size()-1)]
+	current_background_idx = background_image_array_duplicate.find(current_background)
+	
 	# Zapisuje wylosowane tło
-	GameManager.current_background_texture = background_image_array_duplicate[current_background_idx]
-	return background_image_array_duplicate[current_background_idx]
+	GameManager.current_background_texture = current_background
+	return current_background
 
 
 ## Jeżeli animacja gra, to zapisuje jej pozycje podczas wyjścia z drzewa
