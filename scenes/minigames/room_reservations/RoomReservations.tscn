@@ -37,7 +37,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_u0f26")
-polish_name = "Uporządkuj rezerwacje pokojów"
+polish_name = "Porządkowanie rezerwacji"
 
 [node name="Background" type="TextureRect" parent="."]
 unique_name_in_owner = true
