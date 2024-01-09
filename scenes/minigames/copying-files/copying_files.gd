@@ -2,6 +2,8 @@ extends Control
 
 signal minigame_end
 
+@export var polish_name : String
+
 func _on_confirm_button_down():
 	$Confirm.disabled = true
 	$Confirm.visible = false

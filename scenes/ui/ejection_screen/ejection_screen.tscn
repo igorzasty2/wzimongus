@@ -33,5 +33,3 @@ grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
 fit_content = true
-
-[connection signal="most_voted_player_set" from="." to="." method="_on_most_voted_player_set"]

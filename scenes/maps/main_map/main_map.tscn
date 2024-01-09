@@ -1,4 +1,4 @@
-[gd_scene load_steps=119 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=120 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -44,7 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://lv5k5yskqtbw" path="res://scenes/maps/main_map/assets/objects/kanapa.png" id="35_ryots"]
 [ext_resource type="PackedScene" uid="uid://ct2plxemq2ft5" path="res://scenes/ui/loading_screen/loading_screen.tscn" id="36_4x0df"]
 [ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_1.png" id="36_k0n1h"]
-[ext_resource type="PackedScene" uid="uid://r6y42aeh1ep3" path="res://scenes/ui/report_button/report_button.tscn" id="36_xfee5"]
+[ext_resource type="PackedScene" uid="uid://dp2sfegsvyvqy" path="res://scenes/maps/main_map/scenes/report/emergency_button/emergency_button.tscn" id="36_xfee5"]
 [ext_resource type="Texture2D" uid="uid://bps64glp2uv7u" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_2.png" id="37_mklhi"]
 [ext_resource type="PackedScene" uid="uid://m6q8rh67ru1c" path="res://scenes/ui/user_interface/user_interface.tscn" id="37_tw5rq"]
 [ext_resource type="PackedScene" uid="uid://blfakmqxo172y" path="res://scenes/ui/task_list_display/task_list_display.tscn" id="38_l1f3e"]
@@ -93,6 +93,7 @@
 [ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/maps/main_map/scenes/camera/camera.tscn" id="81_mexjh"]
 [ext_resource type="PackedScene" uid="uid://br73d5fyt6ecp" path="res://scenes/minigames/copying-files/copying_files.tscn" id="82_rt2pg"]
 [ext_resource type="PackedScene" uid="uid://dra00by8ikhk4" path="res://scenes/minigames/graph_the_function/graph_the_function.tscn" id="83_7u8vq"]
+[ext_resource type="PackedScene" uid="uid://di5jtb8ateug1" path="res://scenes/minigames/find_password/FindPassword.tscn" id="84_y3nq6"]
 [ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
@@ -766,6 +767,9 @@ metadata/_edit_group_ = true
 [node name="Sprite" type="Sprite2D" parent="Objects/SamorzadStol"]
 texture = ExtResource("60_kfep4")
 
+[node name="EmergencyButton" parent="Objects/SamorzadStol" instance=ExtResource("36_xfee5")]
+position = Vector2(0, -11)
+
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadStol"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SamorzadStol/CollisionBox"]
@@ -1003,6 +1007,11 @@ position = Vector2(2136, -1012)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("83_7u8vq")
 
+[node name="Task8" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(2504, -1028)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("84_y3nq6")
+
 [node name="Vents" type="Node2D" parent="."]
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
@@ -1053,6 +1062,72 @@ position = Vector2(3036, 352)
 [node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
 position = Vector2(2848, -1132)
 
+[node name="MeetingPositions" type="Node2D" parent="."]
+
+[node name="MeetingPosition1" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1592, 187)
+
+[node name="MeetingPosition2" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1561, 251)
+
+[node name="MeetingPosition3" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1553, 328)
+
+[node name="MeetingPosition4" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1573, 408)
+
+[node name="MeetingPosition5" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1645, 455)
+
+[node name="MeetingPosition6" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1747, 476)
+
+[node name="MeetingPosition7" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1837, 450)
+
+[node name="MeetingPosition8" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1890, 389)
+
+[node name="MeetingPosition9" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1912, 312)
+
+[node name="MeetingPosition10" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1900, 237)
+
+[node name="StartPositions" type="Node2D" parent="."]
+
+[node name="StartPosition" type="Marker2D" parent="StartPositions"]
+position = Vector2(-301, 436)
+
+[node name="StartPosition2" type="Marker2D" parent="StartPositions"]
+position = Vector2(-434, 425)
+
+[node name="StartPosition3" type="Marker2D" parent="StartPositions"]
+position = Vector2(-553, 449)
+
+[node name="StartPosition4" type="Marker2D" parent="StartPositions"]
+position = Vector2(-605, 542)
+
+[node name="StartPosition5" type="Marker2D" parent="StartPositions"]
+position = Vector2(-605, 664)
+
+[node name="StartPosition6" type="Marker2D" parent="StartPositions"]
+position = Vector2(-536, 741)
+
+[node name="StartPosition7" type="Marker2D" parent="StartPositions"]
+position = Vector2(-419, 769)
+
+[node name="StartPosition8" type="Marker2D" parent="StartPositions"]
+position = Vector2(-296, 746)
+
+[node name="StartPosition9" type="Marker2D" parent="StartPositions"]
+position = Vector2(-217, 663)
+
+[node name="StartPosition10" type="Marker2D" parent="StartPositions"]
+position = Vector2(-224, 506)
+
+[node name="DeadBodies" type="Node2D" parent="."]
+
 [node name="MapBorder" type="Node2D" parent="."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MapBorder"]
@@ -1089,8 +1164,6 @@ occluder = SubResource("OccluderPolygon2D_f6dli")
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="DeadBodies" type="Node2D" parent="."]
-
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
 zoom = Vector2(0.45, 0.45)
@@ -1109,16 +1182,20 @@ properties = Array[String]([":global_position"])
 
 [node name="TaskListDisplay" parent="." instance=ExtResource("38_l1f3e")]
 
-[node name="ReportButton" parent="." instance=ExtResource("36_xfee5")]
-
 [node name="UserInterface" parent="." instance=ExtResource("37_tw5rq")]
 
 [node name="MinigameMenu" parent="." instance=ExtResource("34_5r0ro")]
+visible = false
 script = ExtResource("35_23714")
+
+[node name="VotingCanvas" type="CanvasLayer" parent="."]
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.411765, 0.411765, 0.411765, 1)
 
+[connection signal="visibility_changed" from="MinigameMenu" to="." method="update_player_input"]
+[connection signal="child_order_changed" from="VotingCanvas" to="." method="update_player_input"]
 [connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
+[connection signal="visibility_changed" from="LoadingScreen" to="." method="update_player_input"]

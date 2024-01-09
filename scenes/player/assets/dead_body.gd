@@ -1,12 +1,19 @@
 extends Node2D
 
+@export var victim_id: int
+
 @onready var node = $"."
 @onready var sprite = $DeadBodySprite
 @onready var label = $DeadBodyLabel
 
+
 func set_dead_player(victim: int) -> void:
+	victim_id = victim
 	var victim_node = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))
 	var victim_sprite = victim_node.get_node("Skins/PlayerSprite")
+	
+	name = "DeadBody"+str(victim)
+	
 	sprite.texture = victim_sprite.texture
 	sprite.hframes = 5
 	sprite.vframes = 2

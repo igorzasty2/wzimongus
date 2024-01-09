@@ -4,15 +4,18 @@ extends Control
 @onready var end_vote_text = get_node("%EndVoteText")
 @onready var skip_decision = get_node("%Decision")
 @onready var skip_button = get_node("%SkipButton")
+@onready var chat_container = get_node("%ChatContainer")
 @onready var chat = get_node("%Chat")
-@onready var chat_background = get_node("%ChatBackground")
-@onready var chat_input = $Chat/ChatContainer/InputText
+@onready var chat_input = %ChatContainer/Chat/ChatContainer/InputText
 
 @export var VOTING_TIME = 10
 @onready var voting_timer = Timer.new()
 
 @export var EJECT_PLAYER_TIME = 5
 @onready var eject_player_timer = Timer.new()
+
+@export var DISCUSSION_TIME = 60
+@onready var discussion_timer = Timer.new()
 
 var player_box = preload("res://scenes/ui/voting_screen/player_box/player_box.tscn")
 var ejection_screen = preload("res://scenes/ui/ejection_screen/ejection_screen.tscn")
@@ -21,29 +24,68 @@ var time = 0
 
 var is_selected = false
 
+## Określa czy czat jest otwarty
+var is_chat_open:bool = false
+
+## Zmienna na UserSettingsManager
+var user_sett: UserSettingsManager
+
+## Początkowa skaka siatki z przyciskami
+var initial_grid_container_scale
 
 func _ready():
+	visible = false
+	chat.visible = false
+	initial_grid_container_scale = $GridContainer.scale
+	user_sett = UserSettingsManager.load_or_create()
+	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
+	on_interface_scale_changed(user_sett.interface_scale)
+	
+	set_process(false)
+
+## Zaczyna głosowanie
+func start_voting():
+	visible = true
+	
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
 
-	chat.visible = false
+	for player in players.get_children():
+		player.set_voting_status(false)
+
+	chat_container.visible = false
+	skip_button.disabled = true
+
 
 	# END VOTING TIMER
 	add_child(voting_timer)
 	voting_timer.autostart = true
 	voting_timer.one_shot = true
 	voting_timer.connect("timeout", _on_end_voting_timer_timeout)
-	voting_timer.start(VOTING_TIME)
 
 	# EJECT PLAYER TIMER
 	add_child(eject_player_timer)
 	eject_player_timer.connect("timeout", _on_eject_player_timer_timeout)
 
+	# DISCUSSION TIMER
+	add_child(discussion_timer)
+	discussion_timer.autostart = true
+	discussion_timer.one_shot = true
+	discussion_timer.connect("timeout", _on_discussion_timer_timeout)
+	discussion_timer.start(DISCUSSION_TIME)
+
+	
+	set_process(true)
+
 
 func _process(delta):
-	if time < VOTING_TIME:
+	if time < DISCUSSION_TIME:
 		time += delta
-		var time_remaining = VOTING_TIME - time
+		var time_remaining = DISCUSSION_TIME - time
+		end_vote_text.text = "Dyskusja kończy się za %02d sekund" % time_remaining
+	elif time < DISCUSSION_TIME + VOTING_TIME:
+		time += delta
+		var time_remaining = DISCUSSION_TIME + VOTING_TIME - time
 		end_vote_text.text = "Głosowanie kończy się za %02d sekund" % time_remaining
 
 
@@ -122,7 +164,7 @@ func _on_end_voting_timer_timeout():
 
 		GameManager.set_most_voted_player.rpc(GameManager.get_registered_players()[most_voted_player_id] if most_voted_player_id != null else null)
 
-		GameManager.kill_player(most_voted_player_id)
+		#GameManager.kill_player(most_voted_player_id)
 
 
 ## Zmienia scene na ekran wyrzucenia
@@ -135,11 +177,6 @@ func _change_scene_to_ejection_screen():
 	self.get_parent().add_child(ejection_screen.instantiate())
 	self.queue_free()
 
-
-func update_input():
-	if chat_input:
-		var input_status = !chat_input.visible
-		GameManager.set_input_status(input_status)
 
 ## Zwraca id gracza z największą ilością głosów, jeśli jest remis zwraca null
 func get_most_voted_player_id():
@@ -160,13 +197,35 @@ func get_most_voted_player_id():
 		return most_voted_players[0]
 
 
-func _on_open_chat_pressed():
-	chat.visible = true
-	chat._open_chat()
-	chat_background.visible = true
+## Obsługuje otwarcie/zamknięcie czatu
+func _on_chat_button_button_down():
+	if is_chat_open:
+		chat._close_chat()
+		is_chat_open = false
+		chat.visible = false
+		chat_container.visible = false
+	else:
+		chat_container.visible = true
+		chat.visible = true
+		chat._open_chat()
+		is_chat_open = true
 
 
-func _on_close_chat_pressed():
-	chat.visible = false
-	chat_background.visible = false
-	chat._close_chat()
+## Obsługuje naciśnięcie przycisku menu pauzy
+func _on_pause_menu_button_button_down():
+	var event = InputEventAction.new()
+	event.action = "pause_menu"
+	event.pressed = true
+	Input.parse_input_event(event)
+
+
+## Obsługuje zmianę skali nakładki
+func on_interface_scale_changed(value:float):
+	$GridContainer.scale = initial_grid_container_scale * value
+
+
+func _on_discussion_timer_timeout():
+	skip_button.disabled = false
+	voting_timer.start(VOTING_TIME)
+	for player in players.get_children():
+		player.set_voting_status(true)

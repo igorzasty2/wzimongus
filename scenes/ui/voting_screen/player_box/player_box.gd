@@ -4,6 +4,7 @@ extends Control
 @onready var username = get_node("%Username")
 @onready var decision = get_node("%Decision")
 @onready var voted_by_container = get_node("%VotedBy")
+@onready var button = get_node("%Button")
 
 signal player_voted
 signal player_selected
@@ -69,3 +70,10 @@ func _on_decision_no_pressed():
 func _on_decision_yes_pressed():
 	decision.visible = false
 	emit_signal("player_voted", player_key)
+
+
+func set_voting_status(is_voted: bool):
+	if is_voted:
+		button.pressed.connect(_on_button_pressed)
+	else:
+		button.pressed.disconnect(_on_button_pressed)
