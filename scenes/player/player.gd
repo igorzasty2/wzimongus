@@ -238,7 +238,7 @@ func _input(event):
 	if event.is_action_pressed("sabotage") and event.is_pressed() and !is_in_vent:
 		if name.to_int() == GameManager.get_current_player_id() && GameManager.get_registered_player_key(name.to_int(), "is_lecturer"):
 			if can_sabotage_cooldown:
-				GameManager.request_light_sabotage.rpc_id(0)
+				GameManager.request_light_sabotage.rpc_id(1)
 				button_active.emit("SabotageButton", false)
 
 
