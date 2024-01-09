@@ -54,10 +54,10 @@ func _switch_chat_group():
 		_update_group_label()
 
 func _update_group_label():
-	if GameManager.get_current_player_key("is_lecturer"):
-		group_label.text = "Lecturer" if current_group == Group.LECTURER else "Global"
-	elif GameManager.get_current_player_key("is_dead"):
+	if GameManager.get_current_player_key("is_dead"):
 		group_label.text = "Dead"
+	elif GameManager.get_current_player_key("is_lecturer"):
+		group_label.text = "Lecturer" if current_group == Group.LECTURER else "Global"
 	else:
 		group_label.text = "Global"
 
