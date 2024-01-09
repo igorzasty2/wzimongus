@@ -67,7 +67,7 @@ var can_report: bool = false
 
 ## Zwraca najbliższy vent.
 func get_nearest_vent() -> Vent:
-	var vent_systems = get_tree().root.get_node("Game/Maps/MainMap/Vents").get_children()
+	var vent_systems = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/Vents").get_children()
 
 	for i in vent_systems:
 		var vents = i.get_children()

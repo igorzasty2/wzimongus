@@ -8,7 +8,7 @@ extends Area2D
 ## Interfejs
 @onready var user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 ## Przycisk alarmowy
-@onready var emergency_button = get_tree().root.get_node("Game/Maps/MainMap/Objects/SamorzadStol/EmergencyButton")
+@onready var emergency_button = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/EmergencyButton")
 
 
 ## Określa czy gracz jest w zasięgu

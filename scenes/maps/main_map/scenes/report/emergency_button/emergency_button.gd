@@ -16,7 +16,7 @@ extends Node2D
 ## Pozycje do spotkania podczas głosowania
 @onready var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
 ## Tablica wszystkich tasków
-@onready var tasks = get_tree().root.get_node("Game/Maps/MainMap/Tasks").get_children()
+@onready var tasks = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/Tasks").get_children()
 ## System kamer
 @onready var camera_system = get_tree().root.get_node("Game/Maps/MainMap/Cameras/CameraSystem")
 ## Interfejs
@@ -24,7 +24,7 @@ extends Node2D
 ## Lista zadań
 @onready var task_list = get_tree().root.get_node("Game/Maps/MainMap/TaskListDisplay")
 ## Przycisk alarmowy
-@onready var emergency_button = get_tree().root.get_node("Game/Maps/MainMap/Objects/SamorzadStol/EmergencyButton")
+@onready var emergency_button = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/EmergencyButton")
 
 ## Ekran głosowania
 var voting_screen = preload("res://scenes/ui/voting_screen/voting_screen.tscn")
