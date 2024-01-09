@@ -32,6 +32,7 @@ var user_sett: UserSettingsManager
 var initial_grid_container_scale
 
 func _ready():
+	visible = false
 	initial_grid_container_scale = $GridContainer.scale
 	user_sett = UserSettingsManager.load_or_create()
 	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
@@ -41,6 +42,8 @@ func _ready():
 
 ## Zaczyna głosowanie
 func start_voting():
+	visible = true
+	
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
 

@@ -30,6 +30,3 @@ scale = Vector2(0.275, 0.275)
 
 [node name="ReportArea" parent="." instance=ExtResource("2_5uuls")]
 scale = Vector2(1.6, 1.6)
-
-[connection signal="body_entered" from="ReportArea" to="." method="_on_report_area_body_entered"]
-[connection signal="body_exited" from="ReportArea" to="." method="_on_report_area_body_exited"]
