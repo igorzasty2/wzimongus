@@ -6,8 +6,17 @@
 script = ExtResource("1_dgkoj")
 
 [node name="TaskList" type="RichTextLabel" parent="."]
-offset_right = 515.0
-offset_bottom = 553.0
+offset_left = 46.0
+offset_top = 59.0
+offset_right = 561.0
+offset_bottom = 612.0
 mouse_filter = 2
 bbcode_enabled = true
 fit_content = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = 43.0
+offset_top = 18.0
+offset_right = 562.0
+offset_bottom = 45.0
+show_percentage = false
