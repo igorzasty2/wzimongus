@@ -29,6 +29,15 @@ func _on_save_button_pressed():
 
 func _on_visibility_changed():
 	$SettingsContainer.visible = visible
+	var settings = GameManager.get_server_settings()
+	if settings["max_players"]:
+		max_connections.selected = max_connections.get_item_index(settings["max_players"])
+		max_lecturers.selected = max_lecturers.get_item_index(settings["max_lecturers"])
+		kill_cooldown.selected = kill_cooldown.get_item_index(settings["kill_cooldown"])
+		kill_radius.selected = kill_radius.get_item_index(settings["kill_radius"])
+		task_amount.selected = task_amount.get_item_index(settings["task_amount"])
+		emergency_cooldown.selected = emergency_cooldown.get_item_index(settings["emergency_cooldown"])
+		_on_connections_lecturers_item_selected(max_connections.selected)
 
 
 func _on_connections_lecturers_item_selected(_index: int):
@@ -43,7 +52,7 @@ func _update_max_connections(_id: int = 0, _player: Dictionary = {}):
 	# Dodaje opcje do wyboru
 	var idx = 0
 	for i in range(max(3, GameManager.get_registered_players().size()), 11):
-		max_connections.add_item(str(i))
+		max_connections.add_item(str(i),i)
 
 		# Ustawia aktualną ilość połączeń jako zaznaczoną
 		if i == GameManager.get_server_settings().max_players:
