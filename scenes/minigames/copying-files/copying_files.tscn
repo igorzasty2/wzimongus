@@ -12,6 +12,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_obpcf")
+polish_name = "Kopiowanie plików"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

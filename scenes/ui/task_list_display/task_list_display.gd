@@ -10,7 +10,11 @@ func _update_task_list():
 	var tasks_string = ""
 	
 	for i in TaskManager.current_player_tasks:
-		tasks_string += str(" ".join(TaskManager.current_player_tasks[i].minigame_scene.resource_path.split('/')[-1].split('.')[0].split('_')).capitalize())
+		for prop_index in range(TaskManager.current_player_tasks[i].minigame_scene.get_state().get_node_property_count(0)):
+			if TaskManager.current_player_tasks[i].minigame_scene.get_state().get_node_property_name(0, prop_index) == "polish_name":
+				tasks_string += TaskManager.current_player_tasks[i].minigame_scene.get_state().get_node_property_value(0, prop_index)
+				break
+		
 		tasks_string += "\n"
 	
 	_task_list_node.text = tasks_string
