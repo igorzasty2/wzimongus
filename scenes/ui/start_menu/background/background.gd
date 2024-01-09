@@ -36,7 +36,7 @@ func _ready():
 	background_image_array = [background_image1, background_image2, background_image3, background_image4]
 	GameManager.is_first_time = false
 	
-	# Przekazuje teksture tła na kolejną scenę
+	# Przekazuje teksture tła na kolejnej scenie
 	if GameManager.current_background_texture != null:
 		background.texture = GameManager.current_background_texture
 		transition_background.texture = GameManager.transition_background_texture
