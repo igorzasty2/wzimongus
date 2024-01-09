@@ -62,7 +62,6 @@ func _on_change_background_timer_timeout():
 	transition_background.texture = background.texture
 	GameManager.transition_background_texture = transition_background.texture
 	background.texture = randomize_background()
-	print(transition_background.texture, "\n",background.texture,"\n")
 	transition_animation_player.play("transition_animation")
 	background_animation_player.play("move_animation")
 	
