@@ -26,16 +26,15 @@ func _ready():
 	if socketUDP.bind(listenPort) != OK:
 		print("GameServer LAN service: Error listening on port: " + str(listenPort))
 
-func _process(delta):
+func _process(_delta):
 	if socketUDP.get_available_packet_count() > 0:
+		var serverMessage = socketUDP.get_packet().get_string_from_ascii()
 		var serverIp = socketUDP.get_packet_ip()
 		var serverPort = socketUDP.get_packet_port()
-		var array_bytes = socketUDP.get_packet()
-		
+
 		if serverIp != '' and serverPort > 0:
 			# We've discovered a new server! Add it to the list and let people know
 			if not knownServers.has(serverIp):
-				var serverMessage = array_bytes.get_string_from_ascii()
 				var json = JSON.new()
 				var result = json.parse(serverMessage)
 				var gameInfo = json.get_data()
