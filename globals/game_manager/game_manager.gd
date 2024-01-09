@@ -119,7 +119,7 @@ var _server_settings = {
 	"port": 9001,
 	"max_players": 10,
 	"max_lecturers": 3,
-	"kill_cooldown": 40,
+	"kill_cooldown": 30,
 	"kill_radius": 260,
 	"task_amount": 3,
 	"lecturer_light_radius": 4,
