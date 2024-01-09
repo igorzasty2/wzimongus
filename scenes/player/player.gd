@@ -218,7 +218,7 @@ func _input(event):
 			if can_kill_cooldown:
 				var victim = closest_player(GameManager.get_current_player_id())
 				if victim:
-					GameManager.kill(victim)
+					GameManager.kill_victim(victim)
 					_handle_kill_timer()
 					button_active.emit("FailButton", false)
 

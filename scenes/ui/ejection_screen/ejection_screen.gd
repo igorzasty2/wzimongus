@@ -9,6 +9,7 @@ extends Control
 @onready var most_voted_player = GameManager.get_current_game_key("most_voted_player")
 
 func _ready():
+	# Przenosi graczy na miejsce spotkania
 	GameManager.teleport_players()
 	
 	if  most_voted_player == null:
@@ -29,4 +30,4 @@ func _ready():
 #Następna runda
 func _on_next_round_timer_timeout():
 	self.queue_free()
-	GameManager.next_round()
+	GameManager.new_round()

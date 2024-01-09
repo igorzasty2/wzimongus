@@ -125,7 +125,7 @@ var _server_settings = {
 	"kill_cooldown": 40,
 	"kill_radius": 260,
 	"task_amount": 3,
-	"emergency_cooldown": 30
+	"emergency_cooldown": 30,
 	"lecturer_light_radius": 4,
 	"student_light_radius": 2, 
 }
@@ -306,8 +306,10 @@ func reset_game():
 func new_round():
 	# Resetuje system głosowania.
 	_reset_votes()
+	
 	next_round_started.emit()
-
+	set_input_status(true)
+	
 	check_winning_conditions()
 
 
@@ -696,11 +698,11 @@ func _send_player_kill(player_id: int, is_victim: bool = true):
 func check_winning_conditions():
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-	
+
 	if TaskManager.get_tasks_server().is_empty():
 		winner_determined.emit(Role.STUDENT)
 		return
-	
+
 	if _count_alive_lecturers() == 0:
 		winner_determined.emit(Role.STUDENT)
 		return

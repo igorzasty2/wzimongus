@@ -76,8 +76,8 @@ func _process(_delta):
 
 
 ## Wywoływane w momencie oblania gracza
-func _on_player_killed(id:int):
-	if multiplayer.get_unique_id() == id:
+func _on_player_killed(id: int, is_victim: bool):
+	if multiplayer.get_unique_id() == id && is_victim:
 		uses_left_label.text = ""
 		toggle_button_highlight(false)
 		button_active.emit("InteractButton", false)

@@ -145,7 +145,7 @@ func _on_end_voting_timer_timeout():
 
 		GameManager.set_most_voted_player.rpc(GameManager.get_registered_players()[most_voted_player_id] if most_voted_player_id != null else null)
 
-		GameManager.kill_player(most_voted_player_id)
+		#GameManager.kill_player(most_voted_player_id)
 
 
 ## Zmienia scene na ekran wyrzucenia
