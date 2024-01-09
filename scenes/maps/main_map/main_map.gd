@@ -8,8 +8,6 @@ signal load_finished
 ## Pozycje do spawnu gracza
 @onready var start_positions = $StartPositions.get_children()
 
-## Indeks aktualnej pozycji spawnu dla gracza
-var position_idx: int = 0
 
 func _ready():
 	# Uruchamia synchronizację czasu.
@@ -63,8 +61,7 @@ func _spawn_player(id: int):
 
 	# Ustawia startową pozycję gracza.
 	if multiplayer.is_server():
-		player.position = start_positions[position_idx].position
-		position_idx +=1
+		player.position = start_positions[GameManager.get_registered_players().keys().find(id)].position
 
 	players.add_child(player)
 	

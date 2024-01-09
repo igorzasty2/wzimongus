@@ -308,7 +308,6 @@ func new_round():
 	_reset_votes()
 	
 	next_round_started.emit()
-	set_input_status(true)
 	
 	check_winning_conditions()
 

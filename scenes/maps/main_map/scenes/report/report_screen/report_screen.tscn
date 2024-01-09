@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://djoj4kykfho2y"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/scenes/report/report_screen/report_screen.gd" id="1_woxjr"]
-[ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://scenes/maps/main_map/scenes/report/emergency_button/assets/_emergency_meeting.png" id="2_nakpi"]
+[ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://scenes/maps/main_map/scenes/report/emergency_button/assets/emergency_meeting.png" id="2_nrmn5"]
 [ext_resource type="Texture2D" uid="uid://dy8j6jl7efkn1" path="res://icon.png" id="2_y8u8h"]
 
 [node name="ReportScreen" type="CanvasLayer"]
@@ -37,7 +37,7 @@ offset_right = 225.0
 offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_nakpi")
+texture = ExtResource("2_nrmn5")
 
 [node name="BodySprite" type="Sprite2D" parent="."]
 position = Vector2(640, 290)

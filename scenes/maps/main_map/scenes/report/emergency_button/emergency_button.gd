@@ -105,6 +105,7 @@ func _on_end_emergency_timer_timeout():
 func on_next_round_started():
 	voting_canvas.get_child(0).queue_free()
 	
+	GameManager.set_input_status(true)
 	GameManager.is_meeting_called = false
 	
 	button_active.emit("ReportButton", false)
@@ -194,9 +195,7 @@ func instantiate_voting_screen():
 	var voting_screen_instance = voting_screen.instantiate()
 	voting_canvas.add_child(voting_screen_instance)
 	
-	# Wyłącza ruch gracza - później włącza się w game_manager
 	GameManager.set_input_status(false)
-	
 	GameManager.is_meeting_called = true
 	is_wait_time_over = false
 	

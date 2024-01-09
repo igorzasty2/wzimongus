@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/maps/main_map/scenes/report/emergency_button/emergency_button.gd" id="1_48x8y"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_ultrg"]
 [ext_resource type="PackedScene" uid="uid://dposexvk3a7mv" path="res://scenes/maps/main_map/scenes/report/report_area/report_area.tscn" id="3_6fy7m"]
-[ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://scenes/maps/main_map/scenes/report/emergency_button/assets/_emergency_meeting.png" id="3_wkt5k"]
+[ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://scenes/maps/main_map/scenes/report/emergency_button/assets/emergency_meeting.png" id="3_wkt5k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eovgj"]
 shader = ExtResource("2_ultrg")
