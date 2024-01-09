@@ -1,6 +1,17 @@
-[gd_scene load_steps=18 format=3 uid="uid://mtrc2q6rpyb6"]
+[gd_scene load_steps=19 format=3 uid="uid://mtrc2q6rpyb6"]
 
 [ext_resource type="Script" path="res://scenes/ui/camera_system/camera_system.gd" id="1_j11j8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pguk4"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [sub_resource type="Gradient" id="Gradient_27dqk"]
 
@@ -84,6 +95,17 @@ anchor_bottom = 0.93
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j11j8")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.01
+anchor_top = -0.02
+anchor_right = 1.008
+anchor_bottom = 1.02
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pguk4")
 
 [node name="CameraPanel" type="GridContainer" parent="."]
 layout_mode = 1

@@ -1009,7 +1009,7 @@ allow_student_venting = true
 [node name="Cameras" type="Node2D" parent="."]
 
 [node name="CameraSystem" parent="Cameras" instance=ExtResource("3_e0rk4")]
-position = Vector2(4016, -1329)
+position = Vector2(4019, -1314)
 is_minigame = false
 minigame_scene = ExtResource("89_58eb3")
 
