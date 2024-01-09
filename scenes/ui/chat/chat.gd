@@ -33,6 +33,9 @@ func _ready():
 	group_label.hide()
 	_update_group_label()
 
+	if GameManager.get_current_player_key("is_dead"):
+		current_group = Group.DEAD
+
 
 func _input(event):
 	if event.is_action_pressed("chat_open") && !input_text.visible:
@@ -53,8 +56,10 @@ func _switch_chat_group():
 func _update_group_label():
 	if GameManager.get_current_player_key("is_lecturer"):
 		group_label.text = "Lecturer" if current_group == Group.LECTURER else "Global"
+	elif GameManager.get_current_player_key("is_dead"):
+		group_label.text = "Dead"
 	else:
-		group_label.text = "Dead" if current_group == Group.DEAD else "Global"
+		group_label.text = "Global"
 
 @rpc("any_peer", "call_local", "reliable")
 func send_message(message, group, id):
@@ -63,7 +68,7 @@ func send_message(message, group, id):
 			if current_group == Group.DEAD:
 				_create_message(GameManager.get_registered_players()[id], message, Group.DEAD)
 		Group.LECTURER:
-			if current_group == Group.LECTURER:
+			if current_group == Group.LECTURER || current_group == Group.DEAD:
 				_create_message(GameManager.get_registered_players()[id], message, Group.LECTURER)
 		Group.SYSTEM:
 			var system_message_instance = system_message_scene.instantiate()
@@ -76,7 +81,7 @@ func send_message(message, group, id):
 
 			timer.start()
 		_:
-			_create_message(GameManager.get_registered_players()[id], message, current_group)
+			_create_message(GameManager.get_registered_players()[id], message, Group.GLOBAL)
 	
 	if multiplayer.is_server():
 		for peer_id in GameManager.get_registered_players().keys():
