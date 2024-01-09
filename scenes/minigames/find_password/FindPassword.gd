@@ -20,7 +20,7 @@ func _ready():
 		page_scenes.append(page_scene_instance)
 		add_child(page_scene_instance)
 		page_scene_instance.visible = false
-		page_scene_instance.position = Vector2(400, 400)
+		page_scene_instance.position = Vector2(650, 500)
 
 func _generate_passwords():
 	var passwords = []
@@ -37,7 +37,7 @@ func _on_password_input_text_submitted(new_text):
 		_close()
 	else:
 		password_input.clear()
-		password_input.set_placeholder("Wrong password!")
+		password_input.set_placeholder("Niepoprawne Hasło!")
 
 func _on_button_pressed():
 	pass
@@ -47,20 +47,27 @@ func _close():
 	self.queue_free()
 
 func _on_page_1_pressed():
-	page_scenes[0].visible = true
-
+	if not _any_page_visible():
+		page_scenes[0].visible = true
 
 func _on_page_2_pressed():
-	page_scenes[1].visible = true
-
+	if not _any_page_visible():
+		page_scenes[1].visible = true
 
 func _on_page_3_pressed():
-	page_scenes[2].visible = true
-
+	if not _any_page_visible():
+		page_scenes[2].visible = true
 
 func _on_page_4_pressed():
-	page_scenes[3].visible = true
-
+	if not _any_page_visible():
+		page_scenes[3].visible = true
 
 func _on_page_5_pressed():
-	page_scenes[4].visible = true
+	if not _any_page_visible():
+		page_scenes[4].visible = true
+
+func _any_page_visible():
+	for page_scene in page_scenes:
+		if page_scene.visible:
+			return true
+	return false
