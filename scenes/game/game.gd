@@ -45,6 +45,8 @@ func _on_game_ended():
 
 func _on_error_occured(message: String):
 	if !error.visible:
+		$PauseMenu.queue_free()
+		
 		connecting.hide()
 		_delete_map()
 		error_pop_up.set_information(message)

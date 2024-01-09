@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://m6q8rh67ru1c"]
+[gd_scene load_steps=8 format=3 uid="uid://m6q8rh67ru1c"]
 
 [ext_resource type="Script" path="res://scenes/ui/user_interface/user_interface.gd" id="1_vsf4i"]
 [ext_resource type="Texture2D" uid="uid://ds2c374kw2h50" path="res://scenes/ui/user_interface/assets/nowy_vent.png" id="2_qqfse"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://h8ydultq6bpk" path="res://scenes/ui/user_interface/assets/nowy_sabotaz.png" id="4_ww8h1"]
 [ext_resource type="Texture2D" uid="uid://b0wwwpxa645jv" path="res://scenes/ui/user_interface/assets/4_przycisk_zglos.png" id="5_m7bia"]
 [ext_resource type="Texture2D" uid="uid://djuqvjgi3pbno" path="res://scenes/ui/user_interface/assets/5_przycisk_uzyj.png" id="6_57n6h"]
-[ext_resource type="Texture2D" uid="uid://x3hb3b3rrfa1" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/_czat.png" id="7_gbm8j"]
 [ext_resource type="Texture2D" uid="uid://c3krnig4q8qwh" path="res://scenes/ui/user_interface/assets/__nowy_setting_v1.png" id="8_5be7m"]
 
 [node name="UserInterface" type="CanvasLayer"]
@@ -47,7 +46,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("3_chfnj")
 
-[node name="Label" type="Label" parent="GridContainer/FailButton"]
+[node name="FailLabel" type="Label" parent="GridContainer/FailButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -75,6 +74,27 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("4_ww8h1")
 
+[node name="SabotageLabel" type="Label" parent="GridContainer/SabotageButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 200
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ReportButton" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -99,16 +119,12 @@ offset_left = -360.0
 offset_bottom = 360.0
 grow_horizontal = 0
 scale = Vector2(0.18, 0.18)
-pivot_offset = Vector2(740, 0)
+pivot_offset = Vector2(360, 0)
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
 columns = 2
-
-[node name="ChatButton" type="TextureButton" parent="GridContainer2"]
-layout_mode = 2
-texture_normal = ExtResource("7_gbm8j")
 
 [node name="PauseButton" type="TextureButton" parent="GridContainer2"]
 custom_minimum_size = Vector2(100, 100)
@@ -122,5 +138,4 @@ texture_normal = ExtResource("8_5be7m")
 [connection signal="button_down" from="GridContainer/SabotageButton" to="." method="_on_sabotage_button_button_down"]
 [connection signal="button_down" from="GridContainer/ReportButton" to="." method="_on_report_button_button_down"]
 [connection signal="button_down" from="GridContainer/InteractButton" to="." method="_on_interact_button_button_down"]
-[connection signal="button_down" from="GridContainer2/ChatButton" to="." method="_on_chat_button_button_down"]
 [connection signal="button_down" from="GridContainer2/PauseButton" to="." method="_on_pause_button_button_down"]

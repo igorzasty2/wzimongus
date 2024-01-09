@@ -57,6 +57,9 @@ func _input(event):
 	
 	if GameManager.get_current_game_key("is_paused"):
 		return
+	
+	if GameManager.get_current_game_key("is_input_disabled"):
+		return
 
 	summon_window()
 
