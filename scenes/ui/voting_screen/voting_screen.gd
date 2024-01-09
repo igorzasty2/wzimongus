@@ -5,7 +5,7 @@ extends Control
 @onready var skip_decision = get_node("%Decision")
 @onready var skip_button = get_node("%SkipButton")
 @onready var chat_container = get_node("%ChatContainer")
-@onready var chat = get_node("%ChatContainer/Chat")
+@onready var chat = get_node("%Chat")
 @onready var chat_input = %ChatContainer/Chat/ChatContainer/InputText
 
 @export var VOTING_TIME = 10
@@ -204,11 +204,13 @@ func get_most_voted_player_id():
 ## Obsługuje otwarcie/zamknięcie czatu
 func _on_chat_button_button_down():
 	if is_chat_open:
-		chat_container.visible = false
 		chat._close_chat()
 		is_chat_open = false
+		chat.visible = false
+		chat_container.visible = false
 	else:
 		chat_container.visible = true
+		chat.visible = true
 		chat._open_chat()
 		is_chat_open = true
 
