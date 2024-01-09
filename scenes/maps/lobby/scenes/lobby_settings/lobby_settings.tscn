@@ -52,9 +52,10 @@ text = "Maksymalna
 liczba graczy"
 
 [node name="MaxConnectionsInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/MaxConnectionsContainer"]
-custom_minimum_size = Vector2(65, 2.08165e-12)
+custom_minimum_size = Vector2(72, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 4
 size_flags_stretch_ratio = 0.0
 
 [node name="LecturersAmountAlert" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer"]
@@ -76,9 +77,10 @@ text = "Maksymalna
 liczba wykładowców"
 
 [node name="MaxLecturersInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/MaxLecturersContainer"]
-custom_minimum_size = Vector2(65, 2.08165e-12)
+custom_minimum_size = Vector2(72, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 4
 size_flags_stretch_ratio = 0.0
 item_count = 3
 selected = 1
@@ -97,7 +99,9 @@ layout_mode = 2
 text = "Czas odnowienia oblania"
 
 [node name="KillCooldownInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/KillCooldownContainer"]
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
+size_flags_horizontal = 8
 item_count = 4
 selected = 2
 popup/item_0/text = "15s"
@@ -117,7 +121,9 @@ layout_mode = 2
 text = "Czas odnowienia sabotażu"
 
 [node name="SabotageCooldownInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/SabotageCooldownContainer"]
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
+size_flags_horizontal = 8
 item_count = 4
 selected = 2
 popup/item_0/text = "15s"
@@ -138,9 +144,10 @@ text = "Promień oblania"
 
 [node name="KillRadiusInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/KillRadiusContainer"]
 layout_mode = 2
+size_flags_horizontal = 8
 item_count = 3
 selected = 0
-popup/item_0/text = "Mnieszy"
+popup/item_0/text = "Mniejszy"
 popup/item_0/id = 200
 popup/item_1/text = "Domyślny"
 popup/item_1/id = 260
@@ -155,7 +162,7 @@ layout_mode = 2
 text = "Liczba zadań"
 
 [node name="TaskAmountInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/TaskAmountContainer"]
-custom_minimum_size = Vector2(65, 0)
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 item_count = 8
@@ -185,7 +192,9 @@ layout_mode = 2
 text = "Czas włączenia przycisku"
 
 [node name="EmergencyCooldownInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/EmergencyCooldownContainer"]
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
+size_flags_horizontal = 8
 item_count = 4
 selected = 1
 popup/item_0/text = "15s"
@@ -206,6 +215,7 @@ text = "Zasięg widzenia studenta"
 
 [node name="StudentLightRadiusInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/StudentLightRadiusContainer"]
 layout_mode = 2
+size_flags_horizontal = 8
 item_count = 3
 selected = 1
 popup/item_0/text = "Bliski"
@@ -224,11 +234,12 @@ text = "Zasięg widzenia wykładowcy"
 
 [node name="LecturerLightRadiusInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/LecturerLightRadiusContainer"]
 layout_mode = 2
+size_flags_horizontal = 8
 item_count = 3
 selected = 1
 popup/item_0/text = "Bliski"
 popup/item_0/id = 2
-popup/item_1/text = "Domyśny"
+popup/item_1/text = "Domyślny"
 popup/item_1/id = 4
 popup/item_2/text = "Daleki"
 popup/item_2/id = 8

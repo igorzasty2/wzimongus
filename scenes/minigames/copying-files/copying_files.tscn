@@ -36,7 +36,7 @@ offset_top = -172.0
 offset_right = 261.0
 offset_bottom = -132.0
 theme_override_font_sizes/normal_font_size = 27
-text = "C:/sala_komputerowa/stanowsko4/desktop"
+text = "C:/sala_komputerowa/stanowisko4/desktop"
 
 [node name="PromptLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
