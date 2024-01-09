@@ -35,22 +35,17 @@ func _exit_tree():
 	# Zatrzymuje synchronizację czasu.
 	NetworkTime.stop()
 
-	GameManager.player_deregistered.disconnect(_remove_player)
-
 
 @rpc("call_local", "reliable")
 ## Włącza ekran ładowania.
 func _start_game():
 	show()
 	camera.enabled = true
-	loading_screen.connect("finished", _on_loading_screen_finished)
 	loading_screen.play()
 	load_finished.emit()
 
 
 func _on_loading_screen_finished():
-	loading_screen.disconnect("finished", _on_loading_screen_finished)
-	loading_screen.hide()
 	loading_screen.queue_free()
 	GameManager.set_input_status(true)
 
@@ -58,19 +53,24 @@ func _on_loading_screen_finished():
 ## Spawnuje gracza na mapie.
 func _spawn_player(id: int):
 	var player = preload("res://scenes/player/player.tscn").instantiate()
-
+	
 	player.name = str(id)
 
 	# Ustawia startową pozycję gracza.
 	if multiplayer.is_server():
 		player.position = Vector2(randi_range(0, 100), randi_range(0, 100))
-
+	
 	players.add_child(player)
+	
+	player.activate_player_shaders()
 
-	# Ustawia kamerę.
 	if GameManager.get_current_player_id() == id:
+		# Ustawia kamerę.
 		camera.target = player
 		camera.global_position = player.global_position
+	
+		# Włącza światło
+		player.activate_lights()
 
 
 ## Usuwa gracza z mapy.

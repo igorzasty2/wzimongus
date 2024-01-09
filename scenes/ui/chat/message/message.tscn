@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://delr2y3pedulb"]
+[gd_scene load_steps=3 format=3 uid="uid://delr2y3pedulb"]
 
 [ext_resource type="Script" path="res://scenes/ui/chat/message/message.gd" id="1_0n54r"]
-[ext_resource type="Texture2D" uid="uid://bjct6kxmgyau0" path="res://scenes/ui/chat/assets/man.png" id="2_vh1mn"]
 
 [sub_resource type="Theme" id="Theme_bghm4"]
 
@@ -15,7 +14,6 @@ script = ExtResource("1_0n54r")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-texture = ExtResource("2_vh1mn")
 expand_mode = 1
 stretch_mode = 4
 

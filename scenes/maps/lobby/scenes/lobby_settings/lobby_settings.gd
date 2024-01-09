@@ -3,23 +3,16 @@ extends CanvasLayer
 @onready var max_connections = $SettingsContainer/MarginContainer/VBoxContainer/MaxConnectionsContainer/MaxConnectionsInput
 @onready var lecturers_amount_alert = $SettingsContainer/MarginContainer/VBoxContainer/LecturersAmountAlert
 @onready var max_lecturers = $SettingsContainer/MarginContainer/VBoxContainer/MaxLecturersContainer/MaxLecturersInput
-
+@onready var kill_cooldown = $SettingsContainer/MarginContainer/VBoxContainer/KillCooldownContainer/KillCooldownInput
+@onready var kill_radius = $SettingsContainer/MarginContainer/VBoxContainer/KillRadiusContainer/KillRadiusInput
+@onready var task_amount = $SettingsContainer/MarginContainer/VBoxContainer/TaskAmountContainer/TaskAmountInput
 
 func _ready():
-	hide()
-	lecturers_amount_alert.hide()
-
 	# Ustawia aktualizacje ilości maksymalnych połączeń
 	if multiplayer.is_server():
 		_update_max_connections()
 		GameManager.player_registered.connect(_update_max_connections)
 		GameManager.player_deregistered.connect(_update_max_connections)
-
-
-func _exit_tree():
-	if multiplayer.is_server():
-		GameManager.server_settings_changed.disconnect(_update_max_connections)
-		GameManager.player_deregistered.disconnect(_update_max_connections)
 
 
 func _input(event):
@@ -28,13 +21,21 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 
-func _on_save_button_pressed():
-	GameManager.change_server_settings(max_connections.text.to_int(), max_lecturers.text.to_int())
+func _on_save_button_pressed():	
+	GameManager.change_server_settings(max_connections.text.to_int(), max_lecturers.get_selected_id(), kill_cooldown.get_selected_id(), kill_radius.get_selected_id(), task_amount.get_selected_id())
 	hide()
 
 
 func _on_visibility_changed():
-	get_parent().update_input()
+	$SettingsContainer.visible = visible
+	var settings = GameManager.get_server_settings()
+	if settings["max_players"]:
+		max_connections.selected = max_connections.get_item_index(settings["max_players"])
+		max_lecturers.selected = max_lecturers.get_item_index(settings["max_lecturers"])
+		kill_cooldown.selected = kill_cooldown.get_item_index(settings["kill_cooldown"])
+		kill_radius.selected = kill_radius.get_item_index(settings["kill_radius"])
+		task_amount.selected = task_amount.get_item_index(settings["task_amount"])
+		_on_connections_lecturers_item_selected(max_connections.selected)
 
 
 func _on_connections_lecturers_item_selected(_index: int):
@@ -49,7 +50,7 @@ func _update_max_connections(_id: int = 0, _player: Dictionary = {}):
 	# Dodaje opcje do wyboru
 	var idx = 0
 	for i in range(max(3, GameManager.get_registered_players().size()), 11):
-		max_connections.add_item(str(i))
+		max_connections.add_item(str(i),i)
 
 		# Ustawia aktualną ilość połączeń jako zaznaczoną
 		if i == GameManager.get_server_settings().max_players:
