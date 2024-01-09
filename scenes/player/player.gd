@@ -24,8 +24,10 @@ var in_range_color = [180, 0, 0, 255]
 var out_of_range_color = [0, 0, 0, 0]
 ## Kolor nicku martwego gracza
 var dead_username_color = Color.DARK_GOLDENROD
-## Przechowuje informację o możliwości użycia funkcji zabicia 
+## Przechowuje informację o możliwości użycia funkcji zabicia.
 var can_kill_cooldown: bool = false
+## Przechowuje informację o możliwości użycia funkcji sabotage. 
+var can_sabotage_cooldown: bool = false
 
 ## Czy jest teleport
 var is_teleport: bool = false
@@ -44,7 +46,7 @@ var teleport_position = null
 @onready var player_sprite = $Skins/PlayerSprite
 ## Referencja do node'a postaci.
 @onready var player_node = $"."
-##
+
 @onready var light = $LightsContainer/Light
 @onready var lights_container = $LightsContainer
 
@@ -57,6 +59,10 @@ var user_interface
 signal button_active(button_name:String, is_active:bool)
 ## Timer z czasem do oblania
 var timer
+
+var sabotage_timer
+
+var no_light_timer
 ## Określa czy gracz może reportować
 var can_report: bool = false
 
@@ -113,10 +119,12 @@ func _ready():
 	
 	# Łączy sygnał zabicia postaci z funkcją _on_killed_player
 	GameManager.player_killed.connect(_on_killed_player)
+	GameManager.sabotage.connect(_on_sabotage)
 	
 	# Jeśli gracz jest impostorem to ustawia początkową możliwość zabicia na true
 	if GameManager.get_current_player_key("is_lecturer"):
 		can_kill_cooldown = true
+		can_sabotage_cooldown = true
 	
 	GameManager.map_load_finished.connect(_on_map_load_finished)
 	GameManager.next_round_started.connect(_on_next_round_started)
@@ -131,6 +139,9 @@ func _process(_delta):
 	# Aktualizuje czas pozostały do kolejnej możliwości oblania
 	if user_interface!=null && timer!=null && timer.time_left!=0:
 		user_interface.update_time_left("FailLabel", str(int(timer.time_left)))
+		
+	if user_interface!=null && sabotage_timer!=null && sabotage_timer.time_left>0:
+		user_interface.update_time_left("SabotageLabel", str(int(sabotage_timer.time_left)))
 
 
 func _rollback_tick(delta, _tick, is_fresh):
@@ -145,7 +156,8 @@ func _rollback_tick(delta, _tick, is_fresh):
 				input.direction = Vector2.ZERO
 
 				button_active.emit("ReportButton", !is_in_vent && can_report)
-				button_active.emit("FailButton", false)
+				button_active.emit("FailButton", !is_in_vent)
+				button_active.emit("SabotageButton", !is_in_vent)
 
 				# Wyłącza widoczność gracza.
 				if multiplayer.is_server():
@@ -198,6 +210,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 	# żyje i cooldown na funkcji zabij nie jest aktywny.
 	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer") && !is_in_vent:
+			button_active.emit("SabotageButton", !is_in_vent)
 			if !GameManager.get_current_player_key("is_dead"):
 				#print(can_kill_cooldown)
 				if can_kill_cooldown && !GameManager.is_meeting_called:
@@ -221,6 +234,12 @@ func _input(event):
 					GameManager.kill_victim(victim)
 					_handle_kill_timer()
 					button_active.emit("FailButton", false)
+	
+	if event.is_action_pressed("sabotage") and event.is_pressed() and !is_in_vent:
+		if name.to_int() == GameManager.get_current_player_id() && GameManager.get_registered_player_key(name.to_int(), "is_lecturer"):
+			if can_sabotage_cooldown:
+				GameManager.request_light_sabotage.rpc_id(0)
+				button_active.emit("SabotageButton", false)
 
 
 ## Aktualizuje parametry animacji postaci.
@@ -255,6 +274,8 @@ func _on_next_round_started():
 	if name.to_int() == GameManager.get_current_player_id() && GameManager.get_registered_player_key(name.to_int(),"is_lecturer"):
 		_handle_kill_timer()
 		button_active.emit("FailButton", false)
+		_handle_sabotage_timer()
+		button_active.emit("SabotageButton", false)
 
 
 ## Obsługuje timer zabicia
@@ -516,3 +537,64 @@ func deactivate_player_shaders():
 
 func set_light_texture_scale(texture_scale: float):
 	light.texture_scale = texture_scale / player_node.global_scale.x
+
+
+## Obsługuje timer sabotage
+func _handle_sabotage_timer():
+	can_sabotage_cooldown = false
+	sabotage_timer = Timer.new()
+	sabotage_timer.set_name("SabotageCooldownTimer")
+	sabotage_timer.timeout.connect(_on_sabotage_timer_timeout)
+	sabotage_timer.one_shot = true
+	sabotage_timer.wait_time = GameManager.get_server_settings()["sabotage_cooldown"]
+	add_child(sabotage_timer)
+	sabotage_timer.start()
+
+
+func _on_sabotage_timer_timeout() -> void:
+	if GameManager.get_current_player_id() == name.to_int():
+		if GameManager.get_current_player_key("is_lecturer"):
+			can_sabotage_cooldown = true
+			user_interface.update_time_left("SabotageLabel", "")
+			
+			for i in range(player_node.get_child_count()):
+				var child: Node = player_node.get_child(i)
+				if child.name == "SabotageCooldownTimer":
+					child.queue_free()
+					button_active.emit("SabotageButton", true)
+					return
+
+
+func _on_sabotage():
+	if GameManager.get_current_player_key("is_lecturer"):
+		button_active.emit("SabotageButton", false)
+		_handle_sabotage_timer()
+		
+	else:
+		decrease_light_range_sabotage()
+		
+		no_light_timer = Timer.new()
+		no_light_timer.set_name("NoLightTimer")
+		no_light_timer.timeout.connect(cancel_decrease_light_range_sabotage)
+		no_light_timer.one_shot = true
+		no_light_timer.wait_time = GameManager.get_server_settings()["sabotage_cooldown"] if GameManager.get_server_settings()["sabotage_cooldown"] <= 10 else 10
+		add_child(no_light_timer)
+		no_light_timer.start()
+
+
+## Zmniejsza promień swiatła podczas sabotage.
+func decrease_light_range_sabotage() -> void:
+	if not GameManager.get_current_player_key("is_lecturer"):
+#		light.texture_scale /= 6
+		var tween = get_tree().create_tween()
+		tween.tween_property(light, "texture_scale", light.texture_scale / 6, 1).set_trans(Tween.TRANS_CUBIC)
+	
+
+
+## Wraca promień swiatła na normalny po sabotage.
+func cancel_decrease_light_range_sabotage() -> void:
+	if not GameManager.get_current_player_key("is_lecturer"):
+#		light.texture_scale *= 6
+		var tween = get_tree().create_tween()
+		tween.tween_property(light, "texture_scale", light.texture_scale * 6, 1).set_trans(Tween.TRANS_CUBIC)
+		
