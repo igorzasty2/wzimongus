@@ -44,6 +44,9 @@ var teleport_position = null
 @onready var player_sprite = $Skins/PlayerSprite
 ## Referencja do node'a postaci.
 @onready var player_node = $"."
+##
+@onready var light = $LightsContainer/Light
+@onready var lights_container = $LightsContainer
 
 ## Początkowa maska kolizji.
 @onready var initial_collision_mask: int = collision_mask
@@ -151,6 +154,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
 					_toggle_vent_buttons(true)
+					_toggle_vent_light(true)
 
 				input.is_walking_to_destination = false
 				is_moving_through_vent = false
@@ -210,14 +214,13 @@ func _input(event):
 		_use_vent()
 
 	if event.is_action("fail") and event.is_pressed() and not event.is_echo() and !is_in_vent:
-		if name.to_int() == GameManager.get_current_player_id():
-			if GameManager.get_registered_player_key(name.to_int(),"is_lecturer"):
-				if can_kill_cooldown:
-					var victim = closest_player(GameManager.get_current_player_id())
-					if victim:
-						GameManager.kill(victim)
-						_handle_kill_timer()
-						button_active.emit("FailButton", false)
+		if name.to_int() == GameManager.get_current_player_id() && GameManager.get_registered_player_key(name.to_int(), "is_lecturer"):
+			if can_kill_cooldown:
+				var victim = closest_player(GameManager.get_current_player_id())
+				if victim:
+					GameManager.kill(victim)
+					_handle_kill_timer()
+					button_active.emit("FailButton", false)
 
 
 ## Aktualizuje parametry animacji postaci.
@@ -281,39 +284,39 @@ func _update_highlight(player: int) -> void:
 			_toggle_highlight(i, i == player)
 
 
-## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje
+## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje.
 func closest_player(to_who: int) -> int:
-	## Tablica graczy do przeszukiwania najbliższego gracza
+	# Tablica graczy do przeszukiwania najbliższego gracza.
 	var players: Array = GameManager.get_registered_players().keys()
 	players.erase(to_who)
-	
+
 	for i in players:
-		if GameManager.get_registered_player_key(i,"is_lecturer") or GameManager.get_registered_player_key(i,"is_dead"):
+		if GameManager.get_registered_player_key(i, "is_lecturer") or GameManager.get_registered_player_key(i, "is_dead"):
 			players.erase(i)
-	
+
 	if players.size() > 0:
-		## Pobiera promień zabicia z serwera
+		# Pobiera promień zabicia z serwera.
 		var kill_radius = GameManager.get_server_settings()["kill_radius"]
-		
-		## Przechowuje wektor pozycji gracza, względem którego szukamy najbliższego gracza
-		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(to_who)).global_position
-		
-		## Przechowuje node najbliższego gracza
+
+		# Przechowuje wektor pozycji gracza, względem którego szukamy najbliższego gracza.
+		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(to_who)).global_position
+
+		# Przechowuje node najbliższego gracza.
 		var curr_closest = null
-		
-		## Przechowuje odległość najbliższego gracza od pozycji 'my_position'
+
+		# Przechowuje odległość najbliższego gracza od pozycji 'my_position'.
 		var curr_closest_dist = kill_radius**2 + 1
-		
+
 		for i in range(players.size()):
-			## Pozycja gracza tymczasowego
-			var temp_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(players[i])).global_position
-			## Dystans gracza tymczasowego od pozycji 'my_position'
+			# Pozycja gracza tymczasowego
+			var temp_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(players[i])).global_position
+			# Dystans gracza tymczasowego od pozycji 'my_position'.
 			var temp_dist = my_position.distance_squared_to(temp_position)
-			
-			if(temp_dist < curr_closest_dist):
+
+			if (temp_dist < curr_closest_dist):
 				curr_closest = players[i]
 				curr_closest_dist = temp_dist
-				
+
 		if curr_closest_dist < (kill_radius**2):
 			button_active.emit("FailButton", true)
 			return curr_closest
@@ -323,22 +326,24 @@ func closest_player(to_who: int) -> int:
 	return 0
 
 
-func _on_killed_player(victim: int) -> void:
-	if name.to_int() == victim:
-		if GameManager.get_registered_player_key(victim,"is_dead"):
-			_update_dead_player(victim)
-			
-			if GameManager.get_current_player_id() != victim:
-				get_parent().get_node(str(victim)).visible = false
-		
+func _on_killed_player(player_id: int, is_victim: bool) -> void:
+	if name.to_int() == player_id:
+		_update_dead_player(player_id)
+
+		# Wyłącza widoczność gracza.
+		if GameManager.get_current_player_id() != player_id:
+			get_parent().get_node(str(player_id)).visible = false
+
+		# Włącza widoczność wszystkich martwych graczy u marwtch graczy.
 		if GameManager.get_current_player_key("is_dead"):
 			for i in GameManager.get_registered_players().keys():
 				get_parent().get_node(str(i)).visible = true
-		
-		var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
-		get_tree().root.get_node("Game/Maps/MainMap/DeadBodies").add_child(dead_body)
-		dead_body.set_dead_player(victim)
-		dead_body.get_node("DeadBodyLabel").text = GameManager.get_registered_player_key(victim,"username")+" dead body"
+
+		if is_victim:
+			var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
+			get_parent().get_parent().get_node("DeadBodies").add_child(dead_body)
+			dead_body.set_dead_player(player_id)
+			dead_body.get_node("DeadBodyLabel").text = "Oblany student (" + GameManager.get_registered_player_key(player_id, "username") + ")"
 
 
 func _on_timer_timeout() -> void:
@@ -353,8 +358,8 @@ func _on_timer_timeout() -> void:
 					return
 
 
-func _update_dead_player(victim: int):
-	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))
+func _update_dead_player(player_id: int):
+	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
 	victim_node.get_node("Skins/PlayerSprite").use_parent_material = true
 	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
@@ -399,10 +404,10 @@ func _request_vent_entering():
 
 @rpc("call_local", "reliable")
 ## Wchodzi do venta.
-func _enter_vent(vent_position: Vector2):
+func _enter_vent(vent_position):
 	if name.to_int() == GameManager.get_current_player_id():
 		GameManager.set_input_status(false)
-
+	
 	is_in_vent = true
 	collision_mask = 0
 	is_moving_through_vent = true
@@ -439,12 +444,13 @@ func _request_vent_exiting():
 ## Obsługuje wyjście z venta.
 func _exit_vent():
 	var vent = get_nearest_vent()
-
+	
 	if vent == null:
 		return
 
 	if name.to_int() == GameManager.get_current_player_id():
 		vent.set_direction_buttons_visibility(false)
+		vent.set_vent_light_visibility_for(name.to_int(), false)
 		GameManager.set_input_status(true)
 
 	is_in_vent = false
@@ -462,3 +468,48 @@ func _toggle_vent_buttons(is_enabled: bool):
 		return
 
 	vent.set_direction_buttons_visibility(is_enabled)
+
+
+func _toggle_vent_light(value: bool):
+	var vent = get_nearest_vent()
+
+	if vent == null:
+		return
+
+	vent.set_vent_light_visibility_for(name.to_int(), value)
+
+
+func activate_lights():
+	if GameManager.get_current_player_key("is_lecturer"):
+		set_light_texture_scale(GameManager.get_server_settings()["lecturer_light_radius"])
+	else:
+		set_light_texture_scale(GameManager.get_server_settings()["student_light_radius"])
+	
+	lights_container.show()
+	
+
+func deactivate_lights():
+	lights_container.hide()
+
+
+func activate_player_shaders():
+	# Domyślnie shadery są wyłaczone w menu bo jeżeli włączyć ich to nie będzie widać graczowi
+	var shader_material = ShaderMaterial.new()
+	shader_material.shader = load("res://shaders/player_outline.gdshader")
+	
+	player_sprite.material = shader_material
+	player_sprite.material.set_shader_parameter("width", 4.0)
+	player_sprite.material.set_shader_parameter("pattern", 1)
+	player_sprite.material.set_shader_parameter("add_margins", true)
+	player_sprite.material.set_shader_parameter("color", "#00000000")
+	
+	username_label.material = load("res://scenes/player/assets/light_only_canvas_material.tres")
+
+
+func deactivate_player_shaders():
+	player_sprite.material = null
+	username_label.material = null
+
+
+func set_light_texture_scale(texture_scale: float):
+	light.texture_scale = texture_scale / player_node.global_scale.x

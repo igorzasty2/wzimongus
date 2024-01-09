@@ -20,7 +20,6 @@ func assign_tasks(task_amount):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
-	GameManager.player_deregistered.connect(_remove_deregistered_player_tasks)
 	# Oczekuje jedną klatkę na wczytanie mapy._active
 	await get_tree().process_frame
 
@@ -76,7 +75,7 @@ func _send_tasks(tasks):
 	tasks_change.emit()
 
 
-@rpc("any_peer", "reliable")
+@rpc("any_peer", "reliable", "call_local")
 ## Wysyła infomację do serwera informujące o wykonaniu zadania.
 func _send_task_completion(player_id, task_id):
 	if !multiplayer.is_server():
@@ -89,23 +88,15 @@ func _send_task_completion(player_id, task_id):
 	if _tasks[player_id].is_empty():
 		_tasks.erase(player_id)
 
-	# TODO: ja zrobiłbym osobną funkcję check_task_winning_condition, bo ten if jeszcze jest 
-	# potrzebny dla _remove_deregistered_player_tasks.
-	if _tasks.is_empty():
-		# TODO: Jeśli wszystkie zadania zostały wykonane oznacz, że studenci wygrali.
-		pass
+	GameManager.check_winning_conditions()
 
 
 ## Usuwa wszystkie zadania przypisane do tego gracza na serwerowej liście zadań.
-func _remove_deregistered_player_tasks(id: int, player: Dictionary): 
+func remove_player_tasks(player_id: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-	
-	_tasks.erase(id)
-	
-	# Czytaj _send_task_completion.
-	if _tasks.is_empty():
-		pass
+
+	_tasks.erase(player_id)
 
 
 ## Resetuje zadania.
@@ -113,6 +104,8 @@ func reset():
 	current_task_id = null
 	_tasks.clear()
 	current_player_tasks.clear()
-	
-	# Nie jestem pewien czy to będzie działać.
-	GameManager.player_deregistered.disconnect(_remove_deregistered_player_tasks)
+
+
+# Zwraca słownik wszystkich niezakończonych zadań przepisanych do wszystkich graczę.
+func get_tasks_server():
+	return _tasks

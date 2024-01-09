@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=30 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dtls6wyj0nyjq" path="res://scenes/player/assets/skins/alt_spritesheet.png" id="3_obr1o"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_uw8t3"]
 [ext_resource type="Script" path="res://scenes/player/input.gd" id="4_8ajvt"]
+[ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://scenes/player/assets/light_circle.png" id="7_188be"]
 
 [sub_resource type="Animation" id="Animation_fqt5r"]
 length = 0.001
@@ -88,14 +89,7 @@ _data = {
 "walk_right": SubResource("Animation_b832w")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_484ic"]
-resource_local_to_scene = true
-shader = ExtResource("3_uw8t3")
-shader_parameter/color = Color(0, 0, 0, 0)
-shader_parameter/width = 15.0
-shader_parameter/pattern = 1
-shader_parameter/inside = false
-shader_parameter/add_margins = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vdv6v"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mw58m"]
 animation = &"idle_left"
@@ -165,6 +159,9 @@ states/walk/node = SubResource("AnimationNodeBlendSpace2D_fnme7")
 states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pafr0"]
+blend_mode = 1
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 2
 y_sort_enabled = true
@@ -177,6 +174,7 @@ safe_margin = 5.0
 script = ExtResource("1_rovco")
 
 [node name="Skins" type="Node2D" parent="."]
+use_parent_material = true
 position = Vector2(0, -30)
 script = ExtResource("2_mfjlm")
 
@@ -186,10 +184,9 @@ libraries = {
 }
 
 [node name="PlayerSprite" type="Sprite2D" parent="Skins"]
-material = SubResource("ShaderMaterial_484ic")
+material = SubResource("ShaderMaterial_vdv6v")
 position = Vector2(0, 30)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_obr1o")
 offset = Vector2(0, -250)
 hframes = 5
 vframes = 2
@@ -212,6 +209,7 @@ scale = Vector2(0.682897, 1)
 polygon = PackedVector2Array(16.1079, 13, 17.5722, -2.00004, 17.5721, -17, 14.6433, -34, 10.2502, -46, 5.8571, -56, -4.39336, -59, -16.1081, -57, -26.3585, -46.9999, -32.2158, -26.9999, -33.6801, -2.99992, -29.2868, 31.0001, -19.0363, 45, -8.78584, 48, 0.000236511, 45, 5.8576, 39, 10.2506, 32, 13.1793, 25)
 
 [node name="UsernameLabel" type="Label" parent="."]
+z_index = 2
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -240,3 +238,14 @@ input_properties = Array[String](["Input:direction"])
 script = ExtResource("3_l2yj5")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
+
+[node name="LightsContainer" type="Node2D" parent="."]
+visible = false
+
+[node name="Light" type="PointLight2D" parent="LightsContainer"]
+material = SubResource("CanvasItemMaterial_pafr0")
+position = Vector2(0, -68)
+energy = 0.3
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 1)
+texture = ExtResource("7_188be")

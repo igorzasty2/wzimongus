@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=119 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -92,6 +92,7 @@
 [ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
 [ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/maps/main_map/scenes/camera/camera.tscn" id="81_mexjh"]
 [ext_resource type="PackedScene" uid="uid://br73d5fyt6ecp" path="res://scenes/minigames/copying-files/copying_files.tscn" id="82_rt2pg"]
+[ext_resource type="PackedScene" uid="uid://dra00by8ikhk4" path="res://scenes/minigames/graph_the_function/graph_the_function.tscn" id="83_7u8vq"]
 [ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
@@ -156,6 +157,15 @@ size = Vector2(8896, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_apqsq"]
 size = Vector2(48, 6224)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_2hbmx"]
+polygon = PackedVector2Array(776, -34, 776, 25, 1174, 22, 1174, -84, 1455, -327, 2336, -328, 2338, 27, 3123, 27, 3123, -45, 2402, -45, 2402, -836, 2543, -836, 2543, -869, 2368, -869, 2368, -584, 1246, -583, 1246, -777, 847, -777, 847, -219, 183, -218, 184, -36)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_eoh7v"]
+polygon = PackedVector2Array(2542, -1449, 2370, -1448, 2368, -1642, 1244, -1641, 1245, -1345, 847, -1345, 848, -1927, -828, -1927, -828, -1772, -1199, -1773, -1199, -2077, -701, -2077, -699, -2351, -243, -2351, -244, -1994, 1070, -1994, 1305, -2231, 1669, -2231, 1669, -1867, 2543, -1867)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_f6dli"]
+polygon = PackedVector2Array(3489, -1765, 3154, -1447, 2938, -1447, 2937, -1868, 3129, -1868, 3130, -2898, 1667, -2893, 1668, -2801, 1304, -2800, 1305, -3120, -25, -3118, -189, -2935, -698, -2937, -698, -3031, -1899, -3032, -1898, -2080, -1597, -2080, -1597, -1773, -2071, -1773, -2071, -1920, -2508, -1921, -2507, -2254, -1970, -2254, -1969, -3170, -3167, -3170, -3168, -2254, -2907, -2254, -2906, -1922, -3384, -1922, -3384, -1084, -3085, -792, -2505, -792, -2504, -652, -3110, -652, -3109, 273, -3166, 273, -3439, 515, -3439, 1308, -2270, 1309, -2269, 548, -2577, 272, -2713, 272, -2713, -80, -2106, -80, -2106, -791, -2071, -791, -2070, -1187, -826, -1187, -826, -219, -216, -219, -216, -35, -769, -35, -769, 335, -1174, 334, -1174, 287, -923, 287, -924, -665, -2040, -665, -2041, 288, -1573, 288, -1572, 919, -771, 919, -771, 955, -61, 955, -60, 1178, -586, 1178, -586, 1772, 129, 2085, 755, 1770, 755, 1177, 339, 1177, 339, 955, 776, 955, 776, 608, 1174, 610, 1158, 636, 1195, 613, 1186, 646, 2332, 650, 2332, 613, 3521, 613, 3522, -46, 3674, -46, 3476, -837, 2937, -837, 2937, -869, 3443, -869, 3797, -1217, 4533, -1216, 4533, -1993, 4268, -2261, 3489, -2261)
 
 [node name="MainMap" type="Node2D"]
 y_sort_enabled = true
@@ -245,8 +255,10 @@ position = Vector2(3067, -1348)
 position = Vector2(3038, -441)
 
 [node name="Objects" type="Node2D" parent="."]
-z_index = 1
+z_index = 2
 y_sort_enabled = true
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="AulaProjektor" type="Node2D" parent="Objects"]
 position = Vector2(332, -1342)
@@ -424,14 +436,16 @@ texture = ExtResource("41_jiu28")
 polygon = PackedVector2Array(340.5, -144, 356.5, -133.1, 356.5, -130.6, 361.5, -122.7, 361.5, 121.7, 355.8, 134, 354.1, 134, 338.9, 145, -329.6, 145, -336.5, 143.6, -336.5, 142.4, -344.5, 139.4, -344.5, 137.9, -355.5, 128.9, -355.5, 126.5, -361.5, 116.8, -361.5, -117.1, -357.9, -127, -356.4, -127, -346.4, -139, -343.9, -139, -330.9, -145, 340.5, -145)
 
 [node name="PielegniarkaZaslona" type="Node2D" parent="Objects"]
-position = Vector2(973, -2617)
+position = Vector2(973, -2657)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/PielegniarkaZaslona"]
 position = Vector2(0, -208)
 texture = ExtResource("42_bsxxq")
+offset = Vector2(0, 20)
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/PielegniarkaZaslona"]
+position = Vector2(0, 20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/PielegniarkaZaslona/CollisionBox"]
 shape = SubResource("RectangleShape2D_g46sc")
@@ -987,7 +1001,14 @@ position = Vector2(1751, -1014)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("82_rt2pg")
 
+[node name="Task7" parent="Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(2136, -1012)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("83_7u8vq")
+
 [node name="Vents" type="Node2D" parent="."]
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="VentSystem1" type="Node2D" parent="Vents"]
 
@@ -1008,12 +1029,10 @@ vent_target_list = [NodePath("../Vent1"), NodePath("../Vent2")]
 [node name="Vent1" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
 position = Vector2(2158, 154)
 vent_target_list = [NodePath("../Vent2")]
-allow_student_venting = true
 
 [node name="Vent2" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
 position = Vector2(4372, -1366)
 vent_target_list = [NodePath("../Vent1")]
-allow_student_venting = true
 
 [node name="Cameras" type="Node2D" parent="."]
 
@@ -1125,8 +1144,21 @@ shape = SubResource("RectangleShape2D_apqsq")
 position = Vector2(-3888, -584)
 shape = SubResource("RectangleShape2D_apqsq")
 
+[node name="LightMap" type="Node2D" parent="."]
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="LightMap"]
+occluder = SubResource("OccluderPolygon2D_2hbmx")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="LightMap"]
+occluder = SubResource("OccluderPolygon2D_eoh7v")
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="LightMap"]
+occluder = SubResource("OccluderPolygon2D_f6dli")
+
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="DeadBodies" type="Node2D" parent="."]
 
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
@@ -1152,5 +1184,8 @@ properties = Array[String]([":global_position"])
 script = ExtResource("35_23714")
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.411765, 0.411765, 0.411765, 1)
 
 [connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
