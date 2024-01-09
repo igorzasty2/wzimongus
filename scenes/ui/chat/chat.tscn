@@ -38,12 +38,23 @@ unique_name_in_owner = true
 wait_time = 3.464
 one_shot = true
 
-[node name="InputText" type="LineEdit" parent="ChatContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ChatContainer"]
+layout_mode = 2
+
+[node name="Group" type="Label" parent="ChatContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+text = "[group]"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="InputText" type="LineEdit" parent="ChatContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 placeholder_text = "Napisz wiadomość..."
 flat = true
 
 [connection signal="timeout" from="ChatContainer/ChatLogsScrollbar/ChatLogsContainer/ChatDisappearTimer" to="." method="_on_timer_timeout"]
-[connection signal="text_submitted" from="ChatContainer/InputText" to="." method="_on_input_text_text_submitted"]
-[connection signal="visibility_changed" from="ChatContainer/InputText" to="." method="_on_input_text_visibility_changed"]
+[connection signal="text_submitted" from="ChatContainer/HBoxContainer/InputText" to="." method="_on_input_text_text_submitted"]
+[connection signal="visibility_changed" from="ChatContainer/HBoxContainer/InputText" to="." method="_on_input_text_visibility_changed"]
