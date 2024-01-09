@@ -4,6 +4,7 @@ extends Control
 @onready var username = get_node("%Username")
 @onready var decision = get_node("%Decision")
 @onready var voted_by_container = get_node("%VotedBy")
+@onready var button = get_node("%Button")
 
 signal player_voted
 signal player_selected
@@ -35,8 +36,12 @@ func init(player_id: int, voted_by: Array):
 		display_tween.tween_property(voted_by_instance, "modulate:a", 1, 0.25)
 
 		voted_by_container.add_child(voted_by_instance)
-	
 
+func set_voting_status(is_voted: bool):
+	if is_voted:
+		button.pressed.connect(_on_button_pressed)
+	else:
+		button.pressed.disconnect(_on_button_pressed)
 
 func _get_skin_texture(skin_id: int) -> AtlasTexture:
 	var texture = AtlasTexture.new()

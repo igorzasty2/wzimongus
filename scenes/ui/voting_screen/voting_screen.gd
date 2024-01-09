@@ -14,6 +14,9 @@ extends Control
 @export var EJECT_PLAYER_TIME = 5
 @onready var eject_player_timer = Timer.new()
 
+@export var DISCUSSION_TIME = 60
+@onready var discussion_timer = Timer.new()
+
 var player_box = preload("res://scenes/ui/voting_screen/player_box/player_box.tscn")
 var ejection_screen = preload("res://scenes/ui/ejection_screen/ejection_screen.tscn")
 
@@ -26,14 +29,23 @@ func _ready():
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
 
+	for player in players.get_children():
+		player.set_voting_status(false)
+
 	chat.visible = false
+
+	# DISCUSSION TIMER
+	add_child(discussion_timer)
+	discussion_timer.autostart = true
+	discussion_timer.one_shot = true
+	discussion_timer.connect("timeout", _on_discussion_timer_timeout)
+	discussion_timer.start(DISCUSSION_TIME)
 
 	# END VOTING TIMER
 	add_child(voting_timer)
 	voting_timer.autostart = true
 	voting_timer.one_shot = true
 	voting_timer.connect("timeout", _on_end_voting_timer_timeout)
-	voting_timer.start(VOTING_TIME)
 
 	# EJECT PLAYER TIMER
 	add_child(eject_player_timer)
@@ -41,9 +53,13 @@ func _ready():
 
 
 func _process(delta):
-	if time < VOTING_TIME:
+	if time < DISCUSSION_TIME:
 		time += delta
-		var time_remaining = VOTING_TIME - time
+		var time_remaining = DISCUSSION_TIME - time
+		end_vote_text.text = "Dyskusja kończy się za %02d sekund" % time_remaining
+	elif time < DISCUSSION_TIME + VOTING_TIME:
+		time += delta
+		var time_remaining = DISCUSSION_TIME + VOTING_TIME - time
 		end_vote_text.text = "Głosowanie kończy się za %02d sekund" % time_remaining
 
 
@@ -170,3 +186,8 @@ func _on_close_chat_pressed():
 	chat.visible = false
 	chat_background.visible = false
 	chat._close_chat()
+
+func _on_discussion_timer_timeout():
+	voting_timer.start(VOTING_TIME)
+	for player in players.get_children():
+		player.set_voting_status(true)
