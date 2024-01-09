@@ -6,7 +6,6 @@ extends Control
 @onready var skip_button = get_node("%SkipButton")
 @onready var chat_container = get_node("%ChatContainer")
 @onready var chat = get_node("%ChatContainer/Chat")
-@onready var chat_background = get_node("%ChatContainer/ChatBackground")
 @onready var chat_input = %ChatContainer/Chat/ChatContainer/InputText
 
 @export var VOTING_TIME = 10
@@ -206,15 +205,11 @@ func get_most_voted_player_id():
 func _on_chat_button_button_down():
 	if is_chat_open:
 		chat_container.visible = false
-		chat_background.visible = false
 		chat._close_chat()
-		chat.visible = false
 		is_chat_open = false
 	else:
 		chat_container.visible = true
-		chat_background.visible = true
 		chat._open_chat()
-		chat.visible = true
 		is_chat_open = true
 
 
