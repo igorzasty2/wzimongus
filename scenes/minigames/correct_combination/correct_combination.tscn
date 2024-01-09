@@ -13,6 +13,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_y2ahe")
+polish_name = "Poprawna kombinacja"
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(-2, 107.5)

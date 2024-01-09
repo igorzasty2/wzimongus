@@ -1,5 +1,8 @@
 extends Control
+
 signal minigame_end
+
+@export var polish_name : String
 
 @onready var lecturers_containers = get_node("%Lecturers")
 @onready var rooms_container = get_node("%Rooms")

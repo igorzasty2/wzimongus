@@ -1,5 +1,8 @@
 extends Control
+
 signal minigame_end
+
+@export var polish_name : String
 
 @onready var zero = get_node("%0")
 @onready var thirty = get_node("%30")

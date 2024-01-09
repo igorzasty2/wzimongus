@@ -3,6 +3,8 @@ extends Node2D
 # Scena ta przechowuje główną logikę minigry oraz główne jej skrypty wymagane
 # do jej działania
 
+@export var polish_name : String
+
 # FORMULAS przechowuje listę możliwych do wylosowania wzorów do uzupełnienia
 const FORMULAS = {
 	0:"F=m*v", 
