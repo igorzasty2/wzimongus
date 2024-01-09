@@ -11,7 +11,7 @@ extends Node2D
 ## Area reportu
 @onready var report_area = $ReportArea
 ## Canvas w którym będzie instancjonowane głosowanie
-@onready var voting_canvas = $VotingCanvas
+@onready var voting_canvas = get_tree().root.get_node("Game/Maps/MainMap/VotingCanvas")
 
 ## Pozycje do spotkania podczas głosowania
 @onready var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
@@ -43,8 +43,6 @@ var out_of_range_color = [0, 0, 0, 0]
 
 ## Wszyscy gracze
 var players
-## Wszystkie ciała
-var dead_bodies
 
 ## Określa czy przycisk wywołał spotkanie czy ciało
 var is_caller_button: bool
@@ -104,8 +102,7 @@ func _on_end_emergency_timer_timeout():
 ## Na początku rundy restartuje timer z czasem oczekiwania na aktywację przycisku, przywraca widoczność elementów interfejsu
 func on_next_round_started():
 	voting_canvas.get_child(0).queue_free()
-	
-	GameManager.set_input_status(true)
+
 	GameManager.is_meeting_called = false
 	
 	button_active.emit("ReportButton", false)
@@ -144,7 +141,7 @@ func handle_report(is_button: bool, body_id):
 	
 	is_caller_button = is_button
 	
-	update_arrays()
+	update_array()
 	
 	# Chowa przyciski z interfejsu i liste tasków
 	user_interface.toggle_visiblity.rpc(false)
@@ -164,10 +161,9 @@ func handle_report(is_button: bool, body_id):
 		button_used()
 
 
-## Aktualizuje tablice, które mogły ulec zmianie
-func update_arrays():
+## Aktualizuje tablice, która mogła ulec zmianie
+func update_array():
 	players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
-	dead_bodies = get_tree().root.get_node("Game/Maps/MainMap/DeadBodies").get_children()
 
 
 @rpc("call_local", "any_peer")
@@ -194,11 +190,10 @@ func close_camera_system():
 func instantiate_voting_screen():
 	var voting_screen_instance = voting_screen.instantiate()
 	voting_canvas.add_child(voting_screen_instance)
-	
-	GameManager.set_input_status(false)
+
 	GameManager.is_meeting_called = true
 	is_wait_time_over = false
-	
+
 	button_active.emit("ReportButton", false)
 	button_active.emit("InteractButton", false)
 

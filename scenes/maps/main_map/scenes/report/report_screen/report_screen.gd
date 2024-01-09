@@ -11,6 +11,8 @@ extends CanvasLayer
 @onready var label = $Label
 ## Odniesienie do Node'a "BodySprite"
 @onready var body_sprite = $BodySprite
+## Player animacji
+@onready var animation_player = $AnimationPlayer
 
 ## Teskst dla spotkania awaryjnego
 var emergency_meeting_text = "Spotkanie awaryjne!"
@@ -22,12 +24,16 @@ func _ready():
 	if is_emergency_meeting:
 		label.text = emergency_meeting_text
 		body_sprite.visible = false
+		animation_player.play("shake_animation")
 	else:
 		label.text = body_found_text
 		texture_rect.visible = false
 		
-		var player_body = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(body_texture_id)).get_node("Skins/PlayerSprite")
-		body_sprite.texture = player_body.texture
+		var dead_body = get_tree().root.get_node("Game/Maps/MainMap/DeadBodies/DeadBody"+str(body_texture_id)).get_node("DeadBodySprite")
+		if dead_body!=null:
+			body_sprite.texture = dead_body.texture
+
+		animation_player.play("slide_in_animation")
 		
 		body_sprite.hframes = 5
 		body_sprite.vframes = 2

@@ -3,6 +3,10 @@ class_name Player
 extends CharacterBody2D
 
 
+signal vent_entered()
+
+signal vent_exited()
+
 ## Prędkość poruszania się.
 @export var walking_speed: float = 600.0
 ## Prędkość teleportacji do venta.
@@ -59,6 +63,7 @@ signal button_active(button_name:String, is_active:bool)
 var timer
 ## Określa czy gracz może reportować
 var can_report: bool = false
+
 
 ## Zwraca najbliższy vent.
 func get_nearest_vent() -> Vent:
@@ -408,14 +413,12 @@ func _request_vent_entering():
 @rpc("call_local", "reliable")
 ## Wchodzi do venta.
 func _enter_vent(vent_position):
-	if name.to_int() == GameManager.get_current_player_id():
-		GameManager.set_input_status(false)
-	
 	is_in_vent = true
 	collision_mask = 0
 	is_moving_through_vent = true
 	input.destination_position = vent_position
 	input.is_walking_to_destination = true
+	vent_entered.emit()
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -454,10 +457,11 @@ func _exit_vent():
 	if name.to_int() == GameManager.get_current_player_id():
 		vent.set_direction_buttons_visibility(false)
 		vent.set_vent_light_visibility_for(name.to_int(), false)
-		GameManager.set_input_status(true)
 
 	is_in_vent = false
 	collision_mask = initial_collision_mask
+
+	vent_exited.emit()
 
 	if multiplayer.is_server():
 		toggle_visibility.rpc(true)
