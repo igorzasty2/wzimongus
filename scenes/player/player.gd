@@ -204,7 +204,6 @@ func _rollback_tick(delta, _tick, is_fresh):
 	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer") && !is_in_vent:
 			if !GameManager.get_current_player_key("is_dead"):
-				#print(can_kill_cooldown)
 				if can_kill_cooldown && !GameManager.is_meeting_called:
 					_update_highlight(closest_player(GameManager.get_current_player_id()))
 				else:
@@ -218,7 +217,7 @@ func _input(event):
 	if event.is_action_pressed("use_vent") && can_use_vent && !GameManager.get_current_game_key("paused"):
 		_use_vent()
 
-	if event.is_action("fail") and event.is_pressed() and not event.is_echo() and !is_in_vent:
+	if event.is_action("fail") and event.is_pressed() and not event.is_echo() and !is_in_vent and !GameManager.get_current_game_key("is_input_disabled"):
 		if name.to_int() == GameManager.get_current_player_id() && GameManager.get_registered_player_key(name.to_int(), "is_lecturer"):
 			if can_kill_cooldown:
 				var victim = closest_player(GameManager.get_current_player_id())
