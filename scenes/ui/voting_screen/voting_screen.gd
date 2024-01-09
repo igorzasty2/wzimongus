@@ -34,6 +34,8 @@ func _ready():
 
 	chat.visible = false
 
+	skip_button.disabled = true
+
 	# DISCUSSION TIMER
 	add_child(discussion_timer)
 	discussion_timer.autostart = true
@@ -189,5 +191,6 @@ func _on_close_chat_pressed():
 
 func _on_discussion_timer_timeout():
 	voting_timer.start(VOTING_TIME)
+	skip_button.disabled = false
 	for player in players.get_children():
 		player.set_voting_status(true)
