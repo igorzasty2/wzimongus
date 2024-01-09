@@ -4,9 +4,10 @@ extends Control
 @onready var end_vote_text = get_node("%EndVoteText")
 @onready var skip_decision = get_node("%Decision")
 @onready var skip_button = get_node("%SkipButton")
-@onready var chat = get_node("%Chat")
-@onready var chat_background = get_node("%ChatBackground")
-@onready var chat_input = $Chat/ChatContainer/InputText
+@onready var chat_container = get_node("%ChatContainer")
+@onready var chat = get_node("%ChatContainer/Chat")
+@onready var chat_background = get_node("%ChatContainer/ChatBackground")
+@onready var chat_input = %ChatContainer/Chat/ChatContainer/InputText
 
 @export var VOTING_TIME = 10
 @onready var voting_timer = Timer.new()
@@ -21,12 +22,32 @@ var time = 0
 
 var is_selected = false
 
+## Określa czy czat jest otwarty
+var is_chat_open:bool = false
+
+## Zmienna na UserSettingsManager
+var user_sett: UserSettingsManager
+
+## Początkowa skaka siatki z przyciskami
+var initial_grid_container_scale
 
 func _ready():
+	visible = false
+	initial_grid_container_scale = $GridContainer.scale
+	user_sett = UserSettingsManager.load_or_create()
+	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
+	on_interface_scale_changed(user_sett.interface_scale)
+	
+	set_process(false)
+
+## Zaczyna głosowanie
+func start_voting():
+	visible = true
+	
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
 
-	chat.visible = false
+	chat_container.visible = false
 
 	# END VOTING TIMER
 	add_child(voting_timer)
@@ -38,6 +59,8 @@ func _ready():
 	# EJECT PLAYER TIMER
 	add_child(eject_player_timer)
 	eject_player_timer.connect("timeout", _on_eject_player_timer_timeout)
+	
+	set_process(true)
 
 
 func _process(delta):
@@ -122,7 +145,7 @@ func _on_end_voting_timer_timeout():
 
 		GameManager.set_most_voted_player.rpc(GameManager.get_registered_players()[most_voted_player_id] if most_voted_player_id != null else null)
 
-		GameManager.kill_player(most_voted_player_id)
+		#GameManager.kill_player(most_voted_player_id)
 
 
 ## Zmienia scene na ekran wyrzucenia
@@ -160,13 +183,28 @@ func get_most_voted_player_id():
 		return most_voted_players[0]
 
 
-func _on_open_chat_pressed():
-	chat.visible = true
-	chat._open_chat()
-	chat_background.visible = true
+## Obsługuje otwarcie/zamknięcie czatu
+func _on_chat_button_button_down():
+	if is_chat_open:
+		chat_container.visible = false
+		chat._close_chat()
+		chat.visible = false
+		is_chat_open = false
+	else:
+		chat_container.visible = true
+		chat._open_chat()
+		chat.visible = true
+		is_chat_open = true
 
 
-func _on_close_chat_pressed():
-	chat.visible = false
-	chat_background.visible = false
-	chat._close_chat()
+## Obsługuje naciśnięcie przycisku menu pauzy
+func _on_pause_menu_button_button_down():
+	var event = InputEventAction.new()
+	event.action = "pause_menu"
+	event.pressed = true
+	Input.parse_input_event(event)
+
+
+## Obsługuje zmianę skali nakładki
+func on_interface_scale_changed(value:float):
+	$GridContainer.scale = initial_grid_container_scale * value

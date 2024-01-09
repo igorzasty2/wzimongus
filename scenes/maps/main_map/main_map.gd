@@ -5,6 +5,9 @@ signal load_finished
 @onready var players = $Players
 @onready var camera = $Camera
 @onready var loading_screen = $LoadingScreen
+## Pozycje do spawnu gracza
+@onready var start_positions = $StartPositions.get_children()
+
 
 func _ready():
 	# Uruchamia synchronizację czasu.
@@ -58,8 +61,8 @@ func _spawn_player(id: int):
 
 	# Ustawia startową pozycję gracza.
 	if multiplayer.is_server():
-		player.position = Vector2(randi_range(0, 100), randi_range(0, 100))
-	
+		player.position = start_positions[GameManager.get_registered_players().keys().find(id)].position
+
 	players.add_child(player)
 	
 	player.activate_player_shaders()

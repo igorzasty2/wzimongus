@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x3hb3b3rrfa1"
-path="res://.godot/imported/_czat.png-a974c8da71f780b38873e9ba4bf51bd1.ctex"
+uid="uid://bgxqh33irknuq"
+path="res://.godot/imported/emergency_meeting.png-1b9abdc36b0ce598f68fb07344664e4e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/maps/lobby/scenes/lobby_ui/assets/_czat.png"
-dest_files=["res://.godot/imported/_czat.png-a974c8da71f780b38873e9ba4bf51bd1.ctex"]
+source_file="res://scenes/maps/main_map/scenes/report/emergency_button/assets/emergency_meeting.png"
+dest_files=["res://.godot/imported/emergency_meeting.png-1b9abdc36b0ce598f68fb07344664e4e.ctex"]
 
 [params]
 

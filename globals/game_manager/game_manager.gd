@@ -22,6 +22,9 @@ signal game_started()
 ## Emitowany po zakończeniu gry.
 signal game_ended()
 
+## Emitowany po zaczęciu nowej rundy.
+signal next_round_started()
+
 ## Emitowany po wystąpieniu błędu.
 signal error_occured(message: String)
 
@@ -29,7 +32,7 @@ signal error_occured(message: String)
 signal player_killed(player_id: int, is_victim: bool)
 
 ## Emitowany po zakończeniu ładowania mapy głównej.
-signal map_load_finished
+signal map_load_finished()
 
 # Przechowuje informacje o aktualnym stanie gry.
 ## Emitowany po zmianie ustawień serwera.
@@ -122,6 +125,7 @@ var _server_settings = {
 	"kill_cooldown": 30,
 	"kill_radius": 260,
 	"task_amount": 3,
+	"emergency_cooldown": 30,
 	"lecturer_light_radius": 4,
 	"student_light_radius": 2, 
 }
@@ -138,6 +142,8 @@ var _player_attributes = {
 	"is_dead": false
 }
 
+## Okrśla czy jest zwołane alarmowe zebranie
+var is_meeting_called: bool = false
 ## Przechowuje infromację o tym czy gra animacja tła
 var is_animation_playing: bool = false
 ## Przechowuje pozycję animacji tła
@@ -190,7 +196,7 @@ func create_lobby(lobby_name: String, port: int):
 
 
 ## Zmienia ustawienia serwera.
-func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, kill_radius: int, task_amount: int):
+func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, kill_radius: int, task_amount: int, emergency_cooldown: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
@@ -199,6 +205,7 @@ func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown:
 	_server_settings["kill_cooldown"] = kill_cooldown
 	_server_settings["kill_radius"] = kill_radius
 	_server_settings["task_amount"] = task_amount
+	_server_settings["emergency_cooldown"] = emergency_cooldown
 	_update_server_settings.rpc(_server_settings)
 	server_settings_changed.emit()
 
@@ -299,7 +306,9 @@ func reset_game():
 func new_round():
 	# Resetuje system głosowania.
 	_reset_votes()
-
+	
+	next_round_started.emit()
+	
 	check_winning_conditions()
 
 
@@ -688,11 +697,11 @@ func _send_player_kill(player_id: int, is_victim: bool = true):
 func check_winning_conditions():
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-	
+
 	if TaskManager.get_tasks_server().is_empty():
 		winner_determined.emit(Role.STUDENT)
 		return
-	
+
 	if _count_alive_lecturers() == 0:
 		winner_determined.emit(Role.STUDENT)
 		return
@@ -724,6 +733,17 @@ func _count_alive_crewmates():
 	return crewmate_counter
 
 
-## Emituje sygnał informujący o zakończeniu wczytywania mapy głównej
+## Teleportuje wszystkich graczy do wskazanage miejsca lub do miejsca spotkania - używane po rozpoczęciu przejścia na ekran ejection_screen
+func teleport_players():
+	var players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
+	var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
+	
+	for i in range(0, players.size()):
+		if multiplayer.is_server():
+			players[i].is_teleport = true
+			players[i].teleport_position = meeting_positions[i].global_position
+
+
+## Emituje sygnał po zakończeniu wczytywania
 func main_map_load_finished():
 	map_load_finished.emit()
