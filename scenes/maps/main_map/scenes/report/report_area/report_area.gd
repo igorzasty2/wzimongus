@@ -32,22 +32,42 @@ func _ready():
 
 
 func _input(event):
-	# Obłsuguje odpowiednio naciśnięcie przycisku do zebrania lub do reportowania
-	if (
-	((event.is_action_pressed("report") && !is_button) || ((event.is_action_pressed("interact") && is_button && is_wait_time_over)))
-	&& !GameManager.get_current_game_key("is_input_disabled")
-	&& !GameManager.get_current_game_key("paused") 
-	&& is_player_inside 
-	&& !GameManager.get_current_player_key("is_dead") 
-	&& !GameManager.is_meeting_called):
-		
-		GameManager.is_meeting_called = true
-		
-		var body_id = null
+	if GameManager.get_current_game_key("is_paused"):
+		return
+
+	if GameManager.get_current_game_key("is_input_disabled"):
+		return
+	
+	if !event.is_action_pressed("report") && !event.is_action_pressed("interact"):
+		return
+
+	if event.is_action_pressed("report"):
+		if is_button:
+			return
+
+	if event.is_action_pressed("interact"):
 		if !is_button:
-			body_id = get_parent().victim_id
-		
-		emergency_button.handle_report(is_button, body_id)
+			return
+
+		if !is_wait_time_over:
+			return
+
+	if !is_player_inside:
+		return
+
+	if GameManager.get_current_player_key("is_dead"):
+		return
+
+	if GameManager.is_meeting_called:
+		return
+
+	GameManager.is_meeting_called = true
+
+	var body_id = null
+	if !is_button:
+		body_id = get_parent().victim_id
+
+	emergency_button.handle_report(is_button, body_id)
 
 
 ## Obsługuje zakończenie emergeny_timer

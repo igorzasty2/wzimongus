@@ -213,18 +213,43 @@ func _rollback_tick(delta, _tick, is_fresh):
 ## Sprawdza, czy nie naciśnięto fail button. Jeśli tak to sprawdza, czy jesteśmy lecturerem
 ## i prosi serwer o oblanie najbliższego gracza w promieniu oblania.
 func _input(event):
-	# Obsługuje użycie venta.
-	if event.is_action_pressed("use_vent") && can_use_vent && !GameManager.get_current_game_key("paused"):
+	if GameManager.get_current_game_key("is_paused"):
+		return
+
+	if name.to_int() != GameManager.get_current_player_id():
+		return
+
+	# Obsługuje używanie venta.
+	if event.is_action_pressed("use_vent"):
+		if !can_use_vent:
+			return
+
+		if !is_in_vent && GameManager.get_current_game_key("is_input_disabled"):
+			return
+
 		_use_vent()
 
-	if event.is_action("fail") and event.is_pressed() and not event.is_echo() and !is_in_vent and !GameManager.get_current_game_key("is_input_disabled"):
-		if name.to_int() == GameManager.get_current_player_id() && GameManager.get_registered_player_key(name.to_int(), "is_lecturer"):
-			if can_kill_cooldown:
-				var victim = closest_player(GameManager.get_current_player_id())
-				if victim:
-					GameManager.kill_victim(victim)
-					_handle_kill_timer()
-					button_active.emit("FailButton", false)
+		return
+
+	# Obsługuje zabijanie graczy.
+	if event.is_action("fail") && !event.is_echo() && event.is_pressed():
+		if GameManager.get_current_game_key("is_input_disabled"):
+			return
+
+		if !GameManager.get_current_player_key("is_lecturer"):
+			return
+
+		if !can_kill_cooldown:
+			return
+
+		var victim = closest_player(GameManager.get_current_player_id())
+
+		if victim:
+			GameManager.kill_victim(victim)
+			_handle_kill_timer()
+			button_active.emit("FailButton", false)
+
+		return
 
 
 ## Aktualizuje parametry animacji postaci.

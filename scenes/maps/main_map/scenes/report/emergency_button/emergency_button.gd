@@ -18,7 +18,7 @@ extends Node2D
 ## Tablica wszystkich tasków
 @onready var tasks = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/Tasks").get_children()
 ## System kamer
-@onready var camera_system = get_tree().root.get_node("Game/Maps/MainMap/Cameras/CameraSystem")
+@onready var camera_system = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/CameraSystem")
 ## Interfejs
 @onready var user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 ## Lista zadań
