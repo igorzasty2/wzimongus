@@ -159,11 +159,6 @@ func _change_scene_to_ejection_screen():
 	self.queue_free()
 
 
-func update_input():
-	if chat_input:
-		var input_status = !chat_input.visible
-		GameManager.set_input_status(input_status)
-
 ## Zwraca id gracza z największą ilością głosów, jeśli jest remis zwraca null
 func get_most_voted_player_id():
 	var most_voted_players = []

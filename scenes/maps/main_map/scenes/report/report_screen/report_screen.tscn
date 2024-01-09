@@ -1,8 +1,46 @@
-[gd_scene load_steps=4 format=3 uid="uid://djoj4kykfho2y"]
+[gd_scene load_steps=7 format=3 uid="uid://djoj4kykfho2y"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/scenes/report/report_screen/report_screen.gd" id="1_woxjr"]
 [ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://scenes/maps/main_map/scenes/report/emergency_button/assets/emergency_meeting.png" id="2_nrmn5"]
 [ext_resource type="Texture2D" uid="uid://dy8j6jl7efkn1" path="res://icon.png" id="2_y8u8h"]
+
+[sub_resource type="Animation" id="Animation_g4k8g"]
+resource_name = "slide_in_animation"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.5),
+"transitions": PackedFloat32Array(1, 1.7411, 1),
+"update": 0,
+"values": [Vector2(1480, 290), Vector2(740, 290), Vector2(-200, 290)]
+}
+
+[sub_resource type="Animation" id="Animation_oi8ud"]
+resource_name = "shake_animation"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.10472, -0.10472, 0.10472, -0.10472, 0.10472, -0.10472, 0.10472, -0.10472]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mb8t2"]
+_data = {
+"shake_animation": SubResource("Animation_oi8ud"),
+"slide_in_animation": SubResource("Animation_g4k8g")
+}
 
 [node name="ReportScreen" type="CanvasLayer"]
 script = ExtResource("1_woxjr")
@@ -37,10 +75,12 @@ offset_right = 225.0
 offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = -0.10472
+pivot_offset = Vector2(225, 225)
 texture = ExtResource("2_nrmn5")
 
 [node name="BodySprite" type="Sprite2D" parent="."]
-position = Vector2(640, 290)
+position = Vector2(-200, 290)
 texture = ExtResource("2_y8u8h")
 
 [node name="Label" type="Label" parent="."]
@@ -56,3 +96,8 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 70
 text = "tekst tekst tekst tekst"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mb8t2")
+}
