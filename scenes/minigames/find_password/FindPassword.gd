@@ -1,5 +1,7 @@
 extends Node2D
 
+signal minigame_end
+
 @onready var password_input = get_node("%PasswordInput")
 
 @onready var passwords = _generate_passwords()
@@ -9,8 +11,6 @@ extends Node2D
 var correct_password
 
 var page_scenes = []
-
-signal minigame_end
 
 func _ready():
 	correct_password = passwords[randi() % 5]
@@ -34,17 +34,10 @@ func _generate_passwords():
 
 func _on_password_input_text_submitted(new_text):
 	if new_text == correct_password:
-		_close()
+		minigame_end.emit()
 	else:
 		password_input.clear()
 		password_input.set_placeholder("Niepoprawne Hasło!")
-
-func _on_button_pressed():
-	pass
-
-func _close():
-	minigame_end.emit()
-	self.queue_free()
 
 func _on_page_1_pressed():
 	if not _any_page_visible():
