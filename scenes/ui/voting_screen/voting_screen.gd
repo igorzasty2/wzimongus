@@ -5,8 +5,7 @@ extends Control
 @onready var skip_decision = get_node("%Decision")
 @onready var skip_button = get_node("%SkipButton")
 @onready var chat_container = get_node("%ChatContainer")
-@onready var chat = get_node("%ChatContainer/Chat")
-@onready var chat_background = get_node("%ChatContainer/ChatBackground")
+@onready var chat = get_node("%Chat")
 @onready var chat_input = %ChatContainer/Chat/ChatContainer/InputText
 
 @export var VOTING_TIME = 10
@@ -14,6 +13,9 @@ extends Control
 
 @export var EJECT_PLAYER_TIME = 5
 @onready var eject_player_timer = Timer.new()
+
+@export var DISCUSSION_TIME = 60
+@onready var discussion_timer = Timer.new()
 
 var player_box = preload("res://scenes/ui/voting_screen/player_box/player_box.tscn")
 var ejection_screen = preload("res://scenes/ui/ejection_screen/ejection_screen.tscn")
@@ -33,6 +35,7 @@ var initial_grid_container_scale
 
 func _ready():
 	visible = false
+	chat.visible = false
 	initial_grid_container_scale = $GridContainer.scale
 	user_sett = UserSettingsManager.load_or_create()
 	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
@@ -47,26 +50,42 @@ func start_voting():
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
 
+	for player in players.get_children():
+		player.set_voting_status(false)
+
 	chat_container.visible = false
+	skip_button.disabled = true
+
 
 	# END VOTING TIMER
 	add_child(voting_timer)
 	voting_timer.autostart = true
 	voting_timer.one_shot = true
 	voting_timer.connect("timeout", _on_end_voting_timer_timeout)
-	voting_timer.start(VOTING_TIME)
 
 	# EJECT PLAYER TIMER
 	add_child(eject_player_timer)
 	eject_player_timer.connect("timeout", _on_eject_player_timer_timeout)
+
+	# DISCUSSION TIMER
+	add_child(discussion_timer)
+	discussion_timer.autostart = true
+	discussion_timer.one_shot = true
+	discussion_timer.connect("timeout", _on_discussion_timer_timeout)
+	discussion_timer.start(DISCUSSION_TIME)
+
 	
 	set_process(true)
 
 
 func _process(delta):
-	if time < VOTING_TIME:
+	if time < DISCUSSION_TIME:
 		time += delta
-		var time_remaining = VOTING_TIME - time
+		var time_remaining = DISCUSSION_TIME - time
+		end_vote_text.text = "Dyskusja kończy się za %02d sekund" % time_remaining
+	elif time < DISCUSSION_TIME + VOTING_TIME:
+		time += delta
+		var time_remaining = DISCUSSION_TIME + VOTING_TIME - time
 		end_vote_text.text = "Głosowanie kończy się za %02d sekund" % time_remaining
 
 
@@ -181,14 +200,14 @@ func get_most_voted_player_id():
 ## Obsługuje otwarcie/zamknięcie czatu
 func _on_chat_button_button_down():
 	if is_chat_open:
-		chat_container.visible = false
 		chat._close_chat()
-		chat.visible = false
 		is_chat_open = false
+		chat.visible = false
+		chat_container.visible = false
 	else:
 		chat_container.visible = true
-		chat._open_chat()
 		chat.visible = true
+		chat._open_chat()
 		is_chat_open = true
 
 
@@ -203,3 +222,10 @@ func _on_pause_menu_button_button_down():
 ## Obsługuje zmianę skali nakładki
 func on_interface_scale_changed(value:float):
 	$GridContainer.scale = initial_grid_container_scale * value
+
+
+func _on_discussion_timer_timeout():
+	skip_button.disabled = false
+	voting_timer.start(VOTING_TIME)
+	for player in players.get_children():
+		player.set_voting_status(true)

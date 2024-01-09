@@ -676,11 +676,12 @@ func _request_victim_kill(victim_id: int):
 
 
 ## Zabija gracza.
-func kill_player(player_id: int):
+func kill_player(player_id):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
-	_send_player_kill.rpc(player_id, false)
+	if player_id != null:
+		_send_player_kill.rpc(player_id, false)
 
 
 @rpc("call_local", "reliable")
