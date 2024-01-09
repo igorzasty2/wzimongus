@@ -6,7 +6,7 @@ var _minigame_instance: Node
 var use_button_disabled: bool = true
 
 @onready var minigame_container = $MinigameContainer
-@onready var viewport = minigame_container.get_node("ViewportContainer/Viewport")
+@onready var subviewport = minigame_container.get_node("SubviewportContainer/MinigameViewport")
 @onready var close_button: TextureButton = minigame_container.get_node("CloseButton")
 
 # Zmienne do obsługi interface gracza
@@ -36,7 +36,7 @@ func _on_use_button_pressed():
 	if _minigame == null:
 		return
 
-	if viewport.get_child_count() != 0:
+	if subviewport.get_child_count() != 0:
 		return
 	
 	summon_window()
@@ -54,7 +54,7 @@ func _input(event):
 	if _minigame == null:
 		return
 
-	if viewport.get_child_count() != 0:
+	if subviewport.get_child_count() != 0:
 		return
 	
 	if use_button_disabled:
@@ -69,8 +69,8 @@ func _input(event):
 func summon_window():
 	minigame_container.visible = true
 
-	viewport.add_child(_minigame.instantiate())
-	_minigame_instance = viewport.get_child(0)
+	subviewport.add_child(_minigame.instantiate())
+	_minigame_instance = subviewport.get_child(0)
 	
 	emit_signal("use_button_active", "InteractButton", false)
 	use_button_disabled = true
