@@ -25,7 +25,7 @@ var _disabled_line_thickness = 0.0
 var _is_player_inside : bool = false
 
 @onready var sprite_node = get_node("Sprite2D")
-@onready var minigame_window = get_parent().get_parent().get_node("MinigameWindow")
+@onready var minigame_window = get_tree().root.get_node("Game/Maps/MainMap/MinigameWindow")
 
 func _ready():
 	sprite_node.texture = sprite

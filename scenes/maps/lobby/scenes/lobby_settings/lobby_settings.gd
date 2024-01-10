@@ -20,7 +20,10 @@ func _ready():
 
 
 func _input(event):
-	if event.is_action_pressed("pause_menu") && visible:
+	if event.is_action_pressed("pause_menu"):
+		if !visible:
+			return
+
 		hide()
 		get_viewport().set_input_as_handled()
 

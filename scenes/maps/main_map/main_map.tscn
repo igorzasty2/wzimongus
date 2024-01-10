@@ -173,7 +173,7 @@ y_sort_enabled = true
 script = ExtResource("1_xvngj")
 
 [node name="Background" type="Node2D" parent="."]
-z_index = -2
+z_index = -5
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
@@ -256,7 +256,7 @@ position = Vector2(3067, -1348)
 position = Vector2(3038, -441)
 
 [node name="Objects" type="Node2D" parent="."]
-z_index = 2
+z_index = 5
 y_sort_enabled = true
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
@@ -361,16 +361,16 @@ texture = ExtResource("35_ryots")
 position = Vector2(12.5, -15)
 shape = SubResource("RectangleShape2D_o0u2b")
 
-[node name="ChillRoomStol" type="Node2D" parent="Objects"]
+[node name="ChillRoomStol1" type="Node2D" parent="Objects"]
 position = Vector2(-413, 584)
 metadata/_edit_group_ = true
 
-[node name="Sprite" type="Sprite2D" parent="Objects/ChillRoomStol"]
+[node name="Sprite" type="Sprite2D" parent="Objects/ChillRoomStol1"]
 texture = ExtResource("36_k0n1h")
 
-[node name="CollisionBox" type="StaticBody2D" parent="Objects/ChillRoomStol"]
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/ChillRoomStol1"]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/ChillRoomStol/CollisionBox"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/ChillRoomStol1/CollisionBox"]
 polygon = PackedVector2Array(52.5, -130.8, 52.5, -129.5, 82.5, -120.5, 82.5, -119.1, 118.5, -99.2, 118.5, -97.8, 144.5, -72.9, 144.5, -70.5, 160.5, -44.6, 160.5, -41.4, 162.5, -36.4, 162.5, 28, 160.2, 41, 158.9, 41, 150.9, 61, 149.6, 61, 138.6, 78, 137.4, 78, 120.4, 96, 118.2, 96, 97.2, 112, 94.8, 112, 52.9, 130, 48.6, 130, 41.2, 132, -43.5, 132, -82.5, 120.5, -82.5, 119.1, -119.5, 98.2, -119.5, 96.8, -147.5, 68.8, -147.5, 66.7, -154.5, 57.7, -154.5, 55.4, -162.5, 37.6, -162.5, -27.4, -159.1, -44, -157.7, -44, -142.7, -73, -141.3, -73, -111.3, -103, -109.2, -103, -97.2, -112, -95, -112, -69, -125, -65.6, -125, -37.5, -132, 43.5, -132)
 
 [node name="ChillRoomStol2" type="Node2D" parent="Objects"]
@@ -749,6 +749,7 @@ position = Vector2(0, -120)
 polygon = PackedVector2Array(30.5, 118.8, 117.5, 163.8, 117.5, 173, 115, 175.4, 112.5, 174.3, 112.5, 173.2, 59.3, 146.2, 112.5, 195.1, 112.5, 199.4, 110.7, 200, 102.5, 200, 24.1, 129.2, -52.5, 200, -62.3, 200, -63.5, 198.8, -63.5, 195.1, -11.7, 146.7, -66, 176, -68.3, 176, -72.5, 171.8, -72.5, 167.2, -70.3, 165, -68, 165, 19.5, 118.8)
 
 [node name="SamorzadKanapa" type="Node2D" parent="Objects"]
+z_index = -1
 position = Vector2(1775, 85)
 metadata/_edit_group_ = true
 
@@ -761,14 +762,12 @@ texture = ExtResource("59_s1cnf")
 polygon = PackedVector2Array(177, -76.8, 177, -75.4, 189, -71.4, 189, -69.7, 198, -59.8, 198, -57, 198.9, -38, 165, 97, -213.5, 46, -215.7, 46, -225, 46, -230, 43, -202.6, -103, -201, -103, -192, -116, -189.4, -116, -180.7, -120, -149.9, -120)
 
 [node name="SamorzadStol" type="Node2D" parent="Objects"]
+z_index = -1
 position = Vector2(1734, 297)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/SamorzadStol"]
 texture = ExtResource("60_kfep4")
-
-[node name="EmergencyButton" parent="Objects/SamorzadStol" instance=ExtResource("36_xfee5")]
-position = Vector2(0, -11)
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadStol"]
 
@@ -872,7 +871,7 @@ texture = ExtResource("66_3plgl")
 polygon = PackedVector2Array(-3, -69.6, -3, -68.4, 24, -57.3, 24, -56.1, 43, -45.2, 43, -44, 57.8, -32, 59.7, -32, 66.6, -35, 78.2, -35, 84, -33.6, 84, -32.4, 90, -30.4, 90, -28.7, 97, -21, 97, 1.2, 51.1, 70, 48.6, 70, 45.6, 72, 18.8, 72, 7, 64.1, 7, 61.4, 3.6, 52, -1.3, 52, -39, 41.5, -39, 40.3, -64, 29.3, -64, 28, -80, 17.1, -80, 15.7, -95, -2.3, -95, -4.5, -97, -8.5, -97, -41.1, -93.4, -51, -91.8, -51, -75.8, -67, -73.4, -67, -60.1, -72, -14.6, -72)
 
 [node name="WillyBiurko" type="Node2D" parent="Objects"]
-z_index = -2
+z_index = -4
 position = Vector2(2036, -2077)
 metadata/_edit_group_ = true
 
@@ -885,7 +884,7 @@ texture = ExtResource("67_5at3m")
 polygon = PackedVector2Array(-156.5, -151.4, -156.5, -150.2, -144.5, -148.2, -144.5, -146.6, -132.5, -138.6, -132.5, -136.1, -122.5, -121.1, -122.5, -117.8, -114.5, -91.8, -114.5, -86.5, -107.7, -20.5, -100.4, -9.5, -98.9, -9.5, -81.9, 1.5, -79.2, 1.5, -56.1, 9.5, -41.5, 9.5, 163.5, 7.5, 163.5, 8.70001, 180.5, 10.7, 180.5, 12.2, 197.5, 19.2, 197.5, 20.6, 208.5, 30.6, 208.5, 33.1, 214.5, 49.1, 214.5, 161.5, 212.2, 161.5, 206.2, 166.5, -318, 166.5, -321.5, 164.7, -321.5, -125.5, -319.7, -125.5, -312.8, -140.5, -311.1, -140.5, -295.1, -150.5, -290.5, -150.5, -222.5, -152.4, -222.5, -153.6)
 
 [node name="WillyKabelki" type="Node2D" parent="Objects"]
-z_index = -1
+z_index = -3
 position = Vector2(2407, -2298)
 metadata/_edit_group_ = true
 
@@ -935,11 +934,11 @@ texture = ExtResource("70_8h00i")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/XeroKopiarka/CollisionBox"]
 polygon = PackedVector2Array(121.5, -99.5, 123.5, -99.5, 123.5, 119.5, -65.5, 119.5, -65.5, 76.5, -68.7, 76.5, -73.7, 81.5, -96.5, 81.5, -96.5, 79.3, -103.5, 72.3, -103.5, 66.5, -104.8, 66.5, -116.5, 62.4, -116.5, 65.1, -123.5, 66.5, -123.5, 32.5, -116.7, 32.5, -114.7, 49.5, -112.1, 49.5, -99.1, 54.5, -96.6, 54.5, -94.6, 51.5, -77.8, 51.5, -79.1, 46.5, -72.8, 46.5, -73.8, 39.5, -67.8, 39.5, -65.5, 41.3, -65.5, -12.6, -76.4, -24.5, -78.2, -24.5, -105.5, -46.5, -105.5, -50.2, -98.4, -58.5, -95.1, -58.5, -88.6, -62.8, -86.5, -61.7, -86.5, -60.6, -69.8, -50.6, -80.4, -62.5, -82.1, -62.5, -97.5, -73.5, -97.5, -76.5, -87.7, -83.8, -85.5, -82.7, -85.5, -81.6, -65.5, -69.1, -65.5, -78.4, -95.5, -97.4, -95.5, -102.1, -91.6, -108.5, -88.9, -108.5, -56, -88.5, -52.4, -88.5, -51.4, -102.5, -32.5, -102.5, -32.5, -100.2, -23.5, -88.5, 7.5, -88.5, 7.5, -114.9, 10.5, -115.9, 10.5, -119.5, 121.5, -119.5)
 
-[node name="XeroPolka" type="Node2D" parent="Objects"]
+[node name="XeroPolka1" type="Node2D" parent="Objects"]
 position = Vector2(-1207, -460)
 metadata/_edit_group_ = true
 
-[node name="Sprite" type="Sprite2D" parent="Objects/XeroPolka"]
+[node name="Sprite" type="Sprite2D" parent="Objects/XeroPolka1"]
 texture = ExtResource("71_yvo4d")
 
 [node name="XeroPolka2" type="Node2D" parent="Objects"]
@@ -950,7 +949,7 @@ metadata/_edit_group_ = true
 texture = ExtResource("71_yvo4d")
 
 [node name="XeroStosKartek" type="Node2D" parent="Objects"]
-z_index = -1
+z_index = -3
 position = Vector2(-1182, -56)
 metadata/_edit_group_ = true
 
@@ -970,167 +969,155 @@ texture = ExtResource("73_g7t2a")
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_f8ggq")
 
+[node name="InteractionPoints" type="Node2D" parent="."]
+z_index = 4
+
 [node name="Tasks" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="Task1" parent="Tasks" instance=ExtResource("3_e0rk4")]
+[node name="EmergencyButton" parent="InteractionPoints" instance=ExtResource("36_xfee5")]
+z_index = 1
+position = Vector2(1734, 286)
+
+[node name="Tasks" type="Node2D" parent="InteractionPoints"]
+
+[node name="Task1" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(2.08165e-12, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("77_1ivr1")
 
-[node name="Task2" parent="Tasks" instance=ExtResource("3_e0rk4")]
+[node name="Task2" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(350, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("78_pc37b")
 
-[node name="Task3" parent="Tasks" instance=ExtResource("3_e0rk4")]
+[node name="Task3" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(700, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("79_xtlh3")
 
-[node name="Task4" parent="Tasks" instance=ExtResource("3_e0rk4")]
+[node name="Task4" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(1050, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("80_j2qov")
 
-[node name="Task5" parent="Tasks" instance=ExtResource("3_e0rk4")]
+[node name="Task5" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(1400, -1000)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("80_b7854")
 
-[node name="Task6" parent="Tasks" instance=ExtResource("3_e0rk4")]
+[node name="Task6" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(1751, -1014)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("82_rt2pg")
 
-[node name="Task7" parent="Tasks" instance=ExtResource("3_e0rk4")]
+[node name="Task7" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(2136, -1012)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("83_7u8vq")
 
-[node name="Task8" parent="Tasks" instance=ExtResource("3_e0rk4")]
+[node name="Task8" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(2504, -1028)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("84_y3nq6")
 
-[node name="Vents" type="Node2D" parent="."]
-metadata/_edit_lock_ = true
-metadata/_edit_group_ = true
-
-[node name="VentSystem1" type="Node2D" parent="Vents"]
-
-[node name="Vent1" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(-1092, 147)
-vent_target_list = [NodePath("../Vent2"), NodePath("../Vent3")]
-
-[node name="Vent2" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(-3279, 1172)
-vent_target_list = [NodePath("../Vent1"), NodePath("../Vent3")]
-
-[node name="Vent3" parent="Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(-2701, -2818)
-vent_target_list = [NodePath("../Vent1"), NodePath("../Vent2")]
-
-[node name="VentSystem2" type="Node2D" parent="Vents"]
-
-[node name="Vent1" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(2158, 154)
-vent_target_list = [NodePath("../Vent2")]
-
-[node name="Vent2" parent="Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
-position = Vector2(4372, -1351)
-vent_target_list = [NodePath("../Vent1")]
-
-[node name="Cameras" type="Node2D" parent="."]
-metadata/_edit_lock_ = true
-metadata/_edit_group_ = true
-
-[node name="CameraSystem" parent="Cameras" instance=ExtResource("3_e0rk4")]
-position = Vector2(4016, -1314)
+[node name="CameraSystem" parent="InteractionPoints" instance=ExtResource("3_e0rk4")]
+position = Vector2(4016, -1329)
 is_minigame = false
 minigame_scene = ExtResource("89_58eb3")
 
-[node name="Camera" parent="Cameras" instance=ExtResource("81_mexjh")]
-position = Vector2(-2602, -277)
+[node name="Vents" type="Node2D" parent="InteractionPoints"]
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
-[node name="Camera2" parent="Cameras" instance=ExtResource("81_mexjh")]
-position = Vector2(-1390, -1450)
+[node name="VentSystem1" type="Node2D" parent="InteractionPoints/Vents"]
 
-[node name="Camera3" parent="Cameras" instance=ExtResource("81_mexjh")]
-position = Vector2(36, 476)
+[node name="Vent1" parent="InteractionPoints/Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-1092, 147)
+vent_target_list = [NodePath("../Vent2"), NodePath("../Vent3")]
 
-[node name="Camera4" parent="Cameras" instance=ExtResource("81_mexjh")]
-position = Vector2(3036, 352)
+[node name="Vent2" parent="InteractionPoints/Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-3279, 1172)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent3")]
 
-[node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
-position = Vector2(2848, -1132)
+[node name="Vent3" parent="InteractionPoints/Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-2701, -2818)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent2")]
 
-[node name="MeetingPositions" type="Node2D" parent="."]
+[node name="VentSystem2" type="Node2D" parent="InteractionPoints/Vents"]
 
-[node name="MeetingPosition1" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1592, 187)
+[node name="Vent1" parent="InteractionPoints/Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(2158, 154)
+vent_target_list = [NodePath("../Vent2")]
 
-[node name="MeetingPosition2" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1561, 251)
-
-[node name="MeetingPosition3" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1553, 328)
-
-[node name="MeetingPosition4" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1573, 408)
-
-[node name="MeetingPosition5" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1645, 455)
-
-[node name="MeetingPosition6" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1747, 476)
-
-[node name="MeetingPosition7" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1837, 450)
-
-[node name="MeetingPosition8" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1890, 389)
-
-[node name="MeetingPosition9" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1912, 312)
-
-[node name="MeetingPosition10" type="Marker2D" parent="MeetingPositions"]
-position = Vector2(1900, 237)
+[node name="Vent2" parent="InteractionPoints/Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(4372, -1366)
+vent_target_list = [NodePath("../Vent1")]
 
 [node name="StartPositions" type="Node2D" parent="."]
 
-[node name="StartPosition" type="Marker2D" parent="StartPositions"]
+[node name="0" type="Marker2D" parent="StartPositions"]
 position = Vector2(-301, 436)
 
-[node name="StartPosition2" type="Marker2D" parent="StartPositions"]
+[node name="1" type="Marker2D" parent="StartPositions"]
 position = Vector2(-434, 425)
 
-[node name="StartPosition3" type="Marker2D" parent="StartPositions"]
+[node name="2" type="Marker2D" parent="StartPositions"]
 position = Vector2(-553, 449)
 
-[node name="StartPosition4" type="Marker2D" parent="StartPositions"]
+[node name="3" type="Marker2D" parent="StartPositions"]
 position = Vector2(-605, 542)
 
-[node name="StartPosition5" type="Marker2D" parent="StartPositions"]
+[node name="4" type="Marker2D" parent="StartPositions"]
 position = Vector2(-605, 664)
 
-[node name="StartPosition6" type="Marker2D" parent="StartPositions"]
+[node name="5" type="Marker2D" parent="StartPositions"]
 position = Vector2(-536, 741)
 
-[node name="StartPosition7" type="Marker2D" parent="StartPositions"]
+[node name="6" type="Marker2D" parent="StartPositions"]
 position = Vector2(-419, 769)
 
-[node name="StartPosition8" type="Marker2D" parent="StartPositions"]
+[node name="7" type="Marker2D" parent="StartPositions"]
 position = Vector2(-296, 746)
 
-[node name="StartPosition9" type="Marker2D" parent="StartPositions"]
+[node name="8" type="Marker2D" parent="StartPositions"]
 position = Vector2(-217, 663)
 
-[node name="StartPosition10" type="Marker2D" parent="StartPositions"]
+[node name="9" type="Marker2D" parent="StartPositions"]
 position = Vector2(-224, 506)
 
-[node name="DeadBodies" type="Node2D" parent="."]
+[node name="MeetingPositions" type="Node2D" parent="."]
+
+[node name="0" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1592, 187)
+
+[node name="1" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1561, 251)
+
+[node name="2" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1553, 328)
+
+[node name="3" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1573, 408)
+
+[node name="4" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1645, 455)
+
+[node name="5" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1747, 476)
+
+[node name="6" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1837, 450)
+
+[node name="7" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1890, 389)
+
+[node name="8" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1912, 312)
+
+[node name="9" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1900, 237)
 
 [node name="MapBorder" type="Node2D" parent="."]
 
@@ -1138,7 +1125,7 @@ position = Vector2(-224, 506)
 collision_layer = 16
 collision_mask = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+[node name="CollisionShape2D1" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
 position = Vector2(584, 2504)
 shape = SubResource("RectangleShape2D_elfmc")
 
@@ -1158,7 +1145,7 @@ shape = SubResource("RectangleShape2D_apqsq")
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="LightMap"]
+[node name="LightOccluder2D1" type="LightOccluder2D" parent="LightMap"]
 occluder = SubResource("OccluderPolygon2D_2hbmx")
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="LightMap"]
@@ -1169,6 +1156,25 @@ occluder = SubResource("OccluderPolygon2D_f6dli")
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="DeadBodies" type="Node2D" parent="."]
+
+[node name="Cameras" type="Node2D" parent="."]
+
+[node name="Camera1" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-2602, -277)
+
+[node name="Camera2" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-1390, -1450)
+
+[node name="Camera3" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(36, 476)
+
+[node name="Camera4" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(3036, 352)
+
+[node name="Camera5" parent="Cameras" instance=ExtResource("81_mexjh")]
+position = Vector2(2848, -1132)
 
 [node name="Camera" type="Camera2D" parent="."]
 enabled = false
@@ -1200,6 +1206,7 @@ script = ExtResource("92_b2shf")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.411765, 0.411765, 0.411765, 1)
 
-[connection signal="child_order_changed" from="VotingCanvas" to="." method="update_player_input"]
+[connection signal="visibility_changed" from="MinigameMenu" to="." method="_update_player_input"]
+[connection signal="child_order_changed" from="VotingCanvas" to="." method="_update_player_input"]
+[connection signal="visibility_changed" from="LoadingScreen" to="." method="_update_player_input"]
 [connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
-[connection signal="visibility_changed" from="LoadingScreen" to="." method="update_player_input"]

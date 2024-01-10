@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 
 ## Okresla czy spotkanie
 @export var is_emergency_meeting:bool = false

@@ -27,7 +27,16 @@ func _ready():
 
 
 func _input(event):
-	if event.is_action_pressed("interact") && _is_player_inside && !GameManager.get_current_game_key("is_input_disabled") && !GameManager.get_current_game_key("is_paused"):
+	if event.is_action_pressed("interact"):
+		if GameManager.get_current_game_key("is_paused"):
+			return
+
+		if GameManager.get_current_game_key("is_input_disabled"):
+			return
+
+		if !_is_player_inside:
+			return
+
 		get_parent().get_node("SkinSelector").show()
 
 

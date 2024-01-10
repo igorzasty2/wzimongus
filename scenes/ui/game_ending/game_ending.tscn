@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://8infxgemuldq" path="res://scenes/ui/game_ending/assets/background.png" id="2_voi47"]
 
 [node name="GameEnding" type="CanvasLayer"]
-layer = 128
+layer = 6
 script = ExtResource("1_jsh54")
 
 [node name="Background" type="TextureRect" parent="."]

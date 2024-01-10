@@ -43,30 +43,30 @@ func _on_use_button_pressed():
 
 
 func _input(event):
-	if event.is_action_pressed("pause_menu") && minigame_container.visible:
+	if event.is_action_pressed("pause_menu"):
+		if !visible:
+			return
+
 		close_minigame()
 		get_viewport().set_input_as_handled()
-		return
 
-	if !event.is_action_pressed("interact"):
-		return
+	if event.is_action_pressed("interact"):
+		if GameManager.get_current_game_key("is_paused"):
+			return
 
-	if _minigame == null:
-		return
+		if GameManager.get_current_game_key("is_input_disabled"):
+			return
 
-	if subviewport.get_child_count() != 0:
-		return
-	
-	if use_button_disabled:
-		return
-	
-	if GameManager.get_current_game_key("is_paused"):
-		return
-	
-	if GameManager.get_current_game_key("is_input_disabled"):
-		return
+		if _minigame == null:
+			return
 
-	summon_window()
+		if subviewport.get_child_count() != 0:
+			return
+
+		if use_button_disabled:
+			return
+
+		summon_window()
 
 
 func summon_window():

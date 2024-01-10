@@ -9,7 +9,7 @@ material = ExtResource("1_vabh3")
 script = ExtResource("1_p1ew1")
 
 [node name="DeadBodyLabel" type="Label" parent="."]
-z_index = 1
+z_index = 4
 use_parent_material = true
 anchors_preset = 7
 anchor_left = 0.5
@@ -28,7 +28,7 @@ vertical_alignment = 1
 visible_characters = 40
 
 [node name="DeadBodySprite" type="Sprite2D" parent="."]
-z_index = 1
+z_index = 4
 use_parent_material = true
 scale = Vector2(0.275, 0.275)
 

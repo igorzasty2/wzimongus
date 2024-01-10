@@ -15,8 +15,16 @@ bbcode_enabled = true
 fit_content = true
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(0.101961, 0.976471, 0, 1)
 offset_left = 43.0
 offset_top = 18.0
 offset_right = 562.0
 offset_bottom = 45.0
 show_percentage = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 51.0
+offset_top = 18.0
+offset_right = 204.0
+offset_bottom = 58.0
+text = "Zadania wykonane"
