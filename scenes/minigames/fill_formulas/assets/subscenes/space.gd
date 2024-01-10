@@ -1,21 +1,19 @@
+## Klasa reprezentuje pusty kafelek na literę
+class_name EmptyBlock
 extends Area2D
 
-# Ta klasa funkcjonuje jako pole w którym należy umieścić literę składającą się
-# na wzór matematyczny
-
-# Zmienna size przechowuje informacje o rozmiarze pola
+## Informacje o rozmiarze pola
 var size:Vector2
-# wanted_letter przechowuje informacje o tym jaką literę należy umieścić w polu
+## Litera jakiej oczekuje pole
 var wanted_letter
-# correct_area przechowuje obecną intormacje o położeniu pola, wykorzystywana
-# jest w głównym skrypcie
+## Przechowuje informacje o położeniu pola
 var correct_area:Rect2
 
-
+## Ustawia wartość zmiennej size
 func _ready():
 	size = $Sprite2D.get_rect().size
 
 
-# Funkcja służy do uzyskania dokładnego położenia stworzonej już instancji
+## Uzyskuje dokładne położenie stworzonej instancji
 func set_area():
 	correct_area = Rect2(position - size/2, size)
