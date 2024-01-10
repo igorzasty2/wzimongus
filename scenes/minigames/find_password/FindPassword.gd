@@ -2,6 +2,8 @@ extends Node2D
 
 signal minigame_end
 
+@export var polish_name : String
+
 @onready var password_input = get_node("%PasswordInput")
 
 @onready var passwords = _generate_passwords()
