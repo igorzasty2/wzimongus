@@ -972,10 +972,6 @@ shape = SubResource("RectangleShape2D_f8ggq")
 [node name="InteractionPoints" type="Node2D" parent="."]
 z_index = 4
 
-[node name="Tasks" type="Node2D" parent="."]
-metadata/_edit_lock_ = true
-metadata/_edit_group_ = true
-
 [node name="EmergencyButton" parent="InteractionPoints" instance=ExtResource("36_xfee5")]
 z_index = 1
 position = Vector2(1734, 286)
@@ -1054,6 +1050,10 @@ vent_target_list = [NodePath("../Vent2")]
 [node name="Vent2" parent="InteractionPoints/Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
 position = Vector2(4372, -1366)
 vent_target_list = [NodePath("../Vent1")]
+
+[node name="Tasks" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="StartPositions" type="Node2D" parent="."]
 
@@ -1206,7 +1206,6 @@ script = ExtResource("92_b2shf")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.411765, 0.411765, 0.411765, 1)
 
-[connection signal="visibility_changed" from="MinigameMenu" to="." method="_update_player_input"]
 [connection signal="child_order_changed" from="VotingCanvas" to="." method="_update_player_input"]
-[connection signal="visibility_changed" from="LoadingScreen" to="." method="_update_player_input"]
 [connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
+[connection signal="visibility_changed" from="LoadingScreen" to="." method="_update_player_input"]

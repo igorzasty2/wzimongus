@@ -19,9 +19,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -249.0
-offset_top = -309.0
+offset_top = -348.0
 offset_right = 249.0
-offset_bottom = 328.0
+offset_bottom = 347.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(249, 204)
@@ -32,7 +32,7 @@ size_flags_stretch_ratio = 0.0
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 60
+theme_override_constants/margin_bottom = 25
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsContainer/MarginContainer"]
 layout_mode = 2
@@ -205,6 +205,58 @@ popup/item_2/text = "45s"
 popup/item_2/id = 45
 popup/item_3/text = "60s"
 popup/item_3/id = 60
+
+[node name="VotingTimeContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VotingTimeLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/VotingTimeContainer"]
+layout_mode = 2
+text = "Czas głosowania"
+
+[node name="VotingTimeInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/VotingTimeContainer"]
+custom_minimum_size = Vector2(72, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+item_count = 6
+selected = 1
+popup/item_0/text = "15"
+popup/item_0/id = 15
+popup/item_1/text = "30"
+popup/item_1/id = 30
+popup/item_2/text = "45"
+popup/item_2/id = 45
+popup/item_3/text = "60"
+popup/item_3/id = 60
+popup/item_4/text = "75"
+popup/item_4/id = 75
+popup/item_5/text = "90"
+popup/item_5/id = 90
+
+[node name="DiscussionTimeContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DiscussionTimeLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/DiscussionTimeContainer"]
+layout_mode = 2
+text = "Czas dyskusji"
+
+[node name="DiscussionTimeInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/DiscussionTimeContainer"]
+custom_minimum_size = Vector2(72, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+item_count = 6
+selected = 1
+popup/item_0/text = "15"
+popup/item_0/id = 15
+popup/item_1/text = "30"
+popup/item_1/id = 30
+popup/item_2/text = "45"
+popup/item_2/id = 45
+popup/item_3/text = "60"
+popup/item_3/id = 60
+popup/item_4/text = "75"
+popup/item_4/id = 75
+popup/item_5/text = "90"
+popup/item_5/id = 90
 
 [node name="StudentLightRadiusContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
