@@ -1,5 +1,7 @@
-extends Control
 ## Klasa jest reprezentacją okna systemu kamer
+class_name CameraSystem
+extends Control
+
 
 ## Jego obecność naprawia błąd
 signal minigame_end
