@@ -703,20 +703,21 @@ func _send_player_kill(player_id: int, is_victim: bool = true):
 
 ## Sprawdza kto wygrał w tym momencie i kończy grę na korzyść wykładowcom lub crewmatom, jeżeli nikt, to nic nie robi.
 func check_winning_conditions():
-	if !multiplayer.is_server():
-		return ERR_UNAUTHORIZED
+	if GameManager.get_current_game_key("is_started"):
+		if !multiplayer.is_server():
+			return ERR_UNAUTHORIZED
 
-	if TaskManager.get_tasks_server().is_empty():
-		winner_determined.emit(Role.STUDENT)
-		return
+		if TaskManager.get_tasks_server().is_empty():
+			winner_determined.emit(Role.STUDENT)
+			return
 
-	if _count_alive_lecturers() == 0:
-		winner_determined.emit(Role.STUDENT)
-		return
+		if _count_alive_lecturers() == 0:
+			winner_determined.emit(Role.STUDENT)
+			return
 
-	if _count_alive_crewmates() <= _count_alive_lecturers():
-		winner_determined.emit(Role.LECTURER)
-		return
+		if _count_alive_crewmates() <= _count_alive_lecturers():
+			winner_determined.emit(Role.LECTURER)
+			return
 
 
 ## Liczy żyjących wykładowców.
