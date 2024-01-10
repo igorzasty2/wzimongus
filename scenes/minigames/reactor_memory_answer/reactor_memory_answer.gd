@@ -1,10 +1,12 @@
+class_name ReactorMemoryMinigame	
 extends Node2D
+
 
 signal minigame_end
 
 @export var polish_name : String
 
-class_name ReactorMemoryMinigame
+
 
 ## Tablica przechowująca sekwencję
 var sequence = []
