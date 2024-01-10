@@ -70,10 +70,13 @@ func _switch_chat_group():
 		_update_group_label()
 
 func _update_group_label():
-	if GameManager.get_current_player_key("is_lecturer"):
+	if !GameManager.get_current_player_key("is_alive"):
+		group_label.text = "Dead"
+	elif GameManager.get_current_player_key("is_lecturer"):
 		group_label.text = "Lecturer" if current_group == Group.LECTURER else "Global"
 	else:
-		group_label.text = "Dead" if current_group == Group.DEAD else "Global"
+		group_label.text = "Global"
+		
 
 
 @rpc("any_peer", "call_local", "reliable")

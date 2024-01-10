@@ -10,6 +10,8 @@ extends CanvasLayer
 @onready var emergency_cooldown = $SettingsContainer/MarginContainer/VBoxContainer/EmergencyCooldownContainer/EmergencyCooldownInput
 @onready var student_light_radius = $SettingsContainer/MarginContainer/VBoxContainer/StudentLightRadiusContainer/StudentLightRadiusInput
 @onready var lecturer_light_radius = $SettingsContainer/MarginContainer/VBoxContainer/LecturerLightRadiusContainer/LecturerLightRadiusInput
+@onready var voting_time = $SettingsContainer/MarginContainer/VBoxContainer/VotingTimeContainer/VotingTimeInput
+@onready var discussion_time = $SettingsContainer/MarginContainer/VBoxContainer/DiscussionTimeContainer/DiscussionTimeInput
 
 func _ready():
 	# Ustawia aktualizacje ilości maksymalnych połączeń
@@ -29,7 +31,7 @@ func _input(event):
 
 
 func _on_save_button_pressed():	
-	GameManager.change_server_settings(max_connections.text.to_int(), max_lecturers.text.to_int(), kill_cooldown.get_selected_id(), sabotage_cooldown.get_selected_id(), kill_radius.get_selected_id(), task_amount.get_selected_id(), emergency_cooldown.get_selected_id(), student_light_radius.get_selected_id(), lecturer_light_radius.get_selected_id())
+	GameManager.change_server_settings(max_connections.text.to_int(), max_lecturers.text.to_int(), kill_cooldown.get_selected_id(), sabotage_cooldown.get_selected_id(), kill_radius.get_selected_id(), task_amount.get_selected_id(), emergency_cooldown.get_selected_id(), student_light_radius.get_selected_id(), lecturer_light_radius.get_selected_id(), voting_time.get_selected_id(), discussion_time.get_selected_id())
 	hide()
 
 
@@ -46,6 +48,8 @@ func _on_visibility_changed():
 		emergency_cooldown.selected = emergency_cooldown.get_item_index(settings["emergency_cooldown"])
 		student_light_radius.selected = student_light_radius.get_item_index(settings["student_light_radius"])
 		lecturer_light_radius.selected = lecturer_light_radius.get_item_index(settings["lecturer_light_radius"])
+		voting_time.selected = voting_time.get_item_index(settings["voting_time"])
+		discussion_time.selected = discussion_time.get_item_index(settings["discussion_time"])
 		_on_connections_lecturers_item_selected(max_connections.selected)
 
 

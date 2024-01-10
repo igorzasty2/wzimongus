@@ -8,13 +8,13 @@ extends Control
 @onready var chat = get_node("%Chat")
 @onready var chat_input = %ChatContainer/Chat/ChatContainer/InputText
 
-@export var VOTING_TIME = 10
+var VOTING_TIME = GameManager.get_server_settings()["voting_time"]
 @onready var voting_timer = Timer.new()
 
-@export var EJECT_PLAYER_TIME = 5
+var EJECT_PLAYER_TIME = 5
 @onready var eject_player_timer = Timer.new()
 
-@export var DISCUSSION_TIME = 60
+var DISCUSSION_TIME = GameManager.get_server_settings()["discussion_time"]
 @onready var discussion_timer = Timer.new()
 
 var player_box = preload("res://scenes/ui/voting_screen/player_box/player_box.tscn")

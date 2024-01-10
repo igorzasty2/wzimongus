@@ -131,7 +131,9 @@ var _server_settings = {
 	"task_amount": 3,
 	"emergency_cooldown": 30,
 	"student_light_radius": 4.0, 
-	"lecturer_light_radius": 4.0
+	"lecturer_light_radius": 4.0,
+	"voting_time": 60,
+	"discussion_time": 60
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -200,7 +202,7 @@ func create_lobby(lobby_name: String, port: int):
 
 
 ## Zmienia ustawienia serwera.
-func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, sabotage_cooldown: int, kill_radius: int, task_amount: int, emergency_cooldown: int, student_light_radius: int, lecturer_light_radius: int):
+func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, sabotage_cooldown: int, kill_radius: int, task_amount: int, emergency_cooldown: int, student_light_radius: int, lecturer_light_radius: int, voting_time: int, discussion_time: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 	
@@ -213,6 +215,8 @@ func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown:
 	_server_settings["emergency_cooldown"] = emergency_cooldown
 	_server_settings["lecturer_light_radius"] = lecturer_light_radius
 	_server_settings["student_light_radius"] = student_light_radius
+	_server_settings["voting_time"] = voting_time
+	_server_settings["discussion_time"] = discussion_time
 	_update_server_settings.rpc(_server_settings)
 	server_settings_changed.emit()
 
