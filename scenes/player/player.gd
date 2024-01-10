@@ -224,14 +224,14 @@ func _rollback_tick(delta, _tick, is_fresh):
 ## Sprawdza, czy nie naciśnięto fail button. Jeśli tak to sprawdza, czy jesteśmy lecturerem
 ## i prosi serwer o oblanie najbliższego gracza w promieniu oblania.
 func _input(event):
-	if GameManager.get_current_game_key("is_paused"):
-		return
-
-	if name.to_int() != GameManager.get_current_player_id():
-		return
-
 	# Obsługuje używanie venta.
 	if event.is_action_pressed("use_vent"):
+		if name.to_int() != GameManager.get_current_player_id():
+			return
+
+		if GameManager.get_current_game_key("is_paused"):
+			return
+
 		if !can_use_vent:
 			return
 
@@ -240,10 +240,14 @@ func _input(event):
 
 		_use_vent()
 
-		return
-
 	# Obsługuje zabijanie graczy.
 	if event.is_action("fail") && !event.is_echo() && event.is_pressed():
+		if name.to_int() != GameManager.get_current_player_id():
+			return
+
+		if GameManager.get_current_game_key("is_paused"):
+			return
+
 		if GameManager.get_current_game_key("is_input_disabled"):
 			return
 
@@ -255,15 +259,21 @@ func _input(event):
 
 		var victim = closest_player(GameManager.get_current_player_id())
 
-		if victim:
-			GameManager.kill_victim(victim)
-			_handle_kill_timer()
-			button_active.emit("FailButton", false)
+		if !victim:
+			return
 
-		return
+		GameManager.kill_victim(victim)
+		_handle_kill_timer()
+		button_active.emit("FailButton", false)
 
 	# Obsługuje sabotaż.
 	if event.is_action_pressed("sabotage"):
+		if name.to_int() != GameManager.get_current_player_id():
+			return
+
+		if GameManager.get_current_game_key("is_paused"):
+			return
+
 		if GameManager.get_current_game_key("is_input_disabled"):
 			return
 
@@ -274,10 +284,7 @@ func _input(event):
 			return
 
 		GameManager.request_light_sabotage.rpc_id(1)
-
 		button_active.emit("SabotageButton", false)
-
-		return
 
 
 ## Aktualizuje parametry animacji postaci.

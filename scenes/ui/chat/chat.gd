@@ -36,27 +36,32 @@ func _ready():
 
 
 func _input(event):
-	if GameManager.get_current_game_key("is_paused"):
-		return
-
 	if event.is_action_pressed("chat_open"):
+		if GameManager.get_current_game_key("is_paused"):
+			return
+
 		if input_text.visible:
 			return
 
 		_open_chat()
-
 		get_viewport().set_input_as_handled()
 
-	if event.is_action_pressed("chat_close") && input_text.visible:
+	if event.is_action_pressed("chat_close"):
+		if GameManager.get_current_game_key("is_paused"):
+			return
+
+		if !input_text.visible:
+			return
+
 		_switch_chat_group()
-
 		get_viewport().set_input_as_handled()
 
-	if event.is_action_pressed("pause_menu") && input_text.visible:
+	if event.is_action_pressed("pause_menu"):
+		if !input_text.visible:
+			return
+
 		_close_chat()
-
 		get_viewport().set_input_as_handled()
-
 
 
 func _switch_chat_group():
