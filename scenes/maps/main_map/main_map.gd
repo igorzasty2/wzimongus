@@ -88,3 +88,10 @@ func _remove_player(id: int, _player: Dictionary = {}):
 ## Aktualizuje status wejścia gracza.
 func update_player_input():
 	GameManager.set_input_status(!$Players.get_node(str(GameManager.get_current_player_id())).is_in_vent && !$MinigameMenu.visible && !$VotingCanvas.get_child_count() > 0 && !$LoadingScreen.visible)
+
+func close_modals():
+	# Zamyka wszystkie okna.
+	$MinigameMenu.close_minigame()
+
+	# Zamyka głosowanie.
+	for i in $VotingCanvas.get_children(): i.queue_free()

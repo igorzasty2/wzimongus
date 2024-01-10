@@ -12,19 +12,10 @@ extends Node2D
 @onready var report_area = $ReportArea
 ## Canvas w którym będzie instancjonowane głosowanie
 @onready var voting_canvas = get_tree().root.get_node("Game/Maps/MainMap/VotingCanvas")
-
-## Pozycje do spotkania podczas głosowania
-@onready var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
-## Tablica wszystkich tasków
-@onready var tasks = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/Tasks").get_children()
-## System kamer
-@onready var camera_system = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/CameraSystem")
+## Główna mapa
+@onready var main_map = get_tree().root.get_node("Game/Maps/MainMap")
 ## Interfejs
 @onready var user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
-## Lista zadań
-@onready var task_list = get_tree().root.get_node("Game/Maps/MainMap/TaskListDisplay")
-## Przycisk alarmowy
-@onready var emergency_button = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/EmergencyButton")
 
 ## Ekran głosowania
 var voting_screen = preload("res://scenes/ui/voting_screen/voting_screen.tscn")
@@ -109,10 +100,6 @@ func on_next_round_started():
 	button_active.emit("InteractButton", false)
 	toggle_button_highlight(false)
 	
-	# Pokazuje przyciski z interfejsu i liste zadań
-	user_interface.toggle_visiblity.rpc(true)
-	toggle_task_list_visibility.rpc(true)
-	
 	set_process(true)
 	is_wait_time_over = false
 	
@@ -143,19 +130,7 @@ func handle_report(is_button: bool, body_id):
 	
 	update_array()
 	
-	# Chowa przyciski z interfejsu i liste tasków
-	user_interface.toggle_visiblity.rpc(false)
-	toggle_task_list_visibility.rpc(false)
-	
-	# Zamyka taski i kamery
-	close_tasks.rpc()
-	close_camera_system.rpc()
-	
-	# Instancjonuje ekran głosowania
-	instantiate_voting_screen.rpc()
-	
-	# Pokazuje ekran z ciałem/spotkaniem, po czym rozpoczyna głosowanie
-	show_hide_report_screen.rpc(is_caller_button, body_id)
+	_request_displaying_report_screen.rpc_id(1, is_button, body_id)
 	
 	if is_caller_button:
 		button_used()
@@ -166,26 +141,23 @@ func update_array():
 	players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
 
 
-@rpc("call_local", "any_peer")
-## Przełącza widoczność listy zadań
-func toggle_task_list_visibility(is_visible:bool):
-	task_list.visible = is_visible
+@rpc("any_peer", "call_local", "reliable")
+func _request_displaying_report_screen(is_button: bool, dead_body_id):
+	if !multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+	
+	_display_report_screen.rpc(is_button, dead_body_id)
 
 
-@rpc("call_local", "any_peer")
-## Zamyka wszystkie taski
-func close_tasks():
-	for task in tasks:
-		task.close_minigame()
+@rpc("call_local", "reliable")
+func _display_report_screen(is_button: bool, dead_body_id):
+	main_map.close_modals()
+
+	instantiate_voting_screen()
+
+	show_hide_report_screen(is_button, dead_body_id)
 
 
-@rpc("call_local", "any_peer")
-## Zamyka system kamer
-func close_camera_system():
-	camera_system.close_minigame()
-
-
-@rpc("call_local", "any_peer")
 ## Instancjonuje ekran głosowania
 func instantiate_voting_screen():
 	var voting_screen_instance = voting_screen.instantiate()
@@ -198,9 +170,8 @@ func instantiate_voting_screen():
 	button_active.emit("InteractButton", false)
 
 
-@rpc("call_local", "any_peer")
 ## Pokazuje ekran reporta na chwilę, po czym rozpoczyna głosowanie
-func show_hide_report_screen(is_button:bool, dead_body_id):
+func show_hide_report_screen(is_button: bool, dead_body_id):
 	var report_screen_instance = report_screen.instantiate()
 	report_screen_instance.is_emergency_meeting = is_button
 
