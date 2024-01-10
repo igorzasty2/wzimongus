@@ -83,7 +83,7 @@ func _create_message(player: Dictionary, message: String, group: Group):
 
 	new_message.init(player, message, GROUP_COLORS[group])
 
-	if get_parent().name == "VotingScreen":
+	if get_parent().get_parent().name == "VotingScreen":
 		return
 
 	timer.start()
@@ -129,7 +129,7 @@ func _close_chat():
 	input_text.hide()
 	input_text.text = ""
 
-	if get_parent().name == "VotingScreen":
+	if get_parent().get_parent().name == "VotingScreen":
 		return
 
 	timer.start()
