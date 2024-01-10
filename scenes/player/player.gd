@@ -162,7 +162,6 @@ func _rollback_tick(delta, _tick, is_fresh):
 
 				button_active.emit("ReportButton", !is_in_vent && can_report)
 				button_active.emit("FailButton", !is_in_vent)
-				button_active.emit("SabotageButton", !is_in_vent)
 
 				# Wyłącza widoczność gracza.
 				if multiplayer.is_server():
@@ -215,7 +214,6 @@ func _rollback_tick(delta, _tick, is_fresh):
 	# żyje i cooldown na funkcji zabij nie jest aktywny.
 	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer") && !is_in_vent:
-			button_active.emit("SabotageButton", !is_in_vent)
 			if !GameManager.get_current_player_key("is_dead"):
 				if can_kill_cooldown && !GameManager.is_meeting_called:
 					_update_highlight(closest_player(GameManager.get_current_player_id()))
