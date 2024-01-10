@@ -1,5 +1,5 @@
 ## Klasa reprezentuje pusty kafelek na literę
-class_name SpaceBlock
+class_name EmptyBlock
 extends Area2D
 
 ## Informacje o rozmiarze pola
