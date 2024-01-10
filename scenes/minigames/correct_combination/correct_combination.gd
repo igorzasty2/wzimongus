@@ -1,34 +1,55 @@
+class_name CorrectCombinationMiniGame
 extends Control
 
+## Sygnał emitowany, gdy gracz poprawnie rozwiąże minigrę
 signal minigame_end
 
+## Nazwa polska minigry
 @export var polish_name : String
 
+## Kontrolka oznaczająca 0%
 @onready var zero = get_node("%0")
+## Kontrolka oznaczająca 30%
 @onready var thirty = get_node("%30")
+## Kontrolka oznaczająca 50%
 @onready var fifty = get_node("%50")
+## Kontrolka oznaczająca 80%
 @onready var eighty = get_node("%80")
+## Kontrolka oznaczająca 100%
 @onready var hundred = get_node("%100")
 
+## Tekstura włączonego przełącznika
 @onready var switch_on_sprite = preload("res://scenes/minigames/correct_combination/assets/switch_on.png")
 
+## Kontener na przyciski
 @onready var buttons_container = get_node("%Buttons")
 
+## Lista wszystkich przycisków
 var all_buttons = []
 
+## Lista poprawnych przycisków
 var correct_buttons = []
+## Lista niepoprawnych przycisków
 var incorrect_buttons = []
 
+## Liczba poprawnie wciśniętych przycisków
 var correct_pressed_count = 0
 
+## Lista progów dla każdej kontrolki
 @onready var THRESHOLDS = [[1, 3, 5, 6], [1, 2, 4, 5], [1, 2, 3, 5], [1, 2, 5, 6]]
 
+## Liczba wszystkich przycisków
 const TOTAL_BUTTONS = 12
+## Liczba poprawnych przycisków
 const CORRECT_BUTTONS_COUNT = 7
 
+## Zmienna przechowująca próg dla 0%
 var zero_threshold = 0
+## Zmienna przechowująca próg dla 30%
 var thirty_threshold = 0
+## Zmienna przechowująca próg dla 50%
 var fifty_threshold = 0
+## Zmienna przechowująca próg dla 80%
 var eighty_threshold = 0
 
 

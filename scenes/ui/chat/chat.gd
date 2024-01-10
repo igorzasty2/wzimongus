@@ -1,7 +1,10 @@
+class_name Chat
 extends CanvasLayer
 
+## Grupy czatu
 enum Group { GLOBAL, LECTURER, DEAD, SYSTEM }
 
+## Kolor grupy
 const GROUP_COLORS = {
 	Group.GLOBAL: "white",
 	Group.LECTURER: "red",
@@ -9,21 +12,34 @@ const GROUP_COLORS = {
 	Group.SYSTEM: "yellow"
 }
 
+## Czas po którym czat zniknie
 const FADE_OUT_TIME = 0.25
 
+## Referencja do pola tekstowego
 @onready var input_text = $%InputText
+## Referencja do timera
 @onready var timer = $%ChatDisappearTimer
+## Referencja do kontenera z logami czatu
 @onready var chat_logs_scroll_container = $%ChatLogsScrollbar
+## Referencja do kontenera z logami czatu
 @onready var chat_logs_container = $%ChatLogsContainer
+## Referencja do suwaka
 @onready var chat_logs_scrollbar = chat_logs_scroll_container.get_v_scroll_bar()
+## Referencja do nazwy gracza, przechowywana
 @onready var username = GameManager.get_current_player_key("username")
+## Referencja do etykiety grupy
 @onready var group_label = $%Group
 
+## Scena wiadomości
 var message_scene = preload("res://scenes/ui/chat/message/message.tscn")
+## Scena wiadomości systemowej
 var system_message_scene = preload("res://scenes/ui/chat/system_message/system_message.tscn")
 
+## Zmienna przechowująca ostatnią wartość suwaka
 var last_known_scroll_max = 0
+## Zmienna przechowująca aktualną grupę
 var current_group = Group.GLOBAL
+## Zmienna przechowująca tweena
 var fade_out_tween 
 
 
@@ -69,6 +85,7 @@ func _switch_chat_group():
 		current_group = Group.LECTURER if current_group == Group.GLOBAL else Group.GLOBAL
 		_update_group_label()
 
+
 func _update_group_label():
 	if GameManager.get_current_player_key("is_lecturer"):
 		group_label.text = "Lecturer" if current_group == Group.LECTURER else "Global"
@@ -77,6 +94,7 @@ func _update_group_label():
 
 
 @rpc("any_peer", "call_local", "reliable")
+## Funkcja wysyłająca wiadomość
 func send_message(message, group, id):
 	match group:
 		Group.DEAD:
@@ -103,7 +121,7 @@ func send_message(message, group, id):
 			if peer_id != 1:
 				send_message.rpc_id(peer_id, message, group, id)
 
-
+## Funkcja wysyłająca wiadomość systemową
 func send_system_message(message):
 	const SYSTEM_MESSAGE_ID = 1
 	send_message(message, Group.SYSTEM, SYSTEM_MESSAGE_ID)
@@ -137,6 +155,7 @@ func _on_input_text_text_submitted(submitted_text):
 
 	input_text.text = ""
 	_close_chat()
+
 
 func _on_timer_timeout():
 	if input_text.has_focus():

@@ -1,17 +1,22 @@
+class_name FindPasswordMiniGame
 extends Node2D
 
+## Sygnał końca minigry
 signal minigame_end
 
+## Nazwa polska minigry
 @export var polish_name : String
-
+## Referencja do wejścia na hasło
 @onready var password_input = get_node("%PasswordInput")
-
+## Generuje hasła
 @onready var passwords = _generate_passwords()
-
+## Referencja do sceny strony
 @onready var page_scene = preload("res://scenes/minigames/find_password/page_scenes/page_scene.tscn")
 
+## Hasło do odgadnięcia
 var correct_password
 
+## Referencje do scen stron
 var page_scenes = []
 
 func _ready():
