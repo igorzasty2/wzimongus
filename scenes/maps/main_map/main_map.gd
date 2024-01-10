@@ -6,7 +6,7 @@ signal load_finished()
 @onready var _camera = $Camera
 @onready var _loading_screen = $LoadingScreen
 @onready var _start_positions = $StartPositions.get_children()
-@onready var _minigame_menu = $MinigameMenu
+@onready var _minigame_menu = $MinigameWindow/MinigameContainer/SubviewportContainer/MinigameViewport
 @onready var _voting_canvas = $VotingCanvas
 
 func _ready():
@@ -87,7 +87,7 @@ func _remove_player(id: int, _player: Dictionary = {}):
 ## Aktualizuje status wejścia gracza.
 func _update_player_input():
 	var is_player_in_vent = _players.get_node(str(GameManager.get_current_player_id())).is_in_vent if _players != null else false
-	var is_minigame_menu_visible = _minigame_menu.visible if _minigame_menu != null else false
+	var is_minigame_menu_visible = _minigame_menu.get_child_count() > 0 if _minigame_menu != null else false
 	var is_voting_in_progress = _voting_canvas.get_child_count() > 0 if _voting_canvas != null else false
 	var is_loading_screen_visible = _loading_screen.visible if _loading_screen != null else false
 

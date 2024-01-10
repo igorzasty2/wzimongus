@@ -38,9 +38,8 @@
 [ext_resource type="Texture2D" uid="uid://5n0jedd1cmxk" path="res://scenes/maps/main_map/assets/objects/bufet_automat.png" id="32_jc7lc"]
 [ext_resource type="Texture2D" uid="uid://dmy20om8608ff" path="res://scenes/maps/main_map/assets/objects/bufet_stol.png" id="33_fxkqp"]
 [ext_resource type="PackedScene" uid="uid://cwapulye6fjyc" path="res://scenes/maps/main_map/scenes/vent/vent.tscn" id="33_q8paj"]
-[ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_menu.tscn" id="34_5r0ro"]
+[ext_resource type="PackedScene" uid="uid://c3l6wkk0ahn02" path="res://scenes/ui/minigame_menu/minigame_window.tscn" id="34_5r0ro"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="34_b878o"]
-[ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_menu.gd" id="35_23714"]
 [ext_resource type="Texture2D" uid="uid://lv5k5yskqtbw" path="res://scenes/maps/main_map/assets/objects/kanapa.png" id="35_ryots"]
 [ext_resource type="PackedScene" uid="uid://ct2plxemq2ft5" path="res://scenes/ui/loading_screen/loading_screen.tscn" id="36_4x0df"]
 [ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_1.png" id="36_k0n1h"]
@@ -95,6 +94,7 @@
 [ext_resource type="PackedScene" uid="uid://dra00by8ikhk4" path="res://scenes/minigames/graph_the_function/graph_the_function.tscn" id="83_7u8vq"]
 [ext_resource type="PackedScene" uid="uid://di5jtb8ateug1" path="res://scenes/minigames/find_password/FindPassword.tscn" id="84_y3nq6"]
 [ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
+[ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_window.gd" id="92_b2shf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -166,7 +166,7 @@ polygon = PackedVector2Array(776, -34, 776, 25, 1174, 22, 1174, -84, 1455, -327,
 polygon = PackedVector2Array(2542, -1449, 2370, -1448, 2368, -1642, 1244, -1641, 1245, -1345, 847, -1345, 848, -1927, -828, -1927, -828, -1772, -1199, -1773, -1199, -2077, -701, -2077, -699, -2351, -243, -2351, -244, -1994, 1070, -1994, 1305, -2231, 1669, -2231, 1669, -1867, 2543, -1867)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_f6dli"]
-polygon = PackedVector2Array(3489, -1765, 3154, -1447, 2938, -1447, 2937, -1868, 3129, -1868, 3130, -2898, 1667, -2893, 1668, -2801, 1304, -2800, 1305, -3120, -25, -3118, -189, -2935, -698, -2937, -698, -3031, -1899, -3032, -1898, -2080, -1597, -2080, -1597, -1773, -2071, -1773, -2071, -1920, -2508, -1921, -2507, -2254, -1970, -2254, -1969, -3170, -3167, -3170, -3168, -2254, -2907, -2254, -2906, -1922, -3384, -1922, -3384, -1084, -3085, -792, -2505, -792, -2504, -652, -3110, -652, -3109, 273, -3166, 273, -3439, 515, -3439, 1308, -2270, 1309, -2269, 548, -2577, 272, -2713, 272, -2713, -80, -2106, -80, -2106, -791, -2071, -791, -2070, -1187, -826, -1187, -826, -219, -216, -219, -216, -35, -769, -35, -769, 335, -1174, 334, -1174, 287, -923, 287, -924, -665, -2040, -665, -2041, 288, -1573, 288, -1572, 919, -771, 919, -771, 955, -61, 955, -60, 1178, -586, 1178, -586, 1772, 129, 2085, 755, 1770, 755, 1177, 339, 1177, 339, 955, 776, 955, 776, 608, 1174, 610, 1158, 636, 1195, 613, 1186, 646, 2332, 650, 2332, 613, 3521, 613, 3522, -46, 3674, -46, 3476, -837, 2937, -837, 2937, -869, 3443, -869, 3797, -1217, 4533, -1216, 4533, -1993, 4268, -2261, 3489, -2261)
+polygon = PackedVector2Array(3490, -1763, 3154, -1447, 2938, -1447, 2937, -1868, 3129, -1868, 3130, -2898, 1667, -2893, 1668, -2801, 1304, -2800, 1305, -3120, -25, -3118, -189, -2935, -698, -2937, -698, -3031, -1899, -3032, -1898, -2080, -1597, -2080, -1597, -1773, -2071, -1773, -2071, -1920, -2508, -1921, -2507, -2254, -1970, -2254, -1969, -3170, -3167, -3170, -3168, -2254, -2907, -2254, -2906, -1922, -3384, -1922, -3384, -1084, -3085, -792, -2505, -792, -2504, -652, -3110, -652, -3109, 273, -3166, 273, -3439, 515, -3439, 1308, -2270, 1309, -2269, 548, -2577, 272, -2713, 272, -2713, -80, -2106, -80, -2106, -791, -2071, -791, -2070, -1187, -826, -1187, -826, -219, -216, -219, -216, -35, -769, -35, -769, 335, -1174, 334, -1174, 287, -923, 287, -924, -665, -2040, -665, -2041, 288, -1573, 288, -1572, 919, -771, 919, -771, 955, -61, 955, -60, 1178, -586, 1178, -586, 1772, 129, 2085, 755, 1770, 755, 1177, 339, 1177, 339, 955, 776, 955, 776, 608, 1174, 610, 1158, 636, 1195, 613, 1186, 646, 2332, 650, 2332, 613, 3521, 613, 3522, -46, 3674, -46, 3476, -837, 2937, -837, 2937, -869, 3443, -869, 3782, -1202, 4533, -1202, 4533, -1976, 4268, -2245, 3490, -2244)
 
 [node name="MainMap" type="Node2D"]
 y_sort_enabled = true
@@ -214,7 +214,7 @@ position = Vector2(2, 460)
 position = Vector2(530, -2556)
 
 [node name="PokojWykladowcow" parent="Background" instance=ExtResource("16_e83ls")]
-position = Vector2(4011, -1738)
+position = Vector2(4011, -1723)
 
 [node name="KorytarzAulaSala1" parent="Background" instance=ExtResource("17_2k61j")]
 position = Vector2(1046, -1061)
@@ -452,7 +452,7 @@ position = Vector2(0, 20)
 shape = SubResource("RectangleShape2D_g46sc")
 
 [node name="PokojWykladowcowBiurko" type="Node2D" parent="Objects"]
-position = Vector2(4023, -1476)
+position = Vector2(4023, -1461)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/PokojWykladowcowBiurko"]
@@ -465,7 +465,7 @@ position = Vector2(0, 39.5)
 shape = SubResource("RectangleShape2D_u71ro")
 
 [node name="PokojWykladowcowSzafaLewa" type="Node2D" parent="Objects"]
-position = Vector2(3794, -2044)
+position = Vector2(3794, -2029)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/PokojWykladowcowSzafaLewa"]
@@ -477,7 +477,7 @@ texture = ExtResource("44_y3l63")
 shape = SubResource("RectangleShape2D_e1pta")
 
 [node name="PokojWykladowcowSzafaPrawa" type="Node2D" parent="Objects"]
-position = Vector2(4072, -2045)
+position = Vector2(4072, -2030)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/PokojWykladowcowSzafaPrawa"]
@@ -972,6 +972,10 @@ shape = SubResource("RectangleShape2D_f8ggq")
 [node name="InteractionPoints" type="Node2D" parent="."]
 z_index = 4
 
+[node name="Tasks" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
 [node name="EmergencyButton" parent="InteractionPoints" instance=ExtResource("36_xfee5")]
 z_index = 1
 position = Vector2(1734, 286)
@@ -1138,6 +1142,8 @@ position = Vector2(-3888, -584)
 shape = SubResource("RectangleShape2D_apqsq")
 
 [node name="LightMap" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="LightOccluder2D1" type="LightOccluder2D" parent="LightMap"]
 occluder = SubResource("OccluderPolygon2D_2hbmx")
@@ -1190,9 +1196,8 @@ properties = Array[String]([":global_position"])
 
 [node name="UserInterface" parent="." instance=ExtResource("37_tw5rq")]
 
-[node name="MinigameMenu" parent="." instance=ExtResource("34_5r0ro")]
-visible = false
-script = ExtResource("35_23714")
+[node name="MinigameWindow" parent="." instance=ExtResource("34_5r0ro")]
+script = ExtResource("92_b2shf")
 
 [node name="VotingCanvas" type="CanvasLayer" parent="."]
 
@@ -1203,5 +1208,5 @@ color = Color(0.411765, 0.411765, 0.411765, 1)
 
 [connection signal="visibility_changed" from="MinigameMenu" to="." method="_update_player_input"]
 [connection signal="child_order_changed" from="VotingCanvas" to="." method="_update_player_input"]
-[connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
 [connection signal="visibility_changed" from="LoadingScreen" to="." method="_update_player_input"]
+[connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]

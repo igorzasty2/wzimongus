@@ -13,7 +13,7 @@ signal minigame_end
 
 var LECTURERS = ["dr inż. Marcin Bator", "dr Marcin Dudziński", "dr inż. Diana Dziewa-Dawidczyk", "dr inż. Alina Jóźwikowska", "dr hab. inż. Arkadiusz Orłowski", "dr inż. Maciej Pankiewicz", "dr hab. Alexander Prokopenya", "dr Piotr Stachura", "dr inż. Robert Stępień", "dr hab. Aleksander Strasburger", "dr Tomasz Świsłocki", "dr inż. Artur Wiliński", "dr inż. Piotr Wrzeciono", "dr Andrzej Zembrzuski", ]
 
-var ROOMS = ["Aula IV", "Aula III", "Aula II", "Aula I", "Sala 3/82", "Sala 3/40", "Sala 3/42", "Sala 3/14", "Sala 3/19"]
+var ROOMS = ["Aula 4", "Aula 3", "Aula 2", "Aula 1", "Sala 3/82", "Sala 3/40", "Sala 3/42", "Sala 3/14", "Sala 3/19"]
 
 var COLORS = ["#00a436", "#076db5", "#b80400", "#5e4943"]
 

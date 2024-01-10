@@ -6,7 +6,7 @@
 script = ExtResource("1_7a15m")
 
 [node name="CameraViewport" type="SubViewport" parent="."]
-size = Vector2i(426, 240)
+size = Vector2i(363, 204)
 
 [node name="CameraProper" type="Camera2D" parent="CameraViewport"]
 zoom = Vector2(0.3, 0.3)
