@@ -25,13 +25,13 @@ var moving
 ## Wcześniej wylosowane wzory
 var generated = []
 ## Informacja ile wzorów zostało uzupełnionych
-var times_generated = 0
+var _times_generated = 0
 ## Liczba uzupełnonych luk we wzorze
-var point = 0
+var _point = 0
 ## Liczba luk w uzupełnianym wzorze
-var wanted_points = 0
+var _wanted_points = 0
 ## Informuje czy minigra została ukończona
-var finished = false
+var _finished = false
 
 
 func _ready():
@@ -57,7 +57,7 @@ func _process(delta):
 						# usuwane aby niemożliwym było umieszczenie tam kolejnej
 						# litery
 						correct_space.queue_free()
-						point += 1
+						_point += 1
 				elif (
 						(l != moving || !mouse_clicked) 
 						&& !l.placed 
@@ -75,18 +75,18 @@ func _process(delta):
 					# Przywraca do originalnej pozycji pole które nie posiada
 					# odpowiadającego pustego pola
 					l.return_to_orig_pos()
-	if point == wanted_points && times_generated != how_many_formulas:
-		wanted_points = 0
-		point = 0
+	if _point == _wanted_points && _times_generated != how_many_formulas:
+		_wanted_points = 0
+		_point = 0
 		# Usuwa stary hałas
 		for i in letters:
 			if i.placed != true:
 				i.queue_free()
 		_random_generate()
-	if point == wanted_points && times_generated == how_many_formulas:
-		if !finished:
+	if _point == _wanted_points && _times_generated == how_many_formulas:
+		if !_finished:
 			minigame_end.emit()
-			finished = true
+			_finished = true
 
 
 ## Generuje pola z literami
@@ -161,19 +161,19 @@ func _generate_formula(formula:String):
 			# W tym fragmencie kodu tworzone jest puste pole reprezentujące
 			# miejsce w którym umieścić należy odpowiednią literę
 			var Space = preload("assets/subscenes/space.tscn").instantiate()
-			Space.position = $StartOfFormula.position + X_SHIFT * i + Y_SHIFT * times_generated
+			Space.position = $StartOfFormula.position + X_SHIFT * i + Y_SHIFT * _times_generated
 			Space.wanted_letter = formula[i]
 			add_child(Space)
 			# Definiowane jest położenie instancji obiektu
 			Space.set_area()
-			wanted_points += 1
+			_wanted_points += 1
 		else:
 			# W tym fragmencie kodu tworzony jest TextBox który reprezentował
 			# będzie uzupełniony fragment wzoru
 			var text:RichTextLabel = RichTextLabel.new()
 			text.position =\
 				($StartOfFormula.position - Vector2(40, 40)) + X_SHIFT *\
-				i + Y_SHIFT * times_generated
+				i + Y_SHIFT * _times_generated
 			text.size = Vector2(80, 80)
 			text.bbcode_enabled = true
 			# Dostosowywanie koloru tekstu zależnie od wybranego gui
@@ -216,4 +216,4 @@ func _random_generate():
 		_generate_formula(FORMULAS[r])
 		_generate_letters(FORMULAS[r])
 		generated.append(FORMULAS[r])
-		times_generated += 1
+		_times_generated += 1

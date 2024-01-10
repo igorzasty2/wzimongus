@@ -3,13 +3,13 @@ class_name LetterBlock
 extends StaticBody2D
 
 ## Informacje o oryginalnym położeniu pola
-var original_position
+var _original_position
 ## Litera jaką reprezentuje pole
 var id = ""
 ## Informuje o tym, czy pole zostało wstawione we wzór
 var placed = false
 ## oryginalna warstwa rysowania pola
-var orig_z_index = z_index
+var _orig_z_index = z_index
 ## Rozmiar pola
 var size 
 ## Dokładne położenie pola
@@ -34,7 +34,7 @@ func _process(delta):
 		Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) 
 		&& get_parent().moving == self
 		&& placed == false
-		&& (position != original_position || get_parent().is_moving)
+		&& (position != _original_position || get_parent().is_moving)
 	):
 		# Przypisanie zmiennych w celu uodpornienia kodu na zmiany wymiarów gui
 		# minigry
@@ -103,7 +103,7 @@ func _process(delta):
 
 ## Przywraca pole do pozycji oryginalnej
 func return_to_orig_pos():
-	position = original_position
+	position = _original_position
 
 ## Zdarzenie wykonywane gdy myszka znajdzie się w obszarze pola
 func _on_mouse_entered():
@@ -119,4 +119,4 @@ func _on_mouse_exited():
 	# Przywraca możliwość podnoszenia innych pól z literami
 	if (get_parent().is_moving && get_parent().moving == self && !Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
 		get_parent().is_moving = false
-		z_index = orig_z_index
+		z_index = _orig_z_index
