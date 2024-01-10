@@ -1,0 +1,119 @@
+[gd_scene load_steps=12 format=3 uid="uid://dbggxxcgwkdh5"]
+
+[ext_resource type="Script" path="res://scenes/ui/start_menu/background/background.gd" id="1_cx0ar"]
+[ext_resource type="Texture2D" uid="uid://bhuxc7bixysra" path="res://scenes/ui/start_menu/background/assets/background2.png" id="2_ycpmc"]
+[ext_resource type="Shader" path="res://scenes/ui/start_menu/background/background.gdshader" id="3_386ya"]
+[ext_resource type="Texture2D" uid="uid://d07etmk0h2llv" path="res://scenes/ui/start_menu/background/assets/new_distortion.png" id="4_ami68"]
+[ext_resource type="Texture2D" uid="uid://bilkh8h2fgt3x" path="res://scenes/ui/start_menu/background/assets/background1.png" id="5_4vhno"]
+
+[sub_resource type="Animation" id="Animation_8cu33"]
+resource_name = "move_animation"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.1, 0, 3.5, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -120), Vector2(0, -150), Vector2(0, -88), Vector2(0, -120)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_72b6a"]
+_data = {
+"move_animation": SubResource("Animation_8cu33")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_prgk7"]
+shader = ExtResource("3_386ya")
+shader_parameter/dissolve_state = 1.1
+shader_parameter/dissolve_pattern = ExtResource("4_ami68")
+
+[sub_resource type="Animation" id="Animation_kjdr6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/dissolve_state")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.1]
+}
+
+[sub_resource type="Animation" id="Animation_r4e0p"]
+resource_name = "transition_animation"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/dissolve_state")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g7bf2"]
+_data = {
+"RESET": SubResource("Animation_kjdr6"),
+"transition_animation": SubResource("Animation_r4e0p")
+}
+
+[node name="Background" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cx0ar")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_bottom = 89.001
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ycpmc")
+expand_mode = 5
+
+[node name="BackgroundAnimationPlayer" type="AnimationPlayer" parent="Background"]
+libraries = {
+"": SubResource("AnimationLibrary_72b6a")
+}
+
+[node name="TransitionBackground" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_prgk7")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_4vhno")
+expand_mode = 5
+
+[node name="ChangeBackgroundTimer" type="Timer" parent="TransitionBackground"]
+one_shot = true
+autostart = true
+
+[node name="TransitionAnimationPlayer" type="AnimationPlayer" parent="TransitionBackground"]
+libraries = {
+"": SubResource("AnimationLibrary_g7bf2")
+}
+
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="timeout" from="TransitionBackground/ChangeBackgroundTimer" to="." method="_on_change_background_timer_timeout"]

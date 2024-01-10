@@ -45,12 +45,12 @@ func send_message(message, group, id):
 	match group:
 		Group.DEAD:
 			if current_group == Group.DEAD:
-				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.DEAD)
+				_create_message(GameManager.get_registered_players()[id], message, Group.DEAD)
 		Group.LECTURER:
 			if current_group == Group.LECTURER:
-				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.LECTURER)
+				_create_message(GameManager.get_registered_players()[id], message, Group.LECTURER)
 			else:
-				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.GLOBAL)
+				_create_message(GameManager.get_registered_players()[id], message, Group.GLOBAL)
 		Group.SYSTEM:
 			var system_message_instance = system_message_scene.instantiate()
 			chat_logs_container.add_child(system_message_instance)
@@ -62,7 +62,7 @@ func send_message(message, group, id):
 
 			timer.start()
 		_:
-			_create_message(GameManager.get_registered_player_key(id, "username"), message, current_group)
+			_create_message(GameManager.get_registered_players()[id], message, current_group)
 	
 	if multiplayer.is_server():
 		for peer_id in GameManager.get_registered_players().keys():
@@ -75,15 +75,15 @@ func send_system_message(message):
 	send_message(message, Group.SYSTEM, SYSTEM_MESSAGE_ID)
 
 
-func _create_message(username, message, group):
+func _create_message(player: Dictionary, message: String, group: Group):
 	chat_logs_scroll_container.modulate.a = 1
 
 	var new_message = message_scene.instantiate()
 	chat_logs_container.add_child(new_message)
 
-	new_message.init(username, message, GROUP_COLORS[group])
+	new_message.init(player, message, GROUP_COLORS[group])
 
-	if get_parent().name == "VotingScreen":
+	if get_parent().get_parent().name == "VotingScreen":
 		return
 
 	timer.start()
@@ -129,7 +129,7 @@ func _close_chat():
 	input_text.hide()
 	input_text.text = ""
 
-	if get_parent().name == "VotingScreen":
+	if get_parent().get_parent().name == "VotingScreen":
 		return
 
 	timer.start()

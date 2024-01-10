@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dnfvmswm3sk7g" path="res://scenes/ui/window_animation_player/window_animation_player.tscn" id="4_34t22"]
 
 [node name="LobbySettings" type="CanvasLayer"]
+visible = false
 script = ExtResource("1_h5l7u")
 
 [node name="BackgroundButton" parent="." node_paths=PackedStringArray("window") instance=ExtResource("2_asrpg")]
@@ -18,9 +19,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -249.0
-offset_top = -204.0
+offset_top = -309.0
 offset_right = 249.0
-offset_bottom = 267.0
+offset_bottom = 328.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(249, 204)
@@ -36,7 +37,7 @@ theme_override_constants/margin_bottom = 60
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 20
+theme_override_constants/separation = 15
 
 [node name="MaxConnectionsContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -51,9 +52,10 @@ text = "Maksymalna
 liczba graczy"
 
 [node name="MaxConnectionsInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/MaxConnectionsContainer"]
-custom_minimum_size = Vector2(65, 2.08165e-12)
+custom_minimum_size = Vector2(72, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 4
 size_flags_stretch_ratio = 0.0
 
 [node name="LecturersAmountAlert" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer"]
@@ -75,18 +77,19 @@ text = "Maksymalna
 liczba wykładowców"
 
 [node name="MaxLecturersInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/MaxLecturersContainer"]
-custom_minimum_size = Vector2(65, 2.08165e-12)
+custom_minimum_size = Vector2(72, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 4
 size_flags_stretch_ratio = 0.0
 item_count = 3
-selected = 2
+selected = 1
 popup/item_0/text = "1"
-popup/item_0/id = 0
+popup/item_0/id = 1
 popup/item_1/text = "2"
-popup/item_1/id = 1
+popup/item_1/id = 2
 popup/item_2/text = "3"
-popup/item_2/id = 2
+popup/item_2/id = 3
 
 [node name="KillCooldownContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -96,7 +99,31 @@ layout_mode = 2
 text = "Czas odnowienia oblania"
 
 [node name="KillCooldownInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/KillCooldownContainer"]
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
+size_flags_horizontal = 8
+item_count = 4
+selected = 2
+popup/item_0/text = "15s"
+popup/item_0/id = 15
+popup/item_1/text = "30s"
+popup/item_1/id = 30
+popup/item_2/text = "45s"
+popup/item_2/id = 45
+popup/item_3/text = "60s"
+popup/item_3/id = 60
+
+[node name="SabotageCooldownContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SabotageCooldownLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/SabotageCooldownContainer"]
+layout_mode = 2
+text = "Czas odnowienia sabotażu"
+
+[node name="SabotageCooldownInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/SabotageCooldownContainer"]
+custom_minimum_size = Vector2(72, 0)
+layout_mode = 2
+size_flags_horizontal = 8
 item_count = 4
 selected = 2
 popup/item_0/text = "15s"
@@ -117,13 +144,14 @@ text = "Promień oblania"
 
 [node name="KillRadiusInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/KillRadiusContainer"]
 layout_mode = 2
+size_flags_horizontal = 8
 item_count = 3
 selected = 0
-popup/item_0/text = "domyślny"
-popup/item_0/id = 260
-popup/item_1/text = "mniejszy"
-popup/item_1/id = 200
-popup/item_2/text = "większy"
+popup/item_0/text = "Mniejszy"
+popup/item_0/id = 200
+popup/item_1/text = "Domyślny"
+popup/item_1/id = 260
+popup/item_2/text = "Większy"
 popup/item_2/id = 350
 
 [node name="TaskAmountContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
@@ -134,23 +162,87 @@ layout_mode = 2
 text = "Liczba zadań"
 
 [node name="TaskAmountInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/TaskAmountContainer"]
-custom_minimum_size = Vector2(65, 0)
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-item_count = 6
-selected = 2
+item_count = 8
+selected = 3
 popup/item_0/text = "1"
 popup/item_0/id = 1
 popup/item_1/text = "2"
 popup/item_1/id = 2
 popup/item_2/text = "3"
-popup/item_2/id = 2
+popup/item_2/id = 3
 popup/item_3/text = "4"
 popup/item_3/id = 4
 popup/item_4/text = "5"
 popup/item_4/id = 5
 popup/item_5/text = "6"
 popup/item_5/id = 6
+popup/item_6/text = "7"
+popup/item_6/id = 7
+popup/item_7/text = "8"
+popup/item_7/id = 8
+
+[node name="EmergencyCooldownContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="EmergencyCooldownLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/EmergencyCooldownContainer"]
+layout_mode = 2
+text = "Czas włączenia przycisku"
+
+[node name="EmergencyCooldownInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/EmergencyCooldownContainer"]
+custom_minimum_size = Vector2(72, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+item_count = 4
+selected = 1
+popup/item_0/text = "15s"
+popup/item_0/id = 15
+popup/item_1/text = "30s"
+popup/item_1/id = 30
+popup/item_2/text = "45s"
+popup/item_2/id = 45
+popup/item_3/text = "60s"
+popup/item_3/id = 60
+
+[node name="StudentLightRadiusContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="StudentLightRadiusLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/StudentLightRadiusContainer"]
+layout_mode = 2
+text = "Zasięg widzenia studenta"
+
+[node name="StudentLightRadiusInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/StudentLightRadiusContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+item_count = 3
+selected = 1
+popup/item_0/text = "Bliski"
+popup/item_0/id = 2
+popup/item_1/text = "Domyślny"
+popup/item_1/id = 4
+popup/item_2/text = "Daleki"
+popup/item_2/id = 8
+
+[node name="LecturerLightRadiusContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LecturerLightRadiusLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/LecturerLightRadiusContainer"]
+layout_mode = 2
+text = "Zasięg widzenia wykładowcy"
+
+[node name="LecturerLightRadiusInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/LecturerLightRadiusContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+item_count = 3
+selected = 1
+popup/item_0/text = "Bliski"
+popup/item_0/id = 2
+popup/item_1/text = "Domyślny"
+popup/item_1/id = 4
+popup/item_2/text = "Daleki"
+popup/item_2/id = 8
 
 [node name="SaveButton" type="Button" parent="SettingsContainer/MarginContainer"]
 custom_minimum_size = Vector2(165, 40)

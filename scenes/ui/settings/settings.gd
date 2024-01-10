@@ -311,8 +311,8 @@ func _on_default_controls_button_pressed():
 	var parent = find_child("Controls").find_child("MarginContainer").find_child("VBoxContainer")
 	for child in parent.get_children():
 		if !(child is HSeparator):
-			if child.has_method("_ready"):
-				child._ready()
+			if child.has_method("start"):
+				child.start()
 
 
 # Zapobiega zmianie zakładki podczas przypisywania klawiszy

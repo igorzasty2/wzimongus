@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwogo8if36ix7"]
+[gd_scene load_steps=5 format=3 uid="uid://cwogo8if36ix7"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_b20el"]
 [ext_resource type="PackedScene" uid="uid://ctojv5s5r4v3" path="res://scenes/ui/pop_up_window/pop_up_window.tscn" id="2_66ag0"]
 [ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="2_knil8"]
+[ext_resource type="Texture2D" uid="uid://bhuxc7bixysra" path="res://scenes/ui/start_menu/background/assets/background2.png" id="3_0vgal"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -21,14 +22,15 @@ anchors_preset = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 
-[node name="Background" type="ColorRect" parent="Connecting"]
+[node name="Background" type="TextureRect" parent="Connecting"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.352941, 0.352941, 0.443137, 1)
+texture = ExtResource("3_0vgal")
+expand_mode = 5
 
 [node name="ConnectingLabel" type="Label" parent="Connecting"]
 layout_mode = 1
@@ -54,14 +56,17 @@ anchors_preset = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 
-[node name="Background" type="ColorRect" parent="Error"]
+[node name="Background" type="TextureRect" parent="Error"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -119.5
+offset_bottom = 119.5
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.352941, 0.352941, 0.443137, 1)
+texture = ExtResource("3_0vgal")
+expand_mode = 5
 
 [node name="ErrorPopUp" parent="Error" instance=ExtResource("2_66ag0")]
 layout_mode = 1

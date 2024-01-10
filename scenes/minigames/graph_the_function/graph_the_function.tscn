@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=3 uid="uid://dra00by8ikhk4"]
+
+[ext_resource type="Script" path="res://scenes/minigames/graph_the_function/assets/scripts/graph_the_function.gd" id="1_1tmyi"]
+[ext_resource type="Texture2D" uid="uid://yv3xaenxjdnd" path="res://scenes/minigames/graph_the_function/assets/gui_elemenets/bigger_background.png" id="2_0k1el"]
+[ext_resource type="Texture2D" uid="uid://r0o8dl0qh7i4" path="res://scenes/minigames/graph_the_function/assets/gui_elemenets/pngegg.png" id="3_ga82t"]
+
+[node name="GraphTheFunction" type="Node2D"]
+script = ExtResource("1_1tmyi")
+polish_name = "Szkicowanie funkcji"
+
+[node name="TextEdit" type="RichTextLabel" parent="." groups=["TextNode"]]
+offset_left = 1.0
+offset_top = 20.0
+offset_right = 1276.0
+offset_bottom = 159.0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+
+[node name="TextEdit2" type="RichTextLabel" parent="." groups=["TextNode"]]
+offset_left = 1.0
+offset_top = 94.0
+offset_right = 1276.0
+offset_bottom = 159.0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]f(x) = sin(x - 0) + 0[/center]"
+
+[node name="BiggerBackground" type="Sprite2D" parent="."]
+position = Vector2(635, 403)
+texture = ExtResource("2_0k1el")
+
+[node name="Pngegg" type="Sprite2D" parent="."]
+position = Vector2(630.5, 404.5)
+scale = Vector2(0.0705472, 0.0758495)
+texture = ExtResource("3_ga82t")
+flip_v = true
+
+[node name="HSlider" type="HSlider" parent="." groups=["HSlider"]]
+offset_left = 186.0
+offset_top = 635.0
+offset_right = 1082.0
+offset_bottom = 694.0
+min_value = -7.0
+max_value = 7.0
+
+[node name="VSlider" type="VSlider" parent="." groups=["VSlider"]]
+offset_left = 163.0
+offset_top = 162.0
+offset_right = 179.0
+offset_bottom = 643.0
+min_value = -4.0
+max_value = 4.0
+
+[node name="VText" type="TextEdit" parent="." groups=["VText"]]
+offset_left = 81.0
+offset_top = 364.0
+offset_right = 139.0
+offset_bottom = 440.0
+theme_override_font_sizes/font_size = 45
+text = "0"
+editable = false
+
+[node name="HText" type="TextEdit" parent="." groups=["HText"]]
+offset_left = 608.0
+offset_top = 672.0
+offset_right = 660.0
+offset_bottom = 751.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+editable = false
+
+[connection signal="drag_ended" from="HSlider" to="." method="_on_h_slider_drag_ended"]
+[connection signal="drag_ended" from="VSlider" to="." method="_on_v_slider_drag_ended"]

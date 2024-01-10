@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://do0gv7fs1aegr"]
+[gd_scene load_steps=4 format=3 uid="uid://do0gv7fs1aegr"]
 
 [ext_resource type="Script" path="res://scenes/ui/join_menu/join_menu.gd" id="1_o0flq"]
+[ext_resource type="PackedScene" uid="uid://dbggxxcgwkdh5" path="res://scenes/ui/start_menu/background/background.tscn" id="2_3dgfg"]
 [ext_resource type="Script" path="res://addons/LANServerBroadcast/server_listener/ServerListener.gd" id="2_07ghn"]
 
 [node name="JoinMenu" type="Control"]
@@ -12,14 +13,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o0flq")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background2" parent="." instance=ExtResource("2_3dgfg")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.352941, 0.352941, 0.443137, 1)
 
 [node name="StatusBar" type="Control" parent="."]
 layout_mode = 1

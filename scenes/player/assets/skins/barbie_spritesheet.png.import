@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x3hb3b3rrfa1"
-path="res://.godot/imported/_czat.png-a974c8da71f780b38873e9ba4bf51bd1.ctex"
+uid="uid://wwp54md28pg0"
+path="res://.godot/imported/barbie_spritesheet.png-efdc07775e340fcad8f502fa4eda77b5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/maps/lobby/scenes/lobby_ui/assets/_czat.png"
-dest_files=["res://.godot/imported/_czat.png-a974c8da71f780b38873e9ba4bf51bd1.ctex"]
+source_file="res://scenes/player/assets/skins/barbie_spritesheet.png"
+dest_files=["res://.godot/imported/barbie_spritesheet.png-efdc07775e340fcad8f502fa4eda77b5.ctex"]
 
 [params]
 

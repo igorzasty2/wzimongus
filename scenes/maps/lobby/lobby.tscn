@@ -53,7 +53,7 @@ script = ExtResource("1_dytr5")
 metadata/_edit_lock_ = true
 
 [node name="Objects" type="Node2D" parent="."]
-z_index = 1
+z_index = 2
 y_sort_enabled = true
 
 [node name="Lampa1" type="Sprite2D" parent="Objects"]
@@ -215,7 +215,6 @@ visible = false
 visible = false
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
-visible = false
 
 [connection signal="visibility_changed" from="Chat" to="." method="update_input"]
 [connection signal="visibility_changed" from="SkinSelector" to="." method="update_input"]

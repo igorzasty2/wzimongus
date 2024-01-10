@@ -3,9 +3,8 @@ extends CanvasLayer
 @onready var grid_container = $GridContainer
 @onready var grid_container_2 = $GridContainer2
 @onready var filler = $GridContainer/Filler
-@onready var chat_button = $GridContainer2/ChatButton
-
-var is_chat_open = false
+@onready var fail_label = $GridContainer/FailButton/FailLabel
+@onready var sabotage_label = $GridContainer/SabotageButton/SabotageLabel
 
 var task_list_display
 
@@ -29,14 +28,14 @@ func _ready():
 	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
 	on_interface_scale_changed(user_sett.interface_scale)
 	
-	toggle_chat_button_active(false)
 	# Gracz jest impostorem
 	if GameManager.get_current_player_key("is_lecturer"):
 		toggle_button_active("VentButton", false)
 		toggle_button_active("FailButton", false)
 		toggle_button_active("SabotageButton", false)
-		toggle_button_active("ReportButton", false)
-		toggle_button_active("InteractButton", false)
+		
+		update_time_left("FailLabel","")
+		update_time_left("SabotageLabel","")
 	# Gracz jest crewmatem
 	else: 
 		remove_button("VentButton")
@@ -44,8 +43,8 @@ func _ready():
 		remove_button("SabotageButton")
 		fill_grid(3)
 		
-		toggle_button_active("ReportButton", false)
-		toggle_button_active("InteractButton", false)
+	toggle_button_active("ReportButton", false)
+	toggle_button_active("InteractButton", false)
 
 
 # Wykonuje podaną akcję
@@ -92,22 +91,12 @@ func _on_pause_button_button_down():
 	execute_action("pause_menu")
 
 
-# Obsługuje naciśnięcie przycisku do otwierania czatu
-func _on_chat_button_button_down():
-	if is_chat_open:
-		execute_action("pause_menu")
-		is_chat_open = false
-	else:
-		execute_action("chat_open")
-		is_chat_open = true
-
-
 # Aktywuje i deaktywuje przycisk o danej nazwie
 func toggle_button_active(button_name:String, is_active:bool):
 	var button : TextureButton = get_node("GridContainer").get_node(button_name)
-	
-	button.disabled = !is_active
-	toggle_button_visual(button, is_active)
+	if button != null:
+		button.disabled = !is_active
+		toggle_button_visual(button, is_active)
 
 
 # Zmienia wygląd przycisku
@@ -132,11 +121,15 @@ func fill_grid(amount:int):
 		grid_container.move_child(filler_duplicate, 0)
 
 
-# Przełącza widoczność przycisku czatu
-func toggle_chat_button_active(is_active:bool):
-	chat_button.visible = is_active
-	chat_button.disabled = is_active
-	if is_active:
-		$GridContainer2.pivot_offset.x = 740
-	else:
-		$GridContainer2.pivot_offset.x = 360
+@rpc("call_local", "any_peer")
+## Przełącza widoczność interfejsu
+func toggle_visiblity(is_visible:bool):
+	visible = is_visible
+
+
+## Aktualizuje zawartość etykiety
+func update_time_left(label_name: String , value:String):
+	if label_name == fail_label.name:
+		fail_label.text = value
+	elif label_name == sabotage_label.name:
+		sabotage_label.text = value
