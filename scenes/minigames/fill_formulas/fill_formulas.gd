@@ -2,14 +2,23 @@
 class_name FillFormulas
 extends Node2D
 
+
 ## Lista możliwych do wylosowania wzorów
+
+# Scena ta przechowuje główną logikę minigry oraz główne jej skrypty wymagane
+# do jej działania
+
+@export var polish_name : String
+
+# FORMULAS przechowuje listę możliwych do wylosowania wzorów do uzupełnienia
+
 const FORMULAS = {
-	0:"F=m*v", 
-	1:"v=s/t", 
-	2:"a=v/t", 
-	3:"P=a²", 
-	4:"P=a*h", 
-	5:"P=π*r²", 
+	0:"F=m*v",
+	1:"v=s/t",
+	2:"a=v/t",
+	3:"P=a²",
+	4:"P=a*h",
+	5:"P=π*r²",
 	6:"P=a*h½",
 	}
 @export
@@ -59,8 +68,8 @@ func _process(delta):
 						correct_space.queue_free()
 						_point += 1
 				elif (
-						(l != moving || !mouse_clicked) 
-						&& !l.placed 
+						(l != moving || !mouse_clicked)
+						&& !l.placed
 						&& l.position != l.original_position
 					):
 					# Przywraca do originalnej pozycji pole które jest na nieprawidłowym
@@ -68,8 +77,8 @@ func _process(delta):
 					# i nie jest na oryginalniej pozycji
 					l.return_to_orig_pos()
 			elif (
-						(l != moving || !mouse_clicked) 
-						&& !l.placed 
+						(l != moving || !mouse_clicked)
+						&& !l.placed
 						&& l.position != l.original_position
 					):
 					# Przywraca do originalnej pozycji pole które nie posiada
@@ -186,7 +195,7 @@ func _generate_formula(formula:String):
 
 ## Zwraca tablicę wygenerowanych pól z literami
 func _get_letters():
-	var children = [] 
+	var children = []
 	for child in get_children():
 		if child is StaticBody2D:
 			children.append(child)

@@ -17,27 +17,63 @@ const FADE_OUT_TIME = 0.25
 @onready var chat_logs_container = $%ChatLogsContainer
 @onready var chat_logs_scrollbar = chat_logs_scroll_container.get_v_scroll_bar()
 @onready var username = GameManager.get_current_player_key("username")
+@onready var group_label = $%Group
 
 var message_scene = preload("res://scenes/ui/chat/message/message.tscn")
 var system_message_scene = preload("res://scenes/ui/chat/system_message/system_message.tscn")
 
 var last_known_scroll_max = 0
-var current_group = Group.LECTURER
+var current_group = Group.GLOBAL
 var fade_out_tween 
 
 
 func _ready():
 	chat_logs_scrollbar.changed.connect(_update_scrollbar_position)
 	input_text.hide()
+	group_label.hide()
+
+	_update_group_label()
 
 
 func _input(event):
-	if event.is_action_pressed("chat_open") && !input_text.visible:
+	if event.is_action_pressed("chat_open"):
+		if GameManager.get_current_game_key("is_paused"):
+			return
+
+		if input_text.visible:
+			return
+
 		_open_chat()
 		get_viewport().set_input_as_handled()
-	if event.is_action_pressed("pause_menu") && input_text.visible:
+
+	if event.is_action_pressed("chat_close"):
+		if GameManager.get_current_game_key("is_paused"):
+			return
+
+		if !input_text.visible:
+			return
+
+		_switch_chat_group()
+		get_viewport().set_input_as_handled()
+
+	if event.is_action_pressed("pause_menu"):
+		if !input_text.visible:
+			return
+
 		_close_chat()
 		get_viewport().set_input_as_handled()
+
+
+func _switch_chat_group():
+	if GameManager.get_current_player_key("is_lecturer"):
+		current_group = Group.LECTURER if current_group == Group.GLOBAL else Group.GLOBAL
+		_update_group_label()
+
+func _update_group_label():
+	if GameManager.get_current_player_key("is_lecturer"):
+		group_label.text = "Lecturer" if current_group == Group.LECTURER else "Global"
+	else:
+		group_label.text = "Dead" if current_group == Group.DEAD else "Global"
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -45,20 +81,22 @@ func send_message(message, group, id):
 	match group:
 		Group.DEAD:
 			if current_group == Group.DEAD:
-				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.DEAD)
+				_create_message(GameManager.get_registered_players()[id], message, Group.DEAD)
 		Group.LECTURER:
 			if current_group == Group.LECTURER:
-				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.LECTURER)
-			else:
-				_create_message(GameManager.get_registered_player_key(id, "username"), message, Group.GLOBAL)
+				_create_message(GameManager.get_registered_players()[id], message, Group.LECTURER)
 		Group.SYSTEM:
 			var system_message_instance = system_message_scene.instantiate()
 			chat_logs_container.add_child(system_message_instance)
 			system_message_instance.init(message)
 			chat_logs_scroll_container.modulate.a = 1
+			
+			if get_parent().name == "VotingScreen":
+				return
+
 			timer.start()
 		_:
-			_create_message(GameManager.get_registered_player_key(id, "username"), message, current_group)
+			_create_message(GameManager.get_registered_players()[id], message, Group.GLOBAL)
 	
 	if multiplayer.is_server():
 		for peer_id in GameManager.get_registered_players().keys():
@@ -71,19 +109,22 @@ func send_system_message(message):
 	send_message(message, Group.SYSTEM, SYSTEM_MESSAGE_ID)
 
 
-func _create_message(username, message, group):
+func _create_message(player: Dictionary, message: String, group: Group):
 	chat_logs_scroll_container.modulate.a = 1
 
 	var new_message = message_scene.instantiate()
 	chat_logs_container.add_child(new_message)
 
-	new_message.init(username, message, GROUP_COLORS[group])
+	new_message.init(player, message, GROUP_COLORS[group])
+
+	if get_parent().get_parent().name == "VotingScreen":
+		return
 
 	timer.start()
 
 
 func _on_input_text_visibility_changed():
-	get_parent().update_input()
+	visibility_changed.emit()
 
 
 func _on_input_text_text_submitted(submitted_text):
@@ -95,7 +136,7 @@ func _on_input_text_text_submitted(submitted_text):
 	send_message.rpc_id(1, submitted_text, current_group, multiplayer.get_unique_id())	
 
 	input_text.text = ""
-
+	_close_chat()
 
 func _on_timer_timeout():
 	if input_text.has_focus():
@@ -114,11 +155,18 @@ func _update_scrollbar_position():
 func _open_chat():
 	input_text.grab_focus()
 	input_text.show()
+	group_label.show()
 	chat_logs_scroll_container.modulate.a = 1
 
 
 func _close_chat():
 	input_text.release_focus()
 	input_text.hide()
-	timer.start()
+	group_label.hide()
 	input_text.text = ""
+
+	if get_parent().get_parent().name == "VotingScreen":
+		return
+
+	timer.start()
+	

@@ -7,6 +7,7 @@
 radius = 170.238
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xwbu7"]
+resource_local_to_scene = true
 shader = ExtResource("2_o3jvt")
 shader_parameter/line_color = Color(1, 1, 1, 1)
 shader_parameter/line_thickness = 0.0
@@ -14,7 +15,7 @@ shader_parameter/line_thickness = 0.0
 [node name="TaskButton" type="Area2D"]
 position = Vector2(-1, 0)
 disable_mode = 2
-collision_mask = 2
+collision_mask = 18
 monitorable = false
 priority = 1
 script = ExtResource("1_dfaon")

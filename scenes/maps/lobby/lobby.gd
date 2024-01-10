@@ -2,20 +2,24 @@ extends Node2D
 
 signal load_finished
 
-@onready var spawn_points = $SpawnPoints
-@onready var players = $Players
-@onready var camera = $Camera
-@onready var server_advertiser = $ServerAdvertiser
-@onready var chat = $Chat
-@onready var chat_input = $Chat/ChatContainer/InputText
-@onready var skin_selector = $SkinSelector
-@onready var lobby_settings = $LobbySettings
+@onready var _spawn_points = $SpawnPoints
+@onready var _players = $Players
+@onready var _camera = $Camera
+@onready var _server_advertiser = $ServerAdvertiser
+@onready var _chat = $Chat
+@onready var _lobby_ui = $LobbyUi
+@onready var _chat_input = $Chat/ChatContainer/InputText
+@onready var _skin_selector = $SkinSelector
+@onready var _lobby_settings = $LobbySettings
 
 
-func update_input():
-	if chat_input && lobby_settings && skin_selector:
-		var input_status = !(chat_input.visible || lobby_settings.visible || skin_selector.visible)
-		GameManager.set_input_status(input_status)
+func _update_player_input():
+	var is_chat_visible = _chat_input.visible if _chat_input != null else false
+	var is_skin_selector_visible = _skin_selector.visible if _skin_selector != null  else false
+	var is_lobby_settings_visible = _lobby_settings.visible if _lobby_settings != null  else false
+
+	var is_input_disabled = is_chat_visible || is_skin_selector_visible || is_lobby_settings_visible
+	GameManager.set_input_disabled_status(is_input_disabled)
 
 
 func _ready():
@@ -23,7 +27,7 @@ func _ready():
 	NetworkTime.start()
 
 	hide()
-	GameManager.set_input_status(false)
+	GameManager.set_input_disabled_status(true)
 
 	# Spawnuje zarejestrowanych graczy.
 	for i in GameManager.get_registered_players():
@@ -48,42 +52,36 @@ func _ready():
 		await NetworkTime.after_sync
 
 	show()
-	camera.enabled = true
-	GameManager.set_input_status(true)
+	_chat.show()
+	_lobby_ui.show()
+	_camera.enabled = true
 	load_finished.emit()
+	_update_player_input()
 
 
 func _exit_tree():
 	# Zatrzymuje synchronizację czasu.
 	NetworkTime.stop()
 
-	GameManager.player_registered.disconnect(_on_player_registered)
-	GameManager.player_deregistered.disconnect(_on_player_deregistered)
-
-	if multiplayer.is_server():
-		GameManager.player_registered.disconnect(_update_broadcast_info)
-		GameManager.player_deregistered.disconnect(_update_broadcast_info)
-		GameManager.server_settings_changed.disconnect(_update_broadcast_info)
-
 
 func _update_broadcast_info(_id: int = 0, _player: Dictionary = {}):
-	server_advertiser.serverInfo = GameManager.get_server_settings().duplicate()
-	server_advertiser.serverInfo["player_count"] = GameManager.get_registered_players().size()
+	_server_advertiser.serverInfo = GameManager.get_server_settings().duplicate()
+	_server_advertiser.serverInfo["player_count"] = GameManager.get_registered_players().size()
 
 
 func _on_player_registered(id: int, player: Dictionary):
 	_spawn_player(id)
-	camera.shake(1.5, 10)
+	_camera.shake(1.5, 10)
 
 	if multiplayer.is_server():
-		chat.send_system_message("Gracz " + player.username + " dołączył do gry.")
+		_chat.send_system_message("Gracz " + player.username + " dołączył do gry.")
 
 
 func _on_player_deregistered(id: int, player: Dictionary):
 	_remove_player(id)
 
 	if multiplayer.is_server():
-		chat.send_system_message("Gracz " + player.username + " opuścił grę.")
+		_chat.send_system_message("Gracz " + player.username + " opuścił grę.")
 
 
 ## Spawnuje gracza na mapie.
@@ -93,22 +91,22 @@ func _spawn_player(id: int):
 	player.name = str(id)
 
 	# Ustawia startową pozycję gracza.
-	player.position = spawn_points.get_child(GameManager.get_registered_players().keys().find(id)).position
+	player.position = _spawn_points.get_child(GameManager.get_registered_players().keys().find(id)).position
 
 	# Ustawia pozycję i animację gracza na podstawie aktualnych danych.
 	if GameManager.lobby_data_at_registration.has(id):
 		player.position = GameManager.lobby_data_at_registration[id]["position"]
-		player.last_direction_x = GameManager.lobby_data_at_registration[id]["last_direction_x"]
+		player.direction_last_x = GameManager.lobby_data_at_registration[id]["direction_last_x"]
 		GameManager.lobby_data_at_registration.erase(id)
 
-	players.add_child(player)
+	_players.add_child(player)
 
 	# Ustawia kamerę.
 	if GameManager.get_current_player_id() == id:
-		camera.target = player
+		_camera.target = player
 
 
 ## Usuwa gracza z mapy.
 func _remove_player(id: int):
-	if players.has_node(str(id)):
-		players.get_node(str(id)).queue_free()
+	if _players.has_node(str(id)):
+		_players.get_node(str(id)).queue_free()

@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://blkno546eohsw"]
+
+[ext_resource type="Script" path="res://scenes/ui/game_ending/game_ending.gd" id="1_jsh54"]
+[ext_resource type="Texture2D" uid="uid://8infxgemuldq" path="res://scenes/ui/game_ending/assets/background.png" id="2_voi47"]
+
+[node name="GameEnding" type="CanvasLayer"]
+layer = 6
+script = ExtResource("1_jsh54")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_voi47")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="WinnerText" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -153.0
+offset_top = -97.5
+offset_right = 153.0
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+
+[node name="PressAnyKeyText" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -174.0
+offset_top = 219.5
+offset_right = 174.0
+offset_bottom = 260.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 21
+text = "Aby kontynuować, naciśnij dowolny klawisz..."
+horizontal_alignment = 1

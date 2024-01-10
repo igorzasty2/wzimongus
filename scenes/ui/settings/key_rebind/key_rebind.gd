@@ -18,6 +18,11 @@ var user_sett: UserSettingsManager
 var saved_event : InputEventKey
 
 func _ready():
+	start()
+
+
+## Obsługuje przypisanie przycisków i ustawienie nazw etykiet i nazw przycisków
+func start():
 	# Wczytuje zapisane ustawienia
 	user_sett = UserSettingsManager.load_or_create()
 	
@@ -36,6 +41,7 @@ func _ready():
 	
 	# Ustawia nazwy przycisków
 	set_buttons_names()
+
 
 # Ustawia tekst w przyciskach
 func set_buttons_names():
