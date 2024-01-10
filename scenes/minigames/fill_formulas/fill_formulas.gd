@@ -1,5 +1,6 @@
+## Klasa reprezuntuje instancję minigry Fill Formulas
+class_name FillFormulas
 extends Node2D
-## Klasa reprezuntuje instancję minigry
 
 ## Lista możliwych do wylosowania wzorów
 const FORMULAS = {

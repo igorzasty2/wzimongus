@@ -1,5 +1,6 @@
-extends CanvasLayer
 ## Klasa ta reprezentuje okno minigry
+class_name MinigameWindow
+extends CanvasLayer
 
 ## Scena minigry jaka ma zostać wyświetlona
 var _minigame: PackedScene

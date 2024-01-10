@@ -1,5 +1,6 @@
+## Klasa reprezentuje pusty kafelek na literę
+class_name SpaceBlock
 extends Area2D
-## Klasa reprezentuje puste pole na literę
 
 ## Informacje o rozmiarze pola
 var size:Vector2

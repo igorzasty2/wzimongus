@@ -1,5 +1,6 @@
+## Klasa reprezentuje przesuwalny myszką kafelek z literą
+class_name LetterBlock
 extends StaticBody2D
-## Klasa reprezentuje przesuwalne myszką pole z literą
 
 ## Informacje o oryginalnym położeniu pola
 var original_position
