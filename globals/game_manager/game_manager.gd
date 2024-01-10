@@ -31,6 +31,9 @@ signal error_occured(message: String)
 ## Emitowany po zabiciu gracza.
 signal player_killed(player_id: int, is_victim: bool)
 
+## Emitowany po włączeniu sabotażu.
+signal sabotage()
+
 ## Emitowany po zakończeniu ładowania mapy głównej.
 signal map_load_finished()
 
@@ -123,11 +126,12 @@ var _server_settings = {
 	"max_players": 10,
 	"max_lecturers": 3,
 	"kill_cooldown": 30,
+	"sabotage_cooldown": 30,
 	"kill_radius": 260,
 	"task_amount": 3,
 	"emergency_cooldown": 30,
-	"lecturer_light_radius": 4,
-	"student_light_radius": 2, 
+	"student_light_radius": 4.0, 
+	"lecturer_light_radius": 4.0
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -196,16 +200,19 @@ func create_lobby(lobby_name: String, port: int):
 
 
 ## Zmienia ustawienia serwera.
-func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, kill_radius: int, task_amount: int, emergency_cooldown: int):
+func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, sabotage_cooldown: int, kill_radius: int, task_amount: int, emergency_cooldown: int, student_light_radius: int, lecturer_light_radius: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-
+	
 	_server_settings["max_players"] = max_players
 	_server_settings["max_lecturers"] = max_lecturers
 	_server_settings["kill_cooldown"] = kill_cooldown
 	_server_settings["kill_radius"] = kill_radius
+	_server_settings["sabotage_cooldown"] = sabotage_cooldown
 	_server_settings["task_amount"] = task_amount
 	_server_settings["emergency_cooldown"] = emergency_cooldown
+	_server_settings["lecturer_light_radius"] = lecturer_light_radius
+	_server_settings["student_light_radius"] = student_light_radius
 	_update_server_settings.rpc(_server_settings)
 	server_settings_changed.emit()
 
@@ -748,3 +755,16 @@ func teleport_players():
 ## Emituje sygnał po zakończeniu wczytywania
 func main_map_load_finished():
 	map_load_finished.emit()
+
+
+@rpc("any_peer", "reliable", "call_local")
+func request_light_sabotage():
+	if not multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+	
+	activate_light_sabotage.rpc()
+	
+
+@rpc("authority", "reliable", "call_local")
+func activate_light_sabotage():
+	sabotage.emit()
