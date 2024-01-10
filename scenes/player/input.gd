@@ -26,6 +26,7 @@ func _ready():
 
 	if is_multiplayer_authority():
 		GameManager.input_status_changed.connect(_on_input_status_changed)
+		GameManager.emit_input_status()
 
 
 func _gather():
