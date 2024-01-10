@@ -1,30 +1,26 @@
+## Klasa reprezentuje przesuwalny myszką kafelek z literą
+class_name LetterBlock
 extends StaticBody2D
 
-# Klasa funkcjonuje jako przesuwalne myszką pole z literą które umieścić należy
-# w odpowiednim polu we wzorze
-
-# original_position przetrzymuje informacje o początkowym położeniu pola, daje
-# możliwość przywrócenia tej pozycji po nieprawidłowym przesunięciu pola
-var original_position
-# id służy do przetrzymania litery która znajduje się wewnątrz pola,
-# wykorzystywane przede wszystkim przez główny skrypt minigry
+## Informacje o oryginalnym położeniu pola
+var _original_position
+## Litera jaką reprezentuje pole
 var id = ""
-# placed informuje o tym, czy pole zostało już "położone" na odpowiednim miejscu
-# wzoru, służy do wyłączenia możliwości poruszania polem
+## Informuje o tym, czy pole zostało wstawione we wzór
 var placed = false
-# zmienna przetrzymująca oryginalną warstwę rysowania pola
-var orig_z_index = z_index
-# zmienna przechowująca wektor rozmiaru pola
-var size
-# zmienna przechowująca dokładne położenie pola (obszar przez niego zajmowany)
+## oryginalna warstwa rysowania pola
+var _orig_z_index = z_index
+## Rozmiar pola
+var size 
+## Dokładne położenie pola
 var rect
 
-
+## Ustawia wartości zmiennych size i rect
 func _ready():
 	size = $Sprite2D.get_rect().size
 	rect = Rect2(position - size/2, size)
 
-
+## Odpowiada za obsługę poruszania pola myszką
 func _process(delta):
 	if GameManager.get_current_game_key("is_paused") && !placed:
 		return_to_orig_pos()
@@ -38,7 +34,7 @@ func _process(delta):
 		Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) 
 		&& get_parent().moving == self
 		&& placed == false
-		&& (position != original_position || get_parent().is_moving)
+		&& (position != _original_position || get_parent().is_moving)
 	):
 		# Przypisanie zmiennych w celu uodpornienia kodu na zmiany wymiarów gui
 		# minigry
@@ -105,11 +101,11 @@ func _process(delta):
 		_on_mouse_entered()
 		
 
-# funkcja przywraca pole do pozycji oryginalnej
+## Przywraca pole do pozycji oryginalnej
 func return_to_orig_pos():
-	position = original_position
+	position = _original_position
 
-
+## Zdarzenie wykonywane gdy myszka znajdzie się w obszarze pola
 func _on_mouse_entered():
 	# instrukcja warunkowa konieczna aby niemożliwe było podniesienie 
 	# jednocześnie więcej niż jednego pola
@@ -118,9 +114,9 @@ func _on_mouse_entered():
 		get_parent().moving = self
 		z_index = 20
 
-
+## Zdarzenie wykonywane gdy myszka opuści obszar pola
 func _on_mouse_exited():
 	# Przywraca możliwość podnoszenia innych pól z literami
 	if (get_parent().is_moving && get_parent().moving == self && !Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
 		get_parent().is_moving = false
-		z_index = orig_z_index
+		z_index = _orig_z_index

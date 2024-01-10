@@ -50,10 +50,11 @@ y_sort_enabled = true
 script = ExtResource("1_dytr5")
 
 [node name="LobbyBackground" parent="." instance=ExtResource("2_mmhfw")]
+z_index = -5
 metadata/_edit_lock_ = true
 
 [node name="Objects" type="Node2D" parent="."]
-z_index = 2
+z_index = 5
 y_sort_enabled = true
 
 [node name="Lampa1" type="Sprite2D" parent="Objects"]
@@ -100,7 +101,7 @@ texture = ExtResource("4_364p8")
 polygon = PackedVector2Array(-177, -4, -328, 73, 327, 74, 178, -5)
 
 [node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
-z_index = 1
+z_index = 4
 position = Vector2(147, -276)
 sprite = ExtResource("4_643ea")
 scale_factor = 1.0
@@ -216,6 +217,6 @@ visible = false
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
 
-[connection signal="visibility_changed" from="Chat" to="." method="update_input"]
-[connection signal="visibility_changed" from="SkinSelector" to="." method="update_input"]
-[connection signal="visibility_changed" from="LobbySettings" to="." method="update_input"]
+[connection signal="visibility_changed" from="Chat" to="." method="_update_player_input"]
+[connection signal="visibility_changed" from="SkinSelector" to="." method="_update_player_input"]
+[connection signal="visibility_changed" from="LobbySettings" to="." method="_update_player_input"]

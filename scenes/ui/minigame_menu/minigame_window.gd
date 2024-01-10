@@ -6,7 +6,7 @@ var _minigame_instance: Node
 var use_button_disabled: bool = true
 
 @onready var minigame_container = $MinigameContainer
-@onready var viewport = minigame_container.get_node("ViewportContainer/Viewport")
+@onready var subviewport = minigame_container.get_node("SubviewportContainer/MinigameViewport")
 @onready var close_button: TextureButton = minigame_container.get_node("CloseButton")
 
 # Zmienne do obsługi interface gracza
@@ -36,45 +36,53 @@ func _on_use_button_pressed():
 	if _minigame == null:
 		return
 
-	if viewport.get_child_count() != 0:
+	if subviewport.get_child_count() != 0:
 		return
 	
 	summon_window()
 
 
 func _input(event):
-	if !event.is_action_pressed("interact"):
-		return
+	if event.is_action_pressed("pause_menu"):
+		if !visible:
+			return
 
-	if _minigame == null:
-		return
+		close_minigame()
+		get_viewport().set_input_as_handled()
 
-	if viewport.get_child_count() != 0:
-		return
-	
-	if use_button_disabled:
-		return
-	
-	if GameManager.get_current_game_key("is_paused"):
-		return
-	
-	if GameManager.get_current_game_key("is_input_disabled"):
-		return
+	if event.is_action_pressed("interact"):
+		if GameManager.get_current_game_key("is_paused"):
+			return
 
-	summon_window()
+		if GameManager.get_current_game_key("is_input_disabled"):
+			return
+
+		if _minigame == null:
+			return
+
+		if subviewport.get_child_count() != 0:
+			return
+
+		if use_button_disabled:
+			return
+
+		summon_window()
 
 
 func summon_window():
 	show()
 
-	viewport.add_child(_minigame.instantiate())
-	_minigame_instance = viewport.get_child(0)
+	subviewport.add_child(_minigame.instantiate())
+	_minigame_instance = subviewport.get_child(0)
 	
 	emit_signal("use_button_active", "InteractButton", false)
 	use_button_disabled = true
 
 	_minigame_instance.minigame_end.connect(end_minigame)
-
+	
+	if _minigame == load("res://scenes/ui/camera_system/camera_system.tscn"):
+		for camera in get_tree().get_nodes_in_group("cameras"):
+			camera.change_light_visibility()
 
 func end_minigame():
 	_minigame_instance.queue_free()
@@ -92,3 +100,7 @@ func close_minigame():
 		hide()
 
 		show_use_button(_minigame)
+	
+	if _minigame == load("res://scenes/ui/camera_system/camera_system.tscn"):
+		for camera in get_tree().get_nodes_in_group("cameras"):
+			camera.change_light_visibility()

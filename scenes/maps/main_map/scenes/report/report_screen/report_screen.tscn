@@ -4,22 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://scenes/maps/main_map/scenes/report/emergency_button/assets/emergency_meeting.png" id="2_nrmn5"]
 [ext_resource type="Texture2D" uid="uid://dy8j6jl7efkn1" path="res://icon.png" id="2_y8u8h"]
 
-[sub_resource type="Animation" id="Animation_oi8ud"]
-resource_name = "shake_animation"
-length = 1.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.10472, -0.10472, 0.10472, -0.10472, 0.10472, -0.10472, 0.10472, -0.10472]
-}
-
 [sub_resource type="Animation" id="Animation_g4k8g"]
 resource_name = "pulse_animation"
 length = 1.5
@@ -36,16 +20,39 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1.05, 1.05), Vector2(1, 1), Vector2(1.05, 1.05), Vector2(1, 1), Vector2(1.05, 1.05), Vector2(1, 1), Vector2(1.05, 1.05)]
 }
 
+[sub_resource type="Animation" id="Animation_oi8ud"]
+resource_name = "shake_animation"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.10472, -0.10472, 0.10472, -0.10472, 0.10472, -0.10472, 0.10472, -0.10472]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mb8t2"]
 _data = {
 "pulse_animation": SubResource("Animation_g4k8g"),
 "shake_animation": SubResource("Animation_oi8ud")
 }
 
-[node name="ReportScreen" type="CanvasLayer"]
+[node name="ReportScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_woxjr")
 
 [node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -64,7 +71,7 @@ grow_vertical = 2
 color = Color(0.705882, 0, 0, 1)
 
 [node name="TextureRect" type="TextureRect" parent="."]
-visible = false
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.395
@@ -86,6 +93,7 @@ scale = Vector2(1.05, 1.05)
 texture = ExtResource("2_y8u8h")
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.849

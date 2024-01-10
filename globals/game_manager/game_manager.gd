@@ -397,14 +397,18 @@ func get_server_settings():
 
 
 ## Zmienia status informacji o wyświetlaniu menu pauzy.
-func set_pause_menu_status(is_paused:bool):
+func set_pause_menu_status(is_paused: bool):
 	_current_game["is_paused"] = is_paused
-	input_status_changed.emit(!get_current_game_key("is_paused") && !get_current_game_key("is_input_disabled"))
+	emit_input_status()
 
 
 ## Umożliwia zmianę statusu sterowania obecnego gracza.
-func set_input_status(state:bool):
-	_current_game["is_input_disabled"] = !state
+func set_input_disabled_status(is_input_disabled: bool):
+	_current_game["is_input_disabled"] = is_input_disabled
+	emit_input_status()
+
+
+func emit_input_status():
 	input_status_changed.emit(!get_current_game_key("is_paused") && !get_current_game_key("is_input_disabled"))
 
 
@@ -703,20 +707,21 @@ func _send_player_kill(player_id: int, is_victim: bool = true):
 
 ## Sprawdza kto wygrał w tym momencie i kończy grę na korzyść wykładowcom lub crewmatom, jeżeli nikt, to nic nie robi.
 func check_winning_conditions():
-	if !multiplayer.is_server():
-		return ERR_UNAUTHORIZED
+	if GameManager.get_current_game_key("is_started"):
+		if !multiplayer.is_server():
+			return ERR_UNAUTHORIZED
 
-	if TaskManager.get_tasks_server().is_empty():
-		winner_determined.emit(Role.STUDENT)
-		return
+		if TaskManager.get_tasks_server().is_empty():
+			winner_determined.emit(Role.STUDENT)
+			return
 
-	if _count_alive_lecturers() == 0:
-		winner_determined.emit(Role.STUDENT)
-		return
+		if _count_alive_lecturers() == 0:
+			winner_determined.emit(Role.STUDENT)
+			return
 
-	if _count_alive_crewmates() <= _count_alive_lecturers():
-		winner_determined.emit(Role.LECTURER)
-		return
+		if _count_alive_crewmates() <= _count_alive_lecturers():
+			winner_determined.emit(Role.LECTURER)
+			return
 
 
 ## Liczy żyjących wykładowców.

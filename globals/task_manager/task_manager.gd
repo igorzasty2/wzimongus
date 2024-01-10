@@ -29,7 +29,7 @@ func assign_tasks(task_amount):
 	# Oczekuje jedną klatkę na wczytanie mapy._active
 	await get_tree().process_frame
 
-	_minigames = get_node("/root/Game/Maps/MainMap/Tasks").get_children()
+	_minigames = get_node("/root/Game/Maps/MainMap/InteractionPoints/Tasks").get_children()
 
 	if multiplayer.is_server() and _tasks.is_empty():
 		# Unikalny id dla każdego zadania.
