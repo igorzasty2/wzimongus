@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://5fao6q35e458"]
+[gd_scene load_steps=5 format=3 uid="uid://c3l6wkk0ahn02"]
 
-[ext_resource type="PackedScene" uid="uid://b2dcvq5rrj3f2" path="res://scenes/ui/minigame_menu/assets/close_minigame_button.tscn" id="3_4rwmm"]
+[ext_resource type="PackedScene" path="res://scenes/ui/minigame_menu/assets/close_minigame_button.tscn" id="3_4rwmm"]
 [ext_resource type="PackedScene" uid="uid://dnfvmswm3sk7g" path="res://scenes/ui/window_animation_player/window_animation_player.tscn" id="4_0h12e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p0mlm"]
@@ -18,9 +18,9 @@ corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
 [node name="MinigameWindow" type="CanvasLayer"]
+visible = false
 
 [node name="MinigameContainer" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchor_left = 0.1
 anchor_top = 0.1
