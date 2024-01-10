@@ -79,7 +79,10 @@ func summon_window():
 	use_button_disabled = true
 
 	_minigame_instance.minigame_end.connect(end_minigame)
-
+	
+	if _minigame == load("res://scenes/ui/camera_system/camera_system.tscn"):
+		for camera in get_tree().get_nodes_in_group("cameras"):
+			camera.change_light_visibility()
 
 func end_minigame():
 	_minigame_instance.queue_free()
@@ -97,3 +100,7 @@ func close_minigame():
 		hide()
 
 		show_use_button(_minigame)
+	
+	if _minigame == load("res://scenes/ui/camera_system/camera_system.tscn"):
+		for camera in get_tree().get_nodes_in_group("cameras"):
+			camera.change_light_visibility()
