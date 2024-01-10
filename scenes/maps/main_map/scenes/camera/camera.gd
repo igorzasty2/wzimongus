@@ -1,5 +1,6 @@
-extends Node2D
 ## Klasa jest reprezentacją kamery w świecie gry
+class_name SurveilenceCamera
+extends Node2D
 
 ## Dodaję kamerę do grupy cameras umożliwia jej odpowiednie wyświetlanie świata gry
 func _ready():

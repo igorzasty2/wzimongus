@@ -25,7 +25,7 @@ var _disabled_line_thickness = 0.0
 var _is_player_inside : bool = false
 
 @onready var sprite_node = get_node("Sprite2D")
-@onready var minigame_menu = get_parent().get_parent().get_node("MinigameMenu")
+@onready var minigame_window = get_parent().get_parent().get_node("MinigameWindow")
 
 func _ready():
 	sprite_node.texture = sprite
@@ -43,7 +43,7 @@ func _on_body_entered(body):
 	if body.name.to_int() == multiplayer.get_unique_id() && !disabled && !body.is_in_vent:
 		_is_player_inside = true
 		sprite_node.material.set_shader_parameter('line_color', _in_range_task_color)
-		minigame_menu.show_use_button(minigame_scene)
+		minigame_window.show_use_button(minigame_scene)
 		TaskManager.current_task_id = task_id
 
 
@@ -51,7 +51,7 @@ func _on_body_exited(body):
 	if body.name.to_int() == multiplayer.get_unique_id() && !disabled:
 		_is_player_inside = false
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
-		minigame_menu.hide_use_button()
+		minigame_window.hide_use_button()
 		TaskManager.current_task_id = null
 
 

@@ -38,9 +38,8 @@
 [ext_resource type="Texture2D" uid="uid://5n0jedd1cmxk" path="res://scenes/maps/main_map/assets/objects/bufet_automat.png" id="32_jc7lc"]
 [ext_resource type="Texture2D" uid="uid://dmy20om8608ff" path="res://scenes/maps/main_map/assets/objects/bufet_stol.png" id="33_fxkqp"]
 [ext_resource type="PackedScene" uid="uid://cwapulye6fjyc" path="res://scenes/maps/main_map/scenes/vent/vent.tscn" id="33_q8paj"]
-[ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_menu.tscn" id="34_5r0ro"]
+[ext_resource type="PackedScene" uid="uid://5fao6q35e458" path="res://scenes/ui/minigame_menu/minigame_window.tscn" id="34_5r0ro"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="34_b878o"]
-[ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_menu.gd" id="35_23714"]
 [ext_resource type="Texture2D" uid="uid://lv5k5yskqtbw" path="res://scenes/maps/main_map/assets/objects/kanapa.png" id="35_ryots"]
 [ext_resource type="PackedScene" uid="uid://ct2plxemq2ft5" path="res://scenes/ui/loading_screen/loading_screen.tscn" id="36_4x0df"]
 [ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://scenes/maps/main_map/assets/objects/chillroom_stol_1.png" id="36_k0n1h"]
@@ -95,6 +94,7 @@
 [ext_resource type="PackedScene" uid="uid://dra00by8ikhk4" path="res://scenes/minigames/graph_the_function/graph_the_function.tscn" id="83_7u8vq"]
 [ext_resource type="PackedScene" uid="uid://di5jtb8ateug1" path="res://scenes/minigames/find_password/FindPassword.tscn" id="84_y3nq6"]
 [ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
+[ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_window.gd" id="92_b2shf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
 size = Vector2(150, 16)
@@ -1043,7 +1043,7 @@ vent_target_list = [NodePath("../Vent1")]
 [node name="Cameras" type="Node2D" parent="."]
 
 [node name="CameraSystem" parent="Cameras" instance=ExtResource("3_e0rk4")]
-position = Vector2(4016, -1329)
+position = Vector2(4019, -1314)
 is_minigame = false
 minigame_scene = ExtResource("89_58eb3")
 
@@ -1184,9 +1184,8 @@ properties = Array[String]([":global_position"])
 
 [node name="UserInterface" parent="." instance=ExtResource("37_tw5rq")]
 
-[node name="MinigameMenu" parent="." instance=ExtResource("34_5r0ro")]
-visible = false
-script = ExtResource("35_23714")
+[node name="MinigameWindow" parent="." instance=ExtResource("34_5r0ro")]
+script = ExtResource("92_b2shf")
 
 [node name="VotingCanvas" type="CanvasLayer" parent="."]
 
