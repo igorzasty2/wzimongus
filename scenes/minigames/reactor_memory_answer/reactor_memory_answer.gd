@@ -1,6 +1,6 @@
 extends Node2D
 
-
+class_name ReactorMemoryMinigame
 
 ## Tablica przechowująca sekwencję
 var sequence = []
