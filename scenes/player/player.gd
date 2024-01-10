@@ -399,6 +399,8 @@ func _use_vent():
 
 		_request_vent_entering.rpc_id(1)
 	else:
+		if can_sabotage_cooldown:
+			button_active.emit("SabotageButton", true)
 		_request_vent_exiting.rpc_id(1)
 
 

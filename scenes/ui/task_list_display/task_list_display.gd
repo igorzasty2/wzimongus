@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-@onready var _task_list_node = $TaskList
-@onready var _progress_bar = $ProgressBar
+@onready var _task_list_node = $VBoxContainer/Control/TaskList
+@onready var _progress_bar = $VBoxContainer/ProgressBar
 
 func _ready():
 	TaskManager.tasks_change.connect(_update_task_list)
