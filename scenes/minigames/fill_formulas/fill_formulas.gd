@@ -3,6 +3,8 @@ extends Node2D
 # Scena ta przechowuje główną logikę minigry oraz główne jej skrypty wymagane
 # do jej działania
 
+@export var polish_name : String
+
 # FORMULAS przechowuje listę możliwych do wylosowania wzorów do uzupełnienia
 const FORMULAS = {
 	0:"F=m*v", 
@@ -17,6 +19,9 @@ const FORMULAS = {
 # max = 3 min = 1
 @export
 var how_many_formulas = 3
+
+signal minigame_end
+
 # Zmienna mówi o tym, czy przesuwane jest obecnie pole z literą
 var is_moving = false
 # moving przechowuje referencję do obecnie przesuwanego pola
@@ -86,7 +91,7 @@ func _process(delta):
 		_random_generate()
 	if point == wanted_points && times_generated == how_many_formulas:
 		if !finished:
-			print("minigame complete")
+			minigame_end.emit()
 			finished = true
 
 
@@ -223,6 +228,3 @@ func _random_generate():
 		_generate_letters(FORMULAS[r])
 		generated.append(FORMULAS[r])
 		times_generated += 1
-
-
-

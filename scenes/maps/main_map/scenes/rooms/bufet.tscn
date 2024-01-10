@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcr0n6fy1ajvx"]
+
+[ext_resource type="Texture2D" uid="uid://dtlpboy2a35v4" path="res://scenes/maps/main_map/assets/rooms/bufet.png" id="1_ria00"]
+
+[node name="bufet" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_ria00")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(-470, -105, -566, -105, -568, 333, 114, 335, 115, 393, -633, 393, -633, -392, -470, -392)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(459, 335, 459, 394, 633, 394, 436, -394, -124, -394, -125, -108, 446, -108, 551, 335)

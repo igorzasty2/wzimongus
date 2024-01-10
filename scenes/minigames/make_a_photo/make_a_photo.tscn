@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://dmjx2shy2ugc2"]
+
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/make_a_photo.gd" id="1_ho2i0"]
+[ext_resource type="Texture2D" uid="uid://bacbpfbdjckd4" path="res://scenes/minigames/make_a_photo/sprites/table.jpg" id="1_uns0w"]
+[ext_resource type="Texture2D" uid="uid://bq4pawvs27u3m" path="res://scenes/minigames/make_a_photo/sprites/papers.png" id="2_t5i8c"]
+[ext_resource type="PackedScene" uid="uid://cr8va0m83uusp" path="res://scenes/minigames/make_a_photo/active_objects/take_the_phone.tscn" id="3_nsmec"]
+[ext_resource type="PackedScene" uid="uid://clh52hsf4nrk5" path="res://scenes/minigames/make_a_photo/active_objects/phone.tscn" id="4_icifk"]
+[ext_resource type="PackedScene" uid="uid://d3t3d48a8862t" path="res://scenes/minigames/make_a_photo/active_objects/to_make_a_photo.tscn" id="5_yej6x"]
+
+[node name="make_a_photo" type="Node2D"]
+script = ExtResource("1_ho2i0")
+polish_name = "Robienie zdjęcia"
+
+[node name="Table" type="Sprite2D" parent="."]
+position = Vector2(562, 312)
+scale = Vector2(0.96, 0.5225)
+texture = ExtResource("1_uns0w")
+
+[node name="Papers" type="Sprite2D" parent="."]
+position = Vector2(547, 313)
+scale = Vector2(0.167991, 0.167483)
+texture = ExtResource("2_t5i8c")
+
+[node name="take_the_phone" parent="." instance=ExtResource("3_nsmec")]
+offset_left = 429.0
+offset_top = 564.0
+offset_right = 664.0
+offset_bottom = 621.0
+
+[node name="Phone" parent="." groups=["phone"] instance=ExtResource("4_icifk")]
+visible = false
+position = Vector2(1151, 646)
+
+[node name="to_make_a_photo" parent="." groups=["to_make_a_photo"] instance=ExtResource("5_yej6x")]
+visible = false
+offset_left = 431.0
+offset_top = 565.0
+offset_right = 651.0
+offset_bottom = 612.0
+
+[connection signal="pressed" from="take_the_phone" to="take_the_phone" method="_on_pressed"]
+[connection signal="pressed" from="to_make_a_photo" to="to_make_a_photo" method="_on_pressed"]

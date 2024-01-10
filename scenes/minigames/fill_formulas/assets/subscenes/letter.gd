@@ -26,6 +26,9 @@ func _ready():
 
 
 func _process(delta):
+	if GameManager.get_current_game_key("is_paused") && !placed:
+		return_to_orig_pos()
+		return
 	# Przypisanie często używanej funkcji do zmiennej w celu skrócenia kodu
 	var mouse_position:Vector2 = get_viewport().get_mouse_position()
 	# sprawdza czy pole powinno być w danym momencie poruszane, zwraca true jeśli
@@ -40,13 +43,15 @@ func _process(delta):
 		# Przypisanie zmiennych w celu uodpornienia kodu na zmiany wymiarów gui
 		# minigry
 		var gui:Sprite2D = get_parent().get_child(0)
+		var minigame_scale:Vector2 = get_parent().scale
 		var gui_rect:Rect2 = Rect2(
-			Vector2(gui.position - gui.get_rect().size/2), gui.get_rect().size
+			Vector2(gui.global_position - gui.get_rect().size/2 * minigame_scale), 
+			gui.get_rect().size * minigame_scale
 			)
 		# Instrukcja warunkowa pozwala na swobodne poruszanie się litery tylko w
 		# obrębie pola minigry
 		if gui_rect.has_point(mouse_position):
-			position = mouse_position
+			global_position = mouse_position
 		# Przypisanie często wykorzystywanych zmiennych w celu skrócenia dalszego
 		# kodu i uodpornienia kodu na zmiany wymiarów gui minigry
 		var letter_boundry_shift = $Sprite2D.get_rect().size.x
@@ -57,41 +62,41 @@ func _process(delta):
 		# Instrukcja pozwala na poruszanie literą wzdłuż granic prostopadłych
 		# do osi x
 		if(mouse_position.x >= right || mouse_position.x <= left):
-			position.y = mouse_position.y
+			global_position.y = mouse_position.y
 			# Następne dwie instrukcje warunkowe odpowiadają za wyeliminowanie
 			# sytuacji gdy myszka opuści pole minigry i pole z literą znajduje
 			# się na środku pola minigry i ma ograniczone ruchy do tylko jednej
 			# osi
-			if mouse_position.x >= right && position.x < right:
-				position.x = right
-			if mouse_position.x <= left && position.x > left:
-				position.x = left
+			if mouse_position.x >= right && global_position.x < right:
+				global_position.x = right
+			if mouse_position.x <= left && global_position.x > left:
+				global_position.x = left
 			# Instrukcja uniemożliwia opuszczenie górnej i dolnej krawędzi
 			# pola minigry
-			if(position.y < top || position.y > bottom):
-				if position.y < top:
-					position.y = top
+			if(global_position.y < top || global_position.y > bottom):
+				if global_position.y < top:
+					global_position.y = top
 				else:
-					position.y = bottom
+					global_position.y = bottom
 		# Instrukcja pozwala na poruszanie literą wzdłuż granic prostopadłych
 		# do osi y
 		if mouse_position.y <= top || mouse_position.y >= bottom:
-			position.x = mouse_position.x
+			global_position.x = mouse_position.x
 			# Następne dwie instrukcje warunkowe odpowiadają za wyeliminowanie
 			# sytuacji gdy myszka opuści pole minigry i pole z literą znajduje
 			# się na środku pola minigry i ma ograniczone ruchy do tylko jednej
 			# osi
-			if mouse_position.y >= bottom && position.y < bottom:
-				position.y = bottom
-			if mouse_position.y <= top && position.y > top:
-				position.y = top
+			if mouse_position.y >= bottom && global_position.y < bottom:
+				global_position.y = bottom
+			if mouse_position.y <= top && global_position.y > top:
+				global_position.y = top
 			# Instrukcja uniemożliwia opuszczenie lewej i prawej krawędzi
 			# pola minigry
-			if position.x > right || position.x < left:
-				if position.x < left:
-					position.x = left
+			if global_position.x > right || global_position.x < left:
+				if global_position.x < left:
+					global_position.x = left
 				else:
-					position.x = right
+					global_position.x = right
 	# Służy do poprawnej zmiany wybranego pola z literą
 	if(
 		rect.has_point(mouse_position) 

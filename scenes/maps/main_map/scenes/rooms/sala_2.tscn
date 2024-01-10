@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwjp3351iq2cg"]
+
+[ext_resource type="Texture2D" uid="uid://kvr1gohuip0i" path="res://scenes/maps/main_map/assets/rooms/sala_2.png" id="1_vx06s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ud8od"]
+size = Vector2(58, 420.5)
+
+[node name="sala_2" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_vx06s")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(627, 354.25)
+shape = SubResource("RectangleShape2D_ud8od")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(248, 563, 248, 499, -331, 499, -600, 240, -601, -282, -154, -282, -154, -565, -656, -565, -656, 272, -357, 562)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(195, -564, 655, -564, 655, -230, 597, -230, 597, -282, 195, -282)

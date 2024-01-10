@@ -13,19 +13,35 @@ config_version=5
 config/name="WZiMong Us"
 run/main_scene="res://scenes/ui/start_menu/start_menu.tscn"
 config/features=PackedStringArray("4.1")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+config/icon="res://icon.png"
 
 [autoload]
 
+NetworkTime="*res://addons/netfox/network-time.gd"
+NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
+NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
+NetworkEvents="*res://addons/netfox/network-events.gd"
 GameManager="*res://globals/game_manager/game_manager.gd"
+TaskManager="*res://globals/task_manager/task_manager.gd"
 
 [display]
 
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
 [dotnet]
 
 project/assembly_name="WZiMong Us"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/LANServerBroadcast/plugin.cfg", "res://addons/netfox.internals/plugin.cfg", "res://addons/netfox/plugin.cfg")
+
+[gui]
+
+theme/custom="res://themes/default/default.tres"
 
 [input]
 
@@ -91,12 +107,7 @@ chat_open={
 }
 chat_close={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"echo":false,"script":null)
-]
-}
-chat_change_group={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 
@@ -104,7 +115,19 @@ chat_change_group={
 
 2d_physics/layer_1="static_objects"
 2d_physics/layer_2="players"
+2d_physics/layer_3="vents"
+2d_physics/layer_4="kill_radius"
+
+[netfox]
+
+events/enabled=false
+logging/log_level=4
+logging/netfox_log_level=4
+time/max_ticks_per_frame=5
+time/recalibrate_threshold=0.5
+time/sync_samples=5
 
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.301961, 0.301961, 0.301961, 1)

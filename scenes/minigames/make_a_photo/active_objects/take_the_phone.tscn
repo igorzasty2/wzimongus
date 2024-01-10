@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr8va0m83uusp"]
+
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/scripts/take_the_phone.gd" id="1_0g8pe"]
+[ext_resource type="Texture2D" uid="uid://bbrgj3cb3ads7" path="res://scenes/minigames/make_a_photo/sprites/take-the-phone.png" id="2_5ca3r"]
+
+[node name="take_the_phone" type="TextureButton"]
+offset_right = 235.0
+offset_bottom = 57.0
+script = ExtResource("1_0g8pe")
+
+[node name="Take-the-phone" type="Sprite2D" parent="."]
+position = Vector2(115, 29)
+scale = Vector2(0.252883, 0.274947)
+texture = ExtResource("2_5ca3r")

@@ -1,38 +1,25 @@
 extends Control
 
 @onready var volume_slider = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VolumeSlider
+@onready var interface_scale_slider = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/InterfaceScaleSlider
 @onready var full_screen_checkbox = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/FullScreenCheckBox
 @onready var v_sync_checkbox = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VSyncCheckBox
-@onready var resolution_slider = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/ResolutionSlider
 
+@onready var interface_scale_output = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/InterfaceScaleOutput
 @onready var volume_output = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VolumeOutput
-@onready var resolution_output = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/ResolutionOutput
 
-@onready var save_button = $TabContainer/SoundAndGraphics/MarginContainer/SaveButton
-
-@onready var key_rebind_window = $KeyRebindWindow
-@onready var action_name = $KeyRebindWindow/Panel/VBoxContainer/ActionName
-@onready var key_used_window = $KeyUsedWindow
+@onready var key_rebind_window = $TabContainer/Controls/KeyRebindWindow
+@onready var action_name = $TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer/ActionName
+@onready var key_used_window = $TabContainer/Controls/KeyUsedWindow
 
 @onready var default_sound_graphics_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton
 @onready var default_controls_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2/DefaultControlsButton
 
-# resolutions array
-const RESOLUTIONS = [Vector2i(800,600), Vector2i(1024,768), Vector2i(1152,648), Vector2i(1152,864), Vector2i(1280,720),
-Vector2i(1280,800),Vector2i(1280,960), Vector2i(1360,768), Vector2i(1366,768), Vector2i(1400,1050), Vector2i(1440,900), Vector2i(1600,900),
-Vector2i(1600,1200), Vector2i(1680,1050), Vector2i(1792,1344), Vector2i(1856,1392), Vector2i(1920,1080), Vector2i(1920,1200),
-Vector2i(1920,1440), Vector2i(2048,1152), Vector2i(2560,1440), Vector2i(2560,1600), Vector2i(3440,1440), Vector2i(3840,2160)]
+@export var can_close:bool = true
 
-var resolutions_dynamic = RESOLUTIONS.duplicate(true)
-
-const ACTIONS = ["pause_menu", "sabotage", "use_vent", "interact", "fail", "report", "move_left", "move_right", "move_up", "move_down"]
+const ACTIONS = ["pause_menu", "sabotage", "use_vent", "interact", "fail", "report", "move_left", "move_right", "move_up", "move_down", "chat_open", "chat_close"]
 
 var user_sett: UserSettingsManager
-
-var full_screen_value : bool
-var v_sync_value : bool
-var volume_value : int
-var resolution_value : Vector2i
 
 enum Side {LEFT, RIGHT}
 
@@ -45,7 +32,7 @@ var right_button : Button
 var primary_event_storage : InputEventKey
 var secondary_event_storage : InputEventKey
 
-# action events before assigning new actions
+# Eventy akcji przed przypisaniem nowych akcji
 var primary_event_backup : InputEventKey
 var secondary_event_backup : InputEventKey
 
@@ -57,61 +44,21 @@ func _ready():
 	user_sett = UserSettingsManager.load_or_create()
 	set_process_unhandled_key_input(false)
 
-	# handling highest resolution
-	limit_highest_resolution()
-
-	# setting default/saved values for sound and graphics
+	# Ustawia domyślne/zapisane wartości dla dźwięku i grafiki
 	volume_slider.value = user_sett.volume
 	_on_volume_slider_value_changed(user_sett.volume)
 	full_screen_checkbox.button_pressed = user_sett.full_screen
 	_on_full_screen_checkbox_toggled(user_sett.full_screen)
 	v_sync_checkbox.button_pressed = user_sett.v_sync
 	_on_v_sync_check_box_toggled(user_sett.v_sync)
-	var slider_value = 0
-	if resolutions_dynamic.has(user_sett.resolution):
-		slider_value = resolutions_dynamic.find(user_sett.resolution)
-		resolution_slider.value = slider_value
-		if slider_value == 0:
-			_on_resolution_slider_value_changed(0)
-	else:
-		resolution_slider.value = int(resolution_slider.max_value/2)
-	_on_resolution_slider_value_changed(slider_value)
-	
-	# applying saved files for sound and graphics
-	_on_save_button_pressed()
+	interface_scale_slider.value = user_sett.interface_scale
+	_on_interface_scale_slider_value_changed(user_sett.interface_scale)
 	
 	key_rebind_window.visible = false
 	key_used_window.visible = false
 
-# limits highest resolution available
-func limit_highest_resolution():
-	var screen_size : Vector2i = DisplayServer.screen_get_size()
-	# users screen resolution is available
-	if RESOLUTIONS.has(screen_size):
-		var index : int = RESOLUTIONS.find(screen_size) + 1
-		resolutions_dynamic = RESOLUTIONS.slice(0, index)
-	# users screen resolution is not available
-	else:
-		var index : int
-		if screen_size.x * screen_size.y > RESOLUTIONS.back().x * RESOLUTIONS.back().y:
-			if !resolutions_dynamic.has(screen_size):
-				resolutions_dynamic.append(screen_size)
-		else:
-			for i in range(0, RESOLUTIONS.size()):
-				if (screen_size.x * screen_size.y < RESOLUTIONS[i].x * RESOLUTIONS[i].y) && i>0:
-					index = i-1
-					break
-			resolutions_dynamic = RESOLUTIONS.slice(0, index)
-			resolutions_dynamic.append(screen_size)
 
-	resolution_slider.max_value = resolutions_dynamic.size()-1
-
-# handles resolution setting and displayed value
-func _on_resolution_slider_value_changed(value):
-	resolution_output.text = str(resolutions_dynamic[value].x,"x",resolutions_dynamic[value].y)
-	resolution_value = resolutions_dynamic[value]
-
-# handles keyboard input when rebinding
+# Obsługuje input z klawiatury podczas przypisywania klawiszy
 func _unhandled_key_input(event):
 	rebind_key(event, button_side)
 	if is_canceled != true:
@@ -120,39 +67,46 @@ func _unhandled_key_input(event):
 	emit_signal("button_rebind", false)
 	set_process_unhandled_key_input(false)
 
-# handles canceling key rebinding
+
+# Obsługuje anulowanie przypisania klawiszy
 func _on_cancel_button_pressed():
 	is_canceled = true
 	if is_processing_unhandled_key_input():
 		_unhandled_key_input(null)
 	key_rebind_window.visible = false
-	
+	can_close = true
 
-# handles deleting key bindings
+
+# Obsługuje usuwanie przypisania klawiszy
 func _on_delete_button_pressed():
 	is_canceled = true
 	if is_processing_unhandled_key_input():
 		_unhandled_key_input(null)
-		
-	# doesnt allow empty key bindings
+
+	# Nie pozwala na puste przypisanie klawiszy
 	if button_side == Side.LEFT && secondary_event_backup != null:
 		save_control_settings(action_project_name, secondary_event_backup, null)
 	elif button_side == Side.RIGHT && primary_event_backup != null:
 		save_control_settings(action_project_name, primary_event_backup, null)
 
 	key_rebind_window.visible = false
+	can_close = true
 
-# handles key rebininding when user picks yes when repeated bindings
+
+# Obsługuje przypisanie klawisza podczas gdy przypisane klawisze się powtarzają, a gracz wybierze "tak"
 func _on_yes_button_pressed():
 	key_used_window.visible = false
+	can_close = true
 
-# handles key rebininding when user picks no when repeated bindings
+
+# Obsługuje przypisanie klawisza podczas gdy przypisane klawisze się powtarzają, a gracz wybierze "nie"
 func _on_no_button_pressed():
 	save_control_settings(action_project_name, primary_event_backup, secondary_event_backup)
 	key_used_window.visible = false
-	
+	can_close = true
 
-# rebinds action key
+
+# Zmienia przypisanie klawisza
 func rebind_key(event, button):
 	if event == null:
 		return
@@ -186,16 +140,19 @@ func rebind_key(event, button):
 		primary_event_storage = primary_event
 		secondary_event_storage = secondary_event
 
-		# checks if event is already used with another action
+		# Sprawdza czy event jest już używany w innej akcji
 		if is_already_used(event):
 			key_rebind_window.visible = false
 			key_used_window.visible = true
+			can_close = false
 			emit_signal("button_rebind", false)
 			return
 
 		key_rebind_window.visible = false
+		can_close = true
 
-# saves control settings
+
+# Zapisuje ustawienia sterowania
 func save_control_settings(action_name : String, primary_butt : InputEventKey, secondary_butt : InputEventKey):
 	InputMap.action_erase_events(action_project_name)
 	if primary_butt!= null:
@@ -213,7 +170,8 @@ func save_control_settings(action_name : String, primary_butt : InputEventKey, s
 		user_sett.controls_dictionary[action_name][1] = null
 	user_sett.save()
 
-# handles repeated key bindings
+
+# Obsługuje powtarzające się przypisania klawiszy
 func is_already_used(event:InputEventKey):
 	var key = event.physical_keycode
 	for ac in ACTIONS :
@@ -225,7 +183,8 @@ func is_already_used(event:InputEventKey):
 				return true
 	return false
 
-# sets text inside buttons
+
+# Ustawia tekst w przyciskach
 func set_buttons_names():
 	if InputMap.has_action(action_project_name) == true:
 		var input_actions = InputMap.action_get_events(action_project_name)
@@ -238,14 +197,15 @@ func set_buttons_names():
 		else:
 			right_button.text = ""
 
-# sets local values needed for binding keys
+
+# Ustawia lokalne wartości potrzebne do przypisywania klawiszy
 func assign(action_label_name, action_project_name, side, left_button, right_button):
 	self.action_label_name = action_label_name
 	self.action_project_name = action_project_name
 	self.button_side = side
 	self.left_button = left_button
 	self.right_button = right_button
-	
+
 	if InputMap.has_action(action_project_name):
 		var input_actions = InputMap.action_get_events(action_project_name)
 		primary_event_backup = null
@@ -254,65 +214,50 @@ func assign(action_label_name, action_project_name, side, left_button, right_but
 			primary_event_backup = input_actions[0]
 		if input_actions.size()>1:
 			secondary_event_backup = input_actions[1]
-	
+
 	action_name.text = action_label_name
 	key_rebind_window.visible = true
+	can_close = false
 	emit_signal("button_rebind", true)
 	set_process_unhandled_key_input(true)
 
-# handles full screen setting
+
+# Obsługuje ustawienia pełnego ekranu
 func _on_full_screen_checkbox_toggled(button_pressed):
-	full_screen_value = button_pressed
-
-# handles volume setting and displayed value
-func _on_volume_slider_value_changed(value):
-	volume_value = value
-	volume_output.text = str(value)
-
-# handles v-sync setting
-func _on_v_sync_check_box_toggled(button_pressed):
-	v_sync_value = button_pressed
-
-# saves and applies sound and graphics settings
-func _on_save_button_pressed():
-	# setting the settings
-	if full_screen_value== true:
+	if button_pressed==true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-		DisplayServer.window_set_min_size(DisplayServer.screen_get_size())
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		DisplayServer.window_set_min_size(Vector2i(800,600))
-	
-	AudioServer.set_bus_volume_db(0,linear_to_db(volume_value))
-	
-	if v_sync_value == true:
+	user_sett.full_screen = button_pressed
+	user_sett.save()
+
+
+# Obsługuje ustawienia dźwięku i wyświetlaną wartość
+func _on_volume_slider_value_changed(value):
+	AudioServer.set_bus_volume_db(0,linear_to_db(value))
+	volume_output.text = str(value)
+	user_sett.volume = value
+	user_sett.save()
+
+
+# Obsługuje ustawienia skali interfejsu i wyświetlaną wartość
+func _on_interface_scale_slider_value_changed(value):
+	interface_scale_output.text = str(value)
+	user_sett.change_interface_scale(value)
+	user_sett.save()
+
+
+# Obsługuje ustawienia v-sync
+func _on_v_sync_check_box_toggled(button_pressed):
+	if button_pressed == true:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 	else:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-	
-	#if get_window() != null:
-		# base resolution
-		#get_viewport().content_scale_size = resolution_value
-		# stretch scale
-		#get_viewport().content_scale_factor = float(resolution_value.x)/resolution_value.y
-	DisplayServer.window_set_size(resolution_value)
-	
-	# prevents buggy button
-	if save_button.is_inside_tree():
-		save_button.release_focus()
-	# saving
-	if user_sett != null:
-		user_sett.full_screen = full_screen_value
-		user_sett.volume = volume_value
-		user_sett.v_sync = v_sync_value
-		user_sett.resolution = resolution_value
-		user_sett.save()
+	user_sett.v_sync = button_pressed
+	user_sett.save()
 
-# cancels unsaved changes in sound and graphics by loading previous save settings when hidden
-func _on_hidden():
-	_ready()
 
-# handles key rebind button press
+# Obsługuje wciśnięcie przycisku przypisania
 func _on_sabotage_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
 	assign(action_label_name, action_project_name, side, left_button, right_button)
 
@@ -343,20 +288,34 @@ func _on_move_down_key_rebind_rebind_button_pressed(action_label_name, action_pr
 func _on_move_up_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
 	assign(action_label_name, action_project_name, side, left_button, right_button)
 
-# handles restore default sound and graphics button
+func _on_chat_open_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+	assign(action_label_name, action_project_name, side, left_button, right_button)
+
+func _on_chat_close_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+	assign(action_label_name, action_project_name, side, left_button, right_button)
+
+
+# Obsługuje przywracanie domyślnych ustawień dźwięku i grafiki
 func _on_default_sound_graphics_button_pressed():
 	default_sound_graphics_button.release_focus()
 	user_sett.restore_default_sound_and_graphics()
 	_ready()
 
-# handles restore default controls button
+
+# Obsługuje przywracanie domyślnych ustawień sterowania
 func _on_default_controls_button_pressed():
 	default_controls_button.release_focus()
 	user_sett.restore_default_controls()
 
-	# apply restored values for every action
+	# Stosuje przywrócone wartości dla każdej akcji
 	var parent = find_child("Controls").find_child("MarginContainer").find_child("VBoxContainer")
 	for child in parent.get_children():
 		if !(child is HSeparator):
-			if child.has_method("_ready"):
-				child._ready()
+			if child.has_method("start"):
+				child.start()
+
+
+# Zapobiega zmianie zakładki podczas przypisywania klawiszy
+func _on_tab_container_tab_changed(_tab):
+	if key_rebind_window.visible || key_used_window.visible:
+		$TabContainer.current_tab = 1

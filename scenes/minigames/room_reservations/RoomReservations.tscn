@@ -1,0 +1,180 @@
+[gd_scene load_steps=6 format=3 uid="uid://2cqm2q0xxlpq"]
+
+[ext_resource type="Script" path="res://scenes/minigames/room_reservations/RoomReservations.gd" id="1_u0f26"]
+
+[sub_resource type="Gradient" id="Gradient_hcbcd"]
+offsets = PackedFloat32Array(0, 0.311475, 0.622951, 1)
+colors = PackedColorArray(0.937255, 0.968627, 0.917647, 1, 0.901961, 0.960784, 0.878431, 1, 0.835294, 0.937255, 0.8, 1, 0.835294, 0.937255, 0.8, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0ush7"]
+gradient = SubResource("Gradient_hcbcd")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v6pgd"]
+bg_color = Color(0.0705882, 0.254902, 0.215686, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.109804)
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5hnvx"]
+bg_color = Color(0.0392157, 0.172549, 0.145098, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+
+[node name="RoomReservations" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u0f26")
+polish_name = "Porządkowanie rezerwacji"
+
+[node name="Background" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 134.0
+offset_top = 114.0
+offset_right = 1146.0
+offset_bottom = 546.0
+texture = SubResource("GradientTexture2D_0ush7")
+
+[node name="HeaderBackground" type="ColorRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 47.0
+grow_horizontal = 2
+color = Color(0, 0.196078, 0.156863, 1)
+
+[node name="Account" type="RichTextLabel" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 754.0
+offset_top = 14.0
+offset_right = 994.0
+offset_bottom = 39.0
+theme_override_font_sizes/normal_font_size = 11
+text = "[username] ([student id])"
+
+[node name="Title" type="RichTextLabel" parent="Background"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 14.0
+offset_right = 410.0
+offset_bottom = 34.0
+theme_override_font_sizes/normal_font_size = 12
+text = "SZKOŁA GŁÓWNA GOSPODARSTWA WIEJSKIEGO | Rezerwacja Pokoi"
+
+[node name="Footer" type="Label" parent="Background"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 403.0
+offset_right = 264.0
+offset_bottom = 422.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Wydział Zastosowań Informatyki i Matematyki"
+
+[node name="LecturerBackground" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 240.0
+offset_right = 608.0
+offset_bottom = 448.0
+
+[node name="Label" type="Label" parent="LecturerBackground"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 10.0
+offset_right = 113.0
+offset_bottom = 33.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Wykładowcy"
+
+[node name="Line2D" type="Line2D" parent="LecturerBackground"]
+points = PackedVector2Array(16, 40, 211.945, 40, 336, 40)
+width = 1.0
+default_color = Color(0.870588, 0.886275, 0.901961, 1)
+
+[node name="Lecturers" type="VBoxContainer" parent="LecturerBackground"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 40.0
+offset_right = -24.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 960.0
+offset_top = 480.0
+offset_right = 1040.0
+offset_bottom = 511.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_v6pgd")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5hnvx")
+text = "Zapisz"
+
+[node name="RoomBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -552.0
+offset_top = 240.0
+offset_right = -240.0
+offset_bottom = -272.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Line2D" type="Line2D" parent="RoomBackground"]
+position = Vector2(10.4098, 24.4655)
+scale = Vector2(0.372679, 0.372679)
+points = PackedVector2Array(16, 40, 768, 40)
+width = 1.0
+default_color = Color(0.870588, 0.886275, 0.901961, 1)
+
+[node name="Rooms" type="VBoxContainer" parent="RoomBackground"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 40.0
+offset_right = -16.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="RoomBackground"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 11.0
+offset_right = 114.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Pokoje"
+
+[connection signal="pressed" from="SaveButton" to="." method="_on_save_button_pressed"]
