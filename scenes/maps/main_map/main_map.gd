@@ -1,20 +1,20 @@
 extends Node2D
 
-signal load_finished
+signal load_finished()
 
-@onready var players = $Players
-@onready var camera = $Camera
-@onready var loading_screen = $LoadingScreen
-## Pozycje do spawnu gracza
-@onready var start_positions = $StartPositions.get_children()
-
+@onready var _players = $Players
+@onready var _camera = $Camera
+@onready var _loading_screen = $LoadingScreen
+@onready var _start_positions = $StartPositions.get_children()
+@onready var _minigame_menu = $MinigameWindow/MinigameContainer/SubviewportContainer/MinigameViewport
+@onready var _voting_canvas = $VotingCanvas
 
 func _ready():
 	# Uruchamia synchronizację czasu.
 	NetworkTime.start()
 
 	hide()
-	GameManager.set_input_status(false)
+	GameManager.set_input_status(true)
 
 	# Spawnuje zarejestrowanych graczy.
 	for i in GameManager.get_registered_players():
@@ -43,14 +43,13 @@ func _exit_tree():
 ## Włącza ekran ładowania.
 func _start_game():
 	show()
-	camera.enabled = true
-	loading_screen.play()
+	_camera.enabled = true
+	_loading_screen.play()
 	load_finished.emit()
 
 
 func _on_loading_screen_finished():
-	loading_screen.hide()
-	# loading_screen.queue_free()
+	_loading_screen.hide()
 
 
 ## Spawnuje gracza na mapie.
@@ -61,30 +60,44 @@ func _spawn_player(id: int):
 
 	# Ustawia startową pozycję gracza.
 	if multiplayer.is_server():
-		player.position = start_positions[GameManager.get_registered_players().keys().find(id)].position
+		player.position = _start_positions[GameManager.get_registered_players().keys().find(id)].position
 
-	players.add_child(player)
+	_players.add_child(player)
 	
 	player.activate_player_shaders()
 
 	if GameManager.get_current_player_id() == id:
 		# Ustawia kamerę.
-		camera.target = player
-		camera.global_position = player.global_position
+		_camera.target = player
+		_camera.global_position = player.global_position
 	
 		# Włącza światło
 		player.activate_lights()
 
-		player.vent_entered.connect(update_player_input)
-		player.vent_exited.connect(update_player_input)
+		player.vent_entered.connect(_update_player_input)
+		player.vent_exited.connect(_update_player_input)
 
 
 ## Usuwa gracza z mapy.
 func _remove_player(id: int, _player: Dictionary = {}):
-	if players.has_node(str(id)):
-		players.get_node(str(id)).queue_free()
+	if _players.has_node(str(id)):
+		_players.get_node(str(id)).queue_free()
 
 
 ## Aktualizuje status wejścia gracza.
-func update_player_input():
-	GameManager.set_input_status(!$Players.get_node(str(GameManager.get_current_player_id())).is_in_vent && !$MinigameMenu.visible && !$VotingCanvas.get_child_count() > 0 && !$LoadingScreen.visible)
+func _update_player_input():
+	var is_player_in_vent = _players.get_node(str(GameManager.get_current_player_id())).is_in_vent if _players != null else false
+	var is_minigame_menu_visible = _minigame_menu.get_child_count() > 0 if _minigame_menu != null else false
+	var is_voting_in_progress = _voting_canvas.get_child_count() > 0 if _voting_canvas != null else false
+	var is_loading_screen_visible = _loading_screen.visible if _loading_screen != null else false
+
+	var is_input_disabled = is_player_in_vent || is_minigame_menu_visible || is_voting_in_progress || is_loading_screen_visible
+	GameManager.set_input_status(!is_input_disabled)
+
+
+func close_modals():
+	# Zamyka wszystkie okna.
+	_minigame_menu.close_minigame()
+
+	# Zamyka głosowanie.
+	for i in _voting_canvas.get_children(): i.queue_free()
