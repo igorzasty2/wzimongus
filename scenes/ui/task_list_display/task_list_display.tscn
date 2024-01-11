@@ -16,9 +16,17 @@ offset_bottom = 40.0
 theme_override_constants/separation = 8
 
 [node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
+self_modulate = Color(0.0352941, 1, 0.0235294, 1)
 custom_minimum_size = Vector2(515, 27)
 layout_mode = 2
+value = 50.0
 show_percentage = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ProgressBar"]
+layout_mode = 2
+offset_right = 515.0
+offset_bottom = 26.0
+text = "Zadania skończone"
 
 [node name="Control" type="Control" parent="VBoxContainer"]
 layout_mode = 2
