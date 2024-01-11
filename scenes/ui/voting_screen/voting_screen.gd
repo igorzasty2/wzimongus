@@ -225,7 +225,12 @@ func on_interface_scale_changed(value:float):
 
 
 func _on_discussion_timer_timeout():
-	skip_button.disabled = false
 	voting_timer.start(VOTING_TIME)
+
+	if GameManager.get_current_player_key("is_dead"):
+		return
+
+	skip_button.disabled = false
+
 	for player in players.get_children():
 		player.set_voting_status(true)
