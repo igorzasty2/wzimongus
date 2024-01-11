@@ -24,6 +24,7 @@ show_percentage = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ProgressBar"]
 layout_mode = 2
+offset_left = 13.0
 offset_right = 515.0
 offset_bottom = 26.0
 text = "Zadania skończone"
