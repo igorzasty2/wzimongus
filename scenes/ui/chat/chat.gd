@@ -40,6 +40,9 @@ func _input(event):
 		if GameManager.get_current_game_key("is_paused"):
 			return
 
+		if get_parent().get_parent().name == "VotingScreen":
+			_open_chat()
+
 		if input_text.visible:
 			return
 
@@ -70,12 +73,13 @@ func _switch_chat_group():
 		_update_group_label()
 
 func _update_group_label():
-	if !GameManager.get_current_player_key("is_alive"):
-		group_label.text = "Dead"
-	elif GameManager.get_current_player_key("is_lecturer"):
-		group_label.text = "Lecturer" if current_group == Group.LECTURER else "Global"
+	if !GameManager.get_current_player_key("is_dead"):
+		if GameManager.get_current_player_key("is_lecturer"):
+			group_label.text = "Wykładowcy" if current_group == Group.LECTURER else "Globalny"
+		else:
+			group_label.text = "Globalny"
 	else:
-		group_label.text = "Global"
+		group_label.text = "Martwy"
 		
 
 
@@ -163,13 +167,12 @@ func _open_chat():
 
 
 func _close_chat():
-	input_text.release_focus()
-	input_text.hide()
-	group_label.hide()
 	input_text.text = ""
-
+	input_text.release_focus()
 	if get_parent().get_parent().name == "VotingScreen":
 		return
-
+	input_text.hide()
+	group_label.hide()
+	
 	timer.start()
 	

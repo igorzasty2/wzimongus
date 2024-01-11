@@ -113,7 +113,7 @@ grow_vertical = 0
 [node name="SkipButton" type="Button" parent="Background/SkipDecision"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "POMIŃ GŁOS"
+text = "Pomiń Głos"
 
 [node name="Decision" type="HBoxContainer" parent="Background/SkipDecision"]
 unique_name_in_owner = true
@@ -124,18 +124,18 @@ theme_override_constants/separation = 10
 [node name="DecisionText" type="RichTextLabel" parent="Background/SkipDecision/Decision"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Is this your final vote?"
+text = "Jesteś pewny?"
 fit_content = true
 
 [node name="DecisionYes" type="Button" parent="Background/SkipDecision/Decision"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "YES"
+text = "Tak"
 
 [node name="DecisionNo" type="Button" parent="Background/SkipDecision/Decision"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "NO"
+text = "Nie"
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
