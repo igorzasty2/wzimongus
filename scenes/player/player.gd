@@ -47,12 +47,15 @@ var teleport_position = null
 ## Referencja do drzewa animacji postaci.
 @onready var animation_tree: AnimationTree = $Skins/AnimationTree
 ## Referencja do sprite'a postaci.
-@onready var player_sprite = $Skins/PlayerSprite
+@onready var player_sprite = $Skins/Control/PlayerSprite
 ## Referencja do node'a postaci.
 @onready var player_node = $"."
 
 @onready var light = $LightsContainer/Light
 @onready var lights_container = $LightsContainer
+
+## Player animacji ventowania
+@onready var venting_animation_player = $Skins/Control/PlayerSprite/VentingAnimationPlayer
 
 ## Początkowa maska kolizji.
 @onready var initial_collision_mask: int = collision_mask
@@ -159,19 +162,13 @@ func _rollback_tick(delta, _tick, is_fresh):
 				# Przesuwa gracza do środka venta.
 				global_position = input.destination_position
 				input.direction = Vector2.ZERO
-
-				button_active.emit("ReportButton", !is_in_vent && can_report)
-				button_active.emit("FailButton", !is_in_vent)
-
-				# Wyłącza widoczność gracza.
-				if multiplayer.is_server():
-					toggle_visibility.rpc(false)
-
-				# Włącza widoczność przycisków kierunkowych venta.
-				if name.to_int() == GameManager.get_current_player_id():
-					_toggle_vent_buttons(true)
-					_toggle_vent_light(true)
-
+				
+				_request_venting_animation.rpc_id(1, false)
+				
+				var vent = get_nearest_vent()
+				if vent!=null:
+					vent.request_vent_animation.rpc_id(1)
+				
 				input.is_walking_to_destination = false
 				is_moving_through_vent = false
 
@@ -336,7 +333,7 @@ func _handle_kill_timer():
 
 ## Włącza i wyłącza podświetlenie możliwości zabicia gracza
 func _toggle_highlight(player: int, is_on: bool) -> void:
-	var player_material = get_parent().get_node(str(player) + "/Skins/PlayerSprite").material
+	var player_material = get_parent().get_node(str(player) + "/Skins/Control/PlayerSprite").material
 	
 	if player_material:
 		player_material.set_shader_parameter('color', in_range_color if is_on else out_of_range_color)
@@ -510,8 +507,9 @@ func _request_vent_exiting():
 @rpc("call_local", "reliable")
 ## Obsługuje wyjście z venta.
 func _exit_vent():
-	var vent = get_nearest_vent()
 	
+	var vent = get_nearest_vent()
+
 	if vent == null:
 		return
 
@@ -519,13 +517,13 @@ func _exit_vent():
 		vent.set_direction_buttons_visibility(false)
 		vent.set_vent_light_visibility_for(name.to_int(), false)
 
-	is_in_vent = false
 	collision_mask = initial_collision_mask
-
-	vent_exited.emit()
-
+	
 	if multiplayer.is_server():
 		toggle_visibility.rpc(true)
+	
+	_request_venting_animation.rpc_id(1, true)
+	vent.request_vent_animation.rpc_id(1)
 
 
 ## Zmienia widoczność przycisków kierunkowych venta.
@@ -641,3 +639,55 @@ func cancel_decrease_light_range_sabotage() -> void:
 #		light.texture_scale *= 6
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale * 6, 1).set_trans(Tween.TRANS_CUBIC)
+
+
+func _on_venting_animation_player_animation_finished(anim_name):
+	if anim_name == "venting_animation":
+		# Gracz wchodzi do venta
+		if is_in_vent:
+			button_active.emit("ReportButton", !is_in_vent && can_report)
+			button_active.emit("FailButton", !is_in_vent)
+
+			# Wyłącza widoczność gracza.
+			if multiplayer.is_server():
+				toggle_visibility.rpc(false)
+
+			# Włącza widoczność przycisków kierunkowych venta.
+			if name.to_int() == GameManager.get_current_player_id():
+				_toggle_vent_buttons(true)
+				_toggle_vent_light(true)
+		# Gracz wychodzi z venta
+		else:
+			_request_handle_vent_exit.rpc_id(1)
+
+
+@rpc("any_peer", "reliable", "call_local")
+func _request_handle_vent_exit():
+	if not multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+	
+	_handle_vent_exit.rpc()
+	
+
+@rpc("authority", "reliable", "call_local")
+func _handle_vent_exit():
+	is_in_vent = false
+	vent_exited.emit()
+
+
+@rpc("any_peer", "reliable", "call_local")
+## Zapytuje o puszczenie animacji ventowania
+func _request_venting_animation(is_backwards:bool):
+	if not multiplayer.is_server():
+		return ERR_UNAUTHORIZED
+	
+	_play_venting_animation.rpc(is_backwards)
+	
+
+@rpc("authority", "reliable", "call_local")
+## Puszcza animacje ventowania
+func _play_venting_animation(is_backwards:bool):
+	if !is_backwards:
+		venting_animation_player.play("venting_animation")
+	else: 
+		venting_animation_player.play_backwards("venting_animation")
