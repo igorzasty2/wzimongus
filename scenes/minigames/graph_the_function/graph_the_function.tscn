@@ -13,7 +13,7 @@ offset_left = 1.0
 offset_top = 20.0
 offset_right = 1276.0
 offset_bottom = 159.0
-theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/normal_font_size = 38
 bbcode_enabled = true
 
 [node name="TextEdit2" type="RichTextLabel" parent="." groups=["TextNode"]]
@@ -21,7 +21,7 @@ offset_left = 1.0
 offset_top = 94.0
 offset_right = 1276.0
 offset_bottom = 159.0
-theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/normal_font_size = 38
 bbcode_enabled = true
 text = "[center]f(x) = sin(x - 0) + 0[/center]"
 
@@ -56,7 +56,7 @@ offset_left = 81.0
 offset_top = 364.0
 offset_right = 139.0
 offset_bottom = 440.0
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 36
 text = "0"
 editable = false
 
@@ -65,7 +65,7 @@ offset_left = 608.0
 offset_top = 672.0
 offset_right = 660.0
 offset_bottom = 751.0
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "0"
 editable = false
 

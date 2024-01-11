@@ -38,7 +38,7 @@ offset_right = 333.0
 offset_bottom = 77.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 185
+theme_override_font_sizes/font_size = 128
 text = "WZiMong Us"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -63,25 +63,21 @@ theme_override_constants/separation = 15
 [node name="PlayButton" type="Button" parent="Menu/ButtonsContainer"]
 custom_minimum_size = Vector2(350, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
 text = "Graj"
 
 [node name="SettingsButton" type="Button" parent="Menu/ButtonsContainer"]
 custom_minimum_size = Vector2(350, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
 text = "Ustawienia"
 
 [node name="CreditsButton" type="Button" parent="Menu/ButtonsContainer"]
 custom_minimum_size = Vector2(350, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
 text = "Twórcy"
 
 [node name="ExitButton" type="Button" parent="Menu/ButtonsContainer"]
 custom_minimum_size = Vector2(350, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
 text = "Wyjdź"
 
 [node name="Settings" type="Control" parent="."]

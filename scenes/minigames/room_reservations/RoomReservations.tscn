@@ -82,7 +82,7 @@ offset_top = 403.0
 offset_right = 264.0
 offset_bottom = 422.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "Wydział Zastosowań Informatyki i Matematyki"
 
 [node name="LecturerBackground" type="ColorRect" parent="."]
