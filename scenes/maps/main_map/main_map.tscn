@@ -1206,6 +1206,7 @@ script = ExtResource("92_b2shf")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.411765, 0.411765, 0.411765, 1)
 
+[connection signal="visibility_changed" from="MinigameWindow" to="." method="_update_player_input"]
 [connection signal="child_order_changed" from="VotingCanvas" to="." method="_update_player_input"]
 [connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
 [connection signal="visibility_changed" from="LoadingScreen" to="." method="_update_player_input"]
