@@ -1122,8 +1122,8 @@ position = Vector2(1900, 237)
 [node name="MapBorder" type="Node2D" parent="."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MapBorder"]
-collision_layer = 16
-collision_mask = 8
+collision_layer = 255
+collision_mask = 255
 
 [node name="CollisionShape2D1" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
 position = Vector2(584, 2504)
@@ -1206,6 +1206,7 @@ script = ExtResource("92_b2shf")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.411765, 0.411765, 0.411765, 1)
 
+[connection signal="visibility_changed" from="MinigameWindow" to="." method="_update_player_input"]
 [connection signal="child_order_changed" from="VotingCanvas" to="." method="_update_player_input"]
 [connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
 [connection signal="visibility_changed" from="LoadingScreen" to="." method="_update_player_input"]

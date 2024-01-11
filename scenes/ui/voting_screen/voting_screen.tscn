@@ -124,7 +124,7 @@ theme_override_constants/separation = 10
 [node name="DecisionText" type="RichTextLabel" parent="Background/SkipDecision/Decision"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Jesteś pewny?"
+text = "Jesteś pewien?"
 fit_content = true
 
 [node name="DecisionYes" type="Button" parent="Background/SkipDecision/Decision"]

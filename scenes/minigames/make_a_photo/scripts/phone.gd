@@ -15,11 +15,14 @@ func show_the_phone_and_start():
 func _ready():
 	set_process_input(true)
 
-func _input(event):
+func _input(_event):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		if self.visible and is_mouse_over():
-			position = position.lerp(get_global_mouse_position(), speed)
-			papers_in_screen()
+		var viewport_rect = get_viewport_rect()
+		var mouse_pos = get_global_mouse_position()
+		if viewport_rect.has_point(mouse_pos):
+			if self.visible and is_mouse_over():
+				position = position.lerp(mouse_pos, speed)
+				papers_in_screen()
 
 func papers_in_screen():
 	var rect_pos = global_position

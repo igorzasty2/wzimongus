@@ -126,11 +126,6 @@ func _ready():
 	GameManager.player_killed.connect(_on_killed_player)
 	GameManager.sabotage.connect(_on_sabotage)
 	
-	# Jeśli gracz jest impostorem to ustawia początkową możliwość zabicia na true
-	if GameManager.get_current_player_key("is_lecturer"):
-		can_kill_cooldown = true
-		can_sabotage_cooldown = true
-	
 	GameManager.map_load_finished.connect(_on_map_load_finished)
 	GameManager.next_round_started.connect(_on_next_round_started)
 
@@ -446,6 +441,8 @@ func _use_vent():
 
 		_request_vent_entering.rpc_id(1)
 	else:
+		if can_sabotage_cooldown:
+			button_active.emit("SabotageButton", true)
 		_request_vent_exiting.rpc_id(1)
 
 
@@ -566,7 +563,7 @@ func activate_player_shaders():
 	shader_material.shader = load("res://shaders/player_outline.gdshader")
 	
 	player_sprite.material = shader_material
-	player_sprite.material.set_shader_parameter("width", 4.0)
+	player_sprite.material.set_shader_parameter("width", 11.0)
 	player_sprite.material.set_shader_parameter("pattern", 1)
 	player_sprite.material.set_shader_parameter("add_margins", true)
 	player_sprite.material.set_shader_parameter("color", "#00000000")
