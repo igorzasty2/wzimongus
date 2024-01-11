@@ -32,6 +32,9 @@ func _ready():
 	input_text.hide()
 	group_label.hide()
 
+	if GameManager.get_current_player_key("is_dead"):
+		current_group = Group.DEAD
+
 	_update_group_label()
 
 
@@ -90,7 +93,7 @@ func send_message(message, group, id):
 			if current_group == Group.DEAD:
 				_create_message(GameManager.get_registered_players()[id], message, Group.DEAD)
 		Group.LECTURER:
-			if current_group == Group.LECTURER:
+			if current_group == Group.LECTURER or current_group == Group.DEAD:
 				_create_message(GameManager.get_registered_players()[id], message, Group.LECTURER)
 		Group.SYSTEM:
 			var system_message_instance = system_message_scene.instantiate()
