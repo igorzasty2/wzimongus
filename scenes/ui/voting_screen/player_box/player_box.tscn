@@ -53,12 +53,15 @@ size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Username" type="Label" parent="VBoxContainer/Panel/Player"]
+[node name="Username" type="RichTextLabel" parent="VBoxContainer/Panel/Player"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
+bbcode_enabled = true
 text = "[username]"
-vertical_alignment = 1
+fit_content = true
+autowrap_mode = 0
 
 [node name="VotedBy" type="HBoxContainer" parent="VBoxContainer/Panel/Player"]
 unique_name_in_owner = true
@@ -88,23 +91,27 @@ visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="DecisionText" type="Label" parent="VBoxContainer/Decision"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Decision"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+
+[node name="DecisionText" type="Label" parent="VBoxContainer/Decision/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Jesteś pewny?"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DecisionYes" type="Button" parent="VBoxContainer/Decision"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(50, 40)
 layout_mode = 2
 text = "Tak"
 
 [node name="DecisionNo" type="Button" parent="VBoxContainer/Decision"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(50, 40)
 layout_mode = 2
 text = "Nie"
 

@@ -17,7 +17,7 @@ extends Control
 
 @export var can_close:bool = true
 
-const ACTIONS = ["pause_menu", "sabotage", "use_vent", "interact", "fail", "report", "move_left", "move_right", "move_up", "move_down", "chat_open", "chat_close"]
+const ACTIONS = ["pause_menu", "sabotage", "use_vent", "interact", "fail", "report", "move_left", "move_right", "move_up", "move_down", "chat_open", "change_group"]
 
 var user_sett: UserSettingsManager
 
@@ -291,7 +291,7 @@ func _on_move_up_key_rebind_rebind_button_pressed(action_label_name, action_proj
 func _on_chat_open_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
 	assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_chat_close_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+func _on_change_group_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
 	assign(action_label_name, action_project_name, side, left_button, right_button)
 
 

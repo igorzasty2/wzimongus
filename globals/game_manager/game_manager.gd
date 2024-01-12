@@ -777,3 +777,12 @@ func request_light_sabotage():
 @rpc("authority", "reliable", "call_local")
 func activate_light_sabotage():
 	sabotage.emit()
+
+
+## Symuluje wciśnięcie klawisza w celu wywołania konkretnej akcji.
+func execute_action(action_name: String):
+	var event = InputEventAction.new()
+	event.action = action_name
+	event.pressed = true
+
+	Input.parse_input_event(event)

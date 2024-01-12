@@ -47,14 +47,6 @@ func _ready():
 	toggle_button_active("InteractButton", false)
 
 
-# Wykonuje podaną akcję
-func execute_action(action_name:String):
-	var event = InputEventAction.new()
-	event.action = action_name
-	event.pressed = true
-	Input.parse_input_event(event)
-
-
 func on_interface_scale_changed(value:float):
 	grid_container.scale = initial_grid_container_scale * value
 	grid_container_2.scale = initial_grid_container_2_scale * value
@@ -63,32 +55,32 @@ func on_interface_scale_changed(value:float):
 
 # Obsługuje naciśnięcie przycisku do reportowania
 func _on_report_button_button_down():
-	execute_action("report")
+	GameManager.execute_action("report")
 
 
 # Obsługuje naciśnięcie przycisku interakcji
 func _on_interact_button_button_down():
-	execute_action("interact")
+	GameManager.execute_action("interact")
 
 
 # Obsługuje naciśnięcie przycisku do ventowania
 func _on_vent_button_button_down():
-	execute_action("use_vent")
+	GameManager.execute_action("use_vent")
 
 
 # Obsługuje naciśnięcie przycisku do oblewania
 func _on_fail_button_button_down():
-	execute_action("fail")
+	GameManager.execute_action("fail")
 
 
 # Obsługuje naciśnięcie przycisku sabotażu
 func _on_sabotage_button_button_down():
-	execute_action("sabotage")
+	GameManager.execute_action("sabotage")
 
 
 # Obsługuje naciśnięcie przycisku do otwierania menu pauzy
 func _on_pause_button_button_down():
-	execute_action("pause_menu")
+	GameManager.execute_action("pause_menu")
 
 
 # Aktywuje i deaktywuje przycisk o danej nazwie

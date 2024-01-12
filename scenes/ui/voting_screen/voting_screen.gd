@@ -26,9 +26,6 @@ var is_selected = false
 
 var is_voting_ended = false
 
-## Określa czy czat jest otwarty
-var is_chat_open:bool = false
-
 ## Zmienna na UserSettingsManager
 var user_sett: UserSettingsManager
 
@@ -248,24 +245,15 @@ func get_most_voted_player_id():
 
 ## Obsługuje otwarcie/zamknięcie czatu
 func _on_chat_button_button_down():
-	if is_chat_open:
-		chat._close_chat()
-		is_chat_open = false
-		chat.visible = false
-		chat_container.visible = false
+	if chat_container.visible:
+		GameManager.execute_action("pause_menu")
 	else:
-		chat_container.visible = true
-		chat.visible = true
-		chat._open_chat()
-		is_chat_open = true
+		GameManager.execute_action("chat_open")
 
 
 ## Obsługuje naciśnięcie przycisku menu pauzy
 func _on_pause_menu_button_button_down():
-	var event = InputEventAction.new()
-	event.action = "pause_menu"
-	event.pressed = true
-	Input.parse_input_event(event)
+	GameManager.execute_action("pause_menu")
 
 
 ## Obsługuje zmianę skali nakładki
@@ -283,3 +271,17 @@ func _on_discussion_timer_timeout():
 
 	for player in players.get_children():
 		player.set_voting_status(true)
+
+
+func _on_chat_input_visibility_changed():
+	if chat_container == null:
+		return
+
+	if chat_container.visible:
+		chat._close_chat()
+		chat.visible = false
+		chat_container.visible = false
+	else:
+		chat._open_chat()
+		chat.visible = true
+		chat_container.visible = true
