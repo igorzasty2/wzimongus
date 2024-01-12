@@ -45,9 +45,22 @@ static func load_or_create():
 	var res : UserSettingsManager
 	if FileAccess.file_exists("user://user_settings.tres"):
 		res = load("user://user_settings.tres") as UserSettingsManager
+		if not _check_settings_list(res):
+			res = UserSettingsManager.new()
 	else:
 		res = UserSettingsManager.new()
 	return res
+
+static func _check_settings_list(res : UserSettingsManager):
+	for setting in UserSettingsManager.new().get_property_list():
+		if setting.name in ["RefCounted", "script", "Resource", "resource_path", "resource_name", "resource_local_to_scene", "user_settings_manager.gd"]:
+			continue
+		if not setting.name in res:
+			return false
+	for input in UserSettingsManager.new().controls_dictionary.keys():
+		if not input in res.controls_dictionary.keys():
+			return false
+	return true
 
 ## Przywraca domyślne ustawienia dźwięku i grafiki
 func restore_default_sound_and_graphics():
