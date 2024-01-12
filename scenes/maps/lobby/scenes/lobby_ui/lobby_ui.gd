@@ -72,7 +72,7 @@ func _on_interact_button_button_down():
 
 func _on_chat_button_button_down():
 	if get_parent().get_node("Chat").get_node("%InputText").visible:
-		execute_action("chat_close")
+		execute_action("pause_menu")
 	else:
 		execute_action("chat_open")
 

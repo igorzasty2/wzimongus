@@ -98,12 +98,12 @@ fit_content = true
 [node name="DecisionYes" type="Button" parent="VBoxContainer/Decision"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "TAK"
+text = "Tak"
 
 [node name="DecisionNo" type="Button" parent="VBoxContainer/Decision"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "NIE"
+text = "Nie"
 
 [connection signal="pressed" from="VBoxContainer/Panel/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Decision/DecisionYes" to="." method="_on_decision_yes_pressed"]
