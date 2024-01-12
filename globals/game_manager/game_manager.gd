@@ -370,6 +370,9 @@ func get_registered_player_key(id:int, key:String):
 
 ## Zwraca ID obecnego gracza.
 func get_current_player_id():
+	if multiplayer == null:
+		return
+
 	return multiplayer.get_unique_id()
 
 

@@ -40,8 +40,7 @@ func _ready():
 	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
 	on_interface_scale_changed(user_sett.interface_scale)
 
-	if multiplayer.is_server():
-		GameManager.player_deregistered.connect(_on_player_deregistered)
+	GameManager.player_deregistered.connect(_on_player_deregistered)
 	
 	set_process(false)
 
@@ -105,9 +104,11 @@ func _on_player_voted(voted_player_key):
 	else:
 		_add_player_vote.rpc_id(1, voted_player_key, multiplayer.get_unique_id())
 
-func _on_player_deregistered(player_key):
+func _on_player_deregistered(player_id, _player):
 	_render_player_boxes()
-	_remove_player_vote(player_key)
+
+	if multiplayer.is_server():
+		_remove_player_vote(player_id)
 
 func _remove_player_vote(player_key):
 	var votes = GameManager.get_current_game_key("votes")
