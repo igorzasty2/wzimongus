@@ -32,6 +32,9 @@ func _ready():
 	input_text.hide()
 	group_label.hide()
 
+	if GameManager.get_current_player_key("is_dead"):
+		current_group = Group.DEAD
+
 	_update_group_label()
 
 
@@ -39,6 +42,9 @@ func _input(event):
 	if event.is_action_pressed("chat_open"):
 		if GameManager.get_current_game_key("is_paused"):
 			return
+
+		if get_parent().get_parent().name == "VotingScreen":
+			_open_chat()
 
 		if input_text.visible:
 			return
@@ -86,7 +92,7 @@ func send_message(message, group, id):
 			if current_group == Group.DEAD:
 				_create_message(GameManager.get_registered_players()[id], message, Group.DEAD)
 		Group.LECTURER:
-			if current_group == Group.LECTURER:
+			if current_group == Group.LECTURER or current_group == Group.DEAD:
 				_create_message(GameManager.get_registered_players()[id], message, Group.LECTURER)
 		Group.SYSTEM:
 			var system_message_instance = system_message_scene.instantiate()
@@ -163,13 +169,12 @@ func _open_chat():
 
 
 func _close_chat():
-	input_text.release_focus()
-	input_text.hide()
-	group_label.hide()
 	input_text.text = ""
-
+	input_text.release_focus()
 	if get_parent().get_parent().name == "VotingScreen":
 		return
-
+	input_text.hide()
+	group_label.hide()
+	
 	timer.start()
 	

@@ -1122,8 +1122,8 @@ position = Vector2(1900, 237)
 [node name="MapBorder" type="Node2D" parent="."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MapBorder"]
-collision_layer = 16
-collision_mask = 8
+collision_layer = 255
+collision_mask = 255
 
 [node name="CollisionShape2D1" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
 position = Vector2(584, 2504)
