@@ -111,8 +111,8 @@ offset_bottom = -33.0
 grow_vertical = 0
 
 [node name="SkipButton" type="Button" parent="Background/SkipDecision"]
-custom_minimum_size = Vector2(165, 40)
 unique_name_in_owner = true
+custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 text = "POMIŃ GŁOS"
 
@@ -129,30 +129,31 @@ text = "Jesteś pewien?"
 fit_content = true
 
 [node name="DecisionYes" type="Button" parent="Background/SkipDecision/Decision"]
-custom_minimum_size = Vector2(0, 40)
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "YES"
 
 [node name="DecisionNo" type="Button" parent="Background/SkipDecision/Decision"]
-custom_minimum_size = Vector2(0, 40)
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "NO"
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.99
-anchor_top = 0.01
-anchor_right = 0.99
-anchor_bottom = 0.01
-offset_left = -360.0
-offset_bottom = 356.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -756.0
+offset_top = 8.0
+offset_right = -16.0
+offset_bottom = 368.0
 grow_horizontal = 0
 scale = Vector2(0.18, 0.18)
 pivot_offset = Vector2(740, 0)
-theme_override_constants/h_separation = 20
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
 columns = 2
 
 [node name="ChatButton" type="TextureButton" parent="GridContainer"]
