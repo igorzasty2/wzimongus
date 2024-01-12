@@ -750,7 +750,7 @@ func _count_alive_crewmates():
 	return crewmate_counter
 
 
-## Teleportuje wszystkich graczy do wskazanage miejsca lub do miejsca spotkania - używane po rozpoczęciu przejścia na ekran ejection_screen
+## Teleportuje wszystkich graczy do miejsca spotkania - używane po rozpoczęciu przejścia na ekran ejection_screen
 func teleport_players():
 	var players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
 	var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
