@@ -111,6 +111,7 @@ offset_bottom = -33.0
 grow_vertical = 0
 
 [node name="SkipButton" type="Button" parent="Background/SkipDecision"]
+custom_minimum_size = Vector2(165, 40)
 unique_name_in_owner = true
 layout_mode = 2
 text = "POMIŃ GŁOS"
@@ -128,11 +129,13 @@ text = "Jesteś pewien?"
 fit_content = true
 
 [node name="DecisionYes" type="Button" parent="Background/SkipDecision/Decision"]
+custom_minimum_size = Vector2(0, 40)
 unique_name_in_owner = true
 layout_mode = 2
 text = "YES"
 
 [node name="DecisionNo" type="Button" parent="Background/SkipDecision/Decision"]
+custom_minimum_size = Vector2(0, 40)
 unique_name_in_owner = true
 layout_mode = 2
 text = "NO"

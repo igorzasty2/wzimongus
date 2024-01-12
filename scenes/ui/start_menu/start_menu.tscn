@@ -27,15 +27,15 @@ grow_vertical = 2
 
 [node name="Title" type="Label" parent="Menu"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 0.185
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.185
-offset_left = -333.0
-offset_top = -77.0
-offset_right = 333.0
-offset_bottom = 77.0
+anchor_bottom = 0.5
+offset_left = -344.5
+offset_top = -326.5
+offset_right = 344.5
+offset_bottom = -169.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 128
@@ -45,38 +45,38 @@ vertical_alignment = 1
 
 [node name="ButtonsContainer" type="VBoxContainer" parent="Menu"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 0.679
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.679
+anchor_bottom = 0.5
 offset_left = -175.0
-offset_top = -142.5
+offset_top = -61.5
 offset_right = 175.0
-offset_bottom = 142.5
+offset_bottom = 253.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 15
+theme_override_constants/separation = 25
 
 [node name="PlayButton" type="Button" parent="Menu/ButtonsContainer"]
-custom_minimum_size = Vector2(350, 60)
+custom_minimum_size = Vector2(165, 60)
 layout_mode = 2
 text = "Graj"
 
 [node name="SettingsButton" type="Button" parent="Menu/ButtonsContainer"]
-custom_minimum_size = Vector2(350, 60)
+custom_minimum_size = Vector2(165, 60)
 layout_mode = 2
 text = "Ustawienia"
 
 [node name="CreditsButton" type="Button" parent="Menu/ButtonsContainer"]
-custom_minimum_size = Vector2(350, 60)
+custom_minimum_size = Vector2(165, 60)
 layout_mode = 2
 text = "Twórcy"
 
 [node name="ExitButton" type="Button" parent="Menu/ButtonsContainer"]
-custom_minimum_size = Vector2(350, 60)
+custom_minimum_size = Vector2(165, 60)
 layout_mode = 2
 text = "Wyjdź"
 

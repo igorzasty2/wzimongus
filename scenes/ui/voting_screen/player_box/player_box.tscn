@@ -70,6 +70,7 @@ size_flags_vertical = 4
 alignment = 2
 
 [node name="Button" type="Button" parent="VBoxContainer/Panel"]
+custom_minimum_size = Vector2(0, 40)
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -96,11 +97,13 @@ text = "Jesteś pewny?"
 fit_content = true
 
 [node name="DecisionYes" type="Button" parent="VBoxContainer/Decision"]
+custom_minimum_size = Vector2(0, 40)
 unique_name_in_owner = true
 layout_mode = 2
 text = "TAK"
 
 [node name="DecisionNo" type="Button" parent="VBoxContainer/Decision"]
+custom_minimum_size = Vector2(0, 40)
 unique_name_in_owner = true
 layout_mode = 2
 text = "NIE"
