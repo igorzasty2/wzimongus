@@ -5,14 +5,14 @@ extends CanvasLayer
 var _minigame: PackedScene
 var _minigame_instance: Node
 ## Inforuje o stanie przycisku aktywacji minigry
-var use_button_disabled: bool = true
+var _use_button_disabled: bool = true
 
 ## Referencja do Node'a w drzewie reprezentującego całość okna minigry
-@onready var minigame_container = $MinigameContainer
+@onready var _minigame_container = $MinigameContainer
 ## Referencja do subviewport'a wyświetlającego minigrę
-@onready var subviewport = minigame_container.get_node("SubviewportContainer/MinigameViewport")
+@onready var _subviewport = _minigame_container.get_node("SubviewportContainer/MinigameViewport")
 ## Referencja do przycisku zamykającego okno minigry
-@onready var close_button: TextureButton = minigame_container.get_node("CloseButton")
+@onready var _close_button: TextureButton = _minigame_container.get_node("CloseButton")
 
 ## Zmienne do obsługi interface gracza
 @onready var user_interface = get_parent().get_node("UserInterface")
@@ -20,20 +20,20 @@ signal use_button_active(is_active:bool)
 
 
 func _ready():
-	close_button.pressed.connect(close_minigame)
+	_close_button.pressed.connect(close_minigame)
 	use_button_active.connect(user_interface.toggle_button_active)
 
 ## Aktywuje przycisk aktywacji minigry
 func show_use_button(minigame):
 	_minigame = minigame
 	emit_signal("use_button_active", "InteractButton", true)
-	use_button_disabled = false
+	_use_button_disabled = false
 
 ## Wyłącza przycisk aktywacji minigry
 func hide_use_button():
 	_minigame = null
 	emit_signal("use_button_active", "InteractButton", false)
-	use_button_disabled = false
+	_use_button_disabled = false
 
 
 ## W chwili naciśnięcia przycisku aktywuje funkcję wyświetlającą okno minigry
@@ -41,7 +41,7 @@ func _on_use_button_pressed():
 	if _minigame == null:
 		return
 
-	if subviewport.get_child_count() != 0:
+	if _subviewport.get_child_count() != 0:
 		return
 	
 	summon_window()
@@ -66,10 +66,10 @@ func _input(event):
 		if _minigame == null:
 			return
 
-		if subviewport.get_child_count() != 0:
+		if _subviewport.get_child_count() != 0:
 			return
 
-		if use_button_disabled:
+		if _use_button_disabled:
 			return
 
 		summon_window()
@@ -78,11 +78,11 @@ func _input(event):
 func summon_window():
 	show()
 
-	subviewport.add_child(_minigame.instantiate())
-	_minigame_instance = subviewport.get_child(0)
+	_subviewport.add_child(_minigame.instantiate())
+	_minigame_instance = _subviewport.get_child(0)
 	
 	emit_signal("use_button_active", "InteractButton", false)
-	use_button_disabled = true
+	_use_button_disabled = true
 
 	_minigame_instance.minigame_end.connect(end_minigame)
 	
