@@ -17,6 +17,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ChatContainer" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,6 +29,7 @@ mouse_filter = 2
 [node name="Chat" parent="ChatContainer" instance=ExtResource("2_u4dx5")]
 unique_name_in_owner = true
 layer = 2
+visible = false
 
 [node name="ChatBackground" type="ColorRect" parent="ChatContainer"]
 unique_name_in_owner = true
@@ -53,18 +55,18 @@ grow_vertical = 2
 color = Color(0.14902, 0.14902, 0.14902, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Background"]
+[node name="TextLabel" type="Label" parent="Background"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -116.0
-offset_top = 42.0
-offset_right = 134.0
-offset_bottom = 82.0
+offset_left = -125.0
+offset_top = 32.0
+offset_right = 125.0
+offset_bottom = 72.0
 grow_horizontal = 2
-theme_override_font_sizes/normal_font_size = 24
 text = "Kto jest wykładowcą?"
+horizontal_alignment = 1
 
 [node name="Players" type="GridContainer" parent="Background"]
 unique_name_in_owner = true
@@ -75,46 +77,32 @@ anchor_left = 0.162
 anchor_top = 0.171
 anchor_right = 0.859
 anchor_bottom = 0.676
-offset_left = 0.376007
-offset_top = 0.192001
-offset_right = -0.568054
-offset_bottom = -0.0480347
+offset_left = -15.36
+offset_top = -11.12
+offset_right = -11.52
+offset_bottom = 89.28
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/h_separation = 20
-theme_override_constants/v_separation = 20
+theme_override_constants/h_separation = 28
+theme_override_constants/v_separation = 28
 columns = 2
-
-[node name="EndVoteText" type="RichTextLabel" parent="Background"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.733686
-anchor_top = 0.810345
-anchor_right = 0.929453
-anchor_bottom = 0.899687
-grow_horizontal = 0
-grow_vertical = 0
-bbcode_enabled = true
-text = "Głosowanie zakończy się za [time] sekund"
-metadata/_edit_use_anchors_ = true
 
 [node name="SkipDecision" type="VBoxContainer" parent="Background"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 35.0
-offset_top = -119.0
-offset_right = 278.0
-offset_bottom = -33.0
+offset_left = 48.0
+offset_top = -96.0
+offset_right = 291.0
+offset_bottom = -8.0
 grow_vertical = 0
 
 [node name="SkipButton" type="Button" parent="Background/SkipDecision"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
-text = "POMIŃ GŁOS"
+text = "Pomiń Głos"
 
 [node name="Decision" type="HBoxContainer" parent="Background/SkipDecision"]
 unique_name_in_owner = true
@@ -122,23 +110,39 @@ visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="DecisionText" type="RichTextLabel" parent="Background/SkipDecision/Decision"]
+[node name="DecisionText" type="Label" parent="Background/SkipDecision/Decision"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Jesteś pewien?"
-fit_content = true
+size_flags_vertical = 1
+text = "Jesteś pewny?"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="DecisionYes" type="Button" parent="Background/SkipDecision/Decision"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "YES"
+text = "Tak"
 
 [node name="DecisionNo" type="Button" parent="Background/SkipDecision/Decision"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "NO"
+text = "Nie"
+
+[node name="EndVoteText" type="RichTextLabel" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.675
+anchor_top = 0.877778
+anchor_right = 0.9625
+anchor_bottom = 0.913889
+grow_horizontal = 0
+grow_vertical = 0
+bbcode_enabled = true
+text = "[right]Głosowanie kończy się za [time] sekund[/right]"
+metadata/_edit_use_anchors_ = true
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1

@@ -82,11 +82,11 @@ func _process(delta):
 	if time < DISCUSSION_TIME:
 		time += delta
 		var time_remaining = DISCUSSION_TIME - time
-		end_vote_text.text = "Dyskusja kończy się za %02d sekund" % time_remaining
+		end_vote_text.text = "[right]Dyskusja kończy się za %02d sekund[/right]" % time_remaining
 	elif time < DISCUSSION_TIME + VOTING_TIME:
 		time += delta
 		var time_remaining = DISCUSSION_TIME + VOTING_TIME - time
-		end_vote_text.text = "Głosowanie kończy się za %02d sekund" % time_remaining
+		end_vote_text.text = "[right]Głosowanie kończy się za %02d sekund[/right]" % time_remaining
 
 
 func _on_player_voted(voted_player_key):
