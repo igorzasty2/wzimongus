@@ -35,7 +35,7 @@ func _ready():
 		if dead_body!=null:
 			_body_sprite.texture = dead_body.texture
 
-		_animation_player.play("slide_in_animation")
+		_animation_player.play("pulse_animation")
 		
 		_body_sprite.hframes = 5
 		_body_sprite.vframes = 2
