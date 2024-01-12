@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3e41jcsgj6bl"]
+[gd_scene load_steps=6 format=3 uid="uid://b3e41jcsgj6bl"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/scenes/lobby_settings/lobby_settings.gd" id="1_h5l7u"]
 [ext_resource type="PackedScene" uid="uid://b84ikvrvlejqh" path="res://scenes/maps/lobby/scenes/close/background_button/background_button.tscn" id="2_asrpg"]
 [ext_resource type="PackedScene" uid="uid://b8yh2vysfv24q" path="res://scenes/maps/lobby/scenes/close/close_button/close_button.tscn" id="2_sp5jw"]
 [ext_resource type="PackedScene" uid="uid://dnfvmswm3sk7g" path="res://scenes/ui/window_animation_player/window_animation_player.tscn" id="4_34t22"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pyuiv"]
 
 [node name="LobbySettings" type="CanvasLayer"]
 visible = false
@@ -316,6 +318,11 @@ popup/item_1/text = "Domyślny"
 popup/item_1/id = 4
 popup/item_2/text = "Daleki"
 popup/item_2/id = 8
+
+[node name="HSeparator" type="HSeparator" parent="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_pyuiv")
 
 [node name="SaveButton" type="Button" parent="SettingsContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(165, 40)
