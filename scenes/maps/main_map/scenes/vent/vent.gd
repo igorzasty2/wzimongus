@@ -18,10 +18,13 @@ var _out_of_range_color = [0, 0, 0, 0]
 
 @onready var _sprite_2d = $Sprite2D
 
-@onready var vent_light_container = $LightsContainer
-@onready var vent_light = $LightsContainer/Light 
+## Referencja do node'a venta.
+@onready var _vent_light_container = $LightsContainer
+## Referencja do kontenera światła venta.
+@onready var _vent_light = $LightsContainer/Light 
 
-@onready var vent_node = $"."
+## Referencja do node'a venta.
+@onready var _vent_node = $"."
 
 ## Interfejs
 var user_interface
@@ -47,7 +50,7 @@ func _ready():
 		_vent_direction_button_list[-1].id = idx
 		idx += 1
 	
-	vent_light.texture_scale = GameManager.get_server_settings()["lecturer_light_radius"] / vent_node.global_scale.x
+	_vent_light.texture_scale = GameManager.get_server_settings()["lecturer_light_radius"] / _vent_node.global_scale.x
 
 ## Instancjonuje przycisk kierunkowy.
 func _instantiante_direction_button(pos : Vector2):
@@ -138,4 +141,4 @@ func _toggle_highlight(is_on: bool):
 ## Włącza światło venta kiedy gracz znajduje się wewnątrz.
 func set_vent_light_visibility_for(player_id: int, visibility: bool):
 	if player_id == GameManager.get_current_player_id():
-		vent_light_container.visible = visibility
+		_vent_light_container.visible = visibility
