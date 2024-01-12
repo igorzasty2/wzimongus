@@ -124,7 +124,9 @@ func _ready():
 	
 	# Łączy sygnał zabicia postaci z funkcją _on_killed_player
 	GameManager.player_killed.connect(_on_killed_player)
-	GameManager.sabotage.connect(_on_sabotage)
+
+	if name.to_int() == GameManager.get_current_player_id():
+		GameManager.sabotage_occured.connect(_on_sabotage_occured)
 	
 	GameManager.map_load_finished.connect(_on_map_load_finished)
 	GameManager.next_round_started.connect(_on_next_round_started)
@@ -322,6 +324,7 @@ func _on_next_round_started():
 func _handle_kill_timer():
 	can_kill_cooldown = false
 	timer = Timer.new()
+	timer.set_name("KillCooldownTimer")
 	timer.timeout.connect(_on_timer_timeout)
 	timer.one_shot = true
 	timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
@@ -408,14 +411,17 @@ func _on_killed_player(player_id: int, is_victim: bool) -> void:
 
 
 func _on_timer_timeout() -> void:
-	if GameManager.get_current_player_id() == name.to_int():
+	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer"):
 			can_kill_cooldown = true
-			user_interface.update_time_left("FailLabel", "")
+
 			for i in range(player_node.get_child_count()):
 				var child: Node = player_node.get_child(i)
-				if child.is_class("Timer"):
+				if child.name == "KillCooldownTimer":
 					child.queue_free()
+
+					user_interface.update_time_left("FailLabel", "")
+
 					return
 
 
@@ -441,8 +447,6 @@ func _use_vent():
 
 		_request_vent_entering.rpc_id(1)
 	else:
-		if can_sabotage_cooldown:
-			button_active.emit("SabotageButton", true)
 		_request_vent_exiting.rpc_id(1)
 
 
@@ -593,27 +597,28 @@ func _handle_sabotage_timer():
 
 
 func _on_sabotage_timer_timeout() -> void:
-	if GameManager.get_current_player_id() == name.to_int():
+	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer"):
 			can_sabotage_cooldown = true
-			user_interface.update_time_left("SabotageLabel", "")
-			
+
 			for i in range(player_node.get_child_count()):
 				var child: Node = player_node.get_child(i)
 				if child.name == "SabotageCooldownTimer":
 					child.queue_free()
+
+					user_interface.update_time_left("SabotageLabel", "")
 					button_active.emit("SabotageButton", true)
+
 					return
 
 
-func _on_sabotage():
+func _on_sabotage_occured():
 	if GameManager.get_current_player_key("is_lecturer"):
 		button_active.emit("SabotageButton", false)
 		_handle_sabotage_timer()
-		
 	else:
 		decrease_light_range_sabotage()
-		
+
 		no_light_timer = Timer.new()
 		no_light_timer.set_name("NoLightTimer")
 		no_light_timer.timeout.connect(cancel_decrease_light_range_sabotage)
@@ -626,15 +631,12 @@ func _on_sabotage():
 ## Zmniejsza promień swiatła podczas sabotage.
 func decrease_light_range_sabotage() -> void:
 	if not GameManager.get_current_player_key("is_lecturer"):
-#		light.texture_scale /= 6
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale / 6, 1).set_trans(Tween.TRANS_CUBIC)
 	
 
-
 ## Wraca promień swiatła na normalny po sabotage.
 func cancel_decrease_light_range_sabotage() -> void:
 	if not GameManager.get_current_player_key("is_lecturer"):
-#		light.texture_scale *= 6
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale * 6, 1).set_trans(Tween.TRANS_CUBIC)
