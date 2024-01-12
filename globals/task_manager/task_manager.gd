@@ -1,23 +1,23 @@
 extends Node
+## Klasa systemu zarządzania zadaniami w grze.
 
-## Emitowane kiedy lista tasków podlega zmianie
+
+## Emitowany kiedy lista tasków podlega zmianie.
 signal tasks_change;
-
+## Emitowany kiedy globalna lista zadań zostaje zmieniona. 
 signal global_tasks_completed_amount_change();
 
 ## Task ID bieżącego zadania.
 var current_task_id = null
-
 ## Minigry dostępne ma mapie.
 var _minigames = {}
-
 ## Przechowuje zadania wszystkich graczy.
 var _tasks = {}
 ## Przechowuje zadania bieżącego gracza.
 var current_player_tasks = {}
-#3 Ilość tasków w całej grze.
+## Ilość zadań w całej grze.
 var global_tasks_amount : int
-## Ilość już zrobionych tasków.
+## Ilość już zrobionych zadań.
 var global_tasks_completed_amount : int
 
 
@@ -57,7 +57,7 @@ func assign_tasks(task_amount):
 		set_global_tasks_amount.rpc(id_counter)
 
 
-## Oznacza zadanie jako wykonane.
+## Oznacza zadanie jako wykonane na stronie klienta.
 func mark_task_as_complete() -> void:
 	# Usuwa zadanie z listy zadań bieżącego gracza.
 	var player_id = multiplayer.get_unique_id()
@@ -82,6 +82,7 @@ func _send_tasks(tasks) -> void:
 
 
 @rpc("authority", "reliable", "call_local")
+## Ustawia początkową ilość zadań graczowi.
 func set_global_tasks_amount(amount: int) -> void:
 	global_tasks_amount = amount
 
@@ -104,6 +105,7 @@ func _send_task_completion(player_id: int, task_id: int):
 	GameManager.check_winning_conditions()
 
 
+## Liczy ilość zadań które już były uzupełnione.
 func _count_global_completed_tasks_amount():
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
@@ -117,6 +119,7 @@ func _count_global_completed_tasks_amount():
 
 
 @rpc('reliable', "authority", "call_local")
+## Aktualizuje ilość zakończonych tasków i wysyła sygnał o aktualizacji tej wartości.
 func _update_global_completed_tasks_amount(new_global_completed_tasks_amount) -> void:
 	global_tasks_completed_amount = new_global_completed_tasks_amount
 	global_tasks_completed_amount_change.emit()
@@ -138,6 +141,6 @@ func reset():
 	current_player_tasks.clear()
 
 
-# Zwraca słownik wszystkich niezakończonych zadań przepisanych do wszystkich graczę.
+## Zwraca słownik wszystkich niezakończonych zadań przepisanych do wszystkich graczę.
 func get_tasks_server():
 	return _tasks
