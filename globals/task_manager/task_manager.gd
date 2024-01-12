@@ -2,7 +2,7 @@ extends Node
 ## Klasa systemu zarządzania zadaniami w grze.
 
 
-## Emitowany kiedy lista tasków podlega zmianie.
+## Emitowany kiedy lista zadań podlega zmianie.
 signal tasks_change;
 ## Emitowany kiedy globalna lista zadań zostaje zmieniona. 
 signal global_tasks_completed_amount_change();
@@ -17,7 +17,7 @@ var _tasks = {}
 var current_player_tasks = {}
 ## Ilość zadań w całej grze.
 var global_tasks_amount : int
-## Ilość już zrobionych zadań.
+## Ilość zrobionych już zadań.
 var global_tasks_completed_amount : int
 
 
@@ -57,7 +57,7 @@ func assign_tasks(task_amount):
 		set_global_tasks_amount.rpc(id_counter)
 
 
-## Oznacza zadanie jako wykonane na stronie klienta.
+## Oznacza zadanie jako wykonane po stronie klienta.
 func mark_task_as_complete() -> void:
 	# Usuwa zadanie z listy zadań bieżącego gracza.
 	var player_id = multiplayer.get_unique_id()
@@ -141,6 +141,6 @@ func reset():
 	current_player_tasks.clear()
 
 
-## Zwraca słownik wszystkich niezakończonych zadań przepisanych do wszystkich graczę.
+## Zwraca słownik wszystkich niezakończonych zadań przypisanych do wszystkich graczy.
 func get_tasks_server():
 	return _tasks

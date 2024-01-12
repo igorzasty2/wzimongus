@@ -53,7 +53,7 @@ var teleport_position = null
 
 ## Referencja do node'a światła.
 @onready var light = $LightsContainer/Light
-## Referencja do contenera node'a światła.
+## Referencja do kontenera node'a światła.
 @onready var lights_container = $LightsContainer
 
 ## Początkowa maska kolizji.
@@ -615,7 +615,7 @@ func _on_sabotage_timer_timeout() -> void:
 					return
 
 
-## Aktywuje sabotaż u studentów oraz blokuje na niektóry czas przecisk sabotażu u wykładowców..
+## Aktywuje sabotaż u studentów oraz blokuje na jakiś czas przecisk sabotażu u wykładowców.
 func _on_sabotage():
 	if GameManager.get_current_player_key("is_lecturer"):
 		button_active.emit("SabotageButton", false)
