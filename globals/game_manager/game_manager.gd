@@ -767,6 +767,7 @@ func main_map_load_finished():
 
 
 @rpc("any_peer", "reliable", "call_local")
+## Przyjmuje prośbę o włączenie sabotażu.
 func request_light_sabotage():
 	if not multiplayer.is_server():
 		return ERR_UNAUTHORIZED
@@ -775,5 +776,6 @@ func request_light_sabotage():
 	
 
 @rpc("authority", "reliable", "call_local")
+## Emituje sygnał włączenia sabotażu.
 func activate_light_sabotage():
 	sabotage.emit()
