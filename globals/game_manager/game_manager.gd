@@ -753,7 +753,7 @@ func _count_alive_crewmates():
 	return crewmate_counter
 
 
-## Teleportuje wszystkich graczy do wskazanage miejsca lub do miejsca spotkania - używane po rozpoczęciu przejścia na ekran ejection_screen
+## Teleportuje wszystkich graczy do miejsca spotkania - używane po rozpoczęciu przejścia na ekran ejection_screen
 func teleport_players():
 	var players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
 	var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
@@ -770,6 +770,7 @@ func main_map_load_finished():
 
 
 @rpc("any_peer", "call_local", "reliable")
+## Przyjmuje prośbę o włączenie sabotażu.
 func request_light_sabotage():
 	if not multiplayer.is_server():
 		return ERR_UNAUTHORIZED
@@ -783,6 +784,7 @@ func request_light_sabotage():
 
 
 @rpc("call_local", "reliable")
+## Emituje sygnał włączenia sabotażu.
 func activate_light_sabotage():
 	sabotage_occured.emit()
 

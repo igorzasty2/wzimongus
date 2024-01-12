@@ -51,7 +51,9 @@ var teleport_position = null
 ## Referencja do node'a postaci.
 @onready var player_node = $"."
 
+## Referencja do node'a światła.
 @onready var light = $LightsContainer/Light
+## Referencja do kontenera node'a światła.
 @onready var lights_container = $LightsContainer
 
 ## Początkowa maska kolizji.
@@ -63,9 +65,9 @@ var user_interface
 signal button_active(button_name:String, is_active:bool)
 ## Timer z czasem do oblania
 var timer
-
+## Timer z czasem do sabotażu
 var sabotage_timer
-
+## Timer z czasem do włączenia światła u studenta.
 var no_light_timer
 ## Określa czy gracz może reportować
 var can_report: bool = false
@@ -142,6 +144,7 @@ func _process(_delta):
 	if user_interface!=null && timer!=null && timer.time_left!=0:
 		user_interface.update_time_left("FailLabel", str(int(timer.time_left)))
 		
+	# Aktualizuje czas pozostały do kolejnej możliwości sabotażu.
 	if user_interface!=null && sabotage_timer!=null && sabotage_timer.time_left>0:
 		user_interface.update_time_left("SabotageLabel", str(int(sabotage_timer.time_left)))
 
@@ -164,7 +167,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 				if multiplayer.is_server():
 					toggle_visibility.rpc(false)
 
-				# Włącza widoczność przycisków kierunkowych venta.
+				# Włącza widoczność przycisków kierunkowych venta oraz światła venta.
 				if name.to_int() == GameManager.get_current_player_id():
 					_toggle_vent_buttons(true)
 					_toggle_vent_light(true)
@@ -538,7 +541,7 @@ func _toggle_vent_buttons(is_enabled: bool):
 
 	vent.set_direction_buttons_visibility(is_enabled)
 
-
+## Zmienia widoczność światła venta.
 func _toggle_vent_light(value: bool):
 	var vent = get_nearest_vent()
 
@@ -548,6 +551,7 @@ func _toggle_vent_light(value: bool):
 	vent.set_vent_light_visibility_for(name.to_int(), value)
 
 
+## Włącza światło graczowi.
 func activate_lights():
 	if GameManager.get_current_player_key("is_lecturer"):
 		set_light_texture_scale(GameManager.get_server_settings()["lecturer_light_radius"])
@@ -555,12 +559,14 @@ func activate_lights():
 		set_light_texture_scale(GameManager.get_server_settings()["student_light_radius"])
 	
 	lights_container.show()
-	
 
+
+## Wyłącza światło graczowi.
 func deactivate_lights():
 	lights_container.hide()
 
 
+## Włącza shadery graczowi.
 func activate_player_shaders():
 	# Domyślnie shadery są wyłaczone w menu bo jeżeli włączyć ich to nie będzie widać graczowi
 	var shader_material = ShaderMaterial.new()
@@ -575,11 +581,13 @@ func activate_player_shaders():
 	username_label.material = load("res://scenes/player/assets/light_only_canvas_material.tres")
 
 
+## Wyłącza shadery graczowi.
 func deactivate_player_shaders():
 	player_sprite.material = null
 	username_label.material = null
 
 
+## Ustawia wartość promienia światła graczowi.
 func set_light_texture_scale(texture_scale: float):
 	light.texture_scale = texture_scale / player_node.global_scale.x
 
@@ -596,6 +604,7 @@ func _handle_sabotage_timer():
 	sabotage_timer.start()
 
 
+## Usuwa timer sabotażu oraz udostępnia sabotaż u wykładowcy.
 func _on_sabotage_timer_timeout() -> void:
 	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer"):
@@ -612,6 +621,7 @@ func _on_sabotage_timer_timeout() -> void:
 					return
 
 
+## Aktywuje sabotaż u studentów oraz blokuje na jakiś czas przecisk sabotażu u wykładowców.
 func _on_sabotage_occured():
 	if GameManager.get_current_player_key("is_lecturer"):
 		button_active.emit("SabotageButton", false)
@@ -633,7 +643,7 @@ func decrease_light_range_sabotage() -> void:
 	if not GameManager.get_current_player_key("is_lecturer"):
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale / 6, 1).set_trans(Tween.TRANS_CUBIC)
-	
+
 
 ## Wraca promień swiatła na normalny po sabotage.
 func cancel_decrease_light_range_sabotage() -> void:
