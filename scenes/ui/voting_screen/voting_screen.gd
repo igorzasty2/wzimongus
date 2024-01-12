@@ -24,6 +24,8 @@ var time = 0
 
 var is_selected = false
 
+var is_voting_ended = false
+
 ## Określa czy czat jest otwarty
 var is_chat_open:bool = false
 
@@ -82,6 +84,11 @@ func start_voting():
 
 
 func _process(delta):
+	if not is_voting_ended:
+		_count_time(delta)
+
+
+func _count_time(delta):
 	if time < DISCUSSION_TIME:
 		time += delta
 		var time_remaining = DISCUSSION_TIME - time
@@ -90,7 +97,6 @@ func _process(delta):
 		time += delta
 		var time_remaining = DISCUSSION_TIME + VOTING_TIME - time
 		end_vote_text.text = "Głosowanie kończy się za %02d sekund" % time_remaining
-
 
 func _on_player_voted(voted_player_key):
 	skip_button.disabled = true
@@ -185,9 +191,9 @@ func _render_player_boxes():
 		new_player_box.init(i, votes[i] if i in votes else [])
 		new_player_box.connect("player_voted", _on_player_voted)
 
-
-## Zamyka głosowanie
+@rpc("any_peer", "call_local", "reliable")
 func _on_end_voting_timer_timeout():
+	is_voting_ended = true
 	GameManager.set_current_game_key("is_voted", true)
 
 	end_vote_text.text = "[center]Głosowanie zakończone![/center]"
