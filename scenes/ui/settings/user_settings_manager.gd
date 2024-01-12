@@ -22,15 +22,15 @@ const _DEFAULT_CONTROLS_DICTIONARY = {
 	"chat_close" : [KEY_TAB, null] 
 }
 
-# Ustawienia dźwięku, początkowo ustawione na domyślne
+## Ustawienia dźwięku, początkowo ustawione na domyślne
 @export_range(0,100) var volume: int = _DEFAULT_VOLUME
-# Ustawienia skali interfejsu, początkowo ustawione na domyślne
+## Ustawienia skali interfejsu, początkowo ustawione na domyślne
 @export var interface_scale: float = _DEFAULT_INTERFACE_SCALE
-# Ustawienia pełnego ekranu, początkowo ustawione na domyślne
+## Ustawienia pełnego ekranu, początkowo ustawione na domyślne
 @export var full_screen: bool = _DEFAULT_FULL_SCREEN
-# Ustawienia v-sync, początkowo ustawione na domyślne
+## Ustawienia v-sync, początkowo ustawione na domyślne
 @export var v_sync: bool = _DEFAULT_V_SYNC
-# Ustawienia sterowania, początkowo ustawione na domyślne
+## Ustawienia sterowania, początkowo ustawione na domyślne
 @export var controls_dictionary = _DEFAULT_CONTROLS_DICTIONARY.duplicate(true)
 
 ## Emitowany po zmianie skali interfejsu
