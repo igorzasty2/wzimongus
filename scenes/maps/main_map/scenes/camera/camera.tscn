@@ -24,3 +24,9 @@ shadow_color = Color(1, 1, 1, 0)
 texture = ExtResource("2_7lg6c")
 texture_scale = 7.0
 height = 10.0
+
+[node name="LightTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[connection signal="timeout" from="LightTimer" to="." method="_on_light_timer_timeout"]
