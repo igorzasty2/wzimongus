@@ -45,7 +45,7 @@ offset_right = 92.5
 offset_bottom = 18.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "Trwa łączenie ..."
 
 [node name="Maps" type="Node" parent="."]

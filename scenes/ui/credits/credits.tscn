@@ -20,19 +20,19 @@ grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
 text = "
-[center][font_size=60][color=#11c223]WZiMong Us[/color][/font_size]
+[center][font_size=56][color=#11c223]WZiMong Us[/color][/font_size]
 
 
-[font_size=25][color=#11c223]Opiekun projektu[/color][/font_size]
+[font_size=24][color=#11c223]Opiekun projektu[/color][/font_size]
 [color=#fcfcf5]Mgr. Inż. Aleksandra Konopka[/color]
 
-[font_size=25][color=#11c223]Menedżer projektu[/color][/font_size]
+[font_size=24][color=#11c223]Menedżer projektu[/color][/font_size]
 [color=#fcfcf5]Mateusz Ługowski[/color]
 
-[font_size=25][color=#11c223]Kierownik zespołu deweloperów[/color][/font_size]
+[font_size=24][color=#11c223]Kierownik zespołu deweloperów[/color][/font_size]
 [color=#fcfcf5]Igor Osiakowski[/color]
 
-[font_size=25][color=#11c223]Zespół deweloperów[/color][/font_size]
+[font_size=24][color=#11c223]Zespół deweloperów[/color][/font_size]
 [color=#fcfcf5]Dawid Maliszewski
 Kamil Marszałek
 Sebastian Matejak
@@ -42,19 +42,19 @@ Ivan Matveichyk
 Ilya Pauliuk
 Kacper Pełka[/color]
 
-[font_size=25][color=#11c223]Kierownik zespołu artystów[/color][/font_size]
+[font_size=24][color=#11c223]Kierownik zespołu artystów[/color][/font_size]
 [color=#fcfcf5]Daryna Mala[/color]
 
-[font_size=25][color=#11c223]Zespół artystów[/color][/font_size]
+[font_size=24][color=#11c223]Zespół artystów[/color][/font_size]
 [color=#fcfcf5]Błażej Józwik
 Aleksander Maciejewski
 Zuzanna Majewska
 Amelia Posiadała[/color]
 
-[font_size=25][color=#11c223]Kierownik zespołu testerów[/color][/font_size]
+[font_size=24][color=#11c223]Kierownik zespołu testerów[/color][/font_size]
 [color=#fcfcf5]Szymon Mlonek[/color]
 
-[font_size=25][color=#11c223]Zespół testerów[/color][/font_size]
+[font_size=24][color=#11c223]Zespół testerów[/color][/font_size]
 [color=#fcfcf5]Michał Łyszkowicz
 Kacper Malik
 Jakub Mierzwa

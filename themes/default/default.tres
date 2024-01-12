@@ -3,22 +3,22 @@
 [ext_resource type="FontFile" uid="uid://dawbyxq2b3pcv" path="res://themes/default/itim/itim_regular.ttf" id="1_mhe6y"]
 
 [resource]
-Button/font_sizes/font_size = 18
+Button/font_sizes/font_size = 19
 Button/fonts/font = ExtResource("1_mhe6y")
-Label/font_sizes/font_size = 18
+Label/font_sizes/font_size = 19
 Label/fonts/font = ExtResource("1_mhe6y")
-LineEdit/font_sizes/font_size = 18
+LineEdit/font_sizes/font_size = 19
 LineEdit/fonts/font = ExtResource("1_mhe6y")
-PopupMenu/font_sizes/font_separator_size = 18
-PopupMenu/font_sizes/font_size = 18
+PopupMenu/font_sizes/font_separator_size = 19
+PopupMenu/font_sizes/font_size = 19
 PopupMenu/fonts/font = ExtResource("1_mhe6y")
 PopupMenu/fonts/font_separator = ExtResource("1_mhe6y")
-ProgressBar/font_sizes/font_size = 18
+ProgressBar/font_sizes/font_size = 19
 ProgressBar/fonts/font = ExtResource("1_mhe6y")
-RichTextLabel/font_sizes/normal_font_size = 18
+RichTextLabel/font_sizes/normal_font_size = 19
 RichTextLabel/fonts/normal_font = ExtResource("1_mhe6y")
-TabContainer/font_sizes/font_size = 18
+TabContainer/font_sizes/font_size = 19
 TabContainer/fonts/font = ExtResource("1_mhe6y")
-Tree/font_sizes/font_size = 18
+Tree/font_sizes/font_size = 19
 Tree/fonts/font = ExtResource("1_mhe6y")
 Tree/fonts/title_button_font = ExtResource("1_mhe6y")

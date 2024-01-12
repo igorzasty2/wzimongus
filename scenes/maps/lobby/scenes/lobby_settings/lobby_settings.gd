@@ -1,17 +1,17 @@
 extends CanvasLayer
 
-@onready var max_connections = $SettingsContainer/MarginContainer/VBoxContainer/MaxConnectionsContainer/MaxConnectionsInput
-@onready var lecturers_amount_alert = $SettingsContainer/MarginContainer/VBoxContainer/LecturersAmountAlert
-@onready var max_lecturers = $SettingsContainer/MarginContainer/VBoxContainer/MaxLecturersContainer/MaxLecturersInput
-@onready var kill_cooldown = $SettingsContainer/MarginContainer/VBoxContainer/KillCooldownContainer/KillCooldownInput
-@onready var sabotage_cooldown = $SettingsContainer/MarginContainer/VBoxContainer/SabotageCooldownContainer/SabotageCooldownInput
-@onready var kill_radius = $SettingsContainer/MarginContainer/VBoxContainer/KillRadiusContainer/KillRadiusInput
-@onready var task_amount = $SettingsContainer/MarginContainer/VBoxContainer/TaskAmountContainer/TaskAmountInput
-@onready var emergency_cooldown = $SettingsContainer/MarginContainer/VBoxContainer/EmergencyCooldownContainer/EmergencyCooldownInput
-@onready var student_light_radius = $SettingsContainer/MarginContainer/VBoxContainer/StudentLightRadiusContainer/StudentLightRadiusInput
-@onready var lecturer_light_radius = $SettingsContainer/MarginContainer/VBoxContainer/LecturerLightRadiusContainer/LecturerLightRadiusInput
-@onready var voting_time = $SettingsContainer/MarginContainer/VBoxContainer/VotingTimeContainer/VotingTimeInput
-@onready var discussion_time = $SettingsContainer/MarginContainer/VBoxContainer/DiscussionTimeContainer/DiscussionTimeInput
+@onready var max_connections = %MaxConnectionsInput
+@onready var lecturers_amount_alert = %LecturersAmountAlert
+@onready var max_lecturers = %MaxLecturersInput
+@onready var kill_cooldown = %KillCooldownInput
+@onready var sabotage_cooldown = %SabotageCooldownInput
+@onready var kill_radius = %KillRadiusInput
+@onready var task_amount = %TaskAmountInput
+@onready var emergency_cooldown = %EmergencyCooldownInput
+@onready var student_light_radius = %StudentLightRadiusInput
+@onready var lecturer_light_radius = %LecturerLightRadiusInput
+@onready var voting_time = %VotingTimeInput
+@onready var discussion_time = %DiscussionTimeInput
 
 func _ready():
 	# Ustawia aktualizacje ilości maksymalnych połączeń

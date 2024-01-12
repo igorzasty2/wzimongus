@@ -26,9 +26,6 @@ var is_selected = false
 
 var is_voting_ended = false
 
-## Określa czy czat jest otwarty
-var is_chat_open:bool = false
-
 ## Zmienna na UserSettingsManager
 var user_sett: UserSettingsManager
 
@@ -43,8 +40,7 @@ func _ready():
 	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
 	on_interface_scale_changed(user_sett.interface_scale)
 
-	if multiplayer.is_server():
-		GameManager.player_deregistered.connect(_on_player_deregistered)
+	GameManager.player_deregistered.connect(_on_player_deregistered)
 	
 	set_process(false)
 
@@ -92,11 +88,11 @@ func _count_time(delta):
 	if time < DISCUSSION_TIME:
 		time += delta
 		var time_remaining = DISCUSSION_TIME - time
-		end_vote_text.text = "Dyskusja kończy się za %02d sekund" % time_remaining
+		end_vote_text.text = "[right]Dyskusja kończy się za %02d sekund[/right]" % time_remaining
 	elif time < DISCUSSION_TIME + VOTING_TIME:
 		time += delta
 		var time_remaining = DISCUSSION_TIME + VOTING_TIME - time
-		end_vote_text.text = "Głosowanie kończy się za %02d sekund" % time_remaining
+		end_vote_text.text = "[right]Głosowanie kończy się za %02d sekund[/right]" % time_remaining
 
 func _on_player_voted(voted_player_key):
 	skip_button.disabled = true
@@ -108,9 +104,11 @@ func _on_player_voted(voted_player_key):
 	else:
 		_add_player_vote.rpc_id(1, voted_player_key, multiplayer.get_unique_id())
 
-func _on_player_deregistered(player_key):
+func _on_player_deregistered(player_id, _player):
 	_render_player_boxes()
-	_remove_player_vote(player_key)
+
+	if multiplayer.is_server():
+		_remove_player_vote(player_id)
 
 func _remove_player_vote(player_key):
 	var votes = GameManager.get_current_game_key("votes")
@@ -248,24 +246,15 @@ func get_most_voted_player_id():
 
 ## Obsługuje otwarcie/zamknięcie czatu
 func _on_chat_button_button_down():
-	if is_chat_open:
-		chat._close_chat()
-		is_chat_open = false
-		chat.visible = false
-		chat_container.visible = false
+	if chat_container.visible:
+		GameManager.execute_action("pause_menu")
 	else:
-		chat_container.visible = true
-		chat.visible = true
-		chat._open_chat()
-		is_chat_open = true
+		GameManager.execute_action("chat_open")
 
 
 ## Obsługuje naciśnięcie przycisku menu pauzy
 func _on_pause_menu_button_button_down():
-	var event = InputEventAction.new()
-	event.action = "pause_menu"
-	event.pressed = true
-	Input.parse_input_event(event)
+	GameManager.execute_action("pause_menu")
 
 
 ## Obsługuje zmianę skali nakładki
@@ -283,3 +272,17 @@ func _on_discussion_timer_timeout():
 
 	for player in players.get_children():
 		player.set_voting_status(true)
+
+
+func _on_chat_input_visibility_changed():
+	if chat_container == null:
+		return
+
+	if chat_container.visible:
+		chat._close_chat()
+		chat.visible = false
+		chat_container.visible = false
+	else:
+		chat._open_chat()
+		chat.visible = true
+		chat_container.visible = true

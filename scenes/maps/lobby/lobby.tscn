@@ -217,6 +217,6 @@ visible = false
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
 
-[connection signal="visibility_changed" from="Chat" to="." method="_update_player_input"]
+[connection signal="input_visibility_changed" from="Chat" to="." method="_update_player_input"]
 [connection signal="visibility_changed" from="SkinSelector" to="." method="_update_player_input"]
 [connection signal="visibility_changed" from="LobbySettings" to="." method="_update_player_input"]

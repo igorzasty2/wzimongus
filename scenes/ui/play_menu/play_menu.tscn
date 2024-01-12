@@ -46,7 +46,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BackButton" type="Button" parent="StatusBar/ButtonsContainer"]
-custom_minimum_size = Vector2(80, 2.08165e-12)
+custom_minimum_size = Vector2(80, 40)
 layout_mode = 2
 text = "⬅️ Wróć"
 
@@ -58,10 +58,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -92.0
-offset_right = 125.0
-offset_bottom = 92.0
+offset_left = -250.0
+offset_top = -96.0
+offset_right = 250.0
+offset_bottom = 144.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -70,7 +70,7 @@ layout_mode = 2
 text = "Host"
 
 [node name="HostButton" type="Button" parent="ButtonsContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 60)
+custom_minimum_size = Vector2(165, 60)
 layout_mode = 2
 text = "Stwórz lobby"
 
@@ -83,7 +83,7 @@ layout_mode = 2
 text = "Gracz"
 
 [node name="JoinButton" type="Button" parent="ButtonsContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 60)
+custom_minimum_size = Vector2(165, 60)
 layout_mode = 2
 text = "Dołącz do lobby"
 

@@ -27,7 +27,7 @@ func _on_winner_determined(winning_role: GameManager.Role):
 @rpc("call_local", "reliable")
 ## Wyświetla ekran zakończenia gry.
 func display_winner(winning_role: GameManager.Role):
-	var ending_scene = preload('res://scenes/ui/game_ending/game_ending.tscn').instantiate()
+	var ending_scene = preload('res://scenes/ui/end_screen/end_screen.tscn').instantiate()
 	ending_scene.set_winning_role(winning_role)
 	get_tree().get_root().add_child(ending_scene)
 

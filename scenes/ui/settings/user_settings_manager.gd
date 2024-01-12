@@ -19,7 +19,7 @@ const _DEFAULT_CONTROLS_DICTIONARY = {
 	"move_down" : [KEY_S, KEY_DOWN],
 	"move_up" : [KEY_W, KEY_UP],
 	"chat_open" : [KEY_T, null], 
-	"chat_close" : [KEY_TAB, null] 
+	"change_group" : [KEY_TAB, null] 
 }
 
 ## Ustawienia dźwięku, początkowo ustawione na domyślne

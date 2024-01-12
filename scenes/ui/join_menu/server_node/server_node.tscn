@@ -32,7 +32,7 @@ size_flags_horizontal = 3
 text = "0/0"
 
 [node name="SelectButton" type="Button" parent="EntryContainer/InfoContainer"]
-custom_minimum_size = Vector2(150, 40)
+custom_minimum_size = Vector2(165, 40)
 layout_mode = 2
 size_flags_vertical = 4
 text = "Wybierz"

@@ -32,7 +32,7 @@ signal error_occured(message: String)
 signal player_killed(player_id: int, is_victim: bool)
 
 ## Emitowany po włączeniu sabotażu.
-signal sabotage()
+signal sabotage_occured()
 
 ## Emitowany po zakończeniu ładowania mapy głównej.
 signal map_load_finished()
@@ -370,6 +370,9 @@ func get_registered_player_key(id:int, key:String):
 
 ## Zwraca ID obecnego gracza.
 func get_current_player_id():
+	if multiplayer == null:
+		return
+
 	return multiplayer.get_unique_id()
 
 
@@ -766,16 +769,30 @@ func main_map_load_finished():
 	map_load_finished.emit()
 
 
-@rpc("any_peer", "reliable", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 ## Przyjmuje prośbę o włączenie sabotażu.
 func request_light_sabotage():
 	if not multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-	
-	activate_light_sabotage.rpc()
-	
 
-@rpc("authority", "reliable", "call_local")
+	var player_id = multiplayer.get_remote_sender_id()
+
+	if !get_registered_player_key(player_id, "is_lecturer"):
+		return ERR_UNAUTHORIZED
+
+	activate_light_sabotage.rpc()
+
+
+@rpc("call_local", "reliable")
 ## Emituje sygnał włączenia sabotażu.
 func activate_light_sabotage():
-	sabotage.emit()
+	sabotage_occured.emit()
+
+
+## Symuluje wciśnięcie klawisza w celu wywołania konkretnej akcji.
+func execute_action(action_name: String):
+	var event = InputEventAction.new()
+	event.action = action_name
+	event.pressed = true
+
+	Input.parse_input_event(event)
