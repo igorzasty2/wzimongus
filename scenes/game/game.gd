@@ -19,11 +19,13 @@ func _on_registered_successfully():
 	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
 
 
+## Wysyła wszystkim graczom informacje o roli która wygrała.
 func _on_winner_determined(winning_role: GameManager.Role):
 	display_winner.rpc(winning_role)
 
 
 @rpc("call_local", "reliable")
+## Wyświetla ekran zakończenia gry.
 func display_winner(winning_role: GameManager.Role):
 	var ending_scene = preload('res://scenes/ui/game_ending/game_ending.tscn').instantiate()
 	ending_scene.set_winning_role(winning_role)
