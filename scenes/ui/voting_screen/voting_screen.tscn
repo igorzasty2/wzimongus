@@ -12,7 +12,6 @@ border_width_top = 10
 border_width_right = 10
 border_width_bottom = 10
 border_color = Color(0, 0, 0, 1)
-border_blend = true
 
 [node name="VotingScreen" type="Control"]
 layout_mode = 3
