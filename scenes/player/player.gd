@@ -271,7 +271,8 @@ func _input(event):
 
 		if !victim:
 			return
-
+		$PlayerInteractionPlayer.stream = load("res://assets/audio/kill_sound.ogg")
+		$PlayerInteractionPlayer.play()
 		GameManager.kill_victim(victim)
 		_handle_kill_timer()
 		button_active.emit("FailButton", false)

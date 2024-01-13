@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://l2mxisy85ciw"]
+[gd_scene load_steps=26 format=3 uid="uid://l2mxisy85ciw"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/lobby.gd" id="1_dytr5"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://c7y7ff03ym4j4" path="res://scenes/maps/lobby/assets/slupy.png" id="5_cauck"]
 [ext_resource type="PackedScene" uid="uid://b3e41jcsgj6bl" path="res://scenes/maps/lobby/scenes/lobby_settings/lobby_settings.tscn" id="7_vdntv"]
 [ext_resource type="PackedScene" uid="uid://rh1o32f8llsb" path="res://scenes/maps/lobby/scenes/skin_selector/skin_selector.tscn" id="8_hy1jx"]
+[ext_resource type="AudioStream" uid="uid://brj4jdusukvhx" path="res://assets/audio/enter_lobby_sound.ogg" id="15_fgqqq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0cw4k"]
 size = Vector2(962, 16)
@@ -216,6 +217,10 @@ visible = false
 visible = false
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
+
+[node name="EnterLobbySound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_fgqqq")
+autoplay = true
 
 [connection signal="input_visibility_changed" from="Chat" to="." method="_update_player_input"]
 [connection signal="visibility_changed" from="SkinSelector" to="." method="_update_player_input"]

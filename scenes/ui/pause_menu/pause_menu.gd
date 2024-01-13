@@ -3,6 +3,8 @@ extends CanvasLayer
 @onready var _pop_up_window = $PopUpWindow
 @onready var _settings_container = $SettingsContainer
 
+signal _player_left
+
 func _ready():
 	visible = false
 	_settings_container.visible = false
@@ -33,7 +35,9 @@ func _on_pop_up_window_left_pressed():
 	GameManager.set_pause_menu_status(visible)
 	_settings_container.visible = visible
 	_pop_up_window.visible = false
-
+	
+	_player_left.emit()
+	
 	GameManager.end_game()
 
 
