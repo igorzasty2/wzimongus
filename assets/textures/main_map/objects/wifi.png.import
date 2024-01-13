@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ge40lyarwi18"
-path="res://.godot/imported/wifi.png-a457c654dbaaff8c0bea5f9595ce96df.ctex"
+uid="uid://fmy66vpvmmra"
+path="res://.godot/imported/wifi.png-21968e5ef50b42c0cd713983e6a728cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/maps/lobby/scenes/skin_selector_point/assets/wifi.png"
-dest_files=["res://.godot/imported/wifi.png-a457c654dbaaff8c0bea5f9595ce96df.ctex"]
+source_file="res://assets/textures/main_map/objects/wifi.png"
+dest_files=["res://.godot/imported/wifi.png-21968e5ef50b42c0cd713983e6a728cc.ctex"]
 
 [params]
 

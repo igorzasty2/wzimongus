@@ -136,7 +136,7 @@ func _on_area_2d_body_exited(body):
 
 ## Zmienia kolor podświetlenia venta.
 func _toggle_highlight(is_on: bool):
-	_sprite_2d.material.set_shader_parameter('color', _in_range_color if is_on else _out_of_range_color)
+	_sprite_2d.material.set_shader_parameter('line_color', _in_range_color if is_on else _out_of_range_color)
 	vent_button_active.emit("VentButton", is_on)
 
 

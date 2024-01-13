@@ -350,7 +350,7 @@ func _toggle_highlight(player: int, is_on: bool) -> void:
 	var player_material = get_parent().get_node(str(player) + "/Skins/Control/PlayerSprite").material
 	
 	if player_material:
-		player_material.set_shader_parameter('color', in_range_color if is_on else out_of_range_color)
+		player_material.set_shader_parameter('line_color', in_range_color if is_on else out_of_range_color)
 
 
 func _update_highlight(player: int) -> void:
@@ -584,15 +584,12 @@ func deactivate_lights():
 func activate_player_shaders():
 	# Domyślnie shadery są wyłaczone w menu bo jeżeli włączyć ich to nie będzie widać graczowi
 	var shader_material = ShaderMaterial.new()
-	shader_material.shader = load("res://shaders/player_outline.gdshader")
+	shader_material.shader = load("res://assets/shaders/outline_light.gdshader")
 	
 	player_sprite.material = shader_material
-	player_sprite.material.set_shader_parameter("width", 11.0)
-	player_sprite.material.set_shader_parameter("pattern", 1)
-	player_sprite.material.set_shader_parameter("add_margins", true)
-	player_sprite.material.set_shader_parameter("color", "#00000000")
+	player_sprite.material.set_shader_parameter("line_thickness", 12.0)
 	
-	username_label.material = load("res://scenes/player/assets/light_only_canvas_material.tres")
+	username_label.material = load("res://assets/shaders/light.tres")
 
 
 ## Wyłącza shadery graczowi.

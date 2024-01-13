@@ -1,28 +1,24 @@
 [gd_scene load_steps=6 format=3 uid="uid://dp2sfegsvyvqy"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/scenes/report/emergency_button/emergency_button.gd" id="1_48x8y"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_ultrg"]
+[ext_resource type="Shader" path="res://assets/shaders/outline.gdshader" id="2_3og5t"]
 [ext_resource type="PackedScene" uid="uid://dposexvk3a7mv" path="res://scenes/maps/main_map/scenes/report/report_area/report_area.tscn" id="3_6fy7m"]
-[ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://scenes/maps/main_map/scenes/report/emergency_button/assets/emergency_meeting.png" id="3_wkt5k"]
+[ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://assets/textures/main_map/objects/emergency_meeting.png" id="3_wkt5k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eovgj"]
-shader = ExtResource("2_ultrg")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/width = 30.0
-shader_parameter/pattern = 1
-shader_parameter/inside = false
-shader_parameter/add_margins = true
+shader = ExtResource("2_3og5t")
+shader_parameter/line_color = Color(1, 1, 1, 0)
+shader_parameter/line_thickness = 20.0
 
 [node name="EmergencyButton" type="Node2D"]
 script = ExtResource("1_48x8y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_eovgj")
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_wkt5k")
 
 [node name="ReportArea" parent="." instance=ExtResource("3_6fy7m")]
-position = Vector2(-1, 3)
 scale = Vector2(1.2, 1.2)
 is_button = true
 
@@ -43,10 +39,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 98.0
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -86.0
+offset_top = 43.75
+offset_right = 86.0
+offset_bottom = 75.75
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24

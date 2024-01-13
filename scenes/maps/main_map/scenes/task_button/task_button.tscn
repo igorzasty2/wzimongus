@@ -1,15 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://cxdyrnlbs0811"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/scenes/task_button/task_button.gd" id="1_dfaon"]
-[ext_resource type="Shader" path="res://scenes/maps/main_map/scenes/task_button/assets/task_button.gdshader" id="2_o3jvt"]
+[ext_resource type="Shader" path="res://assets/shaders/outline.gdshader" id="2_1lj1n"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ykn66"]
 radius = 200.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xwbu7"]
 resource_local_to_scene = true
-shader = ExtResource("2_o3jvt")
-shader_parameter/line_color = Color(1, 1, 1, 1)
+shader = ExtResource("2_1lj1n")
+shader_parameter/line_color = Color(1, 1, 1, 0)
 shader_parameter/line_thickness = 0.0
 
 [node name="TaskButton" type="Area2D"]

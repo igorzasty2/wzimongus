@@ -1,7 +1,8 @@
 shader_type canvas_item;
+render_mode blend_mix, light_only;
 
-uniform vec4 line_color : source_color = vec4(1);
-uniform float line_thickness : hint_range(0, 10) = 0.0;
+uniform vec4 line_color : source_color = vec4(1.0, 1.0, 1.0, 0.0);
+uniform float line_thickness : hint_range(0, 20) = 0.0;
 
 void fragment() {
 	vec2 size = TEXTURE_PIXEL_SIZE * line_thickness;

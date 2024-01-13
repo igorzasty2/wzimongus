@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cmqr4jq3iw4q2"]
 
 [ext_resource type="Script" path="res://scenes/player/assets/dead_body.gd" id="1_p1ew1"]
-[ext_resource type="Material" uid="uid://blfoqacxg8vug" path="res://scenes/player/assets/light_only_canvas_material.tres" id="1_vabh3"]
+[ext_resource type="Material" uid="uid://blfoqacxg8vug" path="res://assets/shaders/light.tres" id="1_vabh3"]
 [ext_resource type="PackedScene" uid="uid://dposexvk3a7mv" path="res://scenes/maps/main_map/scenes/report/report_area/report_area.tscn" id="2_5uuls"]
 
 [node name="DeadBody" type="Node2D"]
