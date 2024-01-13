@@ -1,20 +1,31 @@
+class_name PlayerBox
 extends Control
 
+## Referencja do awatara gracza
 @onready var avatar = get_node("%Avatar")
+## Referencja do nazwy gracza
 @onready var username = get_node("%Username")
+## Referencja do decyzji gracza
 @onready var decision = get_node("%Decision")
+## Referencja do kontenera z głosującymi
 @onready var voted_by_container = get_node("%VotedBy")
+## Referencja do przycisku odpalającego potwierdzenie głosu
 @onready var button = get_node("%Button")
 
+## Sygnał emitowany gdy gracz zagłosuje
 signal player_voted
+## Sygnał emitowany gdy gracz zostanie wybrany
 signal player_selected
 
+## Klucz gracza
 var player_key
+## Tween do animacji
 var display_tween
 
+## Scena z głosującymi
 var voted_by_scene = preload("res://scenes/ui/voting_screen/voted_by/voted_by.tscn")
 
-
+## Funkcja inicjalizująca box gracza
 func init(player_id: int, voted_by: Array):
 	var player = GameManager.get_registered_players()[player_id]
 
@@ -71,7 +82,7 @@ func _on_decision_yes_pressed():
 	decision.visible = false
 	emit_signal("player_voted", player_key)
 
-
+## Funkcja ustawiająca status głosowania
 func set_voting_status(is_voted: bool):
 	if is_voted:
 		button.pressed.connect(_on_button_pressed)

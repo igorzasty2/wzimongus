@@ -1,5 +1,7 @@
+class_name PageNode
 extends Sprite2D		
 
+## Funkcja inicjalizująca scenę strony
 func init(password):
 	$PageText.text = password
 

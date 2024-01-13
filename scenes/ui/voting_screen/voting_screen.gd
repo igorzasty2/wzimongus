@@ -1,27 +1,46 @@
+class_name VotingScreen
 extends Control
 
+
+## Referencja do kontenera na graczy
 @onready var players = get_node("%Players")
+## Referencja do tekstu końca głosowania
 @onready var end_vote_text = get_node("%EndVoteText")
+## Referencja do przycisku o potwierdzeniu skipowaniu głosowania
 @onready var skip_decision = get_node("%Decision")
+## Referencja do przycisku skipowania
 @onready var skip_button = get_node("%SkipButton")
+## Referencja do kontenera na czat
 @onready var chat_container = get_node("%ChatContainer")
+## Referencja do czatu
 @onready var chat = get_node("%Chat")
+## Referencja do wejścia czati
 @onready var chat_input = %ChatContainer/Chat/ChatContainer/InputText
 
+## Czas głosowania
 var VOTING_TIME = GameManager.get_server_settings()["voting_time"]
+## Timer głosowania
 @onready var voting_timer = Timer.new()
 
+## Czas przejścia do ekranu wyrzucenia
 var EJECT_PLAYER_TIME = 5
+## Timer przejścia do ekranu wyrzucenia
 @onready var eject_player_timer = Timer.new()
 
+## Czas dyskusji
 var DISCUSSION_TIME = GameManager.get_server_settings()["discussion_time"]
+## Timer dyskusji
 @onready var discussion_timer = Timer.new()
 
+## Referencja do konkretnego boxa z graczem
 var player_box = preload("res://scenes/ui/voting_screen/player_box/player_box.tscn")
+## Referencja do ekranu wyrzucenia
 var ejection_screen = preload("res://scenes/ui/ejection_screen/ejection_screen.tscn")
 
+## Czas głosowania aktualnie
 var time = 0
 
+## Zmienna na czy gracz jest wybrany
 var is_selected = false
 
 var is_voting_ended = false
@@ -41,13 +60,13 @@ func _ready():
 	on_interface_scale_changed(user_sett.interface_scale)
 
 	GameManager.player_deregistered.connect(_on_player_deregistered)
-	
+
 	set_process(false)
 
 ## Zaczyna głosowanie
 func start_voting():
 	visible = true
-	
+
 	# Renderuje boxy z graczami (bez głosów)
 	_render_player_boxes()
 
@@ -75,7 +94,7 @@ func start_voting():
 	discussion_timer.connect("timeout", _on_discussion_timer_timeout)
 	discussion_timer.start(DISCUSSION_TIME)
 
-	
+
 	set_process(true)
 
 
@@ -112,15 +131,15 @@ func _on_player_deregistered(player_id, _player):
 
 func _remove_player_vote(player_key):
 	var votes = GameManager.get_current_game_key("votes")
-	
+
 	# Usuń głosy, które były na gracza
 	if votes.has(player_key):
 		votes.erase(player_key)
-	
+
 	# Usuń głosy, które gracz oddał
 	for vote_key in votes.keys():
 		votes[vote_key].erase(player_key)
-	
+
 	if _count_all_votes() == _count_alive_players():
 		_on_end_voting_timer_timeout.rpc()
 		_stop_voting_timer.rpc()
@@ -147,21 +166,19 @@ func _count_all_votes():
 	for player_key in votes.keys():
 		total_votes += votes[player_key].size()
 	return total_votes
-			
+
 @rpc("any_peer", "call_local", "reliable")
 func _stop_voting_timer():
 	voting_timer.stop()
 
-## Wyświetla decyzję o skipowaniu
 func _on_skip_button_pressed():
 	if GameManager.get_current_game_key("is_voted") || GameManager.get_current_game_key("is_vote_preselected"):
 		return
-	
+
 	skip_decision.visible = true
 	GameManager.set_current_game_key("is_vote_preselected", true)
 
 
-## Zamyka decyzję o skipowaniu
 func _on_decision_yes_pressed():
 	GameManager.set_current_game_key("is_voted", true)
 	skip_decision.visible = false
@@ -174,7 +191,6 @@ func _on_decision_no_pressed():
 
 
 @rpc("call_local", "reliable")
-## Renderuje boxy z graczami
 func _render_player_boxes():
 	for i in players.get_children():
 		i.queue_free()
@@ -189,13 +205,14 @@ func _render_player_boxes():
 		new_player_box.init(i, votes[i] if i in votes else [])
 		new_player_box.connect("player_voted", _on_player_voted)
 
+
 @rpc("any_peer", "call_local", "reliable")
 func _on_end_voting_timer_timeout():
 	is_voting_ended = true
 	GameManager.set_current_game_key("is_voted", true)
 
 	end_vote_text.text = "[center]Głosowanie zakończone![/center]"
-	
+
 	eject_player_timer.start(EJECT_PLAYER_TIME)
 
 	# Serwer wysyła głosy do graczy, wynik głosowania i renderuje boxy z graczami
@@ -214,7 +231,6 @@ func _on_end_voting_timer_timeout():
 		GameManager.kill_player(most_voted_player_id)
 
 
-## Zmienia scene na ekran wyrzucenia
 func _on_eject_player_timer_timeout():
 	_change_scene_to_ejection_screen.rpc()
 
@@ -244,7 +260,6 @@ func get_most_voted_player_id():
 		return most_voted_players[0]
 
 
-## Obsługuje otwarcie/zamknięcie czatu
 func _on_chat_button_button_down():
 	if chat_container.visible:
 		GameManager.execute_action("pause_menu")
@@ -252,7 +267,6 @@ func _on_chat_button_button_down():
 		GameManager.execute_action("chat_open")
 
 
-## Obsługuje naciśnięcie przycisku menu pauzy
 func _on_pause_menu_button_button_down():
 	GameManager.execute_action("pause_menu")
 

@@ -4,7 +4,7 @@
 [ext_resource type="Shader" path="res://scenes/maps/main_map/scenes/task_button/assets/task_button.gdshader" id="2_o3jvt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ykn66"]
-radius = 170.238
+radius = 200.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xwbu7"]
 resource_local_to_scene = true

@@ -49,7 +49,6 @@ _data = {
 radius = 93.3343
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d2wt8"]
-blend_mode = 1
 
 [node name="Vent" type="Node2D"]
 scale = Vector2(2.4, 2.4)
@@ -84,9 +83,10 @@ visible = false
 material = SubResource("CanvasItemMaterial_d2wt8")
 position = Vector2(0, -27)
 scale = Vector2(0.96875, 0.96875)
-energy = 0.3
+energy = 0.75
+blend_mode = 2
 shadow_enabled = true
-shadow_color = Color(0, 0, 0, 1)
+shadow_color = Color(1, 1, 1, 0)
 texture = ExtResource("4_v6nkv")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
