@@ -40,7 +40,6 @@ func _process(delta):
 		
 func _on_tween_completed():
 	emit_signal("minigame_end")
-	queue_free()
 
 func _on_screw_button_down(index):
 	is_rotating[index] = true
