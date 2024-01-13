@@ -22,6 +22,9 @@ var is_in_vent: bool = false
 ## Czy jest w trakcie poruszania się przez venta lub do venta.
 var is_moving_through_vent: bool = false
 
+## Czy gracz właśnie wszedł do venta
+var _has_entered_vent: bool = false
+
 ## Kolor gracza do zabicia
 var in_range_color = [180, 0, 0, 255]
 ## Kolor gracza, którego nie możemy zabić
@@ -37,6 +40,7 @@ var can_sabotage_cooldown: bool = false
 var is_teleport: bool = false
 ## Pozycja docelowa teleportacji
 var teleport_position = null
+
 
 ## Referencja do wejścia gracza.
 @onready var input: InputSynchronizer = $Input
@@ -163,6 +167,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 				global_position = input.destination_position
 				input.direction = Vector2.ZERO
 				
+				_has_entered_vent = true
 				_request_venting_animation.rpc_id(1, false)
 				
 				var vent = get_nearest_vent()
@@ -233,6 +238,9 @@ func _input(event):
 			return
 
 		if !is_in_vent && GameManager.get_current_game_key("is_input_disabled"):
+			return
+		
+		if venting_animation_player.is_playing():
 			return
 
 		_use_vent()
@@ -516,9 +524,11 @@ func _exit_vent():
 	if name.to_int() == GameManager.get_current_player_id():
 		vent.set_direction_buttons_visibility(false)
 		vent.set_vent_light_visibility_for(name.to_int(), false)
-
-	collision_mask = initial_collision_mask
 	
+	_has_entered_vent = false
+	is_in_vent = false
+	collision_mask = initial_collision_mask
+
 	if multiplayer.is_server():
 		toggle_visibility.rpc(true)
 	
@@ -630,7 +640,6 @@ func decrease_light_range_sabotage() -> void:
 #		light.texture_scale /= 6
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale / 6, 1).set_trans(Tween.TRANS_CUBIC)
-	
 
 
 ## Wraca promień swiatła na normalny po sabotage.
@@ -644,7 +653,7 @@ func cancel_decrease_light_range_sabotage() -> void:
 func _on_venting_animation_player_animation_finished(anim_name):
 	if anim_name == "venting_animation":
 		# Gracz wchodzi do venta
-		if is_in_vent:
+		if _has_entered_vent:
 			button_active.emit("ReportButton", !is_in_vent && can_report)
 			button_active.emit("FailButton", !is_in_vent)
 
@@ -661,21 +670,26 @@ func _on_venting_animation_player_animation_finished(anim_name):
 			_request_handle_vent_exit.rpc_id(1)
 
 
-@rpc("any_peer", "reliable", "call_local")
+@rpc("any_peer", "call_local", "reliable")
+## Zapytuje o obsłużenie wyjście z venta po zakończeniu animacji
 func _request_handle_vent_exit():
-	if not multiplayer.is_server():
-		return ERR_UNAUTHORIZED
-	
-	_handle_vent_exit.rpc()
+	if !name.to_int() == multiplayer.get_remote_sender_id():
+		return
+
+	if name.to_int() != 1:
+		_handle_vent_exit()
+
+	_handle_vent_exit.rpc_id(name.to_int())
 	
 
-@rpc("authority", "reliable", "call_local")
+@rpc("authority", "call_local", "reliable")
+## Obsługuje wyjście z venta po zakończeniu animacji
 func _handle_vent_exit():
-	is_in_vent = false
+	_has_entered_vent = false
 	vent_exited.emit()
 
 
-@rpc("any_peer", "reliable", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 ## Zapytuje o puszczenie animacji ventowania
 func _request_venting_animation(is_backwards:bool):
 	if not multiplayer.is_server():
@@ -684,7 +698,7 @@ func _request_venting_animation(is_backwards:bool):
 	_play_venting_animation.rpc(is_backwards)
 	
 
-@rpc("authority", "reliable", "call_local")
+@rpc("authority", "call_local", "reliable")
 ## Puszcza animacje ventowania
 func _play_venting_animation(is_backwards:bool):
 	if !is_backwards:
