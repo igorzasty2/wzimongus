@@ -980,12 +980,14 @@ shape = SubResource("RectangleShape2D_f8ggq")
 
 [node name="InteractionPoints" type="Node2D" parent="."]
 z_index = 4
+y_sort_enabled = true
 
 [node name="EmergencyButton" parent="InteractionPoints" instance=ExtResource("36_xfee5")]
 z_index = 1
 position = Vector2(1734, 286)
 
 [node name="Tasks" type="Node2D" parent="InteractionPoints"]
+y_sort_enabled = true
 
 [node name="Task1" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
 position = Vector2(2.08165e-12, -1000)
@@ -1003,11 +1005,13 @@ sprite = ExtResource("32_jc7lc")
 minigame_scene = ExtResource("79_xtlh3")
 
 [node name="Task4" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+z_index = 1
 position = Vector2(-2538, 1052)
 sprite = ExtResource("38_u8dgm")
 minigame_scene = ExtResource("80_j2qov")
 
 [node name="Task5" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+z_index = 1
 position = Vector2(1780, -728)
 sprite = ExtResource("48_3efwf")
 minigame_scene = ExtResource("80_b7854")
