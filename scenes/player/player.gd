@@ -166,14 +166,17 @@ func _rollback_tick(delta, _tick, is_fresh):
 				# Przesuwa gracza do środka venta.
 				global_position = input.destination_position
 				input.direction = Vector2.ZERO
-				
+
 				_has_entered_vent = true
-				_request_venting_animation.rpc_id(1, false)
-				
-				var vent = get_nearest_vent()
-				if vent!=null:
-					vent.request_vent_animation.rpc_id(1)
-				
+
+				if multiplayer.is_server():
+					_play_venting_animation.rpc(false)
+
+					var vent = get_nearest_vent()
+
+					if vent != null:
+						vent.play_vent_animation.rpc()
+
 				input.is_walking_to_destination = false
 				is_moving_through_vent = false
 
@@ -182,7 +185,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 			# Przesuwa gracza w kierunku docelowego venta.
 			global_position = global_position.move_toward(input.destination_position, delta * venting_speed * NetworkTime.physics_factor)
 
-			# Jeśli gracz dotał do docelowego venta.
+			# Jeśli gracz dotarł do docelowego venta.
 			if global_position == input.destination_position:
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
@@ -194,11 +197,13 @@ func _rollback_tick(delta, _tick, is_fresh):
 	# Gracz jest przenoszony na miejsce awaryjnego spotkania
 	elif is_teleport && is_fresh:
 		# Wyciąga impostora z venta
-		if is_in_vent:
-			if name.to_int() != 1:
-				_exit_vent()
-			_exit_vent.rpc_id(name.to_int())
-		
+		if multiplayer.is_server():
+			if is_in_vent:
+				if name.to_int() != 1:
+					_exit_vent()
+
+				_exit_vent.rpc_id(name.to_int())
+
 		global_position = teleport_position
 		is_teleport = false
 		teleport_position = null
@@ -493,6 +498,9 @@ func _enter_vent(vent_position):
 @rpc("any_peer", "call_local", "reliable")
 ## Obsługuje żądanie wyjścia z venta.
 func _request_vent_exiting():
+	if !multiplayer.is_server():
+		return
+
 	var id = multiplayer.get_remote_sender_id()
 
 	if !name.to_int() == id:
@@ -518,7 +526,6 @@ func _request_vent_exiting():
 @rpc("call_local", "reliable")
 ## Obsługuje wyjście z venta.
 func _exit_vent():
-	
 	var vent = get_nearest_vent()
 
 	if vent == null:
@@ -527,16 +534,16 @@ func _exit_vent():
 	if name.to_int() == GameManager.get_current_player_id():
 		vent.set_direction_buttons_visibility(false)
 		vent.set_vent_light_visibility_for(name.to_int(), false)
-	
+
 	_has_entered_vent = false
 	is_in_vent = false
 	collision_mask = initial_collision_mask
 
 	if multiplayer.is_server():
 		toggle_visibility.rpc(true)
-	
-	_request_venting_animation.rpc_id(1, true)
-	vent.request_vent_animation.rpc_id(1)
+
+		_play_venting_animation.rpc(true)
+		vent.play_vent_animation.rpc()
 
 
 ## Zmienia widoczność przycisków kierunkowych venta.
@@ -685,16 +692,7 @@ func _handle_vent_exit():
 	vent_exited.emit()
 
 
-@rpc("any_peer", "call_local", "reliable")
-## Zapytuje o puszczenie animacji ventowania
-func _request_venting_animation(is_backwards:bool):
-	if not multiplayer.is_server():
-		return ERR_UNAUTHORIZED
-	
-	_play_venting_animation.rpc(is_backwards)
-	
-
-@rpc("authority", "call_local", "reliable")
+@rpc("call_local", "reliable")
 ## Puszcza animacje ventowania
 func _play_venting_animation(is_backwards:bool):
 	if !is_backwards:

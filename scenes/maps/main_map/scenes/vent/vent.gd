@@ -146,16 +146,7 @@ func set_vent_light_visibility_for(player_id: int, visibility: bool):
 		_vent_light_container.visible = visibility
 
 
-@rpc("any_peer", "reliable", "call_local")
-## Zapytuje puszczenie animacji venta
-func request_vent_animation():
-	if not multiplayer.is_server():
-		return ERR_UNAUTHORIZED
-	
-	_play_vent_animation.rpc()
-	
-
-@rpc("authority", "reliable", "call_local")
+@rpc("call_local", "reliable")
 ## Puszcza animacje ventowania
-func _play_vent_animation():
+func play_vent_animation():
 	_animation_player.play("vent_animation")
