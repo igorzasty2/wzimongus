@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var current_players_counter = $CurrentPlayersCounter
 
+@onready var start_game_alert = $StartGameAlert
 @onready var start_game_button = $StartGameButton
 
 @onready var lobby_settings_button = $GridContainer2/LobbySettingsButton
@@ -36,7 +37,15 @@ func _ready():
 	if !multiplayer.is_server():
 		lobby_settings_button.texture_normal = null
 		lobby_settings_button.disabled = true
+
+		start_game_alert.hide()
 		start_game_button.hide()
+	
+	if multiplayer.is_server():
+		_update_start_game_button()
+
+		GameManager.player_registered.connect(_update_start_game_button)
+		GameManager.player_deregistered.connect(_update_start_game_button)
 
 	_update_current_players_counter()
 
@@ -52,6 +61,17 @@ func on_interface_scale_changed(value:float):
 	grid_container.scale = initial_grid_container_scale * value
 	grid_container_2.scale = initial_grid_container_2_scale * value
 	current_players_counter.scale = initial_current_players_counter_scale * value
+
+
+func _update_start_game_button(_id: int = 0, _player: Dictionary = {}):
+	if GameManager.get_registered_players().size() >= 3:
+		start_game_alert.hide()
+		start_game_button.disabled = false
+		toggle_button_visual(start_game_button, true)
+	else:
+		start_game_alert.show()
+		start_game_button.disabled = true
+		toggle_button_visual(start_game_button, false)
 
 
 func _update_current_players_counter(_id: int = 0, _player: Dictionary = {}):
