@@ -13,6 +13,7 @@ func set_dead_player(victim: int) -> void:
 	var victim_sprite = victim_node.get_node("Skins/PlayerSprite")
 	
 	name = "DeadBody"+str(victim)
+	label.text = "Oblany student (" + GameManager.get_registered_player_key(victim, "username") + ")"
 	
 	sprite.texture = victim_sprite.texture
 	sprite.hframes = 5

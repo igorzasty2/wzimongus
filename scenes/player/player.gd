@@ -410,7 +410,6 @@ func _on_killed_player(player_id: int, is_victim: bool) -> void:
 			var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
 			get_parent().get_parent().get_node("DeadBodies").add_child(dead_body)
 			dead_body.set_dead_player(player_id)
-			dead_body.get_node("DeadBodyLabel").text = "Oblany student (" + GameManager.get_registered_player_key(player_id, "username") + ")"
 
 
 func _on_timer_timeout() -> void:

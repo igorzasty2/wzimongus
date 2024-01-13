@@ -46,7 +46,21 @@ signal winner_determined(winning_role: Role)
 ## Rola gracza
 enum Role {STUDENT, LECTURER}
 
-## Udostępnia dane o dostępnych skinach.
+## Komunikaty błędów.
+const error_messages = {
+	"ERR_LOBBY_NAME_LENGTH": "Nazwa lobby musi mieć od 3 do 16 znaków!",
+	"ERR_USERNAME_LENGTH": "Nazwa użytkownika musi mieć od 3 do 16 znaków!",
+	"ERR_PORT": "Nie udało się nasłuchiwać na porcie %s!",
+	"ERR_SERVER": "Nie udało się uruchomić serwera!",
+	"ERR_CLIENT": "Nie udało się utworzyć klienta! Powód: %s",
+	"ERR_CONNECTION": "Nie udało się połączyć z %s!",
+	"ERR_CONNECTION_FAILED": "Nie można połączyć się z serwerem!",
+	"ERR_CONNECTION_LOST": "Połączenie z serwerem zostało przerwane!",
+	"ERR_GAME_STARTED": "Gra już się rozpoczęła!",
+	"ERR_MAX_PLAYERS": "Przekroczono limit graczy!",
+}
+
+## Dostępne skiny.
 const skins = {
 	0: {
 		"name": "Alternatywka",
@@ -172,6 +186,16 @@ func _ready():
 
 ## Tworzy nowy serwer gry.
 func create_lobby(lobby_name: String, port: int):
+	# Weryfikuje długość nazwy lobby.
+	if !_verify_lobby_name_length(lobby_name):
+		_handle_error(error_messages["ERR_LOBBY_NAME_LENGTH"])
+		return
+
+	# Weryfikuje długość nazwy użytkownika.
+	if !_verify_username_length(_current_player["username"]):
+		_handle_error(error_messages["ERR_USERNAME_LENGTH"])
+		return
+
 	# Ustawia parametry serwera.
 	_server_settings["lobby_name"] = lobby_name
 	_server_settings["port"] = port
@@ -181,7 +205,7 @@ func create_lobby(lobby_name: String, port: int):
 	var status = peer.create_server(_server_settings["port"])
 
 	if status != OK:
-		_handle_error("Nie udało się nasłuchiwać na porcie " + str(_server_settings["port"]) + "!")
+		_handle_error(error_messages["ERR_PORT"] % str(_server_settings["port"]))
 		return
 
 	multiplayer.multiplayer_peer = peer
@@ -193,7 +217,7 @@ func create_lobby(lobby_name: String, port: int):
 	)
 
 	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
-		_handle_error("Nie udało się uruchomić serwera!")
+		_handle_error(error_messages["ERR_SERVER"])
 		return
 
 	# Rejestruje hosta jako gracza.
@@ -235,7 +259,7 @@ func join_lobby(address:String, port:int):
 	var status = peer.create_client(address, port)
 
 	if status != OK:
-		_handle_error("Nie udało się utworzyć klienta! Powód: " + error_string(status))
+		_handle_error(error_messages["ERR_CLIENT"] % error_string(status))
 		return
 
 	multiplayer.multiplayer_peer = peer
@@ -247,7 +271,7 @@ func join_lobby(address:String, port:int):
 	)
 
 	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
-		_handle_error("Nie udało się połączyć z " + str(address) + ":" + str(port) + "!")
+		_handle_error(error_messages["ERR_CONNECTION"] % (str(address) + ":" + str(port)))
 		return
 
 
@@ -455,13 +479,13 @@ func _on_connected():
 
 ## Obsługuje nieudane połączenie z serwerem.
 func _on_connection_failed():
-	_handle_error("Nie można połączyć się z serwerem!")
+	_handle_error(error_messages["ERR_CONNECTION_FAILED"])
 	end_game()
 
 
 ## Obsługuje rozłączenie z serwerem u klienta.
 func _on_server_disconnected():
-	_handle_error("Połączenie z serwerem zostało przerwane!")
+	_handle_error(error_messages["ERR_CONNECTION_LOST"])
 	end_game()
 
 
@@ -500,14 +524,19 @@ func _register_player(player:Dictionary):
 
 	var id = multiplayer.get_remote_sender_id()
 
+	# Wyrzuca gracza, jeśli nazwa użytkownika nie ma odpowiedniej długości.
+	if !_verify_username_length(player["username"]):
+		_kick_player.rpc_id(id, error_messages["ERR_USERNAME_LENGTH"])
+		return
+
 	# Wyrzuca gracza, jeśli gra już się rozpoczęła.
 	if _current_game["is_started"]:
-		_kick_player.rpc_id(id, "Gra już się rozpoczęła!")
+		_kick_player.rpc_id(id, error_messages["ERR_GAME_STARTED"])
 		return
 
 	# Wyrzuca gracza, jeśli przekroczono limit graczy.
 	if _current_game["registered_players"].size() >= _server_settings["max_players"]:
-		_kick_player.rpc_id(id, "Przekroczono limit graczy!")
+		_kick_player.rpc_id(id, error_messages["ERR_MAX_PLAYERS"])
 		return
 
 	# Informuje gracza o obecnych ustawieniach serwera.
@@ -797,7 +826,7 @@ func execute_action(action_name: String):
 	Input.parse_input_event(event)
 
 
-## Weryfikuje nazwę użytkownika i zwraca ją w formie unikalnej.
+## Zwraca nazwę użytkownika w formie unikalnej.
 func _verify_username(username: String, idx: int = 0) -> String:
 	var username_to_verify = username
 
@@ -809,3 +838,13 @@ func _verify_username(username: String, idx: int = 0) -> String:
 			return _verify_username(username, idx + 1)
 
 	return username_to_verify
+
+
+## Weryfikuje długość nazwy lobby.
+func _verify_lobby_name_length(lobby_name: String) -> bool:
+	return lobby_name.length() >= 3 && lobby_name.length() <= 16
+
+
+## Weryfikuje długość nazwy użytkownika.
+func _verify_username_length(username: String) -> bool:
+	return username.length() >= 3 && username.length() <= 16
