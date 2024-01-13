@@ -16,8 +16,8 @@
 custom_minimum_size = Vector2(200, 48)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 395.0
-offset_bottom = 107.0
+offset_right = 500.0
+offset_bottom = 98.0
 size_flags_horizontal = 3
 script = ExtResource("1_sv2tq")
 
@@ -39,10 +39,11 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_right = -6.0
+offset_left = 8.0
+offset_right = -8.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 10
 
 [node name="Avatar" type="TextureRect" parent="VBoxContainer/Panel/Player"]
 unique_name_in_owner = true
@@ -71,6 +72,7 @@ alignment = 2
 
 [node name="Button" type="Button" parent="VBoxContainer/Panel"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,21 +91,29 @@ visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="DecisionText" type="RichTextLabel" parent="VBoxContainer/Decision"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Decision"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+
+[node name="DecisionText" type="Label" parent="VBoxContainer/Decision/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 text = "Jesteś pewny?"
-fit_content = true
+vertical_alignment = 1
 
 [node name="DecisionYes" type="Button" parent="VBoxContainer/Decision"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 40)
 layout_mode = 2
-text = "TAK"
+text = "Tak"
 
 [node name="DecisionNo" type="Button" parent="VBoxContainer/Decision"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 40)
 layout_mode = 2
-text = "NIE"
+text = "Nie"
 
 [connection signal="pressed" from="VBoxContainer/Panel/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Decision/DecisionYes" to="." method="_on_decision_yes_pressed"]

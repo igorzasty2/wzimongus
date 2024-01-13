@@ -2,7 +2,7 @@
 extends Node2D
 
 ## Referencja do sprite'a postaci.
-@onready var player_sprite = $PlayerSprite
+@onready var player_sprite = $Control/PlayerSprite
 
 
 func _ready():

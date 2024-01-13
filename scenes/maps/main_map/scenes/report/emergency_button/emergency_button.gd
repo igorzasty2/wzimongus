@@ -60,8 +60,7 @@ func _ready():
 
 func _process(_delta):
 	# Wyświetla pozostały czas do możliwości użycia przycisku
-	var time_left = int(emergency_timer.get_time_left())
-	time_left_label.text = str(time_left)
+	time_left_label.text = str(int(emergency_timer.get_time_left()))
 
 
 ## Wywoływane w momencie oblania gracza

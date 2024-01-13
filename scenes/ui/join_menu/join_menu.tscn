@@ -47,7 +47,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BackButton" type="Button" parent="StatusBar/ButtonsContainer"]
-custom_minimum_size = Vector2(80, 2.08165e-12)
+custom_minimum_size = Vector2(80, 40)
 layout_mode = 2
 text = "⬅️ Wróć"
 
@@ -123,13 +123,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -384.0
-offset_top = -86.0
-offset_right = 384.0
+offset_left = -400.0
+offset_top = -87.0
+offset_right = 400.0
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 20
+theme_override_constants/separation = 25
 
 [node name="UsernameContainer" type="VBoxContainer" parent="InputsContainer"]
 layout_mode = 2
@@ -142,6 +142,7 @@ text = "Login"
 [node name="UsernameInput" type="LineEdit" parent="InputsContainer/UsernameContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 32)
 layout_mode = 2
+max_length = 16
 
 [node name="AddressContainer" type="VBoxContainer" parent="InputsContainer"]
 layout_mode = 2
@@ -168,8 +169,9 @@ layout_mode = 2
 text = "9001"
 
 [node name="JoinButton" type="Button" parent="InputsContainer"]
-custom_minimum_size = Vector2(175, 2.08165e-12)
+custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
+size_flags_vertical = 8
 text = "Dołącz do lobby"
 
 [connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]

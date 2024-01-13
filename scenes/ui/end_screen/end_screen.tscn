@@ -1,20 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://blkno546eohsw"]
+[gd_scene load_steps=2 format=3 uid="uid://blkno546eohsw"]
 
-[ext_resource type="Script" path="res://scenes/ui/game_ending/game_ending.gd" id="1_jsh54"]
-[ext_resource type="Texture2D" uid="uid://8infxgemuldq" path="res://scenes/ui/game_ending/assets/background.png" id="2_voi47"]
+[ext_resource type="Script" path="res://scenes/ui/end_screen/end_screen.gd" id="1_1dvol"]
 
-[node name="GameEnding" type="CanvasLayer"]
+[node name="EndScreen" type="CanvasLayer"]
 layer = 6
-script = ExtResource("1_jsh54")
+script = ExtResource("1_1dvol")
 
 [node name="Background" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 560.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_voi47")
-expand_mode = 4
+expand_mode = 2
 stretch_mode = 4
 
 [node name="WinnerText" type="Label" parent="."]
@@ -30,7 +29,8 @@ offset_bottom = 1.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_constants/shadow_outline_size = 10
+theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 
 [node name="PressAnyKeyText" type="Label" parent="."]
@@ -46,6 +46,7 @@ offset_bottom = 260.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 21
+theme_override_constants/shadow_outline_size = 10
+theme_override_font_sizes/font_size = 24
 text = "Aby kontynuować, naciśnij dowolny klawisz..."
 horizontal_alignment = 1

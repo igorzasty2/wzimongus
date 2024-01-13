@@ -36,12 +36,13 @@ var incorrect_buttons = []
 var correct_pressed_count = 0
 
 ## Lista progów dla każdej kontrolki
-@onready var THRESHOLDS = [[1, 3, 5, 6], [1, 2, 4, 5], [1, 2, 3, 5], [1, 2, 5, 6]]
+@onready var THRESHOLDS = [[1, 2, 3, 4]]
 
 ## Liczba wszystkich przycisków
 const TOTAL_BUTTONS = 12
+
 ## Liczba poprawnych przycisków
-const CORRECT_BUTTONS_COUNT = 7
+const CORRECT_BUTTONS_COUNT = 5
 
 ## Zmienna przechowująca próg dla 0%
 var zero_threshold = 0
@@ -89,7 +90,7 @@ func _ready():
 
 	for i in range(CORRECT_BUTTONS_COUNT, TOTAL_BUTTONS):
 		incorrect_buttons.append(all_buttons[i])
-	
+
 	##Losuje progi dla każdej kontrolki, a nastepnie przypisuje go do odpowiednich zmiennych
 	var chosen_threshold = THRESHOLDS[randi() % THRESHOLDS.size()]
 
@@ -107,34 +108,34 @@ func _on_button_toggled():
 	for button in correct_buttons:
 		if button.button_pressed:
 			correct_pressed_count += 1
-	
+
 	_update_indicators()
-	
+
 ##Aktualizuje widoczność wskaźników
 func _update_indicators():
 	zero.visible = correct_pressed_count >= zero_threshold
 	thirty.visible = correct_pressed_count >= thirty_threshold
 	fifty.visible = correct_pressed_count >= fifty_threshold
 	eighty.visible = correct_pressed_count >= eighty_threshold
-	
+
 	var all_correct_pressed = true
 
 	for button in correct_buttons:
 		if not button.button_pressed:
 			all_correct_pressed = false
 			break
-	
+
 	for button in incorrect_buttons:
 		if button.button_pressed:
 			all_correct_pressed = false
 			break
-	
+
 	if all_correct_pressed:
 		hundred.visible = true
 
 		for button in correct_buttons:
 			button.disabled = true
-		
+
 		for button in incorrect_buttons:
 			button.disabled = true
 		minigame_end.emit()

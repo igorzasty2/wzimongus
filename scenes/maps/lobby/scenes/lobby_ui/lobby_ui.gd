@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var current_players_counter = $CurrentPlayersCounter
 
+@onready var start_game_alert = $StartGameAlert
 @onready var start_game_button = $StartGameButton
 
 @onready var lobby_settings_button = $GridContainer2/LobbySettingsButton
@@ -36,7 +37,15 @@ func _ready():
 	if !multiplayer.is_server():
 		lobby_settings_button.texture_normal = null
 		lobby_settings_button.disabled = true
+
+		start_game_alert.hide()
 		start_game_button.hide()
+	
+	if multiplayer.is_server():
+		_update_start_game_button()
+
+		GameManager.player_registered.connect(_update_start_game_button)
+		GameManager.player_deregistered.connect(_update_start_game_button)
 
 	_update_current_players_counter()
 
@@ -54,6 +63,17 @@ func on_interface_scale_changed(value:float):
 	current_players_counter.scale = initial_current_players_counter_scale * value
 
 
+func _update_start_game_button(_id: int = 0, _player: Dictionary = {}):
+	if GameManager.get_registered_players().size() >= 3:
+		start_game_alert.hide()
+		start_game_button.disabled = false
+		toggle_button_visual(start_game_button, true)
+	else:
+		start_game_alert.show()
+		start_game_button.disabled = true
+		toggle_button_visual(start_game_button, false)
+
+
 func _update_current_players_counter(_id: int = 0, _player: Dictionary = {}):
 	current_players_counter.text = str(GameManager.get_registered_players().size()) + "/" + str(GameManager.get_server_settings().max_players)
 
@@ -67,26 +87,18 @@ func _on_start_game_button_button_down():
 
 
 func _on_interact_button_button_down():
-	execute_action("interact")
+	GameManager.execute_action("interact")
 
 
 func _on_chat_button_button_down():
 	if get_parent().get_node("Chat").get_node("%InputText").visible:
-		execute_action("chat_close")
+		GameManager.execute_action("pause_menu")
 	else:
-		execute_action("chat_open")
+		GameManager.execute_action("chat_open")
 
 
 func _on_pause_button_button_down():
-	execute_action("pause_menu")
-
-
-# Wykonuje podaną akcję
-func execute_action(action_name:String):
-	var event = InputEventAction.new()
-	event.action = action_name
-	event.pressed = true
-	Input.parse_input_event(event)
+	GameManager.execute_action("pause_menu")
 
 
 # Aktywuje i deaktywuje przycisk interakcji

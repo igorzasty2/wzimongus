@@ -18,11 +18,11 @@ func _ready():
 	GameManager.teleport_players()
 	
 	if  most_voted_player == null:
-		ejection_message.text = "[center]Nikt nie został wyrzucony.[/center]"
+		ejection_message.text = "[center]Nikt nie został usunięty z grupy[/center]"
 	elif most_voted_player["is_lecturer"]:
-		ejection_message.text = "[center]" + most_voted_player['username'] + " został wyrzucony.[/center]"
+		ejection_message.text = "[center]" + most_voted_player['username'] + " został usunięty z grupy[/center]"
 	else:
-		ejection_message.text = "[center]" + most_voted_player['username'] + " nie był wykładowcą.[/center]"
+		ejection_message.text = "[center]" + most_voted_player['username'] + " nie był wykładowcą[/center]"
 
 	add_child(next_round_timer)
 	next_round_timer.autostart = true

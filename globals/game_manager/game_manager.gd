@@ -32,12 +32,11 @@ signal error_occured(message: String)
 signal player_killed(player_id: int, is_victim: bool)
 
 ## Emitowany po włączeniu sabotażu.
-signal sabotage()
+signal sabotage_occured()
 
 ## Emitowany po zakończeniu ładowania mapy głównej.
 signal map_load_finished()
 
-# Przechowuje informacje o aktualnym stanie gry.
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
 
@@ -47,7 +46,21 @@ signal winner_determined(winning_role: Role)
 ## Rola gracza
 enum Role {STUDENT, LECTURER}
 
-## Udostępnia dane o dostępnych skinach.
+## Komunikaty błędów.
+const error_messages = {
+	"ERR_LOBBY_NAME_LENGTH": "Nazwa lobby musi mieć od 3 do 16 znaków!",
+	"ERR_USERNAME_LENGTH": "Nazwa użytkownika musi mieć od 3 do 16 znaków!",
+	"ERR_PORT": "Nie udało się nasłuchiwać na porcie %s!",
+	"ERR_SERVER": "Nie udało się uruchomić serwera!",
+	"ERR_CLIENT": "Nie udało się utworzyć klienta! Powód: %s",
+	"ERR_CONNECTION": "Nie udało się połączyć z %s!",
+	"ERR_CONNECTION_FAILED": "Nie można połączyć się z serwerem!",
+	"ERR_CONNECTION_LOST": "Połączenie z serwerem zostało przerwane!",
+	"ERR_GAME_STARTED": "Gra już się rozpoczęła!",
+	"ERR_MAX_PLAYERS": "Przekroczono limit graczy!",
+}
+
+## Dostępne skiny.
 const skins = {
 	0: {
 		"name": "Alternatywka",
@@ -131,7 +144,9 @@ var _server_settings = {
 	"task_amount": 3,
 	"emergency_cooldown": 30,
 	"student_light_radius": 4.0, 
-	"lecturer_light_radius": 4.0
+	"lecturer_light_radius": 4.0,
+	"voting_time": 60,
+	"discussion_time": 60
 }
 
 ## Lista atrybutów gracza, które klient ma prawo zmieniać.
@@ -161,6 +176,7 @@ var transition_background_texture = null
 ## Czy scena jest włączana po raz pierwszy
 var is_first_time: bool = true
 
+
 func _ready():
 	multiplayer.peer_disconnected.connect(_delete_deregistered_player)
 	multiplayer.connected_to_server.connect(_on_connected)
@@ -170,6 +186,16 @@ func _ready():
 
 ## Tworzy nowy serwer gry.
 func create_lobby(lobby_name: String, port: int):
+	# Weryfikuje długość nazwy lobby.
+	if !_verify_lobby_name_length(lobby_name):
+		_handle_error(error_messages["ERR_LOBBY_NAME_LENGTH"])
+		return
+
+	# Weryfikuje długość nazwy użytkownika.
+	if !_verify_username_length(_current_player["username"]):
+		_handle_error(error_messages["ERR_USERNAME_LENGTH"])
+		return
+
 	# Ustawia parametry serwera.
 	_server_settings["lobby_name"] = lobby_name
 	_server_settings["port"] = port
@@ -179,7 +205,7 @@ func create_lobby(lobby_name: String, port: int):
 	var status = peer.create_server(_server_settings["port"])
 
 	if status != OK:
-		_handle_error("Nie udało się nasłuchiwać na porcie " + str(_server_settings["port"]) + "!")
+		_handle_error(error_messages["ERR_PORT"] % str(_server_settings["port"]))
 		return
 
 	multiplayer.multiplayer_peer = peer
@@ -191,7 +217,7 @@ func create_lobby(lobby_name: String, port: int):
 	)
 
 	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
-		_handle_error("Nie udało się uruchomić serwera!")
+		_handle_error(error_messages["ERR_SERVER"])
 		return
 
 	# Rejestruje hosta jako gracza.
@@ -200,7 +226,7 @@ func create_lobby(lobby_name: String, port: int):
 
 
 ## Zmienia ustawienia serwera.
-func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, sabotage_cooldown: int, kill_radius: int, task_amount: int, emergency_cooldown: int, student_light_radius: int, lecturer_light_radius: int):
+func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, sabotage_cooldown: int, kill_radius: int, task_amount: int, emergency_cooldown: int, student_light_radius: int, lecturer_light_radius: int, voting_time: int, discussion_time: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 	
@@ -213,6 +239,8 @@ func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown:
 	_server_settings["emergency_cooldown"] = emergency_cooldown
 	_server_settings["lecturer_light_radius"] = lecturer_light_radius
 	_server_settings["student_light_radius"] = student_light_radius
+	_server_settings["voting_time"] = voting_time
+	_server_settings["discussion_time"] = discussion_time
 	_update_server_settings.rpc(_server_settings)
 	server_settings_changed.emit()
 
@@ -231,7 +259,7 @@ func join_lobby(address:String, port:int):
 	var status = peer.create_client(address, port)
 
 	if status != OK:
-		_handle_error("Nie udało się utworzyć klienta! Powód: " + error_string(status))
+		_handle_error(error_messages["ERR_CLIENT"] % error_string(status))
 		return
 
 	multiplayer.multiplayer_peer = peer
@@ -243,7 +271,7 @@ func join_lobby(address:String, port:int):
 	)
 
 	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
-		_handle_error("Nie udało się połączyć z " + str(address) + ":" + str(port) + "!")
+		_handle_error(error_messages["ERR_CONNECTION"] % (str(address) + ":" + str(port)))
 		return
 
 
@@ -366,15 +394,14 @@ func get_registered_player_key(id:int, key:String):
 
 ## Zwraca ID obecnego gracza.
 func get_current_player_id():
+	if multiplayer == null:
+		return
+
 	return multiplayer.get_unique_id()
 
 
 ## Zwraca informację o obecnym graczu, która jest przechowywana pod danym kluczem.
 func get_current_player_key(key:String):
-	# Jeśli klucz jest zmienialny, szuka go w słowniku gracza.
-	if key in _player_fillable && _current_player.has(key):
-		return _current_player[key]
-
 	var id = get_current_player_id()
 
 	# W przeciwnym wypadku szuka go w słowniku zarejestrowanych graczy.
@@ -452,13 +479,13 @@ func _on_connected():
 
 ## Obsługuje nieudane połączenie z serwerem.
 func _on_connection_failed():
-	_handle_error("Nie można połączyć się z serwerem!")
+	_handle_error(error_messages["ERR_CONNECTION_FAILED"])
 	end_game()
 
 
 ## Obsługuje rozłączenie z serwerem u klienta.
 func _on_server_disconnected():
-	_handle_error("Połączenie z serwerem zostało przerwane!")
+	_handle_error(error_messages["ERR_CONNECTION_LOST"])
 	end_game()
 
 
@@ -497,14 +524,19 @@ func _register_player(player:Dictionary):
 
 	var id = multiplayer.get_remote_sender_id()
 
+	# Wyrzuca gracza, jeśli nazwa użytkownika nie ma odpowiedniej długości.
+	if !_verify_username_length(player["username"]):
+		_kick_player.rpc_id(id, error_messages["ERR_USERNAME_LENGTH"])
+		return
+
 	# Wyrzuca gracza, jeśli gra już się rozpoczęła.
 	if _current_game["is_started"]:
-		_kick_player.rpc_id(id, "Gra już się rozpoczęła!")
+		_kick_player.rpc_id(id, error_messages["ERR_GAME_STARTED"])
 		return
 
 	# Wyrzuca gracza, jeśli przekroczono limit graczy.
 	if _current_game["registered_players"].size() >= _server_settings["max_players"]:
-		_kick_player.rpc_id(id, "Przekroczono limit graczy!")
+		_kick_player.rpc_id(id, error_messages["ERR_MAX_PLAYERS"])
 		return
 
 	# Informuje gracza o obecnych ustawieniach serwera.
@@ -544,6 +576,9 @@ func _create_registered_player(id:int, player:Dictionary) -> Dictionary:
 
 	# Dodaje predefiniowane atrybuty.
 	filtered_player.merge(_player_attributes)
+
+	# Nadaje unikalną nazwę użytkownika.
+	filtered_player["username"] = _verify_username(filtered_player["username"])
 
 	# Przypisuje skin.
 	filtered_player["skin"] = _select_skin()
@@ -746,7 +781,7 @@ func _count_alive_crewmates():
 	return crewmate_counter
 
 
-## Teleportuje wszystkich graczy do wskazanage miejsca lub do miejsca spotkania - używane po rozpoczęciu przejścia na ekran ejection_screen
+## Teleportuje wszystkich graczy do miejsca spotkania - używane po rozpoczęciu przejścia na ekran ejection_screen
 func teleport_players():
 	var players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
 	var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
@@ -762,14 +797,54 @@ func main_map_load_finished():
 	map_load_finished.emit()
 
 
-@rpc("any_peer", "reliable", "call_local")
+@rpc("any_peer", "call_local", "reliable")
+## Przyjmuje prośbę o włączenie sabotażu.
 func request_light_sabotage():
 	if not multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-	
-	activate_light_sabotage.rpc()
-	
 
-@rpc("authority", "reliable", "call_local")
+	var player_id = multiplayer.get_remote_sender_id()
+
+	if !get_registered_player_key(player_id, "is_lecturer"):
+		return ERR_UNAUTHORIZED
+
+	activate_light_sabotage.rpc()
+
+
+@rpc("call_local", "reliable")
+## Emituje sygnał włączenia sabotażu.
 func activate_light_sabotage():
-	sabotage.emit()
+	sabotage_occured.emit()
+
+
+## Symuluje wciśnięcie klawisza w celu wywołania konkretnej akcji.
+func execute_action(action_name: String):
+	var event = InputEventAction.new()
+	event.action = action_name
+	event.pressed = true
+
+	Input.parse_input_event(event)
+
+
+## Zwraca nazwę użytkownika w formie unikalnej.
+func _verify_username(username: String, idx: int = 0) -> String:
+	var username_to_verify = username
+
+	if idx > 0:
+		username_to_verify += " (" + str(idx) +")"
+
+	for i in get_registered_players():
+		if get_registered_player_key(i, "username") == username_to_verify:
+			return _verify_username(username, idx + 1)
+
+	return username_to_verify
+
+
+## Weryfikuje długość nazwy lobby.
+func _verify_lobby_name_length(lobby_name: String) -> bool:
+	return lobby_name.length() >= 3 && lobby_name.length() <= 16
+
+
+## Weryfikuje długość nazwy użytkownika.
+func _verify_username_length(username: String) -> bool:
+	return username.length() >= 3 && username.length() <= 16

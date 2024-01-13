@@ -123,7 +123,7 @@ func _generate_letters(formula:String):
 		const SHIFT = Vector2(130, 0)
 		Letter.position = $FirstLetter.position + i * SHIFT
 		inner_text = Letter.get_node("./LetterInBox")
-		inner_text.text = "[center][font_size={55}][color=black]"
+		inner_text.text = "[center][font_size={56}][color=black]"
 		if(sequence[i] == 20):
 			inner_text.text += rand_letter
 		else:
@@ -186,11 +186,11 @@ func _generate_formula(formula:String):
 			text.size = Vector2(80, 80)
 			text.bbcode_enabled = true
 			# Dostosowywanie koloru tekstu zależnie od wybranego gui
-			text.text = "[center][font_size={55}][color=black]" +\
+			text.text = "[center][font_size={56}][color=black]" +\
 			formula[i] + "[/color][/font_size][/center]"
 			add_child(text)
 	# TextBox uzupełniany jest o podpowiedź do obecnie uzupełnianego wzoru
-	$Hint.text += "[center][font_size={23}][color=white]" + formula + "[/color][/font_size][/center]\n"
+	$Hint.text += "[center][font_size={24}][color=white]" + formula + "[/color][/font_size][/center]\n"
 
 
 ## Zwraca tablicę wygenerowanych pól z literami

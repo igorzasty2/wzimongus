@@ -10,4 +10,11 @@ func _ready():
 
 ## Zmienia widoczność światła kamery aby widać było stojących w jej polu widzenia graczy
 func change_light_visibility():
+	if $Light.visible:
+		$Light.visible = !$Light.visible
+	else:
+		$LightTimer.start()
+
+
+func _on_light_timer_timeout():
 	$Light.visible = !$Light.visible

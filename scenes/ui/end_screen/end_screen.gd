@@ -1,12 +1,17 @@
 extends CanvasLayer
 
-var winning_role = null
 
-## Ustawia rolą która wygrała dla tej sceny
+func _ready():
+	GameManager.game_started.connect(queue_free)
+
+
+## Ustawia tekst wyświetlany na ekranie.
 func set_winning_role(role: GameManager.Role):
 	if role == GameManager.Role.LECTURER:
+		$Background.texture = load("res://scenes/ui/end_screen/assets/lecturers_won_background.png")
 		$WinnerText.text = "Wykładowcy wygrali"
 	elif role == GameManager.Role.STUDENT:
+		$Background.texture = load("res://scenes/ui/end_screen/assets/students_won_background.png")
 		$WinnerText.text = "Studenci wygrali"
 
 

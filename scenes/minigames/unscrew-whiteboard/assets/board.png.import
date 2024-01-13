@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8infxgemuldq"
-path="res://.godot/imported/background.png-de5e66b2025a9cb15e0c31776465e428.ctex"
+uid="uid://bfhbl52norr51"
+path="res://.godot/imported/board.png-ef0da5866a484b07a4fc4eca8e0b518e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui/game_ending/assets/background.png"
-dest_files=["res://.godot/imported/background.png-de5e66b2025a9cb15e0c31776465e428.ctex"]
+source_file="res://scenes/minigames/unscrew-whiteboard/assets/board.png"
+dest_files=["res://.godot/imported/board.png-ef0da5866a484b07a4fc4eca8e0b518e.ctex"]
 
 [params]
 

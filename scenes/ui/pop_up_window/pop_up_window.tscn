@@ -40,7 +40,6 @@ theme_override_constants/margin_bottom = 15
 [node name="Label" type="Label" parent="Panel/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 19
 text = "text here"
 horizontal_alignment = 1
 vertical_alignment = 1

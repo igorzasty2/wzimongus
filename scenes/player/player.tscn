@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=31 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
@@ -19,7 +19,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:frame_coords")
+tracks/0/path = NodePath("Control/PlayerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -36,7 +36,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:frame_coords")
+tracks/0/path = NodePath("Control/PlayerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -53,7 +53,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:frame_coords")
+tracks/0/path = NodePath("Control/PlayerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -70,7 +70,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:frame_coords")
+tracks/0/path = NodePath("Control/PlayerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -90,6 +90,26 @@ _data = {
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vdv6v"]
+
+[sub_resource type="Animation" id="Animation_rm4wm"]
+resource_name = "venting_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 1),
+"transitions": PackedFloat32Array(0.224, 0.456, 1),
+"update": 0,
+"values": [Vector2(99, 475), Vector2(99, 405), Vector2(99, 680)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ld030"]
+_data = {
+"venting_animation": SubResource("Animation_rm4wm")
+}
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mw58m"]
 animation = &"idle_left"
@@ -191,13 +211,31 @@ libraries = {
 "": SubResource("AnimationLibrary_0ebfx")
 }
 
-[node name="PlayerSprite" type="Sprite2D" parent="Skins"]
+[node name="Control" type="Control" parent="Skins"]
+clip_contents = true
+layout_mode = 3
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.0
+offset_top = -445.0
+offset_right = 99.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerSprite" type="Sprite2D" parent="Skins/Control"]
 material = SubResource("ShaderMaterial_vdv6v")
-position = Vector2(0, 30)
+position = Vector2(99, 475)
 scale = Vector2(0.3, 0.3)
 offset = Vector2(0, -250)
 hframes = 5
 vframes = 2
+
+[node name="VentingAnimationPlayer" type="AnimationPlayer" parent="Skins/Control/PlayerSprite"]
+libraries = {
+"": SubResource("AnimationLibrary_ld030")
+}
 
 [node name="AnimationTree" type="AnimationTree" parent="Skins"]
 tree_root = SubResource("AnimationNodeStateMachine_gjhch")
@@ -227,10 +265,9 @@ offset_right = 42.0
 offset_bottom = -199.0
 grow_horizontal = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 vertical_alignment = 1
-visible_characters = 18
 metadata/_edit_use_anchors_ = true
 
 [node name="Input" type="Node" parent="."]
@@ -246,3 +283,5 @@ input_properties = Array[String](["Input:direction"])
 script = ExtResource("3_l2yj5")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
+
+[connection signal="animation_finished" from="Skins/Control/PlayerSprite/VentingAnimationPlayer" to="." method="_on_venting_animation_player_animation_finished"]

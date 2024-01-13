@@ -9,14 +9,30 @@ script = ExtResource("1_q7pdo")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 160.0
-offset_top = 24.0
-offset_right = -160.0
-offset_bottom = -24.0
+offset_left = 176.0
+offset_top = 48.0
+offset_right = -176.0
+offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/separation = 5
+theme_override_constants/separation = 15
+
+[node name="GroupContainer" type="HBoxContainer" parent="ChatContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="GroupLabel" type="Label" parent="ChatContainer/GroupContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Uczestniczysz w grupie: [group]"
+vertical_alignment = 1
+
+[node name="GroupChangeButton" type="Button" parent="ChatContainer/GroupContainer"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "Zmień grupę"
 
 [node name="ChatLogsScrollbar" type="ScrollContainer" parent="ChatContainer"]
 unique_name_in_owner = true
@@ -41,11 +57,6 @@ unique_name_in_owner = true
 wait_time = 3.464
 one_shot = true
 
-[node name="Group" type="Label" parent="ChatContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "[group]"
-
 [node name="InputText" type="LineEdit" parent="ChatContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -53,6 +64,7 @@ mouse_filter = 2
 placeholder_text = "Napisz wiadomość..."
 flat = true
 
+[connection signal="pressed" from="ChatContainer/GroupContainer/GroupChangeButton" to="." method="_on_group_change_button_pressed"]
 [connection signal="timeout" from="ChatContainer/ChatLogsScrollbar/ChatLogsContainer/ChatDisappearTimer" to="." method="_on_timer_timeout"]
 [connection signal="text_submitted" from="ChatContainer/InputText" to="." method="_on_input_text_text_submitted"]
 [connection signal="visibility_changed" from="ChatContainer/InputText" to="." method="_on_input_text_visibility_changed"]

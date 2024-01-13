@@ -22,6 +22,9 @@ var is_in_vent: bool = false
 ## Czy jest w trakcie poruszania się przez venta lub do venta.
 var is_moving_through_vent: bool = false
 
+## Czy gracz właśnie wszedł do venta
+var _has_entered_vent: bool = false
+
 ## Kolor gracza do zabicia
 var in_range_color = [180, 0, 0, 255]
 ## Kolor gracza, którego nie możemy zabić
@@ -38,6 +41,7 @@ var is_teleport: bool = false
 ## Pozycja docelowa teleportacji
 var teleport_position = null
 
+
 ## Referencja do wejścia gracza.
 @onready var input: InputSynchronizer = $Input
 ## Referencja do synchronizatora rollbacku.
@@ -47,12 +51,17 @@ var teleport_position = null
 ## Referencja do drzewa animacji postaci.
 @onready var animation_tree: AnimationTree = $Skins/AnimationTree
 ## Referencja do sprite'a postaci.
-@onready var player_sprite = $Skins/PlayerSprite
+@onready var player_sprite = $Skins/Control/PlayerSprite
 ## Referencja do node'a postaci.
 @onready var player_node = $"."
 
+## Referencja do node'a światła.
 @onready var light = $LightsContainer/Light
+## Referencja do kontenera node'a światła.
 @onready var lights_container = $LightsContainer
+
+## Player animacji ventowania
+@onready var venting_animation_player = $Skins/Control/PlayerSprite/VentingAnimationPlayer
 
 ## Początkowa maska kolizji.
 @onready var initial_collision_mask: int = collision_mask
@@ -63,9 +72,9 @@ var user_interface
 signal button_active(button_name:String, is_active:bool)
 ## Timer z czasem do oblania
 var timer
-
+## Timer z czasem do sabotażu
 var sabotage_timer
-
+## Timer z czasem do włączenia światła u studenta.
 var no_light_timer
 ## Określa czy gracz może reportować
 var can_report: bool = false
@@ -124,12 +133,9 @@ func _ready():
 	
 	# Łączy sygnał zabicia postaci z funkcją _on_killed_player
 	GameManager.player_killed.connect(_on_killed_player)
-	GameManager.sabotage.connect(_on_sabotage)
-	
-	# Jeśli gracz jest impostorem to ustawia początkową możliwość zabicia na true
-	if GameManager.get_current_player_key("is_lecturer"):
-		can_kill_cooldown = true
-		can_sabotage_cooldown = true
+
+	if name.to_int() == GameManager.get_current_player_id():
+		GameManager.sabotage_occured.connect(_on_sabotage_occured)
 	
 	GameManager.map_load_finished.connect(_on_map_load_finished)
 	GameManager.next_round_started.connect(_on_next_round_started)
@@ -145,6 +151,7 @@ func _process(_delta):
 	if user_interface!=null && timer!=null && timer.time_left!=0:
 		user_interface.update_time_left("FailLabel", str(int(timer.time_left)))
 		
+	# Aktualizuje czas pozostały do kolejnej możliwości sabotażu.
 	if user_interface!=null && sabotage_timer!=null && sabotage_timer.time_left>0:
 		user_interface.update_time_left("SabotageLabel", str(int(sabotage_timer.time_left)))
 
@@ -160,17 +167,15 @@ func _rollback_tick(delta, _tick, is_fresh):
 				global_position = input.destination_position
 				input.direction = Vector2.ZERO
 
-				button_active.emit("ReportButton", !is_in_vent && can_report)
-				button_active.emit("FailButton", !is_in_vent)
+				_has_entered_vent = true
 
-				# Wyłącza widoczność gracza.
 				if multiplayer.is_server():
-					toggle_visibility.rpc(false)
+					_play_venting_animation.rpc(false)
 
-				# Włącza widoczność przycisków kierunkowych venta.
-				if name.to_int() == GameManager.get_current_player_id():
-					_toggle_vent_buttons(true)
-					_toggle_vent_light(true)
+					var vent = get_nearest_vent()
+
+					if vent != null:
+						vent.play_vent_animation.rpc()
 
 				input.is_walking_to_destination = false
 				is_moving_through_vent = false
@@ -180,7 +185,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 			# Przesuwa gracza w kierunku docelowego venta.
 			global_position = global_position.move_toward(input.destination_position, delta * venting_speed * NetworkTime.physics_factor)
 
-			# Jeśli gracz dotał do docelowego venta.
+			# Jeśli gracz dotarł do docelowego venta.
 			if global_position == input.destination_position:
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
@@ -192,11 +197,13 @@ func _rollback_tick(delta, _tick, is_fresh):
 	# Gracz jest przenoszony na miejsce awaryjnego spotkania
 	elif is_teleport && is_fresh:
 		# Wyciąga impostora z venta
-		if is_in_vent:
-			if name.to_int() != 1:
-				_exit_vent()
-			_exit_vent.rpc_id(name.to_int())
-		
+		if multiplayer.is_server():
+			if is_in_vent:
+				if name.to_int() != 1:
+					_exit_vent()
+
+				_exit_vent.rpc_id(name.to_int())
+
 		global_position = teleport_position
 		is_teleport = false
 		teleport_position = null
@@ -236,6 +243,9 @@ func _input(event):
 			return
 
 		if !is_in_vent && GameManager.get_current_game_key("is_input_disabled"):
+			return
+		
+		if venting_animation_player.is_playing():
 			return
 
 		_use_vent()
@@ -327,6 +337,7 @@ func _on_next_round_started():
 func _handle_kill_timer():
 	can_kill_cooldown = false
 	timer = Timer.new()
+	timer.set_name("KillCooldownTimer")
 	timer.timeout.connect(_on_timer_timeout)
 	timer.one_shot = true
 	timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
@@ -336,7 +347,7 @@ func _handle_kill_timer():
 
 ## Włącza i wyłącza podświetlenie możliwości zabicia gracza
 func _toggle_highlight(player: int, is_on: bool) -> void:
-	var player_material = get_parent().get_node(str(player) + "/Skins/PlayerSprite").material
+	var player_material = get_parent().get_node(str(player) + "/Skins/Control/PlayerSprite").material
 	
 	if player_material:
 		player_material.set_shader_parameter('color', in_range_color if is_on else out_of_range_color)
@@ -409,26 +420,28 @@ func _on_killed_player(player_id: int, is_victim: bool) -> void:
 			var dead_body = preload("res://scenes/player/assets/dead_body.tscn").instantiate()
 			get_parent().get_parent().get_node("DeadBodies").add_child(dead_body)
 			dead_body.set_dead_player(player_id)
-			dead_body.get_node("DeadBodyLabel").text = "Oblany student (" + GameManager.get_registered_player_key(player_id, "username") + ")"
 
 
 func _on_timer_timeout() -> void:
-	if GameManager.get_current_player_id() == name.to_int():
+	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer"):
 			can_kill_cooldown = true
-			user_interface.update_time_left("FailLabel", "")
+
 			for i in range(player_node.get_child_count()):
 				var child: Node = player_node.get_child(i)
-				if child.is_class("Timer"):
+				if child.name == "KillCooldownTimer":
 					child.queue_free()
+
+					user_interface.update_time_left("FailLabel", "")
+
 					return
 
 
 func _update_dead_player(player_id: int):
 	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
-	victim_node.get_node("Skins/PlayerSprite").use_parent_material = true
-	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
+	victim_node.get_node("Skins/Control/PlayerSprite").use_parent_material = true
+	victim_node.get_node("Skins/Control/PlayerSprite").modulate = Color(1,1,1,0.35)
 	victim_node.collision_mask = 8
 	victim_node.collision_layer = 16
 	victim_node.z_index += 1
@@ -485,6 +498,9 @@ func _enter_vent(vent_position):
 @rpc("any_peer", "call_local", "reliable")
 ## Obsługuje żądanie wyjścia z venta.
 func _request_vent_exiting():
+	if !multiplayer.is_server():
+		return
+
 	var id = multiplayer.get_remote_sender_id()
 
 	if !name.to_int() == id:
@@ -511,7 +527,7 @@ func _request_vent_exiting():
 ## Obsługuje wyjście z venta.
 func _exit_vent():
 	var vent = get_nearest_vent()
-	
+
 	if vent == null:
 		return
 
@@ -519,13 +535,15 @@ func _exit_vent():
 		vent.set_direction_buttons_visibility(false)
 		vent.set_vent_light_visibility_for(name.to_int(), false)
 
+	_has_entered_vent = false
 	is_in_vent = false
 	collision_mask = initial_collision_mask
 
-	vent_exited.emit()
-
 	if multiplayer.is_server():
 		toggle_visibility.rpc(true)
+
+		_play_venting_animation.rpc(true)
+		vent.play_vent_animation.rpc()
 
 
 ## Zmienia widoczność przycisków kierunkowych venta.
@@ -537,7 +555,7 @@ func _toggle_vent_buttons(is_enabled: bool):
 
 	vent.set_direction_buttons_visibility(is_enabled)
 
-
+## Zmienia widoczność światła venta.
 func _toggle_vent_light(value: bool):
 	var vent = get_nearest_vent()
 
@@ -547,6 +565,7 @@ func _toggle_vent_light(value: bool):
 	vent.set_vent_light_visibility_for(name.to_int(), value)
 
 
+## Włącza światło graczowi.
 func activate_lights():
 	if GameManager.get_current_player_key("is_lecturer"):
 		set_light_texture_scale(GameManager.get_server_settings()["lecturer_light_radius"])
@@ -554,19 +573,21 @@ func activate_lights():
 		set_light_texture_scale(GameManager.get_server_settings()["student_light_radius"])
 	
 	lights_container.show()
-	
 
+
+## Wyłącza światło graczowi.
 func deactivate_lights():
 	lights_container.hide()
 
 
+## Włącza shadery graczowi.
 func activate_player_shaders():
 	# Domyślnie shadery są wyłaczone w menu bo jeżeli włączyć ich to nie będzie widać graczowi
 	var shader_material = ShaderMaterial.new()
 	shader_material.shader = load("res://shaders/player_outline.gdshader")
 	
 	player_sprite.material = shader_material
-	player_sprite.material.set_shader_parameter("width", 4.0)
+	player_sprite.material.set_shader_parameter("width", 11.0)
 	player_sprite.material.set_shader_parameter("pattern", 1)
 	player_sprite.material.set_shader_parameter("add_margins", true)
 	player_sprite.material.set_shader_parameter("color", "#00000000")
@@ -574,11 +595,13 @@ func activate_player_shaders():
 	username_label.material = load("res://scenes/player/assets/light_only_canvas_material.tres")
 
 
+## Wyłącza shadery graczowi.
 func deactivate_player_shaders():
 	player_sprite.material = null
 	username_label.material = null
 
 
+## Ustawia wartość promienia światła graczowi.
 func set_light_texture_scale(texture_scale: float):
 	light.texture_scale = texture_scale / player_node.global_scale.x
 
@@ -595,28 +618,31 @@ func _handle_sabotage_timer():
 	sabotage_timer.start()
 
 
+## Usuwa timer sabotażu oraz udostępnia sabotaż u wykładowcy.
 func _on_sabotage_timer_timeout() -> void:
-	if GameManager.get_current_player_id() == name.to_int():
+	if name.to_int() == GameManager.get_current_player_id():
 		if GameManager.get_current_player_key("is_lecturer"):
 			can_sabotage_cooldown = true
-			user_interface.update_time_left("SabotageLabel", "")
-			
+
 			for i in range(player_node.get_child_count()):
 				var child: Node = player_node.get_child(i)
 				if child.name == "SabotageCooldownTimer":
 					child.queue_free()
+
+					user_interface.update_time_left("SabotageLabel", "")
 					button_active.emit("SabotageButton", true)
+
 					return
 
 
-func _on_sabotage():
+## Aktywuje sabotaż u studentów oraz blokuje na jakiś czas przecisk sabotażu u wykładowców.
+func _on_sabotage_occured():
 	if GameManager.get_current_player_key("is_lecturer"):
 		button_active.emit("SabotageButton", false)
 		_handle_sabotage_timer()
-		
 	else:
 		decrease_light_range_sabotage()
-		
+
 		no_light_timer = Timer.new()
 		no_light_timer.set_name("NoLightTimer")
 		no_light_timer.timeout.connect(cancel_decrease_light_range_sabotage)
@@ -629,15 +655,47 @@ func _on_sabotage():
 ## Zmniejsza promień swiatła podczas sabotage.
 func decrease_light_range_sabotage() -> void:
 	if not GameManager.get_current_player_key("is_lecturer"):
-#		light.texture_scale /= 6
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale / 6, 1).set_trans(Tween.TRANS_CUBIC)
-	
 
 
 ## Wraca promień swiatła na normalny po sabotage.
 func cancel_decrease_light_range_sabotage() -> void:
 	if not GameManager.get_current_player_key("is_lecturer"):
-#		light.texture_scale *= 6
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale * 6, 1).set_trans(Tween.TRANS_CUBIC)
+
+
+func _on_venting_animation_player_animation_finished(anim_name):
+	if anim_name == "venting_animation":
+		# Gracz wchodzi do venta
+		if _has_entered_vent:
+			button_active.emit("ReportButton", !is_in_vent && can_report)
+			button_active.emit("FailButton", !is_in_vent)
+
+			# Wyłącza widoczność gracza.
+			if multiplayer.is_server():
+				toggle_visibility.rpc(false)
+
+			# Włącza widoczność przycisków kierunkowych venta.
+			if name.to_int() == GameManager.get_current_player_id():
+				_toggle_vent_buttons(true)
+				_toggle_vent_light(true)
+		# Gracz wychodzi z venta
+		else:
+			_handle_vent_exit()
+
+
+## Obsługuje wyjście z venta po zakończeniu animacji
+func _handle_vent_exit():
+	_has_entered_vent = false
+	vent_exited.emit()
+
+
+@rpc("call_local", "reliable")
+## Puszcza animacje ventowania
+func _play_venting_animation(is_backwards:bool):
+	if !is_backwards:
+		venting_animation_player.play("venting_animation")
+	else: 
+		venting_animation_player.play_backwards("venting_animation")
