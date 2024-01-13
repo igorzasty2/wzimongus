@@ -317,6 +317,7 @@ position = Vector2(-279, -1725)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/AulaTablica"]
+visible = false
 texture = ExtResource("31_dhdh4")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/AulaTablica"]
@@ -329,6 +330,7 @@ position = Vector2(3144, -625)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/BufetAutomat"]
+visible = false
 texture = ExtResource("32_jc7lc")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/BufetAutomat"]
@@ -394,6 +396,7 @@ position = Vector2(-2541, 1057)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/DziekanatBiurko"]
+visible = false
 texture = ExtResource("38_u8dgm")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/DziekanatBiurko"]
@@ -470,6 +473,7 @@ position = Vector2(3794, -2029)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/PokojWykladowcowSzafaLewa"]
+visible = false
 texture = ExtResource("44_y3l63")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/PokojWykladowcowSzafaLewa"]
@@ -595,6 +599,7 @@ position = Vector2(1779, -730)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/Sala1Stol"]
+visible = false
 texture = ExtResource("48_3efwf")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Stol"]
@@ -853,6 +858,7 @@ texture = ExtResource("64_geuup")
 polygon = PackedVector2Array(108, -191.6, 108, -190.1, 109, -189.4, 109, 48, -52.1, 201, -70.6, 201, -109, 186.2, -109, -68, 45, -200.9, 64.3, -201)
 
 [node name="SerwerowniaWifi" type="Node2D" parent="Objects"]
+visible = false
 position = Vector2(-841, -2878)
 metadata/_edit_group_ = true
 
@@ -897,6 +903,7 @@ position = Vector2(2541, -2614)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/WillyKomputer"]
+visible = false
 texture = ExtResource("69_68rt3")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/WillyKomputer"]
@@ -950,8 +957,9 @@ metadata/_edit_group_ = true
 texture = ExtResource("71_yvo4d")
 
 [node name="XeroStosKartek" type="Node2D" parent="Objects"]
+visible = false
 z_index = -3
-position = Vector2(-1182, -56)
+position = Vector2(-1818, 88)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/XeroStosKartek"]
@@ -985,43 +993,44 @@ sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("77_1ivr1")
 
 [node name="Task2" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(350, -1000)
-sprite = ExtResource("4_wgy3w")
+position = Vector2(-1842, 124)
+sprite = ExtResource("72_vb4gs")
 minigame_scene = ExtResource("78_pc37b")
 
 [node name="Task3" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(700, -1000)
-sprite = ExtResource("4_wgy3w")
+position = Vector2(3152, -624)
+sprite = ExtResource("32_jc7lc")
 minigame_scene = ExtResource("79_xtlh3")
 
 [node name="Task4" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(1050, -1000)
-sprite = ExtResource("4_wgy3w")
+position = Vector2(-2538, 1052)
+sprite = ExtResource("38_u8dgm")
 minigame_scene = ExtResource("80_j2qov")
 
 [node name="Task5" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(1400, -1000)
-sprite = ExtResource("4_wgy3w")
+position = Vector2(1780, -728)
+sprite = ExtResource("48_3efwf")
 minigame_scene = ExtResource("80_b7854")
 
 [node name="Task6" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(1751, -1014)
+position = Vector2(-880, -2911)
 sprite = ExtResource("4_wgy3w")
+scale_factor = 0.5
 minigame_scene = ExtResource("82_rt2pg")
 
 [node name="Task7" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(2136, -1012)
-sprite = ExtResource("4_wgy3w")
+position = Vector2(2543, -2610)
+sprite = ExtResource("69_68rt3")
 minigame_scene = ExtResource("83_7u8vq")
 
 [node name="Task8" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(2504, -1028)
-sprite = ExtResource("4_wgy3w")
+position = Vector2(3802, -2027)
+sprite = ExtResource("44_y3l63")
 minigame_scene = ExtResource("84_y3nq6")
 
 [node name="Task9" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(2861, -1028)
-sprite = ExtResource("4_wgy3w")
+position = Vector2(-277, -1718)
+sprite = ExtResource("31_dhdh4")
 minigame_scene = ExtResource("86_ao4sp")
 
 [node name="CameraSystem" parent="InteractionPoints" instance=ExtResource("3_e0rk4")]
@@ -1148,6 +1157,7 @@ position = Vector2(-3888, -584)
 shape = SubResource("RectangleShape2D_apqsq")
 
 [node name="LightMap" type="Node2D" parent="."]
+visible = false
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
