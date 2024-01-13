@@ -1,22 +1,29 @@
-extends Node
 ## Klasa systemu zarządzania zadaniami w grze.
+class_name TaskManager
+extends Node
 
 
 ## Emitowany kiedy lista zadań podlega zmianie.
-signal tasks_change;
+signal tasks_change()
+
 ## Emitowany kiedy globalna lista zadań zostaje zmieniona. 
-signal global_tasks_completed_amount_change();
+signal global_tasks_completed_amount_change()
 
 ## Task ID bieżącego zadania.
 var current_task_id = null
+
 ## Minigry dostępne ma mapie.
 var _minigames = {}
+
 ## Przechowuje zadania wszystkich graczy.
 var _tasks = {}
+
 ## Przechowuje zadania bieżącego gracza.
 var current_player_tasks = {}
+
 ## Ilość zadań w całej grze.
 var global_tasks_amount : int
+
 ## Ilość zrobionych już zadań.
 var global_tasks_completed_amount : int
 
@@ -60,7 +67,7 @@ func assign_tasks(task_amount):
 ## Oznacza zadanie jako wykonane po stronie klienta.
 func mark_task_as_complete() -> void:
 	# Usuwa zadanie z listy zadań bieżącego gracza.
-	var player_id = multiplayer.get_unique_id()
+	var player_id = GameManagerSingleton.get_current_player_id()
 	current_player_tasks[current_task_id].disable_task()
 	current_player_tasks.erase(current_task_id)
 	
@@ -81,13 +88,13 @@ func _send_tasks(tasks) -> void:
 	tasks_change.emit()
 
 
-@rpc("authority", "reliable", "call_local")
+@rpc("call_local", "reliable")
 ## Ustawia początkową ilość zadań graczowi.
 func set_global_tasks_amount(amount: int) -> void:
 	global_tasks_amount = amount
 
 
-@rpc("any_peer", "reliable", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 ## Wysyła infomację do serwera informujące o wykonaniu zadania.
 func _send_task_completion(player_id: int, task_id: int):
 	if !multiplayer.is_server():
@@ -118,7 +125,7 @@ func _count_global_completed_tasks_amount():
 	return global_tasks_amount - amount
 
 
-@rpc('reliable', "authority", "call_local")
+@rpc("call_local", "reliable")
 ## Aktualizuje ilość zakończonych tasków i wysyła sygnał o aktualizacji tej wartości.
 func _update_global_completed_tasks_amount(new_global_completed_tasks_amount) -> void:
 	global_tasks_completed_amount = new_global_completed_tasks_amount

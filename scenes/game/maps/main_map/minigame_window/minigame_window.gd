@@ -57,10 +57,10 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 	if event.is_action_pressed("interact"):
-		if GameManagerSingleton.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_value("is_paused"):
 			return
 
-		if GameManagerSingleton.get_current_game_key("is_input_disabled"):
+		if GameManagerSingleton.get_current_game_value("is_input_disabled"):
 			return
 
 		if _minigame == null:

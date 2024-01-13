@@ -17,6 +17,6 @@ func init(player: Dictionary, messageText: String, color: Color):
 
 func _get_skin_texture(skin_id: int) -> AtlasTexture:
 	var texture = AtlasTexture.new()
-	texture.atlas = load(GameManagerSingleton.skins[skin_id]["resource"])
+	texture.atlas = load(GameManagerSingleton.SKINS[skin_id]["resource"])
 	texture.region = Rect2(127.5, 0, 420, 420)
 	return texture

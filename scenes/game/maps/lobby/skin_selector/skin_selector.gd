@@ -6,7 +6,7 @@ extends CanvasLayer
 
 
 func _ready():
-	_update_skin_texture_rect(GameManagerSingleton.get_current_player_key("skin"))
+	_update_skin_texture_rect(GameManagerSingleton.get_current_player_value("skin"))
 	_populate_skins()
 
 	GameManagerSingleton.player_registered.connect(_populate_skins)
@@ -31,17 +31,17 @@ func _on_skin_changed(id: int, skin: int):
 
 func _update_skin_texture_rect(index):
 	var texture = AtlasTexture.new()
-	texture.atlas = load(GameManagerSingleton.skins[index]["resource"])
+	texture.atlas = load(GameManagerSingleton.SKINS[index]["resource"])
 	texture.region = Rect2(0, 0, 675, 675)
 	skin_texture_rect.texture = texture
 
 
 func _populate_skins(_id: int = -1, _player: Dictionary = {}):
-	var available_skins = GameManagerSingleton.skins.duplicate()
+	var available_skins = GameManagerSingleton.SKINS.duplicate()
 
 	for i in GameManagerSingleton.get_registered_players():
 		if i != GameManagerSingleton.get_current_player_id():
-			available_skins.erase(GameManagerSingleton.get_registered_player_key(i, "skin"))
+			available_skins.erase(GameManagerSingleton.get_registered_player_value(i, "skin"))
 
 	skin_option_button.clear()
 
@@ -50,7 +50,7 @@ func _populate_skins(_id: int = -1, _player: Dictionary = {}):
 	for i in available_skins:
 		skin_option_button.add_item(available_skins[i]["name"], i)
 
-		if i == GameManagerSingleton.get_current_player_key("skin"):
+		if i == GameManagerSingleton.get_current_player_value("skin"):
 			skin_option_button.select(idx)
 
 		idx += 1

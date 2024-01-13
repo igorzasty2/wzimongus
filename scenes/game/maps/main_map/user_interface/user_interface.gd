@@ -29,7 +29,7 @@ func _ready():
 	_on_interface_scale_changed(_user_sett.interface_scale)
 	
 	# Gracz jest impostorem
-	if GameManagerSingleton.get_current_player_key("is_lecturer"):
+	if GameManagerSingleton.get_current_player_value("is_lecturer"):
 		toggle_button_active("VentButton", false)
 		toggle_button_active("FailButton", false)
 		toggle_button_active("SabotageButton", false)

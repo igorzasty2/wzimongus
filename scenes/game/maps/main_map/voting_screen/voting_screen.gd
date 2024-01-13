@@ -115,13 +115,13 @@ func _count_time(delta):
 
 func _on_player_voted(voted_player_key):
 	skip_button.disabled = true
-	GameManagerSingleton.set_current_game_key("is_voted", true)
+	GameManagerSingleton.set_current_game_value("is_voted", true)
 
 	# Dodaje głos do listy głosów na serwerze
 	if multiplayer.is_server():
-		_add_player_vote(voted_player_key, multiplayer.get_unique_id())
+		_add_player_vote(voted_player_key, GameManagerSingleton.get_current_player_id())
 	else:
-		_add_player_vote.rpc_id(1, voted_player_key, multiplayer.get_unique_id())
+		_add_player_vote.rpc_id(1, voted_player_key, GameManagerSingleton.get_current_player_id())
 
 func _on_player_deregistered(player_id, _player):
 	_render_player_boxes()
@@ -130,7 +130,7 @@ func _on_player_deregistered(player_id, _player):
 		_remove_player_vote(player_id)
 
 func _remove_player_vote(player_key):
-	var votes = GameManagerSingleton.get_current_game_key("votes")
+	var votes = GameManagerSingleton.get_current_game_value("votes")
 
 	# Usuń głosy, które były na gracza
 	if votes.has(player_key):
@@ -156,13 +156,13 @@ func _add_player_vote(player_key, voted_by):
 func _count_alive_players():
 	var alive_count = 0
 	for player_key in GameManagerSingleton.get_registered_players().keys():
-		if GameManagerSingleton.get_registered_player_key(player_key, "is_dead") == false:
+		if GameManagerSingleton.get_registered_player_value(player_key, "is_dead") == false:
 			alive_count += 1
 	return alive_count
 
 func _count_all_votes():
 	var total_votes = 0
-	var votes = GameManagerSingleton.get_current_game_key("votes")
+	var votes = GameManagerSingleton.get_current_game_value("votes")
 	for player_key in votes.keys():
 		total_votes += votes[player_key].size()
 	return total_votes
@@ -172,21 +172,21 @@ func _stop_voting_timer():
 	voting_timer.stop()
 
 func _on_skip_button_pressed():
-	if GameManagerSingleton.get_current_game_key("is_voted") || GameManagerSingleton.get_current_game_key("is_vote_preselected"):
+	if GameManagerSingleton.get_current_game_value("is_voted") || GameManagerSingleton.get_current_game_value("is_vote_preselected"):
 		return
 
 	skip_decision.visible = true
-	GameManagerSingleton.set_current_game_key("is_vote_preselected", true)
+	GameManagerSingleton.set_current_game_value("is_vote_preselected", true)
 
 
 func _on_decision_yes_pressed():
-	GameManagerSingleton.set_current_game_key("is_voted", true)
+	GameManagerSingleton.set_current_game_value("is_voted", true)
 	skip_decision.visible = false
 	skip_button.disabled = true
 
 
 func _on_decision_no_pressed():
-	GameManagerSingleton.set_current_game_key("is_vote_preselected", false)
+	GameManagerSingleton.set_current_game_value("is_vote_preselected", false)
 	skip_decision.visible = false
 
 
@@ -195,7 +195,7 @@ func _render_player_boxes():
 	for i in players.get_children():
 		i.queue_free()
 
-	var votes = GameManagerSingleton.get_current_game_key("votes")
+	var votes = GameManagerSingleton.get_current_game_value("votes")
 
 	for i in GameManagerSingleton.get_registered_players().keys():
 		var new_player_box = player_box.instantiate()
@@ -209,7 +209,7 @@ func _render_player_boxes():
 @rpc("any_peer", "call_local", "reliable")
 func _on_end_voting_timer_timeout():
 	is_voting_ended = true
-	GameManagerSingleton.set_current_game_key("is_voted", true)
+	GameManagerSingleton.set_current_game_value("is_voted", true)
 
 	end_vote_text.text = "[center]Głosowanie zakończone![/center]"
 
@@ -219,8 +219,8 @@ func _on_end_voting_timer_timeout():
 	if multiplayer.is_server():
 		var most_voted_player_id = get_most_voted_player_id()
 
-		for player_id in GameManagerSingleton.get_current_game_key("votes").keys():
-			var voted_by_players = GameManagerSingleton.get_current_game_key("votes")[player_id]
+		for player_id in GameManagerSingleton.get_current_game_value("votes").keys():
+			var voted_by_players = GameManagerSingleton.get_current_game_value("votes")[player_id]
 			for voted_by in voted_by_players:
 				_add_player_vote.rpc(player_id, voted_by)
 
@@ -246,8 +246,8 @@ func get_most_voted_player_id():
 	var most_voted_players = []
 	var max_vote = 0
 
-	for vote_key in GameManagerSingleton.get_current_game_key("votes").keys():
-		var votes_count = GameManagerSingleton.get_current_game_key("votes")[vote_key].size()
+	for vote_key in GameManagerSingleton.get_current_game_value("votes").keys():
+		var votes_count = GameManagerSingleton.get_current_game_value("votes")[vote_key].size()
 		if votes_count > max_vote:
 			max_vote = votes_count
 			most_voted_players = [vote_key]
@@ -279,7 +279,7 @@ func on_interface_scale_changed(value:float):
 func _on_discussion_timer_timeout():
 	voting_timer.start(VOTING_TIME)
 
-	if GameManagerSingleton.get_current_player_key("is_dead"):
+	if GameManagerSingleton.get_current_player_value("is_dead"):
 		return
 
 	skip_button.disabled = false

@@ -29,7 +29,7 @@ var voted_by_scene = preload("res://scenes/game/maps/main_map/voting_screen/vote
 func init(player_id: int, voted_by: Array):
 	var player = GameManagerSingleton.get_registered_players()[player_id]
 
-	if GameManagerSingleton.get_registered_player_key(player_id, "is_dead"):
+	if GameManagerSingleton.get_registered_player_value(player_id, "is_dead"):
 		self.username.text = "[s]" + player.username + "[/s]"
 	else:
 		self.username.text = player.username
@@ -41,7 +41,7 @@ func init(player_id: int, voted_by: Array):
 		var voted_by_instance = voted_by_scene.instantiate()
 		voted_by_instance.modulate.a = 0;
 
-		voted_by_instance.texture = _get_skin_texture(GameManagerSingleton.get_registered_player_key(vote, "skin"))
+		voted_by_instance.texture = _get_skin_texture(GameManagerSingleton.get_registered_player_value(vote, "skin"))
 
 		display_tween = get_tree().create_tween()
 		display_tween.tween_property(voted_by_instance, "modulate:a", 1, 0.25)
@@ -52,30 +52,30 @@ func init(player_id: int, voted_by: Array):
 
 func _get_skin_texture(skin_id: int) -> AtlasTexture:
 	var texture = AtlasTexture.new()
-	texture.atlas = load(GameManagerSingleton.skins[skin_id]["resource"])
+	texture.atlas = load(GameManagerSingleton.SKINS[skin_id]["resource"])
 	texture.region = Rect2(127.5, 0, 420, 420)
 	return texture
 
 
 func _on_button_pressed():
-	if GameManagerSingleton.get_registered_player_key(player_key, "is_dead"):
+	if GameManagerSingleton.get_registered_player_value(player_key, "is_dead"):
 		return
 
-	if GameManagerSingleton.get_current_game_key("is_voted") || GameManagerSingleton.get_current_game_key("is_vote_preselected"):
+	if GameManagerSingleton.get_current_game_value("is_voted") || GameManagerSingleton.get_current_game_value("is_vote_preselected"):
 		return
 	
 	if decision.visible:
 		decision.visible = false
-		GameManagerSingleton.set_current_game_key("is_vote_preselected", false)
+		GameManagerSingleton.set_current_game_value("is_vote_preselected", false)
 		return
 	
 	decision.visible = true
-	GameManagerSingleton.set_current_game_key("is_vote_preselected", true)
+	GameManagerSingleton.set_current_game_value("is_vote_preselected", true)
 
 
 func _on_decision_no_pressed():
 	decision.visible = false
-	GameManagerSingleton.set_current_game_key("is_vote_preselected", false)
+	GameManagerSingleton.set_current_game_value("is_vote_preselected", false)
 
 
 func _on_decision_yes_pressed():

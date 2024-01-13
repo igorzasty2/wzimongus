@@ -33,10 +33,10 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("report") || event.is_action_pressed("interact"):
-		if GameManagerSingleton.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_value("is_paused"):
 			return
 
-		if GameManagerSingleton.get_current_game_key("is_input_disabled"):
+		if GameManagerSingleton.get_current_game_value("is_input_disabled"):
 			return
 
 		if event.is_action_pressed("report"):
@@ -56,7 +56,7 @@ func _input(event):
 		if !is_player_inside:
 			return
 
-		if GameManagerSingleton.get_current_player_key("is_dead"):
+		if GameManagerSingleton.get_current_player_value("is_dead"):
 			return
 
 		if GameManagerSingleton.is_meeting_called:
@@ -75,7 +75,7 @@ func _input(event):
 ## Obsługuje zakończenie emergeny_timer
 func _on_end_emergency_timer_timeout(is_over: bool):
 	is_wait_time_over = is_over
-	if is_player_inside && !GameManagerSingleton.get_registered_player_key(multiplayer.get_unique_id(), "is_dead") && !GameManagerSingleton.is_meeting_called && is_wait_time_over:
+	if is_player_inside && !GameManagerSingleton.get_registered_player_value(GameManagerSingleton.get_current_player_id(), "is_dead") && !GameManagerSingleton.is_meeting_called && is_wait_time_over:
 		button_active.emit("InteractButton", true)
 		toggle_button_highlight.emit(true)
 
@@ -88,7 +88,7 @@ func on_next_round_started():
 
 ## Obsługuje wejście gracza
 func _on_body_entered(body):
-	if body.name.to_int() == multiplayer.get_unique_id() && !GameManagerSingleton.get_registered_player_key(body.name.to_int(), "is_dead") && !body.is_in_vent:
+	if body.name.to_int() == GameManagerSingleton.get_current_player_id() && !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead") && !body.is_in_vent:
 		is_player_inside = true
 
 		if is_button:
@@ -102,7 +102,7 @@ func _on_body_entered(body):
 
 ## Obsługuje wyjście gracza
 func _on_body_exited(body):
-	if body.name.to_int() == multiplayer.get_unique_id() && !GameManagerSingleton.get_registered_player_key(body.name.to_int(), "is_dead") && !body.is_in_vent:
+	if body.name.to_int() == GameManagerSingleton.get_current_player_id() && !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead") && !body.is_in_vent:
 		is_player_inside = false
 		body.can_report = false
 

@@ -4,7 +4,7 @@ extends Control
 ## Referencja do wiadomości, która wyświetla się po wyrzuceniu gracza
 @onready var ejection_message = get_node("%EjectionMessage")
 ## Referencja do głosów przechowywanych w GameManager
-@onready var votes = GameManagerSingleton.get_current_game_key("votes")
+@onready var votes = GameManagerSingleton.get_current_game_value("votes")
 
 ## Czas do następnej rundy
 @export var NEXT_ROUND_TIME = 5
@@ -12,7 +12,7 @@ extends Control
 @onready var next_round_timer = Timer.new()
 
 ## Referencja do najczęściej głosowanego gracza
-@onready var most_voted_player = GameManagerSingleton.get_current_game_key("most_voted_player")
+@onready var most_voted_player = GameManagerSingleton.get_current_game_value("most_voted_player")
 
 func _ready():
 	GameManagerSingleton.teleport_players()

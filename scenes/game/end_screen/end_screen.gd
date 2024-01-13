@@ -17,7 +17,7 @@ func set_winning_role(role: GameManagerSingleton.Role):
 
 func _input(event):
 	if event is InputEventKey && !event.is_echo() && event.is_pressed():
-		if GameManagerSingleton.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_value("is_paused"):
 			return
 
 		queue_free()

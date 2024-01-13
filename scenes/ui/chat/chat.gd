@@ -28,7 +28,7 @@ const FADE_OUT_TIME = 0.25
 ## Referencja do suwaka
 @onready var chat_logs_scrollbar = chat_logs_scroll_container.get_v_scroll_bar()
 ## Referencja do nazwy gracza, przechowywana
-@onready var username = GameManagerSingleton.get_current_player_key("username")
+@onready var username = GameManagerSingleton.get_current_player_value("username")
 
 ## Referencja do kontenera przycisku zmiany grupy
 @onready var group_container = %GroupContainer
@@ -54,7 +54,7 @@ func _ready():
 	input_text.hide()
 	group_container.hide()
 
-	if GameManagerSingleton.get_current_player_key("is_dead"):
+	if GameManagerSingleton.get_current_player_value("is_dead"):
 		current_group = Group.DEAD
 
 	_update_group_label()
@@ -62,7 +62,7 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("chat_open"):
-		if GameManagerSingleton.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_value("is_paused"):
 			return
 
 		if input_text.visible:
@@ -72,7 +72,7 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 	if event.is_action_pressed("change_group"):
-		if GameManagerSingleton.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_value("is_paused"):
 			return
 
 		if !input_text.visible:
@@ -90,15 +90,15 @@ func _input(event):
 
 
 func _switch_chat_group():
-	if GameManagerSingleton.get_current_player_key("is_lecturer"):
+	if GameManagerSingleton.get_current_player_value("is_lecturer"):
 		current_group = Group.LECTURER if current_group == Group.GLOBAL else Group.GLOBAL
 		_update_group_label()
 
 
 func _update_group_label():
-	if GameManagerSingleton.get_current_player_key("is_dead"):
+	if GameManagerSingleton.get_current_player_value("is_dead"):
 		group_label.text = "Uczestniczysz w grupie: Martwi"
-	elif GameManagerSingleton.get_current_player_key("is_lecturer"):
+	elif GameManagerSingleton.get_current_player_value("is_lecturer"):
 		group_label.text = "Uczestniczysz w grupie: Wykładowcy" if current_group == Group.LECTURER else "Uczestniczysz w grupie: Studenci"
 	else:
 		group_label.text = "Uczestniczysz w grupie: Studenci"
@@ -159,7 +159,7 @@ func _on_input_text_text_submitted(submitted_text):
 	if submitted_text == "":
 		return
 
-	send_message.rpc_id(1, submitted_text, current_group, multiplayer.get_unique_id())
+	send_message.rpc_id(1, submitted_text, current_group, GameManagerSingleton.get_current_player_id())
 
 	if get_parent().get_parent().name != "VotingScreen":
 		close_chat()

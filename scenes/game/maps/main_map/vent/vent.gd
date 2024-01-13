@@ -106,7 +106,7 @@ func _move_to_vent(player_id: int, vent_id: int):
 
 ## Obsługuje wejście gracza do obszaru w którym może ventować.
 func _on_area_2d_body_entered(body):
-	if !body.name.to_int() == multiplayer.get_unique_id() && !multiplayer.is_server():
+	if !body.name.to_int() == GameManagerSingleton.get_current_player_id() && !multiplayer.is_server():
 		return
 
 	if !body.has_vent_permission(self):
@@ -115,13 +115,13 @@ func _on_area_2d_body_entered(body):
 	if body.is_in_vent != true:
 		body.can_use_vent = true
 
-	if body.name.to_int() == multiplayer.get_unique_id():
+	if body.name.to_int() == GameManagerSingleton.get_current_player_id():
 		_toggle_highlight(true)
 
 
 ## Obsługuje wyjście gracza z obszaru w którym może ventować.
 func _on_area_2d_body_exited(body):
-	if !body.name.to_int() == multiplayer.get_unique_id() && !multiplayer.is_server():
+	if !body.name.to_int() == GameManagerSingleton.get_current_player_id() && !multiplayer.is_server():
 		return
 
 	if !body.has_vent_permission(self):
@@ -130,7 +130,7 @@ func _on_area_2d_body_exited(body):
 	if body.is_in_vent != true:
 		body.can_use_vent = false
 
-	if body.name.to_int() == multiplayer.get_unique_id():
+	if body.name.to_int() == GameManagerSingleton.get_current_player_id():
 		_toggle_highlight(false)
 
 

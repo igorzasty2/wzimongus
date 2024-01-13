@@ -2,7 +2,7 @@ extends CanvasLayer
 
 signal finished
 
-var role = GameManagerSingleton.get_current_player_key("is_lecturer")
+var role = GameManagerSingleton.get_current_player_value("is_lecturer")
 
 @onready var animation_player = $AnimationPlayer
 

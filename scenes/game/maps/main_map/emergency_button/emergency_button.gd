@@ -66,7 +66,7 @@ func _process(_delta):
 
 ## Wywoływane w momencie oblania gracza
 func _on_player_killed(id: int, is_victim: bool):
-	if multiplayer.get_unique_id() == id && is_victim:
+	if GameManagerSingleton.get_current_player_id() == id && is_victim:
 		uses_left_label.text = ""
 		toggle_button_highlight(false)
 		button_active.emit("InteractButton", false)
@@ -194,6 +194,6 @@ func _on_sabotage_started(has_started:bool):
 	
 	var bodies = report_area.get_overlapping_bodies()
 	for body in bodies:
-		if body.name.to_int()==multiplayer.get_unique_id() && !GameManagerSingleton.get_current_player_key("is_dead") && report_area.monitorable && report_area.monitoring:
+		if body.name.to_int()==GameManagerSingleton.get_current_player_id() && !GameManagerSingleton.get_current_player_value("is_dead") && report_area.monitorable && report_area.monitoring:
 			toggle_button_highlight(!has_started)
 			button_active.emit("InteractButton", !has_started)

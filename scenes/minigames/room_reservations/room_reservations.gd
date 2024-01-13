@@ -33,7 +33,7 @@ var assigned_rooms = {}
 var assigned_colors = {}
 
 func _ready():
-	account.text = GameManagerSingleton.get_current_player_key("username") + " (" + str(GameManagerSingleton.get_current_player_id()).get_slice("", 6) + ")" 
+	account.text = GameManagerSingleton.get_current_player_value("username") + " (" + str(GameManagerSingleton.get_current_player_id()).get_slice("", 6) + ")" 
 
 	LECTURERS.shuffle()
 	ROOMS.shuffle()
