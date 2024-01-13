@@ -1,11 +1,11 @@
 [gd_scene load_steps=18 format=3 uid="uid://dmjx2shy2ugc2"]
 
 [ext_resource type="Script" path="res://scenes/minigames/make_a_photo/make_a_photo.gd" id="1_ho2i0"]
-[ext_resource type="Texture2D" uid="uid://bq4pawvs27u3m" path="res://scenes/minigames/make_a_photo/sprites/papers.png" id="2_t5i8c"]
-[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/scripts/take_the_phone.gd" id="4_4qo1e"]
-[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/scripts/to_make_a_photo.gd" id="5_10m22"]
-[ext_resource type="Texture2D" uid="uid://cyd8kjes00046" path="res://scenes/minigames/make_a_photo/sprites/phone.png" id="6_4ofwl"]
-[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/scripts/phone.gd" id="6_5t864"]
+[ext_resource type="Texture2D" uid="uid://bq4pawvs27u3m" path="res://assets/textures/minigames/make_a_photo/papers.png" id="2_t5i8c"]
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/take_the_phone.gd" id="4_4qo1e"]
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/to_make_a_photo.gd" id="5_10m22"]
+[ext_resource type="Texture2D" uid="uid://cyd8kjes00046" path="res://assets/textures/minigames/make_a_photo/phone.png" id="6_4ofwl"]
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/phone.gd" id="6_5t864"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j6rht"]
 content_margin_left = 4.0

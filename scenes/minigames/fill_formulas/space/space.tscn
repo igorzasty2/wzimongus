@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8jnj26cphyrx"]
+
+[ext_resource type="Script" path="res://scenes/minigames/fill_formulas/space/space.gd" id="1_8hdcv"]
+[ext_resource type="Texture2D" uid="uid://baufr16iq3322" path="res://assets/textures/minigames/fill_formulas/letter.png" id="2_g6dns"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utoeq"]
+size = Vector2(100, 100)
+
+[node name="Space" type="Area2D"]
+script = ExtResource("1_8hdcv")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_g6dns")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_utoeq")
