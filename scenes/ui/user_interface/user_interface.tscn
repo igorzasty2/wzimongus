@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://m6q8rh67ru1c"]
 
 [ext_resource type="Script" path="res://scenes/ui/user_interface/user_interface.gd" id="1_vsf4i"]
-[ext_resource type="Texture2D" uid="uid://ds2c374kw2h50" path="res://assets/textures/ui/nowy_vent.png" id="2_qqfse"]
+[ext_resource type="Texture2D" uid="uid://ds2c374kw2h50" path="res://assets/textures/ui/vent.png" id="2_qqfse"]
 [ext_resource type="Texture2D" uid="uid://cif6s0y35b7xi" path="res://assets/textures/ui/oblej.png" id="3_chfnj"]
-[ext_resource type="Texture2D" uid="uid://h8ydultq6bpk" path="res://assets/textures/ui/nowy_sabotaz.png" id="4_ww8h1"]
-[ext_resource type="Texture2D" uid="uid://b0wwwpxa645jv" path="res://assets/textures/ui/4_przycisk_zglos.png" id="5_m7bia"]
-[ext_resource type="Texture2D" uid="uid://djuqvjgi3pbno" path="res://assets/textures/ui/5_przycisk_uzyj.png" id="6_57n6h"]
-[ext_resource type="Texture2D" uid="uid://c3krnig4q8qwh" path="res://assets/textures/ui/__nowy_setting_v1.png" id="8_5be7m"]
+[ext_resource type="Texture2D" uid="uid://h8ydultq6bpk" path="res://assets/textures/ui/sabotaz.png" id="4_ww8h1"]
+[ext_resource type="Texture2D" uid="uid://b0wwwpxa645jv" path="res://assets/textures/ui/zglos.png" id="5_m7bia"]
+[ext_resource type="Texture2D" uid="uid://djuqvjgi3pbno" path="res://assets/textures/ui/uzyj.png" id="6_57n6h"]
+[ext_resource type="Texture2D" uid="uid://c3krnig4q8qwh" path="res://assets/textures/ui/menu_settings.png" id="8_5be7m"]
 
 [node name="UserInterface" type="CanvasLayer"]
 script = ExtResource("1_vsf4i")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0c1jfl0fwkem"
-path="res://.godot/imported/alt_spritesheet.png-2590d0ae3f5a2bf7da31922eb659ef5a.ctex"
+uid="uid://h8ydultq6bpk"
+path="res://.godot/imported/sabotaz.png-26ce12eac0066351e52dd56327706fab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/skins/alt_spritesheet.png"
-dest_files=["res://.godot/imported/alt_spritesheet.png-2590d0ae3f5a2bf7da31922eb659ef5a.ctex"]
+source_file="res://assets/textures/ui/sabotaz.png"
+dest_files=["res://.godot/imported/sabotaz.png-26ce12eac0066351e52dd56327706fab.ctex"]
 
 [params]
 

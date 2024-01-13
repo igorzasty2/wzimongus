@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqrmha7n8w0ig"
-path="res://.godot/imported/lobby_background.png-06af958d6fe0eecc8d10230ef4780e43.ctex"
+uid="uid://b0c1jfl0fwkem"
+path="res://.godot/imported/alternatywka_spritesheet.png-b780995657d45e8248ae86230b41a818.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/lobby/rooms/lobby_background.png"
-dest_files=["res://.godot/imported/lobby_background.png-06af958d6fe0eecc8d10230ef4780e43.ctex"]
+source_file="res://assets/textures/skins/alternatywka_spritesheet.png"
+dest_files=["res://.godot/imported/alternatywka_spritesheet.png-b780995657d45e8248ae86230b41a818.ctex"]
 
 [params]
 

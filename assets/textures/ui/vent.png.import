@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blrk7daia54ig"
-path="res://.godot/imported/ustawienia_gry.png-63cc50742f04ff341ff3335bbef28843.ctex"
+uid="uid://ds2c374kw2h50"
+path="res://.godot/imported/vent.png-90de9e6132ebb2f1e636924e69f2a046.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/ui/ustawienia_gry.png"
-dest_files=["res://.godot/imported/ustawienia_gry.png-63cc50742f04ff341ff3335bbef28843.ctex"]
+source_file="res://assets/textures/ui/vent.png"
+dest_files=["res://.godot/imported/vent.png-90de9e6132ebb2f1e636924e69f2a046.ctex"]
 
 [params]
 

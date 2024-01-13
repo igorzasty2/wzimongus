@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://irwk5hfqym8q"
-path="res://.godot/imported/9_przycisk_start.png-ade9a79848864ce0e2be47cb6d66eb16.ctex"
+uid="uid://j016m335ll88"
+path="res://.godot/imported/avatar.png-30ac74e4cc98ed5e2d8032dd1ae8bf5c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/ui/9_przycisk_start.png"
-dest_files=["res://.godot/imported/9_przycisk_start.png-ade9a79848864ce0e2be47cb6d66eb16.ctex"]
+source_file="res://assets/textures/ui/avatar.png"
+dest_files=["res://.godot/imported/avatar.png-30ac74e4cc98ed5e2d8032dd1ae8bf5c.ctex"]
 
 [params]
 

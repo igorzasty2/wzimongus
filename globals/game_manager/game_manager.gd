@@ -67,7 +67,7 @@ const error_messages = {
 const skins = {
 	0: {
 		"name": "Alternatywka",
-		"resource": "res://assets/textures/skins/alt_spritesheet.png"
+		"resource": "res://assets/textures/skins/alternatywka_spritesheet.png"
 	},
 	1: {
 		"name": "Barbie",

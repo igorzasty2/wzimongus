@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b8yh2vysfv24q"]
 
-[ext_resource type="Texture2D" uid="uid://y0sk7am2xf1o" path="res://assets/textures/ui/nowy_exit_button.png" id="1_6jcv6"]
+[ext_resource type="Texture2D" uid="uid://y0sk7am2xf1o" path="res://assets/textures/ui/exit.png" id="1_6jcv6"]
 [ext_resource type="Script" path="res://scenes/maps/lobby/scenes/close/close_button/close_button.gd" id="4_r7ojk"]
 
 [node name="CloseButton" type="TextureButton"]

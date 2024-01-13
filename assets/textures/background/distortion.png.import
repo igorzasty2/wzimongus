@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://h8ydultq6bpk"
-path="res://.godot/imported/nowy_sabotaz.png-ad56e6c81a0eb163600e0287b377635a.ctex"
+uid="uid://d07etmk0h2llv"
+path="res://.godot/imported/distortion.png-cd1228da56e77696560fadd37751d80e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/ui/nowy_sabotaz.png"
-dest_files=["res://.godot/imported/nowy_sabotaz.png-ad56e6c81a0eb163600e0287b377635a.ctex"]
+source_file="res://assets/textures/background/distortion.png"
+dest_files=["res://.godot/imported/distortion.png-cd1228da56e77696560fadd37751d80e.ctex"]
 
 [params]
 
