@@ -292,7 +292,8 @@ func _input(event):
 
 		if !can_sabotage_cooldown:
 			return
-
+		
+		GameManager.emit_sabotage_started.rpc(true)
 		GameManager.request_light_sabotage.rpc_id(1)
 		button_active.emit("SabotageButton", false)
 
@@ -661,6 +662,7 @@ func decrease_light_range_sabotage() -> void:
 
 ## Wraca promień swiatła na normalny po sabotage.
 func cancel_decrease_light_range_sabotage() -> void:
+	GameManager.emit_sabotage_started.rpc(false)
 	if not GameManager.get_current_player_key("is_lecturer"):
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale * 6, 1).set_trans(Tween.TRANS_CUBIC)
