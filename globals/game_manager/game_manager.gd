@@ -37,7 +37,6 @@ signal sabotage_occured()
 ## Emitowany po zakończeniu ładowania mapy głównej.
 signal map_load_finished()
 
-# Przechowuje informacje o aktualnym stanie gry.
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
 
@@ -162,6 +161,7 @@ var current_background_texture = null
 var transition_background_texture = null
 ## Czy scena jest włączana po raz pierwszy
 var is_first_time: bool = true
+
 
 func _ready():
 	multiplayer.peer_disconnected.connect(_delete_deregistered_player)
@@ -378,10 +378,6 @@ func get_current_player_id():
 
 ## Zwraca informację o obecnym graczu, która jest przechowywana pod danym kluczem.
 func get_current_player_key(key:String):
-	# Jeśli klucz jest zmienialny, szuka go w słowniku gracza.
-	if key in _player_fillable && _current_player.has(key):
-		return _current_player[key]
-
 	var id = get_current_player_id()
 
 	# W przeciwnym wypadku szuka go w słowniku zarejestrowanych graczy.
@@ -551,6 +547,9 @@ func _create_registered_player(id:int, player:Dictionary) -> Dictionary:
 
 	# Dodaje predefiniowane atrybuty.
 	filtered_player.merge(_player_attributes)
+
+	# Nadaje unikalną nazwę użytkownika.
+	filtered_player["username"] = _verify_username(filtered_player["username"])
 
 	# Przypisuje skin.
 	filtered_player["skin"] = _select_skin()
@@ -796,3 +795,17 @@ func execute_action(action_name: String):
 	event.pressed = true
 
 	Input.parse_input_event(event)
+
+
+## Weryfikuje nazwę użytkownika i zwraca ją w formie unikalnej.
+func _verify_username(username: String, idx: int = 0) -> String:
+	var username_to_verify = username
+
+	if idx > 0:
+		username_to_verify += " (" + str(idx) +")"
+
+	for i in get_registered_players():
+		if get_registered_player_key(i, "username") == username_to_verify:
+			return _verify_username(username, idx + 1)
+
+	return username_to_verify
