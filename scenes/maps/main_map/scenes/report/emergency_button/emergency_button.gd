@@ -189,6 +189,9 @@ func show_hide_report_screen(is_button: bool, dead_body_id):
 
 ## Obsługuje rozpoczęcie/zakończenie sabotażu dla przycisku awaryjnego
 func _on_sabotage_started(has_started:bool):
+	if emergency_timer.time_left > 0:
+		return
+	
 	var bodies = report_area.get_overlapping_bodies()
 	for body in bodies:
 		if body.name.to_int()==multiplayer.get_unique_id() && !GameManager.get_current_player_key("is_dead") && report_area.monitorable && report_area.monitoring:
