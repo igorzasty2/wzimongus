@@ -1,15 +1,20 @@
+class_name EjectionMessage
 extends Control
 
+## Referencja do wiadomości, która wyświetla się po wyrzuceniu gracza
 @onready var ejection_message = get_node("%EjectionMessage")
+## Referencja do głosów przechowywanych w GameManager
 @onready var votes = GameManager.get_current_game_key("votes")
 
+## Czas do następnej rundy
 @export var NEXT_ROUND_TIME = 5
+## Timer do następnej rundy
 @onready var next_round_timer = Timer.new()
 
+## Referencja do najczęściej głosowanego gracza
 @onready var most_voted_player = GameManager.get_current_game_key("most_voted_player")
 
 func _ready():
-	# Przenosi graczy na miejsce spotkania
 	GameManager.teleport_players()
 	
 	if  most_voted_player == null:
@@ -19,7 +24,6 @@ func _ready():
 	else:
 		ejection_message.text = "[center]" + most_voted_player['username'] + " nie był wykładowcą[/center]"
 
-	#NEXT ROUND TIMER
 	add_child(next_round_timer)
 	next_round_timer.autostart = true
 	next_round_timer.one_shot = true
@@ -27,7 +31,6 @@ func _ready():
 	next_round_timer.start(NEXT_ROUND_TIME)
 
 
-#Następna runda
 func _on_next_round_timer_timeout():
 	self.queue_free()
 	GameManager.new_round()
