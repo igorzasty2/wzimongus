@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dawbyxq2b3pcv"
-path="res://.godot/imported/itim_regular.ttf-897434a885797cce714164f05a814c99.fontdata"
+path="res://.godot/imported/itim_regular.ttf-75d1dd8292deca9454e50bfb95ac11d9.fontdata"
 
 [deps]
 
-source_file="res://themes/default/itim/itim_regular.ttf"
-dest_files=["res://.godot/imported/itim_regular.ttf-897434a885797cce714164f05a814c99.fontdata"]
+source_file="res://assets/fonts/itim/itim_regular.ttf"
+dest_files=["res://.godot/imported/itim_regular.ttf-75d1dd8292deca9454e50bfb95ac11d9.fontdata"]
 
 [params]
 

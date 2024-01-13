@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://u0gqomrh4hmh"]
 
-[ext_resource type="FontFile" uid="uid://dawbyxq2b3pcv" path="res://themes/default/itim/itim_regular.ttf" id="1_mhe6y"]
+[ext_resource type="FontFile" uid="uid://dawbyxq2b3pcv" path="res://assets/fonts/itim/itim_regular.ttf" id="1_mhe6y"]
 
 [resource]
 Button/font_sizes/font_size = 19
