@@ -1,20 +1,31 @@
+class_name KeyRebind
 extends Control
 
+## Etykieta z nazwą akcji
 @onready var action = $HBoxContainer/Action
+## Lewy przycisk przypisania
 @onready var left_button = $HBoxContainer/LeftButton
+## Prawy przycisk przypisania
 @onready var right_button = $HBoxContainer/RightButton
 
+## Nazwa akcji dla etykiety
 @export var action_label_name : String = "action name"
+## Nazwa akcji w ustawieniach projektu
 @export var action_project_name : String
 
+## Strona przycisku
 enum Side {LEFT, RIGHT}
 
+## Wciśnięty przycisk
 var pressed_button
 
+## Emitowany po naciśnięciu przycisku
 signal rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button)
 
+## Ustawienia użytkownika
 var user_sett: UserSettingsManager
 
+## Zapisany event
 var saved_event : InputEventKey
 
 func _ready():
@@ -43,7 +54,7 @@ func start():
 	set_buttons_names()
 
 
-# Ustawia tekst w przyciskach
+## Ustawia tekst w przyciskach
 func set_buttons_names():
 	if InputMap.has_action(action_project_name) == true:
 		var input_actions = InputMap.action_get_events(action_project_name)
@@ -56,13 +67,13 @@ func set_buttons_names():
 		else:
 			right_button.text = ""
 
-# Obsługuje wciśnięcie lewego przycisku
+## Obsługuje wciśnięcie lewego przycisku
 func _on_left_button_pressed():
 	left_button.release_focus()
 	pressed_button = Side.LEFT
 	emit_signal("rebind_button_pressed",action_label_name, action_project_name, Side.LEFT, left_button, right_button)
 
-# Obsługuje wciśnięcie prawego przycisku
+## Obsługuje wciśnięcie prawego przycisku
 func _on_right_button_pressed():
 	right_button.release_focus()
 	pressed_button = Side.RIGHT

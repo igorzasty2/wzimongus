@@ -1,4 +1,4 @@
-[gd_scene load_steps=120 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=121 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -93,6 +93,7 @@
 [ext_resource type="PackedScene" uid="uid://br73d5fyt6ecp" path="res://scenes/minigames/copying-files/copying_files.tscn" id="82_rt2pg"]
 [ext_resource type="PackedScene" uid="uid://dra00by8ikhk4" path="res://scenes/minigames/graph_the_function/graph_the_function.tscn" id="83_7u8vq"]
 [ext_resource type="PackedScene" uid="uid://di5jtb8ateug1" path="res://scenes/minigames/find_password/FindPassword.tscn" id="84_y3nq6"]
+[ext_resource type="PackedScene" uid="uid://bq2btisrq4br7" path="res://scenes/minigames/unscrew-whiteboard/unscrew_whiteboard.tscn" id="86_ao4sp"]
 [ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/ui/camera_system/camera_system.tscn" id="89_58eb3"]
 [ext_resource type="Script" path="res://scenes/ui/minigame_menu/minigame_window.gd" id="92_b2shf"]
 
@@ -1018,6 +1019,11 @@ position = Vector2(2504, -1028)
 sprite = ExtResource("4_wgy3w")
 minigame_scene = ExtResource("84_y3nq6")
 
+[node name="Task9" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(2861, -1028)
+sprite = ExtResource("4_wgy3w")
+minigame_scene = ExtResource("86_ao4sp")
+
 [node name="CameraSystem" parent="InteractionPoints" instance=ExtResource("3_e0rk4")]
 position = Vector2(4016, -1329)
 is_minigame = false
@@ -1122,8 +1128,8 @@ position = Vector2(1900, 237)
 [node name="MapBorder" type="Node2D" parent="."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MapBorder"]
-collision_layer = 16
-collision_mask = 8
+collision_layer = 255
+collision_mask = 255
 
 [node name="CollisionShape2D1" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
 position = Vector2(584, 2504)
@@ -1206,6 +1212,7 @@ script = ExtResource("92_b2shf")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.411765, 0.411765, 0.411765, 1)
 
+[connection signal="visibility_changed" from="MinigameWindow" to="." method="_update_player_input"]
 [connection signal="child_order_changed" from="VotingCanvas" to="." method="_update_player_input"]
 [connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
 [connection signal="visibility_changed" from="LoadingScreen" to="." method="_update_player_input"]

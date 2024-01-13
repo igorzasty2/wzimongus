@@ -67,26 +67,18 @@ func _on_start_game_button_button_down():
 
 
 func _on_interact_button_button_down():
-	execute_action("interact")
+	GameManager.execute_action("interact")
 
 
 func _on_chat_button_button_down():
 	if get_parent().get_node("Chat").get_node("%InputText").visible:
-		execute_action("chat_close")
+		GameManager.execute_action("pause_menu")
 	else:
-		execute_action("chat_open")
+		GameManager.execute_action("chat_open")
 
 
 func _on_pause_button_button_down():
-	execute_action("pause_menu")
-
-
-# Wykonuje podaną akcję
-func execute_action(action_name:String):
-	var event = InputEventAction.new()
-	event.action = action_name
-	event.pressed = true
-	Input.parse_input_event(event)
+	GameManager.execute_action("pause_menu")
 
 
 # Aktywuje i deaktywuje przycisk interakcji

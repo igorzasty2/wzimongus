@@ -141,7 +141,7 @@ horizontal_scroll_mode = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/MarginContainer/ScrollContainer"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-theme_override_constants/separation = 42
+theme_override_constants/separation = 48
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -205,8 +205,8 @@ action_project_name = "chat_open"
 
 [node name="ChatCloseKeyRebind" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_qfvcr")]
 layout_mode = 2
-action_label_name = "Zamknij czat"
-action_project_name = "chat_close"
+action_label_name = "Zmień grupę"
+action_project_name = "change_group"
 
 [node name="HSeparator2" type="HSeparator" parent="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -244,7 +244,7 @@ offset_top = -100.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 10
 
 [node name="ActionName" type="Label" parent="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer"]
 layout_mode = 2
@@ -272,7 +272,7 @@ offset_right = 82.5
 offset_bottom = 45.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 15
 
 [node name="DeleteButton" type="Button" parent="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer2"]
 custom_minimum_size = Vector2(165, 40)
@@ -312,9 +312,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -26.0
+offset_top = -63.5
 offset_right = 200.0
-offset_bottom = -20.0
+offset_bottom = 17.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Naciśnięty przycisk jest już przypisany do innej akcji, czy mimo to chcesz go przypisać do tej akcji?"
@@ -330,9 +330,8 @@ anchor_top = 0.624
 anchor_right = 0.5
 anchor_bottom = 0.624
 offset_left = -215.0
-offset_top = -20.0
 offset_right = 215.0
-offset_bottom = 20.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 100
@@ -420,7 +419,7 @@ text = "Przywróć"
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveDownKeyRebind" to="." method="_on_move_down_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/MoveUpKeyRebind" to="." method="_on_move_up_key_rebind_rebind_button_pressed"]
 [connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/ChatOpenKeyRebind" to="." method="_on_chat_open_key_rebind_rebind_button_pressed"]
-[connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/ChatCloseKeyRebind" to="." method="_on_chat_close_key_rebind_rebind_button_pressed"]
+[connection signal="rebind_button_pressed" from="TabContainer/Controls/MarginContainer/ScrollContainer/VBoxContainer/ChatCloseKeyRebind" to="." method="_on_change_group_key_rebind_rebind_button_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer2/DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer2/CancelButton" to="." method="_on_cancel_button_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/KeyUsedWindow/Panel/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]

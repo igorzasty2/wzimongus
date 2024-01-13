@@ -25,19 +25,19 @@ grow_vertical = 2
 theme_override_constants/separation = 20
 
 [node name="Action" type="Label" parent="HBoxContainer"]
-custom_minimum_size = Vector2(130, 35)
+custom_minimum_size = Vector2(130, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "action name"
 vertical_alignment = 1
 
 [node name="LeftButton" type="Button" parent="HBoxContainer"]
-custom_minimum_size = Vector2(100, 35)
+custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 text = "key1"
 
 [node name="RightButton" type="Button" parent="HBoxContainer"]
-custom_minimum_size = Vector2(100, 35)
+custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 text = "key2"
 

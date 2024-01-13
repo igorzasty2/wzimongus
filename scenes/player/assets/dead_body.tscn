@@ -25,7 +25,6 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 vertical_alignment = 1
-visible_characters = 40
 
 [node name="DeadBodySprite" type="Sprite2D" parent="."]
 z_index = 4

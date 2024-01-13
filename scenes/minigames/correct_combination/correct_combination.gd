@@ -21,10 +21,10 @@ var incorrect_buttons = []
 
 var correct_pressed_count = 0
 
-@onready var THRESHOLDS = [[1, 3, 5, 6], [1, 2, 4, 5], [1, 2, 3, 5], [1, 2, 5, 6]]
+@onready var THRESHOLDS = [[1, 2, 3, 4]]
 
 const TOTAL_BUTTONS = 12
-const CORRECT_BUTTONS_COUNT = 7
+const CORRECT_BUTTONS_COUNT = 5
 
 var zero_threshold = 0
 var thirty_threshold = 0
