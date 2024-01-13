@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://bum2mxvabfcb2"]
+
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/vent/vent_direction_button/vent_direction_button.gd" id="1_dml2b"]
+[ext_resource type="Texture2D" uid="uid://bjv5hnh4ovu8l" path="res://assets/textures/main_map/objects/direction_button.png" id="2_f77jn"]
+
+[node name="VentDirectionButton" type="Node2D"]
+z_index = 10
+scale = Vector2(1.3, 1.3)
+script = ExtResource("1_dml2b")
+
+[node name="Button" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+z_index = 10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -14.0
+offset_right = 25.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="Button"]
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_f77jn")
+expand_mode = 3
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

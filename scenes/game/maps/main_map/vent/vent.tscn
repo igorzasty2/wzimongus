@@ -1,0 +1,90 @@
+[gd_scene load_steps=10 format=3 uid="uid://cwapulye6fjyc"]
+
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/vent/vent.gd" id="1_ebero"]
+[ext_resource type="Texture2D" uid="uid://di4xiqnkybme3" path="res://assets/textures/main_map/objects/vent.png" id="3_gku1q"]
+[ext_resource type="Shader" path="res://assets/shaders/outline.gdshader" id="3_hkemy"]
+[ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://assets/textures/light/light_circle.png" id="4_v6nkv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wkw5n"]
+shader = ExtResource("3_hkemy")
+shader_parameter/line_color = Color(1, 1, 1, 0)
+shader_parameter/line_thickness = 3.0
+
+[sub_resource type="Animation" id="Animation_h6o8k"]
+resource_name = "vent_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.05), Vector2(0.5, 0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -23.2), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6s2k4"]
+_data = {
+"vent_animation": SubResource("Animation_h6o8k")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kp4xp"]
+radius = 93.3343
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d2wt8"]
+
+[node name="Vent" type="Node2D"]
+scale = Vector2(2.4, 2.4)
+script = ExtResource("1_ebero")
+metadata/_edit_group_ = true
+
+[node name="Hole" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_gku1q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_wkw5n")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_gku1q")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_6s2k4")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_kp4xp")
+
+[node name="LightsContainer" type="Node2D" parent="."]
+visible = false
+
+[node name="Light" type="PointLight2D" parent="LightsContainer"]
+material = SubResource("CanvasItemMaterial_d2wt8")
+position = Vector2(0, -27)
+scale = Vector2(0.96875, 0.96875)
+energy = 0.75
+blend_mode = 2
+shadow_enabled = true
+shadow_color = Color(1, 1, 1, 0)
+texture = ExtResource("4_v6nkv")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

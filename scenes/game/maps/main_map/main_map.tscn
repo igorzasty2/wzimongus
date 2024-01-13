@@ -1,0 +1,1233 @@
+[gd_scene load_steps=122 format=3 uid="uid://cal1k7y5focn4"]
+
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/main_map.gd" id="1_xvngj"]
+[ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/game/maps/main_map/task_button/task_button.tscn" id="3_e0rk4"]
+[ext_resource type="Script" path="res://scenes/game/maps/camera.gd" id="3_gwvgv"]
+[ext_resource type="PackedScene" uid="uid://dnni64h8l6jcd" path="res://scenes/game/maps/main_map/background/rooms/wc.tscn" id="3_nbyec"]
+[ext_resource type="PackedScene" uid="uid://yk57h8tmiha6" path="res://scenes/game/maps/main_map/background/rooms/sala_1.tscn" id="4_dojmv"]
+[ext_resource type="PackedScene" uid="uid://cwjp3351iq2cg" path="res://scenes/game/maps/main_map/background/rooms/sala_2.tscn" id="5_ehcuo"]
+[ext_resource type="PackedScene" uid="uid://t3ayjy0eflf" path="res://scenes/game/maps/main_map/background/rooms/sala_3.tscn" id="6_j2fhe"]
+[ext_resource type="PackedScene" uid="uid://q56d4alpaarl" path="res://scenes/game/maps/main_map/background/rooms/xero.tscn" id="7_htmn5"]
+[ext_resource type="PackedScene" uid="uid://db74hr2yilxel" path="res://scenes/game/maps/main_map/background/rooms/aula.tscn" id="8_ckisu"]
+[ext_resource type="PackedScene" uid="uid://deoe0yhjya0it" path="res://scenes/game/maps/main_map/background/rooms/willy.tscn" id="9_r6nh5"]
+[ext_resource type="PackedScene" uid="uid://bcr0n6fy1ajvx" path="res://scenes/game/maps/main_map/background/rooms/bufet.tscn" id="10_dswbv"]
+[ext_resource type="PackedScene" uid="uid://dtjxbe3w5aln6" path="res://scenes/game/maps/main_map/background/rooms/samorzad.tscn" id="11_g3ofr"]
+[ext_resource type="PackedScene" uid="uid://b7o2j3ukypgy6" path="res://scenes/game/maps/main_map/background/rooms/serwerownia.tscn" id="12_6nmdt"]
+[ext_resource type="PackedScene" uid="uid://cjpyjgxwnxvda" path="res://scenes/game/maps/main_map/background/rooms/dziekanat.tscn" id="13_jctr6"]
+[ext_resource type="PackedScene" uid="uid://dk3g05gq43kad" path="res://scenes/game/maps/main_map/background/rooms/chillroom.tscn" id="14_8x6md"]
+[ext_resource type="PackedScene" uid="uid://gk1uab4ii8k1" path="res://scenes/game/maps/main_map/background/rooms/pielegniarka.tscn" id="15_giha0"]
+[ext_resource type="PackedScene" uid="uid://cy5elj455alsv" path="res://scenes/game/maps/main_map/background/rooms/pokoj_wykladowcow.tscn" id="16_e83ls"]
+[ext_resource type="PackedScene" uid="uid://qbug4lt0ce46" path="res://scenes/game/maps/main_map/background/corridors/korytarz_aula_sala_1.tscn" id="17_2k61j"]
+[ext_resource type="PackedScene" uid="uid://bcglaee2jl12o" path="res://scenes/game/maps/main_map/background/corridors/korytarz_samorzad_bufet.tscn" id="18_lljii"]
+[ext_resource type="PackedScene" uid="uid://bs65lqtdkpqkd" path="res://scenes/game/maps/main_map/background/corridors/korytarz_chillroom_wc.tscn" id="19_48mvo"]
+[ext_resource type="PackedScene" uid="uid://bsicwruuujpdh" path="res://scenes/game/maps/main_map/background/corridors/korytarz_sala_2_sala_3.tscn" id="20_oj1hn"]
+[ext_resource type="PackedScene" uid="uid://du4wbambleakw" path="res://scenes/game/maps/main_map/background/corridors/korytarz_chillroom_aula.tscn" id="21_5jspd"]
+[ext_resource type="PackedScene" uid="uid://h7j34elcqawo" path="res://scenes/game/maps/main_map/background/corridors/korytarz_xero_chillroom.tscn" id="22_85x4g"]
+[ext_resource type="PackedScene" uid="uid://dx7r7powhfrl" path="res://scenes/game/maps/main_map/background/corridors/korytarz_chillroom_samorzad.tscn" id="23_us6c6"]
+[ext_resource type="PackedScene" uid="uid://bwrknp56vi64y" path="res://scenes/game/maps/main_map/background/corridors/korytarz_dziekanat_sala_2.tscn" id="24_cj2rh"]
+[ext_resource type="PackedScene" uid="uid://dfh2yf2biknok" path="res://scenes/game/maps/main_map/background/corridors/korytarz_pielegniarka_willy.tscn" id="25_qppn4"]
+[ext_resource type="PackedScene" uid="uid://dtke4a6qdlm03" path="res://scenes/game/maps/main_map/background/corridors/korytarz_sala_2_serwerownia_aula.tscn" id="26_tqpop"]
+[ext_resource type="PackedScene" uid="uid://bodsrjrylxs0s" path="res://scenes/game/maps/main_map/background/corridors/korytarz_serwerownia_pielegniarka.tscn" id="27_71qtx"]
+[ext_resource type="PackedScene" uid="uid://1nb6uwps5542" path="res://scenes/game/maps/main_map/background/corridors/korytarz_willy_sala_1_bufet_pokoj_wykladowcow.tscn" id="28_00vjh"]
+[ext_resource type="Texture2D" uid="uid://bitnm52touuq8" path="res://assets/textures/main_map/objects/aula_projektor.png" id="28_1m5fc"]
+[ext_resource type="Texture2D" uid="uid://belo2hmvoy7cu" path="res://assets/textures/main_map/objects/aula_rzedy_lewo.png" id="28_er4x3"]
+[ext_resource type="Texture2D" uid="uid://dehjityxk41bj" path="res://assets/textures/main_map/objects/aula_rzedy_prawo.png" id="29_ogjna"]
+[ext_resource type="Texture2D" uid="uid://yjdsa84eyea3" path="res://assets/textures/main_map/objects/aula_stol.png" id="30_fg5wc"]
+[ext_resource type="Texture2D" uid="uid://dbf7s5lxyo0tg" path="res://assets/textures/main_map/objects/aula_tablica.png" id="31_dhdh4"]
+[ext_resource type="Texture2D" uid="uid://5n0jedd1cmxk" path="res://assets/textures/main_map/objects/bufet_automat.png" id="32_jc7lc"]
+[ext_resource type="Texture2D" uid="uid://dmy20om8608ff" path="res://assets/textures/main_map/objects/bufet_stol.png" id="33_fxkqp"]
+[ext_resource type="PackedScene" uid="uid://cwapulye6fjyc" path="res://scenes/game/maps/main_map/vent/vent.tscn" id="33_q8paj"]
+[ext_resource type="PackedScene" uid="uid://c3l6wkk0ahn02" path="res://scenes/game/maps/main_map/minigame_window/minigame_window.tscn" id="34_5r0ro"]
+[ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="34_b878o"]
+[ext_resource type="Texture2D" uid="uid://lv5k5yskqtbw" path="res://assets/textures/main_map/objects/kanapa.png" id="35_ryots"]
+[ext_resource type="PackedScene" uid="uid://ct2plxemq2ft5" path="res://scenes/game/maps/main_map/loading_screen/loading_screen.tscn" id="36_4x0df"]
+[ext_resource type="Texture2D" uid="uid://7hsus0rose8b" path="res://assets/textures/main_map/objects/chillroom_stol_1.png" id="36_k0n1h"]
+[ext_resource type="PackedScene" uid="uid://dp2sfegsvyvqy" path="res://scenes/game/maps/main_map/emergency_button/emergency_button.tscn" id="36_xfee5"]
+[ext_resource type="Texture2D" uid="uid://bps64glp2uv7u" path="res://assets/textures/main_map/objects/chillroom_stol_2.png" id="37_mklhi"]
+[ext_resource type="PackedScene" uid="uid://m6q8rh67ru1c" path="res://scenes/game/maps/main_map/user_interface/user_interface.tscn" id="37_tw5rq"]
+[ext_resource type="PackedScene" uid="uid://blfakmqxo172y" path="res://scenes/game/maps/main_map/task_list_display/task_list_display.tscn" id="38_l1f3e"]
+[ext_resource type="Texture2D" uid="uid://2l0wseh5bnat" path="res://assets/textures/main_map/objects/dziekanat_biurko.png" id="38_u8dgm"]
+[ext_resource type="Texture2D" uid="uid://jrs08rkqr5da" path="res://assets/textures/main_map/objects/dziekanat_szafka.png" id="39_wtis7"]
+[ext_resource type="Texture2D" uid="uid://mdt0w77352w0" path="res://assets/textures/main_map/objects/pielegnarka_biurko.png" id="40_y4c5f"]
+[ext_resource type="Texture2D" uid="uid://dclxbun1kpyjy" path="res://assets/textures/main_map/objects/pielegnarka_lozko.png" id="41_jiu28"]
+[ext_resource type="Texture2D" uid="uid://b7p2jjjpbbhfa" path="res://assets/textures/main_map/objects/pielegnarka_zaslona.png" id="42_bsxxq"]
+[ext_resource type="Texture2D" uid="uid://birdfs8jslpov" path="res://assets/textures/main_map/objects/pokoj_wykladowcow_biurko.png" id="43_n4m3t"]
+[ext_resource type="Texture2D" uid="uid://dbk6b1j7qny4i" path="res://assets/textures/main_map/objects/pokoj_wykladowcow_szafa_lewa.png" id="44_y3l63"]
+[ext_resource type="Texture2D" uid="uid://f1vqjww2mok8" path="res://assets/textures/main_map/objects/pokoj_wykladowcow_szafa_prawa.png" id="45_sluy1"]
+[ext_resource type="Texture2D" uid="uid://ct6slra1ssixh" path="res://assets/textures/main_map/objects/sala_1_komp.png" id="46_on4ml"]
+[ext_resource type="Texture2D" uid="uid://xt4b2aghgq18" path="res://assets/textures/main_map/objects/sala_1_krzeslo.png" id="47_btq84"]
+[ext_resource type="Texture2D" uid="uid://fqsqsvts4xgj" path="res://assets/textures/main_map/objects/sala_1_stol.png" id="48_3efwf"]
+[ext_resource type="Texture2D" uid="uid://bvddrwchyce01" path="res://assets/textures/main_map/objects/sala_2_krzeslo.png" id="49_11adn"]
+[ext_resource type="Texture2D" uid="uid://srodn74nd68w" path="res://assets/textures/main_map/objects/sala_2_lawka_1.png" id="50_ybu0o"]
+[ext_resource type="Texture2D" uid="uid://didljkpcxaxvp" path="res://assets/textures/main_map/objects/sala_2_lawka_2.png" id="51_181uu"]
+[ext_resource type="Texture2D" uid="uid://dyvcaegiw4lub" path="res://assets/textures/main_map/objects/sala_2_lawka_3.png" id="52_8tgai"]
+[ext_resource type="Texture2D" uid="uid://bke57nwb65g0c" path="res://assets/textures/main_map/objects/sala_2_lawka_4.png" id="53_by40i"]
+[ext_resource type="Texture2D" uid="uid://dfwkd5igax830" path="res://assets/textures/main_map/objects/sala_2_szafka.png" id="54_r5nxd"]
+[ext_resource type="Texture2D" uid="uid://c67fhu0o1phtv" path="res://assets/textures/main_map/objects/sala_3_biurko.png" id="55_n1e6j"]
+[ext_resource type="Texture2D" uid="uid://03js3063fbvs" path="res://assets/textures/main_map/objects/sala_3_deska_galtona.png" id="56_7h2gl"]
+[ext_resource type="Texture2D" uid="uid://cwuoixhexip4l" path="res://assets/textures/main_map/objects/sala_3_stol_cylindr.png" id="57_jt34q"]
+[ext_resource type="Texture2D" uid="uid://bkol0qslqtubr" path="res://assets/textures/main_map/objects/sala_3_wahadlo.png" id="58_txgam"]
+[ext_resource type="Texture2D" uid="uid://dhtbn7y08v15o" path="res://assets/textures/main_map/objects/samorzad_kanapa.png" id="59_s1cnf"]
+[ext_resource type="Texture2D" uid="uid://b4ionm4tqmxty" path="res://assets/textures/main_map/objects/samorzad_stol.png" id="60_kfep4"]
+[ext_resource type="Texture2D" uid="uid://dwg7dn6fy0k5w" path="res://assets/textures/main_map/objects/samorzad_roslina.png" id="61_hrurh"]
+[ext_resource type="Texture2D" uid="uid://boj8uwvl2dqdx" path="res://assets/textures/main_map/objects/serwerownia_biurko.png" id="62_wcg3e"]
+[ext_resource type="Texture2D" uid="uid://dxvfkxhwisouq" path="res://assets/textures/main_map/objects/serwerownia_komp.png" id="63_e1ttq"]
+[ext_resource type="Texture2D" uid="uid://dht0wdcycant" path="res://assets/textures/main_map/objects/serwerownia_szafa.png" id="64_geuup"]
+[ext_resource type="Texture2D" uid="uid://230y2l22be65" path="res://assets/textures/main_map/objects/serwerownia_wifi.png" id="65_2xblb"]
+[ext_resource type="Texture2D" uid="uid://boukedvy1ogjt" path="res://assets/textures/main_map/objects/wc_toaleta.png" id="66_3plgl"]
+[ext_resource type="Texture2D" uid="uid://cnrrfiog8fpf6" path="res://assets/textures/main_map/objects/willy_biurko.png" id="67_5at3m"]
+[ext_resource type="Texture2D" uid="uid://bi11reajtt0xh" path="res://assets/textures/main_map/objects/willy_kabelki.png" id="68_nboir"]
+[ext_resource type="Texture2D" uid="uid://c8ub8inqihj20" path="res://assets/textures/main_map/objects/willy_komp.png" id="69_68rt3"]
+[ext_resource type="Texture2D" uid="uid://c2qhxnptr2my7" path="res://assets/textures/main_map/objects/willy_skrzynka_elektryczna.png" id="69_rlgtp"]
+[ext_resource type="Texture2D" uid="uid://cs5mh8010vw5x" path="res://assets/textures/main_map/objects/xero_kopiarka.png" id="70_8h00i"]
+[ext_resource type="Texture2D" uid="uid://cbxi1n610rgci" path="res://assets/textures/main_map/objects/xero_polka_na_dokumenty.png" id="71_yvo4d"]
+[ext_resource type="Texture2D" uid="uid://rmo5fhilsda3" path="res://assets/textures/main_map/objects/xero_stos_kartek.png" id="72_vb4gs"]
+[ext_resource type="Texture2D" uid="uid://lqlctfob53ns" path="res://assets/textures/main_map/objects/xero_szafa.png" id="73_g7t2a"]
+[ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="77_1ivr1"]
+[ext_resource type="Texture2D" uid="uid://dk44u5xcfwdsf" path="res://assets/textures/main_map/objects/sala_2_tablica.png" id="77_m0r18"]
+[ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="78_pc37b"]
+[ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="79_xtlh3"]
+[ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
+[ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/RoomReservations.tscn" id="80_j2qov"]
+[ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/game/maps/main_map/surveilence_camera/surveilence_camera.tscn" id="81_mexjh"]
+[ext_resource type="PackedScene" uid="uid://br73d5fyt6ecp" path="res://scenes/minigames/copying-files/copying_files.tscn" id="82_rt2pg"]
+[ext_resource type="Texture2D" uid="uid://fmy66vpvmmra" path="res://assets/textures/main_map/objects/wifi.png" id="83_6xbov"]
+[ext_resource type="PackedScene" uid="uid://dra00by8ikhk4" path="res://scenes/minigames/graph_the_function/graph_the_function.tscn" id="83_7u8vq"]
+[ext_resource type="PackedScene" uid="uid://di5jtb8ateug1" path="res://scenes/minigames/find_password/FindPassword.tscn" id="84_y3nq6"]
+[ext_resource type="PackedScene" uid="uid://bq2btisrq4br7" path="res://scenes/minigames/unscrew-whiteboard/unscrew_whiteboard.tscn" id="86_ao4sp"]
+[ext_resource type="PackedScene" uid="uid://mtrc2q6rpyb6" path="res://scenes/game/maps/main_map/camera_system/camera_system.tscn" id="89_58eb3"]
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/minigame_window/minigame_window.gd" id="92_b2shf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vhiy7"]
+size = Vector2(150, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xb10m"]
+size = Vector2(574, 913)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxr4c"]
+size = Vector2(573, 370)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sss5s"]
+size = Vector2(526, 207.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ndv2n"]
+size = Vector2(513, 335)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bph1h"]
+size = Vector2(257, 290)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_otra3"]
+size = Vector2(406, 323)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o0u2b"]
+size = Vector2(391, 196)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g46sc"]
+size = Vector2(344, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u71ro"]
+size = Vector2(372, 223)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e1pta"]
+size = Vector2(222, 276)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48hsj"]
+size = Vector2(222, 276)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bgje4"]
+size = Vector2(226, 149)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qkmkj"]
+size = Vector2(116, 178)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxyos"]
+size = Vector2(214, 169)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8j1br"]
+size = Vector2(374, 95)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8454v"]
+radius = 126.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bkfev"]
+size = Vector2(28, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f8ggq"]
+size = Vector2(287, 292)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elfmc"]
+size = Vector2(8896, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_apqsq"]
+size = Vector2(48, 6224)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_2hbmx"]
+polygon = PackedVector2Array(776, -34, 776, 25, 1174, 22, 1174, -84, 1455, -327, 2336, -328, 2338, 27, 3123, 27, 3123, -45, 2402, -45, 2402, -836, 2543, -836, 2543, -869, 2368, -869, 2368, -584, 1246, -583, 1246, -777, 847, -777, 847, -219, 183, -218, 184, -36)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_eoh7v"]
+polygon = PackedVector2Array(2542, -1449, 2370, -1448, 2368, -1642, 1244, -1641, 1245, -1345, 847, -1345, 848, -1927, -828, -1927, -828, -1772, -1199, -1773, -1199, -2077, -701, -2077, -699, -2351, -243, -2351, -244, -1994, 1070, -1994, 1305, -2231, 1669, -2231, 1669, -1867, 2543, -1867)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_f6dli"]
+polygon = PackedVector2Array(3490, -1763, 3154, -1447, 2938, -1447, 2937, -1868, 3129, -1868, 3130, -2898, 1667, -2893, 1668, -2801, 1304, -2800, 1305, -3120, -25, -3118, -189, -2935, -698, -2937, -698, -3031, -1899, -3032, -1898, -2080, -1597, -2080, -1597, -1773, -2071, -1773, -2071, -1920, -2508, -1921, -2507, -2254, -1970, -2254, -1969, -3170, -3167, -3170, -3168, -2254, -2907, -2254, -2906, -1922, -3384, -1922, -3384, -1084, -3085, -792, -2505, -792, -2504, -652, -3110, -652, -3109, 273, -3166, 273, -3439, 515, -3439, 1308, -2270, 1309, -2269, 548, -2577, 272, -2713, 272, -2713, -80, -2106, -80, -2106, -791, -2071, -791, -2070, -1187, -826, -1187, -826, -219, -216, -219, -216, -35, -769, -35, -769, 335, -1174, 334, -1174, 287, -923, 287, -924, -665, -2040, -665, -2041, 288, -1573, 288, -1572, 919, -771, 919, -771, 955, -61, 955, -60, 1178, -586, 1178, -586, 1772, 129, 2085, 755, 1770, 755, 1177, 339, 1177, 339, 955, 776, 955, 776, 608, 1174, 610, 1158, 636, 1195, 613, 1186, 646, 2332, 650, 2332, 613, 3521, 613, 3522, -46, 3674, -46, 3476, -837, 2937, -837, 2937, -869, 3443, -869, 3782, -1202, 4533, -1202, 4533, -1976, 4268, -2245, 3490, -2244)
+
+[node name="MainMap" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_xvngj")
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -5
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Wc" parent="Background" instance=ExtResource("3_nbyec")]
+position = Vector2(85, 1631)
+
+[node name="Sala1" parent="Background" instance=ExtResource("4_dojmv")]
+position = Vector2(1807, -1112)
+
+[node name="Sala2" parent="Background" instance=ExtResource("5_ehcuo")]
+position = Vector2(-2727, -1356)
+
+[node name="Sala3" parent="Background" instance=ExtResource("6_j2fhe")]
+position = Vector2(-2569, -2712)
+
+[node name="Xero" parent="Background" instance=ExtResource("7_htmn5")]
+position = Vector2(-1481, -189)
+
+[node name="Aula" parent="Background" instance=ExtResource("8_ckisu")]
+position = Vector2(10, -1072)
+
+[node name="Willy" parent="Background" instance=ExtResource("9_r6nh5")]
+position = Vector2(2399, -2379)
+
+[node name="Samorzad" parent="Background" instance=ExtResource("11_g3ofr")]
+position = Vector2(1754, 162)
+
+[node name="Serwerownia" parent="Background" instance=ExtResource("12_6nmdt")]
+position = Vector2(-1298, -2554)
+
+[node name="Dziekanat" parent="Background" instance=ExtResource("13_jctr6")]
+position = Vector2(-2870, 788)
+
+[node name="Chillroom" parent="Background" instance=ExtResource("14_8x6md")]
+position = Vector2(2, 460)
+
+[node name="Pielegniarka" parent="Background" instance=ExtResource("15_giha0")]
+position = Vector2(530, -2556)
+
+[node name="PokojWykladowcow" parent="Background" instance=ExtResource("16_e83ls")]
+position = Vector2(4011, -1723)
+
+[node name="KorytarzAulaSala1" parent="Background" instance=ExtResource("17_2k61j")]
+position = Vector2(1046, -1061)
+
+[node name="KorytarzSamorzadBufet" parent="Background" instance=ExtResource("18_lljii")]
+position = Vector2(2926, 281)
+
+[node name="KorytarzChillroomWc" parent="Background" instance=ExtResource("19_48mvo")]
+position = Vector2(140, 1068)
+
+[node name="KorytarzSala2Sala3" parent="Background" instance=ExtResource("20_oj1hn")]
+position = Vector2(-2707, -2088)
+
+[node name="KorytarzChillroomAula" parent="Background" instance=ExtResource("21_5jspd")]
+position = Vector2(-17, -126)
+
+[node name="KorytarzXeroChillroom" parent="Background" instance=ExtResource("22_85x4g")]
+position = Vector2(-1170, 602)
+
+[node name="KorytarzChillroomSamorzad" parent="Background" instance=ExtResource("23_us6c6")]
+position = Vector2(974, 317)
+
+[node name="KorytarzDziekanatSala2" parent="Background" instance=ExtResource("24_cj2rh")]
+position = Vector2(-2608, -258)
+
+[node name="KorytarzPielegniarkaWilly" parent="Background" instance=ExtResource("25_qppn4")]
+position = Vector2(1488, -2516)
+
+[node name="KorytarzSala2SerwerowniaAula" parent="Background" instance=ExtResource("26_tqpop")]
+position = Vector2(-1448, -1634)
+
+[node name="KorytarzSerwerowniaPielegniarka" parent="Background" instance=ExtResource("27_71qtx")]
+position = Vector2(-472, -2643)
+
+[node name="KorytarzWillySala1BufetPokojWykladowcow" parent="Background" instance=ExtResource("28_00vjh")]
+position = Vector2(3067, -1348)
+
+[node name="Bufet" parent="Background" instance=ExtResource("10_dswbv")]
+position = Vector2(3038, -441)
+
+[node name="Objects" type="Node2D" parent="."]
+z_index = 5
+y_sort_enabled = true
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="AulaProjektor" type="Node2D" parent="Objects"]
+position = Vector2(332, -1342)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/AulaProjektor"]
+texture = ExtResource("28_1m5fc")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/AulaProjektor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/AulaProjektor/CollisionBox"]
+position = Vector2(1, 43)
+shape = SubResource("RectangleShape2D_vhiy7")
+
+[node name="AulaRzedyLewo" type="Node2D" parent="Objects"]
+position = Vector2(-479, -736)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/AulaRzedyLewo"]
+texture = ExtResource("28_er4x3")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/AulaRzedyLewo"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/AulaRzedyLewo/CollisionBox"]
+shape = SubResource("RectangleShape2D_xb10m")
+
+[node name="AulaRzedyPrawo" type="Node2D" parent="Objects"]
+position = Vector2(500, -465)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/AulaRzedyPrawo"]
+texture = ExtResource("29_ogjna")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/AulaRzedyPrawo"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/AulaRzedyPrawo/CollisionBox"]
+shape = SubResource("RectangleShape2D_lxr4c")
+
+[node name="AulaStol" type="Node2D" parent="Objects"]
+position = Vector2(471, -1343)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/AulaStol"]
+texture = ExtResource("30_fg5wc")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/AulaStol"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/AulaStol/CollisionBox"]
+position = Vector2(0, 33.625)
+shape = SubResource("RectangleShape2D_sss5s")
+
+[node name="AulaTablica" type="Node2D" parent="Objects"]
+position = Vector2(-279, -1725)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/AulaTablica"]
+visible = false
+texture = ExtResource("31_dhdh4")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/AulaTablica"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/AulaTablica/CollisionBox"]
+shape = SubResource("RectangleShape2D_ndv2n")
+
+[node name="BufetAutomat" type="Node2D" parent="Objects"]
+position = Vector2(3144, -625)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/BufetAutomat"]
+visible = false
+texture = ExtResource("32_jc7lc")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/BufetAutomat"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/BufetAutomat/CollisionBox"]
+shape = SubResource("RectangleShape2D_bph1h")
+
+[node name="BufetStol" type="Node2D" parent="Objects"]
+position = Vector2(2683, -277)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/BufetStol"]
+texture = ExtResource("33_fxkqp")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/BufetStol"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/BufetStol/CollisionBox"]
+position = Vector2(-3, 2.5)
+shape = SubResource("RectangleShape2D_otra3")
+
+[node name="ChillroomKanapa" type="Node2D" parent="Objects"]
+position = Vector2(-479, 309)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/ChillroomKanapa"]
+texture = ExtResource("35_ryots")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/ChillroomKanapa"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/ChillroomKanapa/CollisionBox"]
+position = Vector2(12.5, -15)
+shape = SubResource("RectangleShape2D_o0u2b")
+
+[node name="ChillRoomStol1" type="Node2D" parent="Objects"]
+position = Vector2(-413, 584)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/ChillRoomStol1"]
+texture = ExtResource("36_k0n1h")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/ChillRoomStol1"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/ChillRoomStol1/CollisionBox"]
+polygon = PackedVector2Array(52.5, -130.8, 52.5, -129.5, 82.5, -120.5, 82.5, -119.1, 118.5, -99.2, 118.5, -97.8, 144.5, -72.9, 144.5, -70.5, 160.5, -44.6, 160.5, -41.4, 162.5, -36.4, 162.5, 28, 160.2, 41, 158.9, 41, 150.9, 61, 149.6, 61, 138.6, 78, 137.4, 78, 120.4, 96, 118.2, 96, 97.2, 112, 94.8, 112, 52.9, 130, 48.6, 130, 41.2, 132, -43.5, 132, -82.5, 120.5, -82.5, 119.1, -119.5, 98.2, -119.5, 96.8, -147.5, 68.8, -147.5, 66.7, -154.5, 57.7, -154.5, 55.4, -162.5, 37.6, -162.5, -27.4, -159.1, -44, -157.7, -44, -142.7, -73, -141.3, -73, -111.3, -103, -109.2, -103, -97.2, -112, -95, -112, -69, -125, -65.6, -125, -37.5, -132, 43.5, -132)
+
+[node name="ChillRoomStol2" type="Node2D" parent="Objects"]
+position = Vector2(493, 746)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/ChillRoomStol2"]
+texture = ExtResource("37_mklhi")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/ChillRoomStol2"]
+
+[node name="CollisionPolygon1" type="CollisionPolygon2D" parent="Objects/ChillRoomStol2/CollisionBox"]
+polygon = PackedVector2Array(55, -128.9, 55, -127.8, 87, -113.8, 87, -112.6, 108, -100.7, 108, -99.5, 127, -85.5, 127, -84.3, 153, -57.3, 153, -55, 169, -24, 169, -19.8, 170, -13.9, 170, -11.5, 168, -11.5, 165, -7.5, 154.8, -7.5, 124, -13.9, 124, -16, 114.9, -32.5, 114.2, -32.5, 107, -39.7, 107, -38.9, 114, -23.9, 114, -19.5, 116.2, 5.5, 114.7, 5.5, 110.7, 31.5, 109.4, 31.5, 104.8, 43.6, 109, 39.6, 109, 37.7, 115, 31.7, 115, 30.1, 121.6, 13.5, 123.3, 13.5, 131.3, 7.5, 136.9, 7.5, 155.7, 2.5, 165.5, 2.5, 169, 4.3, 169, 7.10001, 170, 9.8, 170, 35.7, 155.2, 62.5, 153.8, 62.5, 120.8, 92.5, 118.5, 92.5, 82.6, 114.5, 79.5, 114.5, 58.5, 124.5, 55.3, 124.5, 36.4, 130.5, 26.7, 130.5, 18, 125.7, 18, 122.8, 11, 106.9, 11, 104.1, 14.5, 94.8, -11, 96.7, -11, 95.3, -33, 93.3, -33, 92, -56, 86, -56, 84.7, -84, 69.7, -84, 68.4, -97, 57.4, -97, 55.2, -107, 43.2, -107, 41.1, -112, 33.1, -112, 29.8, -117, 12.8, -117, -1.7, -111.7, -30.5, -110.2, -30.5, -104.9, -41.2, -112, -33.6, -112, -32, -119.8, -16.5, -121.4, -16.5, -127.4, -12.5, -130.8, -12.5, -165, -8.2, -165, -11, -170, -19.8, -170, -20.5, -167.4, -20.5, -155.4, -52.5, -154.1, -52.5, -144.1, -67.5, -142.8, -67.5, -122.8, -87.5, -120.6, -87.5, -88.6, -110.5, -86.5, -110.5, -63.5, -122.5, -60.4, -122.5, -37.4, -130.5, -19.6, -130.5, -14, -127.7, -14, -125, -6, -110, -6, -105.8, -3, -98.9, -3, -95.9, -3.3, -95.5, 9.39999, -95.5, 5.7, -101.4, 6.8, -103.5, 9.3, -116.5, 10.7, -116.5, 16.8, -130.5, 50.2, -130.5)
+
+[node name="CollisionPolygon2" type="CollisionPolygon2D" parent="Objects/ChillRoomStol2/CollisionBox"]
+polygon = PackedVector2Array(-126, 16.8, -126, 18.1, -123, 19.1, -123, 22, -115.7, 37.5, -115.1, 37.5, -92.2, 61.5, -90.4, 61.5, -58.4, 82.5, -55.7, 82.5, -14, 97.1, -14, 99, -7.8, 111.5, -10.6, 111.5, -16.9, 130.5, -50.6, 130.5, -75, 123, -75, 121.8, -111, 104.8, -111, 103.5, -149, 75.5, -149, 74.2, -166, 54.2, -166, 52.1, -170, 44.7, -170, 14.3, -169.6, 12.5, -167.5, 12.5, -167, 12.3, -167, 10.1)
+
+[node name="DziekanatBiurko" type="Node2D" parent="Objects"]
+position = Vector2(-2541, 1057)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/DziekanatBiurko"]
+visible = false
+texture = ExtResource("38_u8dgm")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/DziekanatBiurko"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/DziekanatBiurko/CollisionBox"]
+polygon = PackedVector2Array(-206, 57, -101, 119, 6, 163, 170, 121, 182, 98, 110, 5, 3, -79, -107, -47)
+
+[node name="DziekanatSzafka" type="Node2D" parent="Objects"]
+position = Vector2(-3241, 602)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/DziekanatSzafka"]
+texture = ExtResource("39_wtis7")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/DziekanatSzafka"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/DziekanatSzafka/CollisionBox"]
+polygon = PackedVector2Array(138, 18, 103, 18, -30, 123, -31.7, 188, -137.5, 188, -137.5, -35.8, 46.6, -188, 137.5, -188)
+
+[node name="PielegniarkaBiurko" type="Node2D" parent="Objects"]
+position = Vector2(69, -2223)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/PielegniarkaBiurko"]
+texture = ExtResource("40_y4c5f")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/PielegniarkaBiurko"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/PielegniarkaBiurko/CollisionBox"]
+polygon = PackedVector2Array(-129, -158.5, -129, -157.2, -116, -155.2, -116, -153.5, -105, -145.5, -105, -143.1, -98, -132.1, -98, -127.8, -91, -103.8, -91, -96.5, -84.2, -20.5, -78.7, -9.5, -61.3, 3.5, -58.6, 3.5, -45.6, 9.5, -9, 9.5, 134, 8.5, 134, 10.1, 153, 17.1, 153, 18.7, 164, 29.7, 164, 32.1, 170, 49.2, 170, 168.5, 168, 168.5, 165, 172.5, -254, 172.5, -254, 170.2, -257, 166.2, -257, 151.5, -256, 151.5, -254, -133.5, -252.4, -133.5, -248.4, -145.5, -246.8, -145.5, -235.8, -155.5, -232.2, -155.5, -199, -158.3, -199, -159.5)
+
+[node name="PielegniarkaLozko" type="Node2D" parent="Objects"]
+position = Vector2(669, -2212)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/PielegniarkaLozko"]
+texture = ExtResource("41_jiu28")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/PielegniarkaLozko"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/PielegniarkaLozko/CollisionBox"]
+polygon = PackedVector2Array(340.5, -144, 356.5, -133.1, 356.5, -130.6, 361.5, -122.7, 361.5, 121.7, 355.8, 134, 354.1, 134, 338.9, 145, -329.6, 145, -336.5, 143.6, -336.5, 142.4, -344.5, 139.4, -344.5, 137.9, -355.5, 128.9, -355.5, 126.5, -361.5, 116.8, -361.5, -117.1, -357.9, -127, -356.4, -127, -346.4, -139, -343.9, -139, -330.9, -145, 340.5, -145)
+
+[node name="PielegniarkaZaslona" type="Node2D" parent="Objects"]
+position = Vector2(973, -2657)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/PielegniarkaZaslona"]
+position = Vector2(0, -208)
+texture = ExtResource("42_bsxxq")
+offset = Vector2(0, 20)
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/PielegniarkaZaslona"]
+position = Vector2(0, 20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/PielegniarkaZaslona/CollisionBox"]
+shape = SubResource("RectangleShape2D_g46sc")
+
+[node name="PokojWykladowcowBiurko" type="Node2D" parent="Objects"]
+position = Vector2(4023, -1461)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/PokojWykladowcowBiurko"]
+texture = ExtResource("43_n4m3t")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/PokojWykladowcowBiurko"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/PokojWykladowcowBiurko/CollisionBox"]
+position = Vector2(0, 39.5)
+shape = SubResource("RectangleShape2D_u71ro")
+
+[node name="PokojWykladowcowSzafaLewa" type="Node2D" parent="Objects"]
+position = Vector2(3794, -2029)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/PokojWykladowcowSzafaLewa"]
+visible = false
+texture = ExtResource("44_y3l63")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/PokojWykladowcowSzafaLewa"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/PokojWykladowcowSzafaLewa/CollisionBox"]
+shape = SubResource("RectangleShape2D_e1pta")
+
+[node name="PokojWykladowcowSzafaPrawa" type="Node2D" parent="Objects"]
+position = Vector2(4072, -2030)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/PokojWykladowcowSzafaPrawa"]
+texture = ExtResource("45_sluy1")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/PokojWykladowcowSzafaPrawa"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/PokojWykladowcowSzafaPrawa/CollisionBox"]
+shape = SubResource("RectangleShape2D_48hsj")
+
+[node name="Sala1Komputer1" type="Node2D" parent="Objects"]
+position = Vector2(1436, -1350)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Komputer1"]
+texture = ExtResource("46_on4ml")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Komputer1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala1Komputer1/CollisionBox"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_bgje4")
+
+[node name="Sala1Komputer2" type="Node2D" parent="Objects"]
+position = Vector2(2174, -1350)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Komputer2"]
+texture = ExtResource("46_on4ml")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Komputer2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala1Komputer2/CollisionBox"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_bgje4")
+
+[node name="Sala1Komputer3" type="Node2D" parent="Objects"]
+position = Vector2(1933, -1350)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Komputer3"]
+texture = ExtResource("46_on4ml")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Komputer3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala1Komputer3/CollisionBox"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_bgje4")
+
+[node name="Sala1Komputer4" type="Node2D" parent="Objects"]
+position = Vector2(1685, -1350)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Komputer4"]
+texture = ExtResource("46_on4ml")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Komputer4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala1Komputer4/CollisionBox"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_bgje4")
+
+[node name="Sala1Krzeslo1" type="Node2D" parent="Objects"]
+position = Vector2(1394, -1252)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Krzeslo1"]
+texture = ExtResource("47_btq84")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Krzeslo1"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala1Krzeslo1/CollisionBox"]
+polygon = PackedVector2Array(26, -48.4, 26, -46.8, 33, -43.8, 33, -42.2, 36, -38.2, 36, -25.3, 48, -16.5, 48, -14.1, 50, -11.1, 50, 16.7, 47.4, 24.5, 45.9, 24.5, 39.9, 31.5, 37.6, 31.5, 28.6, 37.5, 24.4, 37.5, 17, 39.1, 17, 42.1, 12.4, 48.5, -12, 48.5, -12, 47.2, -18, 39.5, -19.6, 39.5, -37, 27.6, -37, 25, -50, 1.6, -50, -37.8, -42, -48.2, 24.6, -48.5)
+
+[node name="Sala1Krzeslo2" type="Node2D" parent="Objects"]
+position = Vector2(1722, -1252)
+scale = Vector2(-1, 1)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Krzeslo2"]
+texture = ExtResource("47_btq84")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Krzeslo2"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala1Krzeslo2/CollisionBox"]
+polygon = PackedVector2Array(26, -48.4, 26, -46.8, 33, -43.8, 33, -42.2, 36, -38.2, 36, -25.3, 48, -16.5, 48, -14.1, 50, -11.1, 50, 16.7, 47.4, 24.5, 45.9, 24.5, 39.9, 31.5, 37.6, 31.5, 28.6, 37.5, 24.4, 37.5, 17, 39.1, 17, 42.1, 12.4, 48.5, -12, 48.5, -12, 47.2, -18, 39.5, -19.6, 39.5, -37, 27.6, -37, 25, -50, 1.6, -50, -37.8, -42, -48.2, 24.6, -48.5)
+
+[node name="Sala1Krzeslo3" type="Node2D" parent="Objects"]
+position = Vector2(2128, -1252)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Krzeslo3"]
+texture = ExtResource("47_btq84")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Krzeslo3"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala1Krzeslo3/CollisionBox"]
+polygon = PackedVector2Array(26, -48.4, 26, -46.8, 33, -43.8, 33, -42.2, 36, -38.2, 36, -25.3, 48, -16.5, 48, -14.1, 50, -11.1, 50, 16.7, 47.4, 24.5, 45.9, 24.5, 39.9, 31.5, 37.6, 31.5, 28.6, 37.5, 24.4, 37.5, 17, 39.1, 17, 42.1, 12.4, 48.5, -12, 48.5, -12, 47.2, -18, 39.5, -19.6, 39.5, -37, 27.6, -37, 25, -50, 1.6, -50, -37.8, -42, -48.2, 24.6, -48.5)
+
+[node name="Sala1Krzeslo4" type="Node2D" parent="Objects"]
+position = Vector2(1888, -1252)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Krzeslo4"]
+texture = ExtResource("47_btq84")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Krzeslo4"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala1Krzeslo4/CollisionBox"]
+polygon = PackedVector2Array(26, -48.4, 26, -46.8, 33, -43.8, 33, -42.2, 36, -38.2, 36, -25.3, 48, -16.5, 48, -14.1, 50, -11.1, 50, 16.7, 47.4, 24.5, 45.9, 24.5, 39.9, 31.5, 37.6, 31.5, 28.6, 37.5, 24.4, 37.5, 17, 39.1, 17, 42.1, 12.4, 48.5, -12, 48.5, -12, 47.2, -18, 39.5, -19.6, 39.5, -37, 27.6, -37, 25, -50, 1.6, -50, -37.8, -42, -48.2, 24.6, -48.5)
+
+[node name="Sala1Stol" type="Node2D" parent="Objects"]
+position = Vector2(1779, -730)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala1Stol"]
+visible = false
+texture = ExtResource("48_3efwf")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala1Stol"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala1Stol/CollisionBox"]
+polygon = PackedVector2Array(222, -31.5, 237.5, -23.7, 237.5, -22.2, 244, -11, 244, -7, 245, 63, 242.9, 75.5, 241.5, 75.5, 235.5, 83.5, 233.1, 83.5, 228.9, 86.5, -241.8, 86.5, -254.5, 76.5, -254.5, 74.2, -256.5, 71.7, -256.5, -11.6, -246.6, -26.5, -244, -26.5, -235, -31.5)
+
+[node name="Sala2Krzeslo1" type="Node2D" parent="Objects"]
+position = Vector2(-2599, -1116)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Krzeslo1"]
+texture = ExtResource("49_11adn")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Krzeslo1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Krzeslo1/CollisionBox"]
+shape = SubResource("RectangleShape2D_qkmkj")
+
+[node name="Sala2Krzeslo2" type="Node2D" parent="Objects"]
+position = Vector2(-3150, -1396)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Krzeslo2"]
+texture = ExtResource("49_11adn")
+flip_h = true
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Krzeslo2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Krzeslo2/CollisionBox"]
+shape = SubResource("RectangleShape2D_qkmkj")
+
+[node name="Sala2Krzeslo3" type="Node2D" parent="Objects"]
+position = Vector2(-2662, -1396)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Krzeslo3"]
+texture = ExtResource("49_11adn")
+flip_h = true
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Krzeslo3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Krzeslo3/CollisionBox"]
+shape = SubResource("RectangleShape2D_qkmkj")
+
+[node name="Sala2Lawka1" type="Node2D" parent="Objects"]
+position = Vector2(-2288, -1171)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Lawka1"]
+texture = ExtResource("50_ybu0o")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Lawka1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Lawka1/CollisionBox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_bxyos")
+
+[node name="Sala2Lawka2" type="Node2D" parent="Objects"]
+position = Vector2(-2630, -1174)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Lawka2"]
+texture = ExtResource("51_181uu")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Lawka2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Lawka2/CollisionBox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_bxyos")
+
+[node name="Sala2Lawka3" type="Node2D" parent="Objects"]
+position = Vector2(-2630, -1458)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Lawka3"]
+texture = ExtResource("52_8tgai")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Lawka3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Lawka3/CollisionBox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_bxyos")
+
+[node name="Sala2Lawka4" type="Node2D" parent="Objects"]
+position = Vector2(-3132, -1457)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Lawka4"]
+texture = ExtResource("53_by40i")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Lawka4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Lawka4/CollisionBox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_bxyos")
+
+[node name="Sala2Szafka" type="Node2D" parent="Objects"]
+position = Vector2(-2871, -905)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala2Szafka"]
+texture = ExtResource("54_r5nxd")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala2Szafka"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Sala2Szafka/CollisionBox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_8j1br")
+
+[node name="Sala3Biurko" type="Node2D" parent="Objects"]
+position = Vector2(-2952, -2784)
+metadata/_edit_group_ = true
+
+[node name="Sprite1" type="Sprite2D" parent="Objects/Sala3Biurko"]
+position = Vector2(0, 32)
+texture = ExtResource("55_n1e6j")
+
+[node name="Sprite2" type="Sprite2D" parent="Objects/Sala3Biurko"]
+position = Vector2(0, -72)
+texture = ExtResource("56_7h2gl")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala3Biurko"]
+position = Vector2(0, 32)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala3Biurko/CollisionBox"]
+polygon = PackedVector2Array(150, -24.8, 145.4, -11, 143.9, -11, 136.9, -3, 134.5, -3, 124.5, 2, 79, 2, -1, 0, -13, 4.39999, -13, 5, -25, 14, -25, 15.6, -29, 21.6, -29, 26.1, -36.2, 100, -37.6, 100, -46.6, 126, -48.4, 126, -56.3, 131, -138, 131, -138, 130, -149, 122, -149, 119.5, -150, 117.9, -150, -131, 150, -131)
+
+[node name="Sala3Stol" type="Node2D" parent="Objects"]
+position = Vector2(-2504, -2608)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala3Stol"]
+texture = ExtResource("57_jt34q")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala3Stol"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala3Stol/CollisionBox"]
+polygon = PackedVector2Array(163.3, -17.5, 176, -12.4, 189, -1.4, 189, 107.5, 175.7, 122.5, 174.4, 123.5, -174.2, 123.5, -179, 120.2, -189, 108.5, -189, 1.4, -178.4, -10.5, -163.4, -17.5)
+
+[node name="Sala3Wahadlo" type="Node2D" parent="Objects"]
+position = Vector2(-2172, -2756)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/Sala3Wahadlo"]
+position = Vector2(0, -120)
+texture = ExtResource("58_txgam")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/Sala3Wahadlo"]
+position = Vector2(0, -120)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Sala3Wahadlo/CollisionBox"]
+polygon = PackedVector2Array(30.5, 118.8, 117.5, 163.8, 117.5, 173, 115, 175.4, 112.5, 174.3, 112.5, 173.2, 59.3, 146.2, 112.5, 195.1, 112.5, 199.4, 110.7, 200, 102.5, 200, 24.1, 129.2, -52.5, 200, -62.3, 200, -63.5, 198.8, -63.5, 195.1, -11.7, 146.7, -66, 176, -68.3, 176, -72.5, 171.8, -72.5, 167.2, -70.3, 165, -68, 165, 19.5, 118.8)
+
+[node name="SamorzadKanapa" type="Node2D" parent="Objects"]
+z_index = -1
+position = Vector2(1775, 85)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/SamorzadKanapa"]
+texture = ExtResource("59_s1cnf")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadKanapa"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/SamorzadKanapa/CollisionBox"]
+polygon = PackedVector2Array(177, -76.8, 177, -75.4, 189, -71.4, 189, -69.7, 198, -59.8, 198, -57, 198.9, -38, 165, 97, -213.5, 46, -215.7, 46, -225, 46, -230, 43, -202.6, -103, -201, -103, -192, -116, -189.4, -116, -180.7, -120, -149.9, -120)
+
+[node name="SamorzadStol" type="Node2D" parent="Objects"]
+z_index = -1
+position = Vector2(1734, 297)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/SamorzadStol"]
+texture = ExtResource("60_kfep4")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadStol"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SamorzadStol/CollisionBox"]
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_8454v")
+
+[node name="SamorzadRoslina1" type="Node2D" parent="Objects"]
+position = Vector2(1390, 161)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/SamorzadRoslina1"]
+position = Vector2(-13, -104)
+texture = ExtResource("61_hrurh")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadRoslina1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SamorzadRoslina1/CollisionBox"]
+position = Vector2(0, 11.5)
+shape = SubResource("RectangleShape2D_bkfev")
+
+[node name="SamorzadRoslina2" type="Node2D" parent="Objects"]
+position = Vector2(2115, 31)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/SamorzadRoslina2"]
+position = Vector2(-13, -104)
+texture = ExtResource("61_hrurh")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/SamorzadRoslina2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SamorzadRoslina2/CollisionBox"]
+position = Vector2(0, 11.5)
+shape = SubResource("RectangleShape2D_bkfev")
+
+[node name="SerwerowniaBiurko" type="Node2D" parent="Objects"]
+position = Vector2(-1702, -2299)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/SerwerowniaBiurko"]
+texture = ExtResource("62_wcg3e")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/SerwerowniaBiurko"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/SerwerowniaBiurko/CollisionBox"]
+polygon = PackedVector2Array(-13, -156.5, -13, -155, -5, -149, -5, -146.5, 2, -132.5, 2, -80, 0, 2, 3.5, 12, 4.10001, 12, 13.1, 26, 14.6, 26, 24.5, 32, 39.1, 32, 91, 37.2, 91, 38.3, 109, 41.3, 109, 42.6, 125, 48.6, 125, 50.1, 132, 56.1, 132, 143.2, 128.4, 154, 126.6, 154, 117.6, 160, -132, 160, -132, -160, -25.3, -160)
+
+[node name="SerwerowniaKomputer" type="Node2D" parent="Objects"]
+position = Vector2(-1209, -2786)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/SerwerowniaKomputer"]
+texture = ExtResource("63_e1ttq")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/SerwerowniaKomputer"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/SerwerowniaKomputer/CollisionBox"]
+polygon = PackedVector2Array(131, -104.3, 131, -102.2, 136, -96.2, 136, -72.5, 134.7, -72.5, 119.3, 14, 135, 34.8, 135, 37, 148, 62, 148, 65.1, 150, 69.6, 150, 95.7, 144.1, 104.5, 141.7, 104.5, 139.2, 106.5, -125.5, 106.5, -141, 104.2, -141, 102.2, -150, 91.6, -150, 58.8, -148.6, 52.5, -147.2, 52.5, -133, 25, -133, 14.5, -137, -23.4, -137, -57.5, -138, -83.5, -137, -83.5, -137, -100.5, -135.3, -100.5, -133, -105.8, -133, -106.5, 113.4, -106.5)
+
+[node name="SerwerowniaKrzeslo" type="Node2D" parent="Objects"]
+position = Vector2(-1292, -2662)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/SerwerowniaKrzeslo"]
+texture = ExtResource("47_btq84")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/SerwerowniaKrzeslo"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/SerwerowniaKrzeslo/CollisionBox"]
+polygon = PackedVector2Array(26, -48.4, 26, -46.8, 33, -43.8, 33, -42.2, 36, -38.2, 36, -25.3, 48, -16.5, 48, -14.1, 50, -11.1, 50, 16.7, 47.4, 24.5, 45.9, 24.5, 39.9, 31.5, 37.6, 31.5, 28.6, 37.5, 24.4, 37.5, 17, 39.1, 17, 42.1, 12.4, 48.5, -12, 48.5, -12, 47.2, -18, 39.5, -19.6, 39.5, -37, 27.6, -37, 25, -50, 1.6, -50, -37.8, -42, -48.2, 24.6, -48.5)
+
+[node name="SerwerowniaSzafa" type="Node2D" parent="Objects"]
+position = Vector2(-1724, -2771)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/SerwerowniaSzafa"]
+texture = ExtResource("64_geuup")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/SerwerowniaSzafa"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/SerwerowniaSzafa/CollisionBox"]
+polygon = PackedVector2Array(108, -191.6, 108, -190.1, 109, -189.4, 109, 48, -52.1, 201, -70.6, 201, -109, 186.2, -109, -68, 45, -200.9, 64.3, -201)
+
+[node name="SerwerowniaWifi" type="Node2D" parent="Objects"]
+visible = false
+position = Vector2(-841, -2878)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/SerwerowniaWifi"]
+texture = ExtResource("65_2xblb")
+
+[node name="WcToaleta" type="Node2D" parent="Objects"]
+position = Vector2(122, 1915)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/WcToaleta"]
+texture = ExtResource("66_3plgl")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/WcToaleta"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/WcToaleta/CollisionBox"]
+polygon = PackedVector2Array(-3, -69.6, -3, -68.4, 24, -57.3, 24, -56.1, 43, -45.2, 43, -44, 57.8, -32, 59.7, -32, 66.6, -35, 78.2, -35, 84, -33.6, 84, -32.4, 90, -30.4, 90, -28.7, 97, -21, 97, 1.2, 51.1, 70, 48.6, 70, 45.6, 72, 18.8, 72, 7, 64.1, 7, 61.4, 3.6, 52, -1.3, 52, -39, 41.5, -39, 40.3, -64, 29.3, -64, 28, -80, 17.1, -80, 15.7, -95, -2.3, -95, -4.5, -97, -8.5, -97, -41.1, -93.4, -51, -91.8, -51, -75.8, -67, -73.4, -67, -60.1, -72, -14.6, -72)
+
+[node name="WillyBiurko" type="Node2D" parent="Objects"]
+z_index = -4
+position = Vector2(2036, -2077)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/WillyBiurko"]
+texture = ExtResource("67_5at3m")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/WillyBiurko"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/WillyBiurko/CollisionBox"]
+polygon = PackedVector2Array(-156.5, -151.4, -156.5, -150.2, -144.5, -148.2, -144.5, -146.6, -132.5, -138.6, -132.5, -136.1, -122.5, -121.1, -122.5, -117.8, -114.5, -91.8, -114.5, -86.5, -107.7, -20.5, -100.4, -9.5, -98.9, -9.5, -81.9, 1.5, -79.2, 1.5, -56.1, 9.5, -41.5, 9.5, 163.5, 7.5, 163.5, 8.70001, 180.5, 10.7, 180.5, 12.2, 197.5, 19.2, 197.5, 20.6, 208.5, 30.6, 208.5, 33.1, 214.5, 49.1, 214.5, 161.5, 212.2, 161.5, 206.2, 166.5, -318, 166.5, -321.5, 164.7, -321.5, -125.5, -319.7, -125.5, -312.8, -140.5, -311.1, -140.5, -295.1, -150.5, -290.5, -150.5, -222.5, -152.4, -222.5, -153.6)
+
+[node name="WillyKabelki" type="Node2D" parent="Objects"]
+z_index = -3
+position = Vector2(2407, -2298)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/WillyKabelki"]
+texture = ExtResource("68_nboir")
+
+[node name="WillyKomputer" type="Node2D" parent="Objects"]
+position = Vector2(2541, -2614)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/WillyKomputer"]
+visible = false
+texture = ExtResource("69_68rt3")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/WillyKomputer"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/WillyKomputer/CollisionBox"]
+polygon = PackedVector2Array(178, -135.5, 178, -134.4, 206, -132.4, 206, -130.6, 213, -126.7, 213, -81.5, 211.7, -81.5, 194.4, -1, 226, 41.8, 226, 44, 236, 63, 236, 67.5, 240.6, 84.5, 238.2, 84.5, 231.2, 98.5, 228.5, 98.5, 210.5, 107.5, 85, 107.5, -131, 106.5, -131, 105, -143, 102.1, -143, 100.5, -152, 93.5, -152, 91.1, -157, 83.1, -157, 59.5, -155.4, 59.5, -149.4, 41.5, -148.1, 41.5, -131, 12, -131, 6.5, -135, -8.20001, -135, -19.5, -139, -74.4, -139, -115.7, -136.7, -130.5, -134.8, -130.5, -131.8, -133.5, -105, -133.5, -105, -134.5, -39, -134.5, 30, -135.5, 30, -136.5)
+
+[node name="WillyKrzeslo" type="Node2D" parent="Objects"]
+position = Vector2(2447, -2513)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/WillyKrzeslo"]
+texture = ExtResource("47_btq84")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/WillyKrzeslo"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/WillyKrzeslo/CollisionBox"]
+polygon = PackedVector2Array(26, -48.4, 26, -46.8, 33, -43.8, 33, -42.2, 36, -38.2, 36, -25.3, 48, -16.5, 48, -14.1, 50, -11.1, 50, 16.7, 47.4, 24.5, 45.9, 24.5, 39.9, 31.5, 37.6, 31.5, 28.6, 37.5, 24.4, 37.5, 17, 39.1, 17, 42.1, 12.4, 48.5, -12, 48.5, -12, 47.2, -18, 39.5, -19.6, 39.5, -37, 27.6, -37, 25, -50, 1.6, -50, -37.8, -42, -48.2, 24.6, -48.5)
+
+[node name="WillySkrzynkaElektryczna" type="Node2D" parent="Objects"]
+position = Vector2(3000, -2665)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/WillySkrzynkaElektryczna"]
+texture = ExtResource("69_rlgtp")
+
+[node name="XeroKopiarka" type="Node2D" parent="Objects"]
+position = Vector2(-1437, -427)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/XeroKopiarka"]
+texture = ExtResource("70_8h00i")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/XeroKopiarka"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/XeroKopiarka/CollisionBox"]
+polygon = PackedVector2Array(121.5, -99.5, 123.5, -99.5, 123.5, 119.5, -65.5, 119.5, -65.5, 76.5, -68.7, 76.5, -73.7, 81.5, -96.5, 81.5, -96.5, 79.3, -103.5, 72.3, -103.5, 66.5, -104.8, 66.5, -116.5, 62.4, -116.5, 65.1, -123.5, 66.5, -123.5, 32.5, -116.7, 32.5, -114.7, 49.5, -112.1, 49.5, -99.1, 54.5, -96.6, 54.5, -94.6, 51.5, -77.8, 51.5, -79.1, 46.5, -72.8, 46.5, -73.8, 39.5, -67.8, 39.5, -65.5, 41.3, -65.5, -12.6, -76.4, -24.5, -78.2, -24.5, -105.5, -46.5, -105.5, -50.2, -98.4, -58.5, -95.1, -58.5, -88.6, -62.8, -86.5, -61.7, -86.5, -60.6, -69.8, -50.6, -80.4, -62.5, -82.1, -62.5, -97.5, -73.5, -97.5, -76.5, -87.7, -83.8, -85.5, -82.7, -85.5, -81.6, -65.5, -69.1, -65.5, -78.4, -95.5, -97.4, -95.5, -102.1, -91.6, -108.5, -88.9, -108.5, -56, -88.5, -52.4, -88.5, -51.4, -102.5, -32.5, -102.5, -32.5, -100.2, -23.5, -88.5, 7.5, -88.5, 7.5, -114.9, 10.5, -115.9, 10.5, -119.5, 121.5, -119.5)
+
+[node name="XeroPolka1" type="Node2D" parent="Objects"]
+position = Vector2(-1207, -460)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/XeroPolka1"]
+texture = ExtResource("71_yvo4d")
+
+[node name="XeroPolka2" type="Node2D" parent="Objects"]
+position = Vector2(-1082, -397)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/XeroPolka2"]
+texture = ExtResource("71_yvo4d")
+
+[node name="XeroStosKartek" type="Node2D" parent="Objects"]
+visible = false
+z_index = -3
+position = Vector2(-1818, 88)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/XeroStosKartek"]
+texture = ExtResource("72_vb4gs")
+
+[node name="XeroSzafa" type="Node2D" parent="Objects"]
+position = Vector2(-1827, -453)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Objects/XeroSzafa"]
+texture = ExtResource("73_g7t2a")
+
+[node name="CollisionBox" type="StaticBody2D" parent="Objects/XeroSzafa"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/XeroSzafa/CollisionBox"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_f8ggq")
+
+[node name="InteractionPoints" type="Node2D" parent="."]
+z_index = 4
+y_sort_enabled = true
+
+[node name="EmergencyButton" parent="InteractionPoints" instance=ExtResource("36_xfee5")]
+z_index = 1
+position = Vector2(1734, 286)
+
+[node name="Tasks" type="Node2D" parent="InteractionPoints"]
+y_sort_enabled = true
+
+[node name="Task1" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(-3113, -1760)
+sprite = ExtResource("77_m0r18")
+minigame_scene = ExtResource("77_1ivr1")
+
+[node name="Task2" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(-1842, 124)
+sprite = ExtResource("72_vb4gs")
+minigame_scene = ExtResource("78_pc37b")
+
+[node name="Task3" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(3152, -624)
+sprite = ExtResource("32_jc7lc")
+minigame_scene = ExtResource("79_xtlh3")
+
+[node name="Task4" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+z_index = 1
+position = Vector2(-2538, 1052)
+sprite = ExtResource("38_u8dgm")
+minigame_scene = ExtResource("80_j2qov")
+
+[node name="Task5" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+z_index = 1
+position = Vector2(1780, -728)
+sprite = ExtResource("48_3efwf")
+minigame_scene = ExtResource("80_b7854")
+
+[node name="Task6" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(-911, -2858)
+sprite = ExtResource("83_6xbov")
+scale_factor = 0.6
+minigame_scene = ExtResource("82_rt2pg")
+
+[node name="Task7" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(2543, -2610)
+sprite = ExtResource("69_68rt3")
+minigame_scene = ExtResource("83_7u8vq")
+
+[node name="Task8" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(3802, -2027)
+sprite = ExtResource("44_y3l63")
+minigame_scene = ExtResource("84_y3nq6")
+
+[node name="Task9" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
+position = Vector2(-277, -1718)
+sprite = ExtResource("31_dhdh4")
+minigame_scene = ExtResource("86_ao4sp")
+
+[node name="CameraSystem" parent="InteractionPoints" instance=ExtResource("3_e0rk4")]
+position = Vector2(4016, -1329)
+is_minigame = false
+minigame_scene = ExtResource("89_58eb3")
+
+[node name="Vents" type="Node2D" parent="InteractionPoints"]
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="VentSystem1" type="Node2D" parent="InteractionPoints/Vents"]
+
+[node name="Vent1" parent="InteractionPoints/Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-1092, 147)
+vent_target_list = [NodePath("../Vent2"), NodePath("../Vent3")]
+
+[node name="Vent2" parent="InteractionPoints/Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-3279, 1172)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent3")]
+
+[node name="Vent3" parent="InteractionPoints/Vents/VentSystem1" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(-2701, -2818)
+vent_target_list = [NodePath("../Vent1"), NodePath("../Vent2")]
+
+[node name="VentSystem2" type="Node2D" parent="InteractionPoints/Vents"]
+
+[node name="Vent1" parent="InteractionPoints/Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(2158, 154)
+vent_target_list = [NodePath("../Vent2")]
+
+[node name="Vent2" parent="InteractionPoints/Vents/VentSystem2" node_paths=PackedStringArray("vent_target_list") instance=ExtResource("33_q8paj")]
+position = Vector2(4372, -1366)
+vent_target_list = [NodePath("../Vent1")]
+
+[node name="Tasks" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="StartPositions" type="Node2D" parent="."]
+
+[node name="0" type="Marker2D" parent="StartPositions"]
+position = Vector2(-301, 436)
+
+[node name="1" type="Marker2D" parent="StartPositions"]
+position = Vector2(-434, 425)
+
+[node name="2" type="Marker2D" parent="StartPositions"]
+position = Vector2(-553, 449)
+
+[node name="3" type="Marker2D" parent="StartPositions"]
+position = Vector2(-605, 542)
+
+[node name="4" type="Marker2D" parent="StartPositions"]
+position = Vector2(-605, 664)
+
+[node name="5" type="Marker2D" parent="StartPositions"]
+position = Vector2(-536, 741)
+
+[node name="6" type="Marker2D" parent="StartPositions"]
+position = Vector2(-419, 769)
+
+[node name="7" type="Marker2D" parent="StartPositions"]
+position = Vector2(-296, 746)
+
+[node name="8" type="Marker2D" parent="StartPositions"]
+position = Vector2(-217, 663)
+
+[node name="9" type="Marker2D" parent="StartPositions"]
+position = Vector2(-224, 506)
+
+[node name="MeetingPositions" type="Node2D" parent="."]
+
+[node name="0" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1592, 187)
+
+[node name="1" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1561, 251)
+
+[node name="2" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1553, 328)
+
+[node name="3" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1573, 408)
+
+[node name="4" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1645, 455)
+
+[node name="5" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1747, 476)
+
+[node name="6" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1837, 450)
+
+[node name="7" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1890, 389)
+
+[node name="8" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1912, 312)
+
+[node name="9" type="Marker2D" parent="MeetingPositions"]
+position = Vector2(1900, 237)
+
+[node name="MapBorder" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MapBorder"]
+collision_layer = 255
+collision_mask = 255
+
+[node name="CollisionShape2D1" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(584, 2504)
+shape = SubResource("RectangleShape2D_elfmc")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(584, -3560)
+shape = SubResource("RectangleShape2D_elfmc")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(5056, -584)
+shape = SubResource("RectangleShape2D_apqsq")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="MapBorder/StaticBody2D"]
+position = Vector2(-3888, -584)
+shape = SubResource("RectangleShape2D_apqsq")
+
+[node name="LightMap" type="Node2D" parent="."]
+visible = false
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="LightOccluder2D1" type="LightOccluder2D" parent="LightMap"]
+occluder = SubResource("OccluderPolygon2D_2hbmx")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="LightMap"]
+occluder = SubResource("OccluderPolygon2D_eoh7v")
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="LightMap"]
+occluder = SubResource("OccluderPolygon2D_f6dli")
+
+[node name="Players" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="DeadBodies" type="Node2D" parent="."]
+
+[node name="SurveilenceCameras" type="Node2D" parent="."]
+
+[node name="SurveilenceCamera1" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-2602, -277)
+
+[node name="SurveilenceCamera2" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+position = Vector2(-1390, -1450)
+
+[node name="SurveilenceCamera3" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+position = Vector2(36, 476)
+
+[node name="SurveilenceCamera4" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+position = Vector2(3036, 352)
+
+[node name="SurveilenceCamera5" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+position = Vector2(2848, -1132)
+
+[node name="Camera" type="Camera2D" parent="."]
+enabled = false
+zoom = Vector2(0.45, 0.45)
+limit_left = -3888
+limit_top = -3674
+limit_right = 5056
+limit_bottom = 2504
+limit_smoothed = true
+position_smoothing_enabled = true
+script = ExtResource("3_gwvgv")
+
+[node name="TickInterpolator" type="Node" parent="Camera" node_paths=PackedStringArray("root")]
+script = ExtResource("34_b878o")
+root = NodePath("..")
+properties = Array[String]([":global_position"])
+
+[node name="TaskListDisplay" parent="." instance=ExtResource("38_l1f3e")]
+
+[node name="UserInterface" parent="." instance=ExtResource("37_tw5rq")]
+
+[node name="MinigameWindow" parent="." instance=ExtResource("34_5r0ro")]
+script = ExtResource("92_b2shf")
+
+[node name="VotingCanvas" type="CanvasLayer" parent="."]
+
+[node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.411765, 0.411765, 0.411765, 1)
+
+[connection signal="visibility_changed" from="MinigameWindow" to="." method="_update_player_input"]
+[connection signal="child_order_changed" from="VotingCanvas" to="." method="_update_player_input"]
+[connection signal="finished" from="LoadingScreen" to="." method="_on_loading_screen_finished"]
+[connection signal="visibility_changed" from="LoadingScreen" to="." method="_update_player_input"]
