@@ -826,7 +826,6 @@ func activate_light_sabotage():
 @rpc("any_peer", "call_local", "reliable")
 ## Emituje sygnał informujący o rozpoczeciu/zakończeniu sabotażu.
 func emit_sabotage_started(has_started:bool):
-	print(has_started)
 	is_sabotage = has_started
 	sabotage_started.emit(has_started)
 
