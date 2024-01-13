@@ -22,6 +22,9 @@ var is_in_vent: bool = false
 ## Czy jest w trakcie poruszania się przez venta lub do venta.
 var is_moving_through_vent: bool = false
 
+## Czy gracz właśnie wszedł do venta
+var _has_entered_vent: bool = false
+
 ## Kolor gracza do zabicia
 var in_range_color = [180, 0, 0, 255]
 ## Kolor gracza, którego nie możemy zabić
@@ -38,6 +41,7 @@ var is_teleport: bool = false
 ## Pozycja docelowa teleportacji
 var teleport_position = null
 
+
 ## Referencja do wejścia gracza.
 @onready var input: InputSynchronizer = $Input
 ## Referencja do synchronizatora rollbacku.
@@ -47,7 +51,7 @@ var teleport_position = null
 ## Referencja do drzewa animacji postaci.
 @onready var animation_tree: AnimationTree = $Skins/AnimationTree
 ## Referencja do sprite'a postaci.
-@onready var player_sprite = $Skins/PlayerSprite
+@onready var player_sprite = $Skins/Control/PlayerSprite
 ## Referencja do node'a postaci.
 @onready var player_node = $"."
 
@@ -55,6 +59,9 @@ var teleport_position = null
 @onready var light = $LightsContainer/Light
 ## Referencja do kontenera node'a światła.
 @onready var lights_container = $LightsContainer
+
+## Player animacji ventowania
+@onready var venting_animation_player = $Skins/Control/PlayerSprite/VentingAnimationPlayer
 
 ## Początkowa maska kolizji.
 @onready var initial_collision_mask: int = collision_mask
@@ -160,17 +167,15 @@ func _rollback_tick(delta, _tick, is_fresh):
 				global_position = input.destination_position
 				input.direction = Vector2.ZERO
 
-				button_active.emit("ReportButton", !is_in_vent && can_report)
-				button_active.emit("FailButton", !is_in_vent)
+				_has_entered_vent = true
 
-				# Wyłącza widoczność gracza.
 				if multiplayer.is_server():
-					toggle_visibility.rpc(false)
+					_play_venting_animation.rpc(false)
 
-				# Włącza widoczność przycisków kierunkowych venta oraz światła venta.
-				if name.to_int() == GameManager.get_current_player_id():
-					_toggle_vent_buttons(true)
-					_toggle_vent_light(true)
+					var vent = get_nearest_vent()
+
+					if vent != null:
+						vent.play_vent_animation.rpc()
 
 				input.is_walking_to_destination = false
 				is_moving_through_vent = false
@@ -180,7 +185,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 			# Przesuwa gracza w kierunku docelowego venta.
 			global_position = global_position.move_toward(input.destination_position, delta * venting_speed * NetworkTime.physics_factor)
 
-			# Jeśli gracz dotał do docelowego venta.
+			# Jeśli gracz dotarł do docelowego venta.
 			if global_position == input.destination_position:
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManager.get_current_player_id():
@@ -192,11 +197,13 @@ func _rollback_tick(delta, _tick, is_fresh):
 	# Gracz jest przenoszony na miejsce awaryjnego spotkania
 	elif is_teleport && is_fresh:
 		# Wyciąga impostora z venta
-		if is_in_vent:
-			if name.to_int() != 1:
-				_exit_vent()
-			_exit_vent.rpc_id(name.to_int())
-		
+		if multiplayer.is_server():
+			if is_in_vent:
+				if name.to_int() != 1:
+					_exit_vent()
+
+				_exit_vent.rpc_id(name.to_int())
+
 		global_position = teleport_position
 		is_teleport = false
 		teleport_position = null
@@ -236,6 +243,9 @@ func _input(event):
 			return
 
 		if !is_in_vent && GameManager.get_current_game_key("is_input_disabled"):
+			return
+		
+		if venting_animation_player.is_playing():
 			return
 
 		_use_vent()
@@ -337,7 +347,7 @@ func _handle_kill_timer():
 
 ## Włącza i wyłącza podświetlenie możliwości zabicia gracza
 func _toggle_highlight(player: int, is_on: bool) -> void:
-	var player_material = get_parent().get_node(str(player) + "/Skins/PlayerSprite").material
+	var player_material = get_parent().get_node(str(player) + "/Skins/Control/PlayerSprite").material
 	
 	if player_material:
 		player_material.set_shader_parameter('color', in_range_color if is_on else out_of_range_color)
@@ -430,8 +440,8 @@ func _on_timer_timeout() -> void:
 func _update_dead_player(player_id: int):
 	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
-	victim_node.get_node("Skins/PlayerSprite").use_parent_material = true
-	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
+	victim_node.get_node("Skins/Control/PlayerSprite").use_parent_material = true
+	victim_node.get_node("Skins/Control/PlayerSprite").modulate = Color(1,1,1,0.35)
 	victim_node.collision_mask = 8
 	victim_node.collision_layer = 16
 	victim_node.z_index += 1
@@ -488,6 +498,9 @@ func _enter_vent(vent_position):
 @rpc("any_peer", "call_local", "reliable")
 ## Obsługuje żądanie wyjścia z venta.
 func _request_vent_exiting():
+	if !multiplayer.is_server():
+		return
+
 	var id = multiplayer.get_remote_sender_id()
 
 	if !name.to_int() == id:
@@ -514,7 +527,7 @@ func _request_vent_exiting():
 ## Obsługuje wyjście z venta.
 func _exit_vent():
 	var vent = get_nearest_vent()
-	
+
 	if vent == null:
 		return
 
@@ -522,13 +535,15 @@ func _exit_vent():
 		vent.set_direction_buttons_visibility(false)
 		vent.set_vent_light_visibility_for(name.to_int(), false)
 
+	_has_entered_vent = false
 	is_in_vent = false
 	collision_mask = initial_collision_mask
 
-	vent_exited.emit()
-
 	if multiplayer.is_server():
 		toggle_visibility.rpc(true)
+
+		_play_venting_animation.rpc(true)
+		vent.play_vent_animation.rpc()
 
 
 ## Zmienia widoczność przycisków kierunkowych venta.
@@ -649,3 +664,38 @@ func cancel_decrease_light_range_sabotage() -> void:
 	if not GameManager.get_current_player_key("is_lecturer"):
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale * 6, 1).set_trans(Tween.TRANS_CUBIC)
+
+
+func _on_venting_animation_player_animation_finished(anim_name):
+	if anim_name == "venting_animation":
+		# Gracz wchodzi do venta
+		if _has_entered_vent:
+			button_active.emit("ReportButton", !is_in_vent && can_report)
+			button_active.emit("FailButton", !is_in_vent)
+
+			# Wyłącza widoczność gracza.
+			if multiplayer.is_server():
+				toggle_visibility.rpc(false)
+
+			# Włącza widoczność przycisków kierunkowych venta.
+			if name.to_int() == GameManager.get_current_player_id():
+				_toggle_vent_buttons(true)
+				_toggle_vent_light(true)
+		# Gracz wychodzi z venta
+		else:
+			_handle_vent_exit()
+
+
+## Obsługuje wyjście z venta po zakończeniu animacji
+func _handle_vent_exit():
+	_has_entered_vent = false
+	vent_exited.emit()
+
+
+@rpc("call_local", "reliable")
+## Puszcza animacje ventowania
+func _play_venting_animation(is_backwards:bool):
+	if !is_backwards:
+		venting_animation_player.play("venting_animation")
+	else: 
+		venting_animation_player.play_backwards("venting_animation")

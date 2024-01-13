@@ -10,7 +10,7 @@ extends Node2D
 func set_dead_player(victim: int) -> void:
 	victim_id = victim
 	var victim_node = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))
-	var victim_sprite = victim_node.get_node("Skins/PlayerSprite")
+	var victim_sprite = victim_node.get_node("Skins/Control/PlayerSprite")
 	
 	name = "DeadBody"+str(victim)
 	label.text = "Oblany student (" + GameManager.get_registered_player_key(victim, "username") + ")"

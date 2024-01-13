@@ -26,6 +26,8 @@ var _out_of_range_color = [0, 0, 0, 0]
 ## Referencja do node'a venta.
 @onready var _vent_node = $"."
 
+@onready var _animation_player = $Sprite2D/AnimationPlayer
+
 ## Interfejs
 var user_interface
 ## Emitowany gdy przycisk ventowania powinien być włączony/wyłączony
@@ -142,3 +144,9 @@ func _toggle_highlight(is_on: bool):
 func set_vent_light_visibility_for(player_id: int, visibility: bool):
 	if player_id == GameManager.get_current_player_id():
 		_vent_light_container.visible = visibility
+
+
+@rpc("call_local", "reliable")
+## Puszcza animacje ventowania
+func play_vent_animation():
+	_animation_player.play("vent_animation")
