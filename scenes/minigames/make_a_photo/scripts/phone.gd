@@ -7,7 +7,7 @@ var papers_x_left = 430
 var papers_x_right = 780
 var papers_y_top = 181
 var papers_y_bottom = 411
-var make_a_photo: TextureButton
+var make_a_photo: Button
 	
 func show_the_phone_and_start():
 	self.visible = true
