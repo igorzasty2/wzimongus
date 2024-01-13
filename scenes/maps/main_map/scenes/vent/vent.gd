@@ -26,7 +26,7 @@ var _out_of_range_color = [0, 0, 0, 0]
 ## Referencja do node'a venta.
 @onready var _vent_node = $"."
 
-@onready var animation_player = $Sprite2D/AnimationPlayer
+@onready var _animation_player = $Sprite2D/AnimationPlayer
 
 ## Interfejs
 var user_interface
@@ -158,4 +158,4 @@ func request_vent_animation():
 @rpc("authority", "reliable", "call_local")
 ## Puszcza animacje ventowania
 func _play_vent_animation():
-	animation_player.play("vent_animation")
+	_animation_player.play("vent_animation")

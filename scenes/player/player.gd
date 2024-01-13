@@ -435,8 +435,8 @@ func _on_timer_timeout() -> void:
 func _update_dead_player(player_id: int):
 	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
-	victim_node.get_node("Skins/PlayerSprite").use_parent_material = true
-	victim_node.get_node("Skins/PlayerSprite").modulate = Color(1,1,1,0.35)
+	victim_node.get_node("Skins/Control/PlayerSprite").use_parent_material = true
+	victim_node.get_node("Skins/Control/PlayerSprite").modulate = Color(1,1,1,0.35)
 	victim_node.collision_mask = 8
 	victim_node.collision_layer = 16
 	victim_node.z_index += 1
@@ -689,7 +689,7 @@ func _request_handle_vent_exit():
 		_handle_vent_exit()
 
 	_handle_vent_exit.rpc_id(name.to_int())
-	
+
 
 @rpc("authority", "call_local", "reliable")
 ## Obsługuje wyjście z venta po zakończeniu animacji
