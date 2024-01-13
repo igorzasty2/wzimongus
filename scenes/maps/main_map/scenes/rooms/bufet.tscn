@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bcr0n6fy1ajvx"]
 
-[ext_resource type="Texture2D" uid="uid://dtlpboy2a35v4" path="res://scenes/maps/main_map/assets/rooms/bufet.png" id="1_ria00"]
+[ext_resource type="Texture2D" uid="uid://dtlpboy2a35v4" path="res://assets/textures/main_map/rooms/bufet.png" id="1_ria00"]
 
 [node name="bufet" type="Node2D"]
 

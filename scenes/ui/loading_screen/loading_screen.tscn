@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://ct2plxemq2ft5"]
 
 [ext_resource type="Script" path="res://scenes/ui/loading_screen/loading_screen.gd" id="1_3sy48"]
-[ext_resource type="Texture2D" uid="uid://bb3so5pp26xqm" path="res://scenes/ui/loading_screen/assets/shhh_logo.png" id="1_62pxn"]
+[ext_resource type="Texture2D" uid="uid://bb3so5pp26xqm" path="res://assets/textures/loading_screen/shhh_logo.png" id="1_62pxn"]
 
 [sub_resource type="Animation" id="Animation_n0sii"]
 length = 0.001

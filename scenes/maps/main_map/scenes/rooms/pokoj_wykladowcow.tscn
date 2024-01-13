@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cy5elj455alsv"]
 
-[ext_resource type="Texture2D" uid="uid://pp4bwuw6e72b" path="res://scenes/maps/main_map/assets/rooms/pokoj_wykladowcow.png" id="1_y06xx"]
+[ext_resource type="Texture2D" uid="uid://pp4bwuw6e72b" path="res://assets/textures/main_map/rooms/pokoj_wykladowcow.png" id="1_y06xx"]
 
 [node name="pokoj_wykladowcow" type="Node2D"]
 

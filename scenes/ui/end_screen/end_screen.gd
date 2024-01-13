@@ -8,10 +8,10 @@ func _ready():
 ## Ustawia tekst wyświetlany na ekranie.
 func set_winning_role(role: GameManager.Role):
 	if role == GameManager.Role.LECTURER:
-		$Background.texture = load("res://scenes/ui/end_screen/assets/lecturers_won_background.png")
+		$Background.texture = load("res://assets/textures/end_screen/lecturers_won_background.png")
 		$WinnerText.text = "Wykładowcy wygrali"
 	elif role == GameManager.Role.STUDENT:
-		$Background.texture = load("res://scenes/ui/end_screen/assets/students_won_background.png")
+		$Background.texture = load("res://assets/textures/end_screen/students_won_background.png")
 		$WinnerText.text = "Studenci wygrali"
 
 

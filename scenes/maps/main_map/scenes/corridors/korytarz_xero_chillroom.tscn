@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://h7j34elcqawo"]
 
-[ext_resource type="Texture2D" uid="uid://dcacy4usw4y7t" path="res://scenes/maps/main_map/assets/corridors/korytarz_xero_chillroom.png" id="1_y3bol"]
+[ext_resource type="Texture2D" uid="uid://dcacy4usw4y7t" path="res://assets/textures/main_map/corridors/korytarz_xero_chillroom.png" id="1_y3bol"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3h2cq"]
 size = Vector2(24, 632)

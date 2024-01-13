@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://dyuj3stgg8wl4"]
 
 [ext_resource type="Script" path="res://scenes/maps/lobby/scenes/lobby_ui/lobby_ui.gd" id="1_x2ran"]
-[ext_resource type="Texture2D" uid="uid://irwk5hfqym8q" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/9_przycisk_start.png" id="2_l78cx"]
-[ext_resource type="Texture2D" uid="uid://x3hb3b3rrfa1" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/czat.png" id="3_g5t7e"]
-[ext_resource type="Texture2D" uid="uid://j016m335ll88" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/3_przycisk_avatar.png" id="3_wnle0"]
+[ext_resource type="Texture2D" uid="uid://irwk5hfqym8q" path="res://assets/textures/ui/9_przycisk_start.png" id="2_l78cx"]
+[ext_resource type="Texture2D" uid="uid://x3hb3b3rrfa1" path="res://assets/textures/ui/czat.png" id="3_g5t7e"]
+[ext_resource type="Texture2D" uid="uid://j016m335ll88" path="res://assets/textures/ui/3_przycisk_avatar.png" id="3_wnle0"]
 [ext_resource type="Texture2D" uid="uid://c3krnig4q8qwh" path="res://scenes/ui/user_interface/assets/__nowy_setting_v1.png" id="4_gjrj2"]
-[ext_resource type="Texture2D" uid="uid://blrk7daia54ig" path="res://scenes/maps/lobby/scenes/lobby_ui/assets/ustawienia_gry.png" id="5_5m3mp"]
+[ext_resource type="Texture2D" uid="uid://blrk7daia54ig" path="res://assets/textures/ui/ustawienia_gry.png" id="5_5m3mp"]
 
 [node name="LobbyUi" type="CanvasLayer"]
 script = ExtResource("1_x2ran")

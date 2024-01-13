@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://q56d4alpaarl"]
 
-[ext_resource type="Texture2D" uid="uid://bvu82f0v7s34y" path="res://scenes/maps/main_map/assets/rooms/xero.png" id="1_oijt1"]
+[ext_resource type="Texture2D" uid="uid://bvu82f0v7s34y" path="res://assets/textures/main_map/rooms/xero.png" id="1_oijt1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d1sq4"]
 size = Vector2(57, 952)

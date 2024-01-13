@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bodsrjrylxs0s"]
 
-[ext_resource type="Texture2D" uid="uid://f88pakvwewgf" path="res://scenes/maps/main_map/assets/corridors/korytarz_serwerownia_pielegniarka.png" id="1_y501d"]
+[ext_resource type="Texture2D" uid="uid://f88pakvwewgf" path="res://assets/textures/main_map/corridors/korytarz_serwerownia_pielegniarka.png" id="1_y501d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gstn3"]
 size = Vector2(462, 24)

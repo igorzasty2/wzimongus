@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dfh2yf2biknok"]
 
-[ext_resource type="Texture2D" uid="uid://bfvhce6rmqp5u" path="res://scenes/maps/main_map/assets/corridors/korytarz_pielegniarka_willy.png" id="1_d8bkn"]
+[ext_resource type="Texture2D" uid="uid://bfvhce6rmqp5u" path="res://assets/textures/main_map/corridors/korytarz_pielegniarka_willy.png" id="1_d8bkn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpu06"]
 size = Vector2(368, 189)

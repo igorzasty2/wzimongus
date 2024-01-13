@@ -110,9 +110,9 @@ func on_next_round_started():
 ## Włącza i wyłącza podświetlenie przycisku awaryjnego
 func toggle_button_highlight(is_on: bool):
 	if is_on:
-		sprite_2d.material.set_shader_parameter('color', in_range_color)
+		sprite_2d.material.set_shader_parameter('line_color', in_range_color)
 	else:
-		sprite_2d.material.set_shader_parameter('color', out_of_range_color)
+		sprite_2d.material.set_shader_parameter('line_color', out_of_range_color)
 
 
 ## Wywoływane po naciśnięciu przycisku, wyłącza możliwość ponownego użycia

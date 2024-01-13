@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bcglaee2jl12o"]
 
-[ext_resource type="Texture2D" uid="uid://def87bfclqma8" path="res://scenes/maps/main_map/assets/corridors/korytarz_samorzad_bufet.png" id="1_o5sw8"]
+[ext_resource type="Texture2D" uid="uid://def87bfclqma8" path="res://assets/textures/main_map/corridors/korytarz_samorzad_bufet.png" id="1_o5sw8"]
 
 [node name="korytarz_samorzad_bufet" type="Node2D"]
 
