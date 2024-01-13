@@ -48,6 +48,7 @@ func _ready():
 	GameManager.next_round_started.connect(on_next_round_started)
 	GameManager.map_load_finished.connect(_on_map_load_finished)
 	GameManager.player_killed.connect(_on_player_killed)
+	GameManager.sabotage_started.connect(_on_sabotage_started)
 	
 	report_area.toggle_button_highlight.connect(toggle_button_highlight)
 	
@@ -184,3 +185,12 @@ func show_hide_report_screen(is_button: bool, dead_body_id):
 	
 	# Rozpoczyna głosowanie
 	voting_canvas.get_child(0).start_voting()
+
+
+## Obsługuje rozpoczęcie/zakończenie sabotażu dla przycisku awaryjnego
+func _on_sabotage_started(has_started:bool):
+	var bodies = report_area.get_overlapping_bodies()
+	for body in bodies:
+		if body.name.to_int()==multiplayer.get_unique_id() && !GameManager.get_current_player_key("is_dead") && report_area.monitorable && report_area.monitoring:
+			toggle_button_highlight(!has_started)
+			button_active.emit("InteractButton", !has_started)

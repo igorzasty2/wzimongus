@@ -50,6 +50,9 @@ func _input(event):
 			if !is_wait_time_over:
 				return
 
+			if GameManager.is_sabotage:
+				return
+
 		if !is_player_inside:
 			return
 
@@ -58,7 +61,7 @@ func _input(event):
 
 		if GameManager.is_meeting_called:
 			return
-
+		
 		GameManager.is_meeting_called = true
 
 		var body_id = null
@@ -89,7 +92,7 @@ func _on_body_entered(body):
 		is_player_inside = true
 
 		if is_button:
-			if is_wait_time_over && !GameManager.is_meeting_called:
+			if is_wait_time_over && !GameManager.is_meeting_called && !GameManager.is_sabotage:
 				button_active.emit("InteractButton", true)
 				toggle_button_highlight.emit(true)
 		else:

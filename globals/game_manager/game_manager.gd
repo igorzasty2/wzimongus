@@ -34,6 +34,9 @@ signal player_killed(player_id: int, is_victim: bool)
 ## Emitowany po włączeniu sabotażu.
 signal sabotage_occured()
 
+## Emitowany po rozpoczęciu/zakończeniu sabotażu.
+signal sabotage_started(has_started:bool)
+
 ## Emitowany po zakończeniu ładowania mapy głównej.
 signal map_load_finished()
 
@@ -176,6 +179,9 @@ var transition_background_texture = null
 ## Czy scena jest włączana po raz pierwszy
 var is_first_time: bool = true
 
+
+## Określa czy właśnie jest sabotaż
+var is_sabotage: bool = false
 
 func _ready():
 	multiplayer.peer_disconnected.connect(_delete_deregistered_player)
@@ -802,9 +808,9 @@ func main_map_load_finished():
 func request_light_sabotage():
 	if not multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-
+	
 	var player_id = multiplayer.get_remote_sender_id()
-
+	
 	if !get_registered_player_key(player_id, "is_lecturer"):
 		return ERR_UNAUTHORIZED
 
@@ -815,6 +821,13 @@ func request_light_sabotage():
 ## Emituje sygnał włączenia sabotażu.
 func activate_light_sabotage():
 	sabotage_occured.emit()
+
+
+@rpc("any_peer", "call_local", "reliable")
+## Emituje sygnał informujący o rozpoczeciu/zakończeniu sabotażu.
+func emit_sabotage_started(has_started:bool):
+	is_sabotage = has_started
+	sabotage_started.emit(has_started)
 
 
 ## Symuluje wciśnięcie klawisza w celu wywołania konkretnej akcji.
