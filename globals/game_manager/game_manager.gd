@@ -260,6 +260,11 @@ func _update_server_settings(server_settings: Dictionary):
 
 ## Dołącza do istniejącego serwera gry.
 func join_lobby(address:String, port:int):
+	# Weryfikuje długość nazwy użytkownika.
+	if !_verify_username_length(_current_player["username"]):
+		_handle_error(error_messages["ERR_USERNAME_LENGTH"])
+		return
+
 	# Tworzy klienta gry.
 	var peer = ENetMultiplayerPeer.new()
 	var status = peer.create_client(address, port)

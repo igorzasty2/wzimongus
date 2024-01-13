@@ -293,10 +293,10 @@ func _on_chat_input_visibility_changed():
 		return
 
 	if chat_container.visible:
-		chat._close_chat()
+		chat.close_chat()
 		chat.visible = false
 		chat_container.visible = false
 	else:
-		chat._open_chat()
+		chat.open_chat()
 		chat.visible = true
 		chat_container.visible = true

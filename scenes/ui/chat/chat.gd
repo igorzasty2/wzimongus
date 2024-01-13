@@ -68,7 +68,7 @@ func _input(event):
 		if input_text.visible:
 			return
 
-		_open_chat()
+		open_chat()
 		get_viewport().set_input_as_handled()
 
 	if event.is_action_pressed("change_group"):
@@ -85,7 +85,7 @@ func _input(event):
 		if !input_text.visible:
 			return
 
-		_close_chat()
+		close_chat()
 		get_viewport().set_input_as_handled()
 
 
@@ -162,7 +162,7 @@ func _on_input_text_text_submitted(submitted_text):
 	send_message.rpc_id(1, submitted_text, current_group, multiplayer.get_unique_id())
 
 	if get_parent().get_parent().name != "VotingScreen":
-		_close_chat()
+		close_chat()
 	else:
 		input_text.text = ""
 
@@ -182,14 +182,14 @@ func _update_scrollbar_position():
 		chat_logs_scroll_container.scroll_vertical = last_known_scroll_max
 
 
-func _open_chat():
+func open_chat():
 	input_text.grab_focus()
 	input_text.show()
 	group_container.show()
 	chat_logs_scroll_container.modulate.a = 1
 
 
-func _close_chat():
+func close_chat():
 	input_text.text = ""
 	input_text.release_focus()
 
