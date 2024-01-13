@@ -2,6 +2,10 @@ extends Node2D
 
 signal minigame_end
 
+
+## Polska nazwa minigry
+@export var polish_name : String
+
 @onready var screws = [%Screw, %Screw2, %Screw3, %Screw4, %Screw5, %Screw6, %Screw7, %Screw8]
 @onready var whiteboard = %Whiteboard
 

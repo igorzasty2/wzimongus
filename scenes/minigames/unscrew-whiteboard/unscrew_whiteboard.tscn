@@ -18,6 +18,7 @@
 
 [node name="UnscrewWhiteboard" type="Node2D"]
 script = ExtResource("1_v7ww6")
+polish_name = "Rozkręcanie tablicy"
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(582, 345)
