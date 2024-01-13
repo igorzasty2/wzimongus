@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b7o2j3ukypgy6"]
 
-[ext_resource type="Texture2D" uid="uid://diewh8ah2i7hm" path="res://scenes/maps/main_map/assets/rooms/serwerownia.png" id="1_4qwa6"]
+[ext_resource type="Texture2D" uid="uid://diewh8ah2i7hm" path="res://assets/textures/main_map/rooms/serwerownia.png" id="1_4qwa6"]
 
 [node name="serwerownia" type="Node2D"]
 

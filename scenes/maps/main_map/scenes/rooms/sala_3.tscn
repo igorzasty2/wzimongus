@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://t3ayjy0eflf"]
 
-[ext_resource type="Texture2D" uid="uid://bks7bbfjd3mal" path="res://scenes/maps/main_map/assets/rooms/sala_3.png" id="1_1nyh0"]
+[ext_resource type="Texture2D" uid="uid://bks7bbfjd3mal" path="res://assets/textures/main_map/rooms/sala_3.png" id="1_1nyh0"]
 
 [node name="sala_3" type="Node2D"]
 

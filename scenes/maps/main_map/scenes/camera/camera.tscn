@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bc5wtxku3y4b1"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/scenes/camera/camera.gd" id="1_7a15m"]
-[ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://scenes/player/assets/light_circle.png" id="2_7lg6c"]
+[ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://assets/textures/light/light_circle.png" id="2_7lg6c"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_640jd"]
 

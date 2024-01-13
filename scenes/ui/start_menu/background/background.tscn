@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://dbggxxcgwkdh5"]
 
 [ext_resource type="Script" path="res://scenes/ui/start_menu/background/background.gd" id="1_cx0ar"]
-[ext_resource type="Texture2D" uid="uid://bhuxc7bixysra" path="res://scenes/ui/start_menu/background/assets/background2.png" id="2_ycpmc"]
+[ext_resource type="Texture2D" uid="uid://bhuxc7bixysra" path="res://assets/textures/background/background2.png" id="2_ycpmc"]
 [ext_resource type="Shader" path="res://scenes/ui/start_menu/background/background.gdshader" id="3_386ya"]
-[ext_resource type="Texture2D" uid="uid://d07etmk0h2llv" path="res://scenes/ui/start_menu/background/assets/new_distortion.png" id="4_ami68"]
-[ext_resource type="Texture2D" uid="uid://bilkh8h2fgt3x" path="res://scenes/ui/start_menu/background/assets/background1.png" id="5_4vhno"]
+[ext_resource type="Texture2D" uid="uid://d07etmk0h2llv" path="res://assets/textures/background/new_distortion.png" id="4_ami68"]
+[ext_resource type="Texture2D" uid="uid://bilkh8h2fgt3x" path="res://assets/textures/background/background1.png" id="5_4vhno"]
 
 [sub_resource type="Animation" id="Animation_8cu33"]
 resource_name = "move_animation"

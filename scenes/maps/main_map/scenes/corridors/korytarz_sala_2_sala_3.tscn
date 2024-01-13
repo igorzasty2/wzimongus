@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bsicwruuujpdh"]
 
-[ext_resource type="Texture2D" uid="uid://civd1fmnyopmq" path="res://scenes/maps/main_map/assets/corridors/korytarz_sala_2_sala_3.png" id="1_vajop"]
+[ext_resource type="Texture2D" uid="uid://civd1fmnyopmq" path="res://assets/textures/main_map/corridors/korytarz_sala_2_sala_3.png" id="1_vajop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svsif"]
 size = Vector2(24, 337)

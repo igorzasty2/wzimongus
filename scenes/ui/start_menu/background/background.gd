@@ -14,13 +14,13 @@ extends Control
 @onready var _background_animation_player = $Background/BackgroundAnimationPlayer
 
 ## Tło 1
-@onready var _background_image1 = preload("res://scenes/ui/start_menu/background/assets/background1.png")
+@onready var _background_image1 = preload("res://assets/textures/background/background1.png")
 ## Tło 2
-@onready var _background_image2 = preload("res://scenes/ui/start_menu/background/assets/background2.png")
+@onready var _background_image2 = preload("res://assets/textures/background/background2.png")
 ## Tło 3
-@onready var _background_image3 = preload("res://scenes/ui/start_menu/background/assets/background3.png")
+@onready var _background_image3 = preload("res://assets/textures/background/background3.png")
 ## Tło 4
-@onready var _background_image4 = preload("res://scenes/ui/start_menu/background/assets/background4.png")
+@onready var _background_image4 = preload("res://assets/textures/background/background4.png")
 
 
 ## Tablica z tłami

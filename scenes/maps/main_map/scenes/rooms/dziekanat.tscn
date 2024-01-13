@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cjpyjgxwnxvda"]
 
-[ext_resource type="Texture2D" uid="uid://o1yqmw51nbg7" path="res://scenes/maps/main_map/assets/rooms/dziekanat.png" id="1_eosrk"]
+[ext_resource type="Texture2D" uid="uid://o1yqmw51nbg7" path="res://assets/textures/main_map/rooms/dziekanat.png" id="1_eosrk"]
 
 [node name="dziekanat" type="Node2D"]
 

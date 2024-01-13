@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://db74hr2yilxel"]
 
-[ext_resource type="Texture2D" uid="uid://dln480b0kephh" path="res://scenes/maps/main_map/assets/rooms/aula.png" id="1_q5m8s"]
+[ext_resource type="Texture2D" uid="uid://dln480b0kephh" path="res://assets/textures/main_map/rooms/aula.png" id="1_q5m8s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wywl7"]
 size = Vector2(60, 344)

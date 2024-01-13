@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://1nb6uwps5542"]
 
-[ext_resource type="Texture2D" uid="uid://tbgku3ra8705" path="res://scenes/maps/main_map/assets/corridors/korytarz_willy_sala_1_bufet_pokoj_wykladowcow.png" id="1_87y23"]
+[ext_resource type="Texture2D" uid="uid://tbgku3ra8705" path="res://assets/textures/main_map/corridors/korytarz_willy_sala_1_bufet_pokoj_wykladowcow.png" id="1_87y23"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kyudw"]
 size = Vector2(24, 625.75)

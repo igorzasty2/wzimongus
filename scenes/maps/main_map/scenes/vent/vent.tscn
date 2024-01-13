@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/scenes/vent/vent.gd" id="1_ebero"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_cbfkx"]
-[ext_resource type="Texture2D" uid="uid://di4xiqnkybme3" path="res://scenes/maps/main_map/scenes/vent/assets/vent.png" id="3_gku1q"]
+[ext_resource type="Texture2D" uid="uid://di4xiqnkybme3" path="res://assets/textures/main_map/objects/vent.png" id="3_gku1q"]
 [ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://scenes/player/assets/light_circle.png" id="4_v6nkv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wkw5n"]
