@@ -676,22 +676,9 @@ func _on_venting_animation_player_animation_finished(anim_name):
 				_toggle_vent_light(true)
 		# Gracz wychodzi z venta
 		else:
-			_request_handle_vent_exit.rpc_id(1)
+			_handle_vent_exit()
 
 
-@rpc("any_peer", "call_local", "reliable")
-## Zapytuje o obsłużenie wyjście z venta po zakończeniu animacji
-func _request_handle_vent_exit():
-	if !name.to_int() == multiplayer.get_remote_sender_id():
-		return
-
-	if name.to_int() != 1:
-		_handle_vent_exit()
-
-	_handle_vent_exit.rpc_id(name.to_int())
-
-
-@rpc("authority", "call_local", "reliable")
 ## Obsługuje wyjście z venta po zakończeniu animacji
 func _handle_vent_exit():
 	_has_entered_vent = false
