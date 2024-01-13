@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=3 uid="uid://cal1k7y5focn4"]
+[gd_scene load_steps=122 format=3 uid="uid://cal1k7y5focn4"]
 
 [ext_resource type="Script" path="res://scenes/maps/main_map/main_map.gd" id="1_xvngj"]
 [ext_resource type="PackedScene" uid="uid://cxdyrnlbs0811" path="res://scenes/maps/main_map/scenes/task_button/task_button.tscn" id="3_e0rk4"]
@@ -85,6 +85,7 @@
 [ext_resource type="Texture2D" uid="uid://rmo5fhilsda3" path="res://scenes/maps/main_map/assets/objects/xero_stos_kartek.png" id="72_vb4gs"]
 [ext_resource type="Texture2D" uid="uid://lqlctfob53ns" path="res://scenes/maps/main_map/assets/objects/xero_szafa.png" id="73_g7t2a"]
 [ext_resource type="PackedScene" uid="uid://buspc3xb5jkoq" path="res://scenes/minigames/fill_formulas/fill_formulas.tscn" id="77_1ivr1"]
+[ext_resource type="Texture2D" uid="uid://dk44u5xcfwdsf" path="res://scenes/maps/main_map/assets/objects/sala_2_tablica.png" id="77_m0r18"]
 [ext_resource type="PackedScene" uid="uid://dmjx2shy2ugc2" path="res://scenes/minigames/make_a_photo/make_a_photo.tscn" id="78_pc37b"]
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="79_xtlh3"]
 [ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
@@ -990,8 +991,8 @@ position = Vector2(1734, 286)
 y_sort_enabled = true
 
 [node name="Task1" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
-position = Vector2(2.08165e-12, -1000)
-sprite = ExtResource("4_wgy3w")
+position = Vector2(-3113, -1760)
+sprite = ExtResource("77_m0r18")
 minigame_scene = ExtResource("77_1ivr1")
 
 [node name="Task2" parent="InteractionPoints/Tasks" instance=ExtResource("3_e0rk4")]
