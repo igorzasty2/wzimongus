@@ -34,25 +34,25 @@ var _wait_time = 15
 
 func _ready():
 	_background_image_array = [_background_image1, _background_image2, _background_image3, _background_image4]
-	GameManager.is_first_time = false
+	GameManagerSingleton.is_first_time = false
 	
 	# Przekazuje teksture tła na kolejnej scenie
-	if GameManager.current_background_texture != null:
-		_background.texture = GameManager.current_background_texture
-		_transition_background.texture = GameManager.transition_background_texture
+	if GameManagerSingleton.current_background_texture != null:
+		_background.texture = GameManagerSingleton.current_background_texture
+		_transition_background.texture = GameManagerSingleton.transition_background_texture
 	else:
 		_background.texture = _randomize_background()
 	
 	# Puszcza animację w odpowiednim momencie na kolejnej scenie
-	if GameManager.is_animation_playing:
+	if GameManagerSingleton.is_animation_playing:
 		_transition_animation_player.play("transition_animation")
-		_transition_animation_player.advance(GameManager.animation_position)
+		_transition_animation_player.advance(GameManagerSingleton.animation_position)
 		_background_animation_player.play("move_animation")
-		_background_animation_player.advance(GameManager.animation_position)
+		_background_animation_player.advance(GameManagerSingleton.animation_position)
 	
-	if GameManager.wait_time != null && !GameManager.is_first_time:
-		_change_background_timer.start(GameManager.wait_time)
-		GameManager.wait_time = null
+	if GameManagerSingleton.wait_time != null && !GameManagerSingleton.is_first_time:
+		_change_background_timer.start(GameManagerSingleton.wait_time)
+		GameManagerSingleton.wait_time = null
 	else:
 		_change_background_timer.start(_wait_time)
 
@@ -60,7 +60,7 @@ func _ready():
 ## Obsługuje przejście między tłami
 func _on_change_background_timer_timeout():
 	_transition_background.texture = _background.texture
-	GameManager.transition_background_texture = _transition_background.texture
+	GameManagerSingleton.transition_background_texture = _transition_background.texture
 	_background.texture = _randomize_background()
 	_transition_animation_player.play("transition_animation")
 	_background_animation_player.play("move_animation")
@@ -80,15 +80,15 @@ func _randomize_background():
 	_current_background_idx = background_image_array_duplicate.find(current_background)
 	
 	# Zapisuje wylosowane tło
-	GameManager.current_background_texture = current_background
+	GameManagerSingleton.current_background_texture = current_background
 	return current_background
 
 
 ## Jeżeli animacja gra, to zapisuje jej pozycje podczas wyjścia z drzewa
 func _on_tree_exiting():
-	GameManager.is_animation_playing = _transition_animation_player.is_playing()
+	GameManagerSingleton.is_animation_playing = _transition_animation_player.is_playing()
 	
-	if GameManager.is_animation_playing:
-		GameManager.animation_position = _transition_animation_player.current_animation_position
+	if GameManagerSingleton.is_animation_playing:
+		GameManagerSingleton.animation_position = _transition_animation_player.current_animation_position
 	else:
-		GameManager.wait_time = _change_background_timer.time_left
+		GameManagerSingleton.wait_time = _change_background_timer.time_left

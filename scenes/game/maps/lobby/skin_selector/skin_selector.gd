@@ -6,12 +6,12 @@ extends CanvasLayer
 
 
 func _ready():
-	_update_skin_texture_rect(GameManager.get_current_player_key("skin"))
+	_update_skin_texture_rect(GameManagerSingleton.get_current_player_key("skin"))
 	_populate_skins()
 
-	GameManager.player_registered.connect(_populate_skins)
-	GameManager.player_deregistered.connect(_populate_skins)
-	GameManager.skin_changed.connect(_on_skin_changed)
+	GameManagerSingleton.player_registered.connect(_populate_skins)
+	GameManagerSingleton.player_deregistered.connect(_populate_skins)
+	GameManagerSingleton.skin_changed.connect(_on_skin_changed)
 
 
 func _input(event):
@@ -24,24 +24,24 @@ func _input(event):
 
 
 func _on_skin_changed(id: int, skin: int):
-	if id == GameManager.get_current_player_id():
+	if id == GameManagerSingleton.get_current_player_id():
 		_update_skin_texture_rect(skin)
 	_populate_skins()
 
 
 func _update_skin_texture_rect(index):
 	var texture = AtlasTexture.new()
-	texture.atlas = load(GameManager.skins[index]["resource"])
+	texture.atlas = load(GameManagerSingleton.skins[index]["resource"])
 	texture.region = Rect2(0, 0, 675, 675)
 	skin_texture_rect.texture = texture
 
 
 func _populate_skins(_id: int = -1, _player: Dictionary = {}):
-	var available_skins = GameManager.skins.duplicate()
+	var available_skins = GameManagerSingleton.skins.duplicate()
 
-	for i in GameManager.get_registered_players():
-		if i != GameManager.get_current_player_id():
-			available_skins.erase(GameManager.get_registered_player_key(i, "skin"))
+	for i in GameManagerSingleton.get_registered_players():
+		if i != GameManagerSingleton.get_current_player_id():
+			available_skins.erase(GameManagerSingleton.get_registered_player_key(i, "skin"))
 
 	skin_option_button.clear()
 
@@ -50,14 +50,14 @@ func _populate_skins(_id: int = -1, _player: Dictionary = {}):
 	for i in available_skins:
 		skin_option_button.add_item(available_skins[i]["name"], i)
 
-		if i == GameManager.get_current_player_key("skin"):
+		if i == GameManagerSingleton.get_current_player_key("skin"):
 			skin_option_button.select(idx)
 
 		idx += 1
 
 
 func _on_skin_option_button_item_selected(index):
-	GameManager.change_skin(skin_option_button.get_item_id(index))
+	GameManagerSingleton.change_skin(skin_option_button.get_item_id(index))
 
 
 func _on_visibility_changed():

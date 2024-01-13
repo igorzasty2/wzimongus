@@ -4,7 +4,7 @@ extends Control
 ## Referencja do wiadomości, która wyświetla się po wyrzuceniu gracza
 @onready var ejection_message = get_node("%EjectionMessage")
 ## Referencja do głosów przechowywanych w GameManager
-@onready var votes = GameManager.get_current_game_key("votes")
+@onready var votes = GameManagerSingleton.get_current_game_key("votes")
 
 ## Czas do następnej rundy
 @export var NEXT_ROUND_TIME = 5
@@ -12,10 +12,10 @@ extends Control
 @onready var next_round_timer = Timer.new()
 
 ## Referencja do najczęściej głosowanego gracza
-@onready var most_voted_player = GameManager.get_current_game_key("most_voted_player")
+@onready var most_voted_player = GameManagerSingleton.get_current_game_key("most_voted_player")
 
 func _ready():
-	GameManager.teleport_players()
+	GameManagerSingleton.teleport_players()
 	
 	if  most_voted_player == null:
 		ejection_message.text = "[center]Nikt nie został usunięty z grupy[/center]"
@@ -33,4 +33,4 @@ func _ready():
 
 func _on_next_round_timer_timeout():
 	self.queue_free()
-	GameManager.new_round()
+	GameManagerSingleton.new_round()

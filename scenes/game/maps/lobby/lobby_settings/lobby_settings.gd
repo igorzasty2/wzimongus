@@ -17,8 +17,8 @@ func _ready():
 	# Ustawia aktualizacje ilości maksymalnych połączeń
 	if multiplayer.is_server():
 		_update_max_connections()
-		GameManager.player_registered.connect(_update_max_connections)
-		GameManager.player_deregistered.connect(_update_max_connections)
+		GameManagerSingleton.player_registered.connect(_update_max_connections)
+		GameManagerSingleton.player_deregistered.connect(_update_max_connections)
 
 
 func _input(event):
@@ -31,13 +31,13 @@ func _input(event):
 
 
 func _on_save_button_pressed():	
-	GameManager.change_server_settings(max_connections.text.to_int(), max_lecturers.text.to_int(), kill_cooldown.get_selected_id(), sabotage_cooldown.get_selected_id(), kill_radius.get_selected_id(), task_amount.get_selected_id(), emergency_cooldown.get_selected_id(), student_light_radius.get_selected_id(), lecturer_light_radius.get_selected_id(), voting_time.get_selected_id(), discussion_time.get_selected_id())
+	GameManagerSingleton.change_server_settings(max_connections.text.to_int(), max_lecturers.text.to_int(), kill_cooldown.get_selected_id(), sabotage_cooldown.get_selected_id(), kill_radius.get_selected_id(), task_amount.get_selected_id(), emergency_cooldown.get_selected_id(), student_light_radius.get_selected_id(), lecturer_light_radius.get_selected_id(), voting_time.get_selected_id(), discussion_time.get_selected_id())
 	hide()
 
 
 func _on_visibility_changed():
 	$SettingsContainer.visible = visible
-	var settings = GameManager.get_server_settings()
+	var settings = GameManagerSingleton.get_server_settings()
 	if settings["max_players"]:
 		max_connections.selected = max_connections.get_item_index(settings["max_players"])
 		max_lecturers.selected = max_lecturers.get_item_index(settings["max_lecturers"])
@@ -64,11 +64,11 @@ func _update_max_connections(_id: int = 0, _player: Dictionary = {}):
 
 	# Dodaje opcje do wyboru
 	var idx = 0
-	for i in range(max(3, GameManager.get_registered_players().size()), 11):
+	for i in range(max(3, GameManagerSingleton.get_registered_players().size()), 11):
 		max_connections.add_item(str(i),i)
 
 		# Ustawia aktualną ilość połączeń jako zaznaczoną
-		if i == GameManager.get_server_settings().max_players:
+		if i == GameManagerSingleton.get_server_settings().max_players:
 			max_connections.select(idx)
 
 		idx += 1

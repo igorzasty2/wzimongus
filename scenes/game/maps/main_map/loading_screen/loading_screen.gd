@@ -2,7 +2,7 @@ extends CanvasLayer
 
 signal finished
 
-var role = GameManager.get_current_player_key("is_lecturer")
+var role = GameManagerSingleton.get_current_player_key("is_lecturer")
 
 @onready var animation_player = $AnimationPlayer
 
@@ -23,4 +23,4 @@ func _on_animation_player_animation_finished(anim_name):
 
 	if anim_name == "lecturer_pop_up" or anim_name == "crewmate_pop_up":
 		finished.emit()
-		GameManager.main_map_load_finished()
+		GameManagerSingleton.main_map_load_finished()

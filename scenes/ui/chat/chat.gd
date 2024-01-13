@@ -28,7 +28,7 @@ const FADE_OUT_TIME = 0.25
 ## Referencja do suwaka
 @onready var chat_logs_scrollbar = chat_logs_scroll_container.get_v_scroll_bar()
 ## Referencja do nazwy gracza, przechowywana
-@onready var username = GameManager.get_current_player_key("username")
+@onready var username = GameManagerSingleton.get_current_player_key("username")
 
 ## Referencja do kontenera przycisku zmiany grupy
 @onready var group_container = %GroupContainer
@@ -54,7 +54,7 @@ func _ready():
 	input_text.hide()
 	group_container.hide()
 
-	if GameManager.get_current_player_key("is_dead"):
+	if GameManagerSingleton.get_current_player_key("is_dead"):
 		current_group = Group.DEAD
 
 	_update_group_label()
@@ -62,7 +62,7 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("chat_open"):
-		if GameManager.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_key("is_paused"):
 			return
 
 		if input_text.visible:
@@ -72,7 +72,7 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 	if event.is_action_pressed("change_group"):
-		if GameManager.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_key("is_paused"):
 			return
 
 		if !input_text.visible:
@@ -90,15 +90,15 @@ func _input(event):
 
 
 func _switch_chat_group():
-	if GameManager.get_current_player_key("is_lecturer"):
+	if GameManagerSingleton.get_current_player_key("is_lecturer"):
 		current_group = Group.LECTURER if current_group == Group.GLOBAL else Group.GLOBAL
 		_update_group_label()
 
 
 func _update_group_label():
-	if GameManager.get_current_player_key("is_dead"):
+	if GameManagerSingleton.get_current_player_key("is_dead"):
 		group_label.text = "Uczestniczysz w grupie: Martwi"
-	elif GameManager.get_current_player_key("is_lecturer"):
+	elif GameManagerSingleton.get_current_player_key("is_lecturer"):
 		group_label.text = "Uczestniczysz w grupie: Wykładowcy" if current_group == Group.LECTURER else "Uczestniczysz w grupie: Studenci"
 	else:
 		group_label.text = "Uczestniczysz w grupie: Studenci"
@@ -111,10 +111,10 @@ func send_message(message, group, id):
 	match group:
 		Group.DEAD:
 			if current_group == Group.DEAD:
-				_create_message(GameManager.get_registered_players()[id], message, Group.DEAD)
+				_create_message(GameManagerSingleton.get_registered_players()[id], message, Group.DEAD)
 		Group.LECTURER:
 			if current_group == Group.LECTURER or current_group == Group.DEAD:
-				_create_message(GameManager.get_registered_players()[id], message, Group.LECTURER)
+				_create_message(GameManagerSingleton.get_registered_players()[id], message, Group.LECTURER)
 		Group.SYSTEM:
 			var system_message_instance = system_message_scene.instantiate()
 			chat_logs_container.add_child(system_message_instance)
@@ -124,10 +124,10 @@ func send_message(message, group, id):
 			if get_parent().name != "VotingScreen":
 				timer.start()
 		_:
-			_create_message(GameManager.get_registered_players()[id], message, Group.GLOBAL)
+			_create_message(GameManagerSingleton.get_registered_players()[id], message, Group.GLOBAL)
 
 	if multiplayer.is_server():
-		for peer_id in GameManager.get_registered_players().keys():
+		for peer_id in GameManagerSingleton.get_registered_players().keys():
 			if peer_id != 1:
 				send_message.rpc_id(peer_id, message, group, id)
 
@@ -201,5 +201,5 @@ func close_chat():
 
 
 func _on_group_change_button_pressed():
-	GameManager.execute_action("change_group")
+	GameManagerSingleton.execute_action("change_group")
 	input_text.grab_focus()

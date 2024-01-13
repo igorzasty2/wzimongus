@@ -6,13 +6,13 @@ extends Node2D
 
 
 func _ready():
-	_update_skin(GameManager.get_registered_player_key(get_parent().name.to_int(), "skin"))
+	_update_skin(GameManagerSingleton.get_registered_player_key(get_parent().name.to_int(), "skin"))
 
-	GameManager.skin_changed.connect(_on_skin_changed)
+	GameManagerSingleton.skin_changed.connect(_on_skin_changed)
 
 
 func _exit_tree():
-	GameManager.skin_changed.disconnect(_on_skin_changed)
+	GameManagerSingleton.skin_changed.disconnect(_on_skin_changed)
 
 
 func _on_skin_changed(id: int, skin: int):
@@ -21,4 +21,4 @@ func _on_skin_changed(id: int, skin: int):
 
 
 func _update_skin(skin: int):
-	player_sprite.texture = load(GameManager.skins[skin]["resource"])
+	player_sprite.texture = load(GameManagerSingleton.skins[skin]["resource"])

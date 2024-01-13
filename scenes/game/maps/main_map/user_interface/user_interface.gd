@@ -29,7 +29,7 @@ func _ready():
 	_on_interface_scale_changed(_user_sett.interface_scale)
 	
 	# Gracz jest impostorem
-	if GameManager.get_current_player_key("is_lecturer"):
+	if GameManagerSingleton.get_current_player_key("is_lecturer"):
 		toggle_button_active("VentButton", false)
 		toggle_button_active("FailButton", false)
 		toggle_button_active("SabotageButton", false)
@@ -55,32 +55,32 @@ func _on_interface_scale_changed(value:float):
 
 ## Obsługuje naciśnięcie przycisku do reportowania
 func _on_report_button_button_down():
-	GameManager.execute_action("report")
+	GameManagerSingleton.execute_action("report")
 
 
 ## Obsługuje naciśnięcie przycisku interakcji
 func _on_interact_button_button_down():
-	GameManager.execute_action("interact")
+	GameManagerSingleton.execute_action("interact")
 
 
 ## Obsługuje naciśnięcie przycisku do ventowania
 func _on_vent_button_button_down():
-	GameManager.execute_action("use_vent")
+	GameManagerSingleton.execute_action("use_vent")
 
 
 ## Obsługuje naciśnięcie przycisku do oblewania
 func _on_fail_button_button_down():
-	GameManager.execute_action("fail")
+	GameManagerSingleton.execute_action("fail")
 
 
 ## Obsługuje naciśnięcie przycisku sabotażu
 func _on_sabotage_button_button_down():
-	GameManager.execute_action("sabotage")
+	GameManagerSingleton.execute_action("sabotage")
 
 
 ## Obsługuje naciśnięcie przycisku do otwierania menu pauzy
 func _on_pause_button_button_down():
-	GameManager.execute_action("pause_menu")
+	GameManagerSingleton.execute_action("pause_menu")
 
 
 ## Aktywuje i deaktywuje przycisk o danej nazwie

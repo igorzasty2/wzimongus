@@ -298,7 +298,7 @@ func start_game():
 	_on_game_started.rpc()
 
 	# Przypisuje zadania.
-	TaskManager.assign_tasks(_server_settings["task_amount"])
+	TaskManagerSingleton.assign_tasks(_server_settings["task_amount"])
 
 
 ## Kończy grę.
@@ -319,7 +319,7 @@ func end_game():
 	_reset_votes()
 
 	# Resetuje zadania.
-	TaskManager.reset()
+	TaskManagerSingleton.reset()
 
 	game_ended.emit()
 
@@ -345,7 +345,7 @@ func reset_game():
 	_reset_votes()
 
 	# Resetuje zadania.
-	TaskManager.reset()
+	TaskManagerSingleton.reset()
 
 
 ## Rozpoczyna nową rundę.
@@ -645,7 +645,7 @@ func _delete_deregistered_player(id:int):
 		_current_game["registered_players"].erase(id)
 
 		if multiplayer.is_server():
-			TaskManager.remove_player_tasks(id)
+			TaskManagerSingleton.remove_player_tasks(id)
 
 			check_winning_conditions()
 
@@ -753,11 +753,11 @@ func _send_player_kill(player_id: int, is_victim: bool = true):
 
 ## Sprawdza kto wygrał w tym momencie i kończy grę na korzyść wykładowcom lub crewmatom, jeżeli nikt, to nic nie robi.
 func check_winning_conditions():
-	if GameManager.get_current_game_key("is_started"):
+	if GameManagerSingleton.get_current_game_key("is_started"):
 		if !multiplayer.is_server():
 			return ERR_UNAUTHORIZED
 
-		if TaskManager.get_tasks_server().is_empty():
+		if TaskManagerSingleton.get_tasks_server().is_empty():
 			winner_determined.emit(Role.STUDENT)
 			return
 

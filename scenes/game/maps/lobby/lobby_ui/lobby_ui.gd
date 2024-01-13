@@ -44,14 +44,14 @@ func _ready():
 	if multiplayer.is_server():
 		_update_start_game_button()
 
-		GameManager.player_registered.connect(_update_start_game_button)
-		GameManager.player_deregistered.connect(_update_start_game_button)
+		GameManagerSingleton.player_registered.connect(_update_start_game_button)
+		GameManagerSingleton.player_deregistered.connect(_update_start_game_button)
 
 	_update_current_players_counter()
 
-	GameManager.player_registered.connect(_update_current_players_counter)
-	GameManager.player_deregistered.connect(_update_current_players_counter)
-	GameManager.server_settings_changed.connect(_update_current_players_counter)
+	GameManagerSingleton.player_registered.connect(_update_current_players_counter)
+	GameManagerSingleton.player_deregistered.connect(_update_current_players_counter)
+	GameManagerSingleton.server_settings_changed.connect(_update_current_players_counter)
 	
 	toggle_interact_button_active(false)
 
@@ -64,7 +64,7 @@ func on_interface_scale_changed(value:float):
 
 
 func _update_start_game_button(_id: int = 0, _player: Dictionary = {}):
-	if GameManager.get_registered_players().size() >= 3:
+	if GameManagerSingleton.get_registered_players().size() >= 3:
 		start_game_alert.hide()
 		start_game_button.disabled = false
 		toggle_button_visual(start_game_button, true)
@@ -75,7 +75,7 @@ func _update_start_game_button(_id: int = 0, _player: Dictionary = {}):
 
 
 func _update_current_players_counter(_id: int = 0, _player: Dictionary = {}):
-	current_players_counter.text = str(GameManager.get_registered_players().size()) + "/" + str(GameManager.get_server_settings().max_players)
+	current_players_counter.text = str(GameManagerSingleton.get_registered_players().size()) + "/" + str(GameManagerSingleton.get_server_settings().max_players)
 
 
 func _on_lobby_settings_button_button_down():
@@ -83,22 +83,22 @@ func _on_lobby_settings_button_button_down():
 
 
 func _on_start_game_button_button_down():
-	GameManager.start_game()
+	GameManagerSingleton.start_game()
 
 
 func _on_interact_button_button_down():
-	GameManager.execute_action("interact")
+	GameManagerSingleton.execute_action("interact")
 
 
 func _on_chat_button_button_down():
 	if get_parent().get_node("Chat").get_node("%InputText").visible:
-		GameManager.execute_action("pause_menu")
+		GameManagerSingleton.execute_action("pause_menu")
 	else:
-		GameManager.execute_action("chat_open")
+		GameManagerSingleton.execute_action("chat_open")
 
 
 func _on_pause_button_button_down():
-	GameManager.execute_action("pause_menu")
+	GameManagerSingleton.execute_action("pause_menu")
 
 
 # Aktywuje i deaktywuje przycisk interakcji

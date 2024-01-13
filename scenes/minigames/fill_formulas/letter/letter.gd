@@ -22,7 +22,7 @@ func _ready():
 
 ## Odpowiada za obsługę poruszania pola myszką
 func _process(delta):
-	if GameManager.get_current_game_key("is_paused") && !placed:
+	if GameManagerSingleton.get_current_game_key("is_paused") && !placed:
 		return_to_orig_pos()
 		return
 	# Przypisanie często używanej funkcji do zmiennej w celu skrócenia kodu

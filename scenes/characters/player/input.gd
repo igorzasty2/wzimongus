@@ -25,8 +25,8 @@ func _ready():
 	await get_tree().process_frame
 
 	if is_multiplayer_authority():
-		GameManager.input_status_changed.connect(_on_input_status_changed)
-		GameManager.emit_input_status()
+		GameManagerSingleton.input_status_changed.connect(_on_input_status_changed)
+		GameManagerSingleton.emit_input_status()
 
 
 func _gather():

@@ -96,10 +96,10 @@ func get_nearest_vent() -> Vent:
 
 ## Zwraca czy gracz może używać ventów.
 func has_vent_permission(vent: Vent) -> bool:
-	if GameManager.get_registered_player_key(name.to_int(), "is_dead"):
+	if GameManagerSingleton.get_registered_player_key(name.to_int(), "is_dead"):
 		return false
 
-	if !GameManager.get_registered_player_key(name.to_int(), "is_lecturer") && !vent.allow_student_venting:
+	if !GameManagerSingleton.get_registered_player_key(name.to_int(), "is_lecturer") && !vent.allow_student_venting:
 		return false
 
 	return true
@@ -122,7 +122,7 @@ func _ready():
 	rollback_synchronizer.process_settings()
 
 	# Ustawia etykietę z nazwą gracza.
-	username_label.text = GameManager.get_registered_player_key(name.to_int(), "username")
+	username_label.text = GameManagerSingleton.get_registered_player_key(name.to_int(), "username")
 
 	# Aktywuje drzewo animacji postaci.
 	animation_tree.active = true
@@ -132,13 +132,13 @@ func _ready():
 	animation_tree["parameters/walk/blend_position"] = Vector2(direction_last_x, 0)
 	
 	# Łączy sygnał zabicia postaci z funkcją _on_killed_player
-	GameManager.player_killed.connect(_on_killed_player)
+	GameManagerSingleton.player_killed.connect(_on_killed_player)
 
-	if name.to_int() == GameManager.get_current_player_id():
-		GameManager.sabotage_occured.connect(_on_sabotage_occured)
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		GameManagerSingleton.sabotage_occured.connect(_on_sabotage_occured)
 	
-	GameManager.map_load_finished.connect(_on_map_load_finished)
-	GameManager.next_round_started.connect(_on_next_round_started)
+	GameManagerSingleton.map_load_finished.connect(_on_map_load_finished)
+	GameManagerSingleton.next_round_started.connect(_on_next_round_started)
 
 
 func _process(_delta):
@@ -188,7 +188,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 			# Jeśli gracz dotarł do docelowego venta.
 			if global_position == input.destination_position:
 				# Włącza widoczność przycisków kierunkowych venta.
-				if name.to_int() == GameManager.get_current_player_id():
+				if name.to_int() == GameManagerSingleton.get_current_player_id():
 					_toggle_vent_buttons(true)
 
 				is_moving_through_vent = false
@@ -219,11 +219,11 @@ func _rollback_tick(delta, _tick, is_fresh):
 	
 	# Podświetla najbliższego gracza jako potencjalną ofiarę do oblania jeśli jestem impostorem,
 	# żyje i cooldown na funkcji zabij nie jest aktywny.
-	if name.to_int() == GameManager.get_current_player_id():
-		if GameManager.get_current_player_key("is_lecturer") && !is_in_vent:
-			if !GameManager.get_current_player_key("is_dead"):
-				if can_kill_cooldown && !GameManager.is_meeting_called:
-					_update_highlight(closest_player(GameManager.get_current_player_id()))
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		if GameManagerSingleton.get_current_player_key("is_lecturer") && !is_in_vent:
+			if !GameManagerSingleton.get_current_player_key("is_dead"):
+				if can_kill_cooldown && !GameManagerSingleton.is_meeting_called:
+					_update_highlight(closest_player(GameManagerSingleton.get_current_player_id()))
 				else:
 					_update_highlight(0)
 
@@ -233,16 +233,16 @@ func _rollback_tick(delta, _tick, is_fresh):
 func _input(event):
 	# Obsługuje używanie venta.
 	if event.is_action_pressed("use_vent"):
-		if name.to_int() != GameManager.get_current_player_id():
+		if name.to_int() != GameManagerSingleton.get_current_player_id():
 			return
 
-		if GameManager.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_key("is_paused"):
 			return
 
 		if !can_use_vent:
 			return
 
-		if !is_in_vent && GameManager.get_current_game_key("is_input_disabled"):
+		if !is_in_vent && GameManagerSingleton.get_current_game_key("is_input_disabled"):
 			return
 		
 		if venting_animation_player.is_playing():
@@ -252,49 +252,49 @@ func _input(event):
 
 	# Obsługuje zabijanie graczy.
 	if event.is_action("fail") && !event.is_echo() && event.is_pressed():
-		if name.to_int() != GameManager.get_current_player_id():
+		if name.to_int() != GameManagerSingleton.get_current_player_id():
 			return
 
-		if GameManager.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_key("is_paused"):
 			return
 
-		if GameManager.get_current_game_key("is_input_disabled"):
+		if GameManagerSingleton.get_current_game_key("is_input_disabled"):
 			return
 
-		if !GameManager.get_current_player_key("is_lecturer"):
+		if !GameManagerSingleton.get_current_player_key("is_lecturer"):
 			return
 
 		if !can_kill_cooldown:
 			return
 
-		var victim = closest_player(GameManager.get_current_player_id())
+		var victim = closest_player(GameManagerSingleton.get_current_player_id())
 
 		if !victim:
 			return
 
-		GameManager.kill_victim(victim)
+		GameManagerSingleton.kill_victim(victim)
 		_handle_kill_timer()
 		button_active.emit("FailButton", false)
 
 	# Obsługuje sabotaż.
 	if event.is_action_pressed("sabotage"):
-		if name.to_int() != GameManager.get_current_player_id():
+		if name.to_int() != GameManagerSingleton.get_current_player_id():
 			return
 
-		if GameManager.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_key("is_paused"):
 			return
 
-		if GameManager.get_current_game_key("is_input_disabled") && !is_in_vent:
+		if GameManagerSingleton.get_current_game_key("is_input_disabled") && !is_in_vent:
 			return
 
-		if !GameManager.get_current_player_key("is_lecturer"):
+		if !GameManagerSingleton.get_current_player_key("is_lecturer"):
 			return
 
 		if !can_sabotage_cooldown:
 			return
 		
-		GameManager.emit_sabotage_started.rpc(true)
-		GameManager.request_light_sabotage.rpc_id(1)
+		GameManagerSingleton.emit_sabotage_started.rpc(true)
+		GameManagerSingleton.request_light_sabotage.rpc_id(1)
 		button_active.emit("SabotageButton", false)
 
 
@@ -327,7 +327,7 @@ func _on_map_load_finished():
 
 ## W momencie zaczęcia kolejnej rundy restartuje kill cooldown gracza
 func _on_next_round_started():
-	if name.to_int() == GameManager.get_current_player_id() && GameManager.get_registered_player_key(name.to_int(),"is_lecturer"):
+	if name.to_int() == GameManagerSingleton.get_current_player_id() && GameManagerSingleton.get_registered_player_key(name.to_int(),"is_lecturer"):
 		_handle_kill_timer()
 		button_active.emit("FailButton", false)
 		_handle_sabotage_timer()
@@ -341,7 +341,7 @@ func _handle_kill_timer():
 	timer.set_name("KillCooldownTimer")
 	timer.timeout.connect(_on_timer_timeout)
 	timer.one_shot = true
-	timer.wait_time = GameManager.get_server_settings()["kill_cooldown"]
+	timer.wait_time = GameManagerSingleton.get_server_settings()["kill_cooldown"]
 	add_child(timer)
 	timer.start()
 
@@ -355,8 +355,8 @@ func _toggle_highlight(player: int, is_on: bool) -> void:
 
 
 func _update_highlight(player: int) -> void:
-		var all_players = GameManager.get_registered_players().keys()
-		all_players.erase(GameManager.get_current_player_id())
+		var all_players = GameManagerSingleton.get_registered_players().keys()
+		all_players.erase(GameManagerSingleton.get_current_player_id())
 		
 		for i in all_players:
 			_toggle_highlight(i, i == player)
@@ -365,16 +365,16 @@ func _update_highlight(player: int) -> void:
 ## Zwraca id: int najbliższego gracza do "to_who", który nie jest impostorem i żyje.
 func closest_player(to_who: int) -> int:
 	# Tablica graczy do przeszukiwania najbliższego gracza.
-	var players: Array = GameManager.get_registered_players().keys()
+	var players: Array = GameManagerSingleton.get_registered_players().keys()
 	players.erase(to_who)
 
 	for i in players:
-		if GameManager.get_registered_player_key(i, "is_lecturer") or GameManager.get_registered_player_key(i, "is_dead"):
+		if GameManagerSingleton.get_registered_player_key(i, "is_lecturer") or GameManagerSingleton.get_registered_player_key(i, "is_dead"):
 			players.erase(i)
 
 	if players.size() > 0:
 		# Pobiera promień zabicia z serwera.
-		var kill_radius = GameManager.get_server_settings()["kill_radius"]
+		var kill_radius = GameManagerSingleton.get_server_settings()["kill_radius"]
 
 		# Przechowuje wektor pozycji gracza, względem którego szukamy najbliższego gracza.
 		var my_position: Vector2 = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(to_who)).global_position
@@ -409,12 +409,12 @@ func _on_killed_player(player_id: int, is_victim: bool) -> void:
 		_update_dead_player(player_id)
 
 		# Wyłącza widoczność gracza.
-		if GameManager.get_current_player_id() != player_id:
+		if GameManagerSingleton.get_current_player_id() != player_id:
 			get_parent().get_node(str(player_id)).visible = false
 
 		# Włącza widoczność wszystkich martwych graczy u marwtch graczy.
-		if GameManager.get_current_player_key("is_dead"):
-			for i in GameManager.get_registered_players().keys():
+		if GameManagerSingleton.get_current_player_key("is_dead"):
+			for i in GameManagerSingleton.get_registered_players().keys():
 				get_parent().get_node(str(i)).visible = true
 
 		if is_victim:
@@ -424,8 +424,8 @@ func _on_killed_player(player_id: int, is_victim: bool) -> void:
 
 
 func _on_timer_timeout() -> void:
-	if name.to_int() == GameManager.get_current_player_id():
-		if GameManager.get_current_player_key("is_lecturer"):
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		if GameManagerSingleton.get_current_player_key("is_lecturer"):
 			can_kill_cooldown = true
 
 			for i in range(player_node.get_child_count()):
@@ -532,7 +532,7 @@ func _exit_vent():
 	if vent == null:
 		return
 
-	if name.to_int() == GameManager.get_current_player_id():
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
 		vent.set_direction_buttons_visibility(false)
 		vent.set_vent_light_visibility_for(name.to_int(), false)
 
@@ -568,10 +568,10 @@ func _toggle_vent_light(value: bool):
 
 ## Włącza światło graczowi.
 func activate_lights():
-	if GameManager.get_current_player_key("is_lecturer"):
-		set_light_texture_scale(GameManager.get_server_settings()["lecturer_light_radius"])
+	if GameManagerSingleton.get_current_player_key("is_lecturer"):
+		set_light_texture_scale(GameManagerSingleton.get_server_settings()["lecturer_light_radius"])
 	else:
-		set_light_texture_scale(GameManager.get_server_settings()["student_light_radius"])
+		set_light_texture_scale(GameManagerSingleton.get_server_settings()["student_light_radius"])
 	
 	lights_container.show()
 
@@ -611,15 +611,15 @@ func _handle_sabotage_timer():
 	sabotage_timer.set_name("SabotageCooldownTimer")
 	sabotage_timer.timeout.connect(_on_sabotage_timer_timeout)
 	sabotage_timer.one_shot = true
-	sabotage_timer.wait_time = GameManager.get_server_settings()["sabotage_cooldown"]
+	sabotage_timer.wait_time = GameManagerSingleton.get_server_settings()["sabotage_cooldown"]
 	add_child(sabotage_timer)
 	sabotage_timer.start()
 
 
 ## Usuwa timer sabotażu oraz udostępnia sabotaż u wykładowcy.
 func _on_sabotage_timer_timeout() -> void:
-	if name.to_int() == GameManager.get_current_player_id():
-		if GameManager.get_current_player_key("is_lecturer"):
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		if GameManagerSingleton.get_current_player_key("is_lecturer"):
 			can_sabotage_cooldown = true
 
 			for i in range(player_node.get_child_count()):
@@ -635,7 +635,7 @@ func _on_sabotage_timer_timeout() -> void:
 
 ## Aktywuje sabotaż u studentów oraz blokuje na jakiś czas przecisk sabotażu u wykładowców.
 func _on_sabotage_occured():
-	if GameManager.get_current_player_key("is_lecturer"):
+	if GameManagerSingleton.get_current_player_key("is_lecturer"):
 		button_active.emit("SabotageButton", false)
 		_handle_sabotage_timer()
 	else:
@@ -645,22 +645,22 @@ func _on_sabotage_occured():
 		no_light_timer.set_name("NoLightTimer")
 		no_light_timer.timeout.connect(cancel_decrease_light_range_sabotage)
 		no_light_timer.one_shot = true
-		no_light_timer.wait_time = GameManager.get_server_settings()["sabotage_cooldown"] if GameManager.get_server_settings()["sabotage_cooldown"] <= 10 else 10
+		no_light_timer.wait_time = GameManagerSingleton.get_server_settings()["sabotage_cooldown"] if GameManagerSingleton.get_server_settings()["sabotage_cooldown"] <= 10 else 10
 		add_child(no_light_timer)
 		no_light_timer.start()
 
 
 ## Zmniejsza promień swiatła podczas sabotage.
 func decrease_light_range_sabotage() -> void:
-	if not GameManager.get_current_player_key("is_lecturer"):
+	if not GameManagerSingleton.get_current_player_key("is_lecturer"):
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale / 6, 1).set_trans(Tween.TRANS_CUBIC)
 
 
 ## Wraca promień swiatła na normalny po sabotage.
 func cancel_decrease_light_range_sabotage() -> void:
-	GameManager.emit_sabotage_started.rpc(false)
-	if not GameManager.get_current_player_key("is_lecturer"):
+	GameManagerSingleton.emit_sabotage_started.rpc(false)
+	if not GameManagerSingleton.get_current_player_key("is_lecturer"):
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "texture_scale", light.texture_scale * 6, 1).set_trans(Tween.TRANS_CUBIC)
 
@@ -677,7 +677,7 @@ func _on_venting_animation_player_animation_finished(anim_name):
 				toggle_visibility.rpc(false)
 
 			# Włącza widoczność przycisków kierunkowych venta.
-			if name.to_int() == GameManager.get_current_player_id():
+			if name.to_int() == GameManagerSingleton.get_current_player_id():
 				_toggle_vent_buttons(true)
 				_toggle_vent_light(true)
 		# Gracz wychodzi z venta

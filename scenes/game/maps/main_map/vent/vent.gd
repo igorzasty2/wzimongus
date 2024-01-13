@@ -52,7 +52,7 @@ func _ready():
 		_vent_direction_button_list[-1].id = idx
 		idx += 1
 	
-	_vent_light.texture_scale = GameManager.get_server_settings()["lecturer_light_radius"] / _vent_node.global_scale.x
+	_vent_light.texture_scale = GameManagerSingleton.get_server_settings()["lecturer_light_radius"] / _vent_node.global_scale.x
 
 ## Instancjonuje przycisk kierunkowy.
 func _instantiante_direction_button(pos : Vector2):
@@ -97,7 +97,7 @@ func _move_to_vent(player_id: int, vent_id: int):
 	player.input.destination_position = vent_target_list[vent_id].global_position
 
 	# Zmienia widoczność przycisków ventu startowego i docelowego.
-	if player_id == GameManager.get_current_player_id():
+	if player_id == GameManagerSingleton.get_current_player_id():
 		set_direction_buttons_visibility(false)
 		set_vent_light_visibility_for(player_id, false)
 		vent_target_list[vent_id].set_direction_buttons_visibility(true)
@@ -142,7 +142,7 @@ func _toggle_highlight(is_on: bool):
 
 ## Włącza światło venta kiedy gracz znajduje się wewnątrz.
 func set_vent_light_visibility_for(player_id: int, visibility: bool):
-	if player_id == GameManager.get_current_player_id():
+	if player_id == GameManagerSingleton.get_current_player_id():
 		_vent_light_container.visible = visibility
 
 

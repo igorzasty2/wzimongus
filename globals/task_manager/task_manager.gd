@@ -35,8 +35,8 @@ func assign_tasks(task_amount):
 		# Unikalny id dla każdego zadania.
 		var id_counter = 0
 
-		for i in GameManager.get_registered_players():
-			if GameManager.get_registered_players()[i]["is_lecturer"]:
+		for i in GameManagerSingleton.get_registered_players():
+			if GameManagerSingleton.get_registered_players()[i]["is_lecturer"]:
 				continue
 				
 			var available_tasks = _minigames.duplicate(true)
@@ -102,7 +102,7 @@ func _send_task_completion(player_id: int, task_id: int):
 
 	_update_global_completed_tasks_amount.rpc(_count_global_completed_tasks_amount())
 	
-	GameManager.check_winning_conditions()
+	GameManagerSingleton.check_winning_conditions()
 
 
 ## Liczy ilość zadań które już były uzupełnione.

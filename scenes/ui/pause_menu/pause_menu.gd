@@ -11,8 +11,8 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("pause_menu"):
-		visible = !GameManager.get_current_game_key("is_paused")
-		GameManager.set_pause_menu_status(visible)
+		visible = !GameManagerSingleton.get_current_game_key("is_paused")
+		GameManagerSingleton.set_pause_menu_status(visible)
 		_settings_container.visible = visible
 		_pop_up_window.visible = false
 
@@ -24,22 +24,22 @@ func _on_leave_game_button_pressed():
 
 func _on_back_to_game_button_pressed():
 	visible = false
-	GameManager.set_pause_menu_status(visible)
+	GameManagerSingleton.set_pause_menu_status(visible)
 	_settings_container.visible = visible
 
 
 func _on_pop_up_window_left_pressed():
 	visible = false
-	GameManager.set_pause_menu_status(visible)
+	GameManagerSingleton.set_pause_menu_status(visible)
 	_settings_container.visible = visible
 	_pop_up_window.visible = false
 
-	GameManager.end_game()
+	GameManagerSingleton.end_game()
 
 
 func _on_pop_up_window_right_pressed():
 	visible = false
-	GameManager.set_pause_menu_status(visible)
+	GameManagerSingleton.set_pause_menu_status(visible)
 	_settings_container.visible = visible
 	_pop_up_window.visible = false
 

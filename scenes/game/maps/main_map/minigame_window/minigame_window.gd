@@ -57,10 +57,10 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 	if event.is_action_pressed("interact"):
-		if GameManager.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_key("is_paused"):
 			return
 
-		if GameManager.get_current_game_key("is_input_disabled"):
+		if GameManagerSingleton.get_current_game_key("is_input_disabled"):
 			return
 
 		if _minigame == null:
@@ -97,7 +97,7 @@ func end_minigame():
 	hide()
 
 
-	TaskManager.mark_task_as_complete()
+	TaskManagerSingleton.mark_task_as_complete()
 
 ## Ukrywa okno minigry pomimo nie ukończenia jej w chwili wciśnięcia przycisku
 func close_minigame():

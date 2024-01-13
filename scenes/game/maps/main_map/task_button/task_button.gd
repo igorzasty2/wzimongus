@@ -51,7 +51,7 @@ func _on_body_entered(body):
 		_is_player_inside = true
 		sprite_node.material.set_shader_parameter('line_color', _in_range_task_color)
 		minigame_window.show_use_button(minigame_scene)
-		TaskManager.current_task_id = task_id
+		TaskManagerSingleton.current_task_id = task_id
 
 
 ## Usuwa ID punktu interakcji i włącza odpowiedni zarys. 
@@ -60,7 +60,7 @@ func _on_body_exited(body):
 		_is_player_inside = false
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
 		minigame_window.hide_use_button()
-		TaskManager.current_task_id = null
+		TaskManagerSingleton.current_task_id = null
 
 
 ## Udostępnia punkt interakcji graczowi.

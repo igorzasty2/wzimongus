@@ -19,7 +19,7 @@ func _update_player_input():
 	var is_lobby_settings_visible = _lobby_settings.visible if _lobby_settings != null  else false
 
 	var is_input_disabled = is_chat_visible || is_skin_selector_visible || is_lobby_settings_visible
-	GameManager.set_input_disabled_status(is_input_disabled)
+	GameManagerSingleton.set_input_disabled_status(is_input_disabled)
 
 
 func _ready():
@@ -27,25 +27,25 @@ func _ready():
 	NetworkTime.start()
 
 	hide()
-	GameManager.set_input_disabled_status(true)
+	GameManagerSingleton.set_input_disabled_status(true)
 
 	# Spawnuje zarejestrowanych graczy.
-	for i in GameManager.get_registered_players():
+	for i in GameManagerSingleton.get_registered_players():
 		_spawn_player(i)
 
 	# Spawnuje nowych graczy.
-	GameManager.player_registered.connect(_on_player_registered)
+	GameManagerSingleton.player_registered.connect(_on_player_registered)
 
 	# Despawnuje wyrejestrowanego gracza.
-	GameManager.player_deregistered.connect(_on_player_deregistered)
+	GameManagerSingleton.player_deregistered.connect(_on_player_deregistered)
 
 	# Włącza broadcast serwera.
 	if multiplayer.is_server():
 		_update_broadcast_info()
 
-		GameManager.player_registered.connect(_update_broadcast_info)
-		GameManager.player_deregistered.connect(_update_broadcast_info)
-		GameManager.server_settings_changed.connect(_update_broadcast_info)
+		GameManagerSingleton.player_registered.connect(_update_broadcast_info)
+		GameManagerSingleton.player_deregistered.connect(_update_broadcast_info)
+		GameManagerSingleton.server_settings_changed.connect(_update_broadcast_info)
 
 	# Czeka na synchronizację czasu.
 	if !multiplayer.is_server():
@@ -65,8 +65,8 @@ func _exit_tree():
 
 
 func _update_broadcast_info(_id: int = 0, _player: Dictionary = {}):
-	_server_advertiser.serverInfo = GameManager.get_server_settings().duplicate()
-	_server_advertiser.serverInfo["player_count"] = GameManager.get_registered_players().size()
+	_server_advertiser.serverInfo = GameManagerSingleton.get_server_settings().duplicate()
+	_server_advertiser.serverInfo["player_count"] = GameManagerSingleton.get_registered_players().size()
 
 
 func _on_player_registered(id: int, player: Dictionary):
@@ -91,18 +91,18 @@ func _spawn_player(id: int):
 	player.name = str(id)
 
 	# Ustawia startową pozycję gracza.
-	player.position = _spawn_points.get_child(GameManager.get_registered_players().keys().find(id)).position
+	player.position = _spawn_points.get_child(GameManagerSingleton.get_registered_players().keys().find(id)).position
 
 	# Ustawia pozycję i animację gracza na podstawie aktualnych danych.
-	if GameManager.lobby_data_at_registration.has(id):
-		player.position = GameManager.lobby_data_at_registration[id]["position"]
-		player.direction_last_x = GameManager.lobby_data_at_registration[id]["direction_last_x"]
-		GameManager.lobby_data_at_registration.erase(id)
+	if GameManagerSingleton.lobby_data_at_registration.has(id):
+		player.position = GameManagerSingleton.lobby_data_at_registration[id]["position"]
+		player.direction_last_x = GameManagerSingleton.lobby_data_at_registration[id]["direction_last_x"]
+		GameManagerSingleton.lobby_data_at_registration.erase(id)
 
 	_players.add_child(player)
 
 	# Ustawia kamerę.
-	if GameManager.get_current_player_id() == id:
+	if GameManagerSingleton.get_current_player_id() == id:
 		_camera.target = player
 
 

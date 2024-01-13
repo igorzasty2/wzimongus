@@ -28,10 +28,10 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("interact"):
-		if GameManager.get_current_game_key("is_paused"):
+		if GameManagerSingleton.get_current_game_key("is_paused"):
 			return
 
-		if GameManager.get_current_game_key("is_input_disabled"):
+		if GameManagerSingleton.get_current_game_key("is_input_disabled"):
 			return
 
 		if !_is_player_inside:
@@ -41,7 +41,7 @@ func _input(event):
 
 
 func _on_body_entered(body):
-	if body.name.to_int() == GameManager.get_current_player_id():
+	if body.name.to_int() == GameManagerSingleton.get_current_player_id():
 		_is_player_inside = true
 		sprite_node.material.set_shader_parameter('line_color', _in_range_color)
 		
@@ -49,7 +49,7 @@ func _on_body_entered(body):
 
 
 func _on_body_exited(body):
-	if body.name.to_int() == GameManager.get_current_player_id():
+	if body.name.to_int() == GameManagerSingleton.get_current_player_id():
 		_is_player_inside = false
 		sprite_node.material.set_shader_parameter('line_color', _out_of_range_color)
 		

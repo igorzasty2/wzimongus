@@ -23,7 +23,7 @@ var voting_screen = preload("res://scenes/game/maps/main_map/voting_screen/votin
 var report_screen = preload("res://scenes/game/maps/main_map/report_screen/report_screen.tscn")
 
 # Czas oczekiwania od początku rundy na aktywację przycisku
-var wait_time = GameManager.get_server_settings()["emergency_cooldown"]
+var wait_time = GameManagerSingleton.get_server_settings()["emergency_cooldown"]
 ## Określa czy czas oczekiwania się skończył
 var is_wait_time_over: bool = false
 
@@ -45,10 +45,10 @@ signal button_active(button_name:String, is_active:bool)
 
 
 func _ready():
-	GameManager.next_round_started.connect(on_next_round_started)
-	GameManager.map_load_finished.connect(_on_map_load_finished)
-	GameManager.player_killed.connect(_on_player_killed)
-	GameManager.sabotage_started.connect(_on_sabotage_started)
+	GameManagerSingleton.next_round_started.connect(on_next_round_started)
+	GameManagerSingleton.map_load_finished.connect(_on_map_load_finished)
+	GameManagerSingleton.player_killed.connect(_on_player_killed)
+	GameManagerSingleton.sabotage_started.connect(_on_sabotage_started)
 	
 	report_area.toggle_button_highlight.connect(toggle_button_highlight)
 	
@@ -94,7 +94,7 @@ func _on_end_emergency_timer_timeout():
 func on_next_round_started():
 	voting_canvas.get_child(0).queue_free()
 
-	GameManager.is_meeting_called = false
+	GameManagerSingleton.is_meeting_called = false
 	
 	button_active.emit("ReportButton", false)
 	button_active.emit("InteractButton", false)
@@ -124,7 +124,7 @@ func button_used():
 
 ## Obsługuje report/zebranie awaryjne
 func handle_report(is_button: bool, body_id):
-	GameManager.is_meeting_called = true
+	GameManagerSingleton.is_meeting_called = true
 	
 	is_caller_button = is_button
 	
@@ -163,7 +163,7 @@ func instantiate_voting_screen():
 	var voting_screen_instance = voting_screen.instantiate()
 	voting_canvas.add_child(voting_screen_instance)
 
-	GameManager.is_meeting_called = true
+	GameManagerSingleton.is_meeting_called = true
 	is_wait_time_over = false
 
 	button_active.emit("ReportButton", false)
@@ -194,6 +194,6 @@ func _on_sabotage_started(has_started:bool):
 	
 	var bodies = report_area.get_overlapping_bodies()
 	for body in bodies:
-		if body.name.to_int()==multiplayer.get_unique_id() && !GameManager.get_current_player_key("is_dead") && report_area.monitorable && report_area.monitoring:
+		if body.name.to_int()==multiplayer.get_unique_id() && !GameManagerSingleton.get_current_player_key("is_dead") && report_area.monitorable && report_area.monitoring:
 			toggle_button_highlight(!has_started)
 			button_active.emit("InteractButton", !has_started)
