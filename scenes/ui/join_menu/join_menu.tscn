@@ -142,6 +142,7 @@ text = "Login"
 [node name="UsernameInput" type="LineEdit" parent="InputsContainer/UsernameContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 32)
 layout_mode = 2
+max_length = 16
 
 [node name="AddressContainer" type="VBoxContainer" parent="InputsContainer"]
 layout_mode = 2
