@@ -1,9 +1,13 @@
+## Klasa odpowiedzialna za zarządzanie sceną gry.
+class_name Game
 extends Control
 
-@onready var connecting = $Connecting
-@onready var maps = $Maps
-@onready var error = $Error
-@onready var error_pop_up = $Error/ErrorPopUp
+
+@onready var _connecting = $Connecting
+@onready var _maps = $Maps
+@onready var _error = $Error
+@onready var _error_pop_up = $Error/ErrorPopUp
+@onready var _pause_menu = $PauseMenu
 
 
 func _ready():
@@ -12,7 +16,9 @@ func _ready():
 	GameManagerSingleton.game_ended.connect(_on_game_ended)
 	GameManagerSingleton.error_occured.connect(_on_error_occured)
 	GameManagerSingleton.winner_determined.connect(_on_winner_determined)
-	error_pop_up.middle_pressed.connect(_on_error_pop_up_closed)
+	_error_pop_up.middle_pressed.connect(_on_error_pop_up_closed)
+
+	GameManagerSingleton.is_game_scene_loaded = true
 
 
 func _on_registered_successfully():
@@ -27,7 +33,7 @@ func _on_winner_determined(winning_role: GameManagerSingleton.Role):
 @rpc("call_local", "reliable")
 ## Wyświetla ekran zakończenia gry.
 func display_winner(winning_role: GameManagerSingleton.Role):
-	var ending_scene = preload('res://scenes/game/end_screen/end_screen.tscn').instantiate()
+	var ending_scene = preload("res://scenes/game/end_screen/end_screen.tscn").instantiate()
 	ending_scene.set_winning_role(winning_role)
 	get_tree().get_root().add_child(ending_scene)
 
@@ -41,18 +47,18 @@ func _on_game_started():
 
 
 func _on_game_ended():
-	if !error.visible:
+	if !_error.visible:
 		get_tree().change_scene_to_file("res://scenes/menu/start_menu/start_menu.tscn")
 
 
 func _on_error_occured(message: String):
-	if !error.visible:
-		$PauseMenu.queue_free()
+	if !_error.visible:
+		_pause_menu.queue_free()
 		
-		connecting.hide()
+		_connecting.hide()
 		_delete_map()
-		error_pop_up.set_information(message)
-		error.show()
+		_error_pop_up.set_information(message)
+		_error.show()
 
 
 func _on_error_pop_up_closed():
@@ -61,20 +67,21 @@ func _on_error_pop_up_closed():
 
 ## Zmienia wyświetlaną globalnie mapę.
 func _change_map(scene: PackedScene):
-	connecting.show()
+	_connecting.show()
 	_delete_map()
+
 	var scene_instantiated = scene.instantiate()
 	scene_instantiated.connect("load_finished", _on_load_finished)
-	maps.add_child(scene_instantiated)
+	_maps.add_child(scene_instantiated)
 
 
 ## Usuwa aktualną mapę.
 func _delete_map():
-	for i in maps.get_children():
+	for i in _maps.get_children():
 		i.disconnect("load_finished", _on_load_finished)
-		maps.remove_child(i)
+		_maps.remove_child(i)
 		i.queue_free()
 
 
 func _on_load_finished():
-	connecting.hide()
+	_connecting.hide()

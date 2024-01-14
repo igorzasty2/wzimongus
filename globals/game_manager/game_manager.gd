@@ -116,6 +116,10 @@ const SKINS = {
 	}
 }
 
+
+## Przechowuje informacje o stanie gotowości sceny gry.
+var is_game_scene_loaded: bool = false
+
 ## Przechowuje dane innych graczy z momentu rejestracji, w celu zespawnowania ich w lobby.
 var lobby_data_at_registration = {}
 
@@ -199,6 +203,12 @@ func _ready():
 
 ## Tworzy nowy serwer gry.
 func create_lobby(lobby_name: String, port: int):
+	# Oczekuje na załadowanie sceny gry.
+	await async_condition(
+		func():
+			return is_game_scene_loaded
+	)
+
 	# Weryfikuje długość nazwy lobby.
 	if !_verify_lobby_name_length(lobby_name):
 		_handle_error(ERROR_MESSAGES["ERR_LOBBY_NAME_LENGTH"])
@@ -267,6 +277,12 @@ func _update_server_settings(server_settings: Dictionary):
 
 ## Dołącza do istniejącego serwera gry.
 func join_lobby(address:String, port:int):
+	# Oczekuje na załadowanie sceny gry.
+	await async_condition(
+		func():
+			return is_game_scene_loaded
+	)
+
 	# Weryfikuje długość nazwy użytkownika.
 	if !_verify_username_length(_current_player["username"]):
 		_handle_error(ERROR_MESSAGES["ERR_USERNAME_LENGTH"])
@@ -327,6 +343,8 @@ func end_game():
 
 	# Resetuje zadania.
 	TaskManagerSingleton.reset()
+
+	is_game_scene_loaded = false
 
 	game_ended.emit()
 

@@ -59,8 +59,7 @@ func _spawn_player(id: int):
 	player.name = str(id)
 
 	# Ustawia startową pozycję gracza.
-	if multiplayer.is_server():
-		player.position = _start_positions[GameManagerSingleton.get_registered_players().keys().find(id)].position
+	player.position = _start_positions[GameManagerSingleton.get_registered_players().keys().find(id)].position
 
 	_players.add_child(player)
 	
