@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://bc5wtxku3y4b1"]
 
-[ext_resource type="Script" path="res://scenes/game/maps/main_map/surveilence_camera/surveilence_camera.gd" id="1_7a15m"]
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/surveillance_camera/surveillance_camera.gd" id="1_7a15m"]
 [ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://assets/textures/light/light_circle.png" id="2_7lg6c"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_640jd"]
 
-[node name="SurveilenceCamera" type="Node2D"]
+[node name="SurveillanceCamera" type="Node2D"]
 script = ExtResource("1_7a15m")
 
 [node name="CameraViewport" type="SubViewport" parent="."]

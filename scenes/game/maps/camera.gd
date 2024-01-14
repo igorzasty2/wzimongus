@@ -1,10 +1,13 @@
+## Klasa kamery, śledzącej gracza.
+class_name Camera
 extends Camera2D
 
-# Referencja do śledzonego gracza.
+## Referencja do śledzonego gracza.
 var target: CharacterBody2D
 
-var timer = Timer.new()
-var shake_amount: float = 0
+var _shake_timer = Timer.new()
+var _shake_amount: float = 0
+
 
 func _ready():
 	NetworkTime.on_tick.connect(_on_tick)
@@ -12,9 +15,9 @@ func _ready():
 	set_process(false)
 	randomize()
 
-	timer.timeout.connect(_on_timer_timeout)
-	timer.one_shot = true
-	add_child(timer)
+	_shake_timer.timeout.connect(_on_timer_timeout)
+	_shake_timer.one_shot = true
+	add_child(_shake_timer)
 
 
 func _on_tick(_delta, _tick):
@@ -27,18 +30,18 @@ func _on_tick(_delta, _tick):
 
 func _process(_delta):
 	# Dodaje drgania do kamery.
-	offset = Vector2(randf_range(-1, 1) * shake_amount,randf_range(-1, 1) * shake_amount)
+	offset = Vector2(randf_range(-1, 1) * _shake_amount, randf_range(-1, 1) * _shake_amount)
 
 
 ## Trząsa kamerą przez określony czas.
 func shake(time: float, amount: float):
 	set_process(true)
-	shake_amount = amount
-	timer.wait_time = time
-	timer.start()
+	_shake_amount = amount
+	_shake_timer.wait_time = time
+	_shake_timer.start()
 
 
 func _on_timer_timeout():
 	set_process(false)
-	shake_amount = 0
+	_shake_amount = 0
 	offset = Vector2.ZERO

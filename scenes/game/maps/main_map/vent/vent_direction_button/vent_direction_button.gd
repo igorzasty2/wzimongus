@@ -2,7 +2,6 @@
 class_name VentDirectionButton
 extends Node2D
 
-
 ## Sygnał emitowany po naciśnięciu przycisku kierunkowego.
 signal direction_button_pressed(button_id)
 

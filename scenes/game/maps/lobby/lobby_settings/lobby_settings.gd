@@ -1,24 +1,26 @@
 extends CanvasLayer
 
-@onready var max_connections = %MaxConnectionsInput
-@onready var lecturers_amount_alert = %LecturersAmountAlert
-@onready var max_lecturers = %MaxLecturersInput
-@onready var kill_cooldown = %KillCooldownInput
-@onready var sabotage_cooldown = %SabotageCooldownInput
-@onready var kill_radius = %KillRadiusInput
-@onready var task_amount = %TaskAmountInput
-@onready var emergency_cooldown = %EmergencyCooldownInput
-@onready var student_light_radius = %StudentLightRadiusInput
-@onready var lecturer_light_radius = %LecturerLightRadiusInput
-@onready var voting_time = %VotingTimeInput
-@onready var discussion_time = %DiscussionTimeInput
+@onready var _settings_container = $SettingsContainer
+@onready var _max_players = %MaxPlayersInput
+@onready var _lecturers_amount_alert = %LecturersAmountAlert
+@onready var _max_lecturers = %MaxLecturersInput
+@onready var _kill_cooldown = %KillCooldownInput
+@onready var _sabotage_cooldown = %SabotageCooldownInput
+@onready var _kill_radius = %KillRadiusInput
+@onready var _task_amount = %TaskAmountInput
+@onready var _emergency_cooldown = %EmergencyCooldownInput
+@onready var _student_light_radius = %StudentLightRadiusInput
+@onready var _lecturer_light_radius = %LecturerLightRadiusInput
+@onready var _voting_time = %VotingTimeInput
+@onready var _discussion_time = %DiscussionTimeInput
+
 
 func _ready():
 	# Ustawia aktualizacje ilości maksymalnych połączeń
 	if multiplayer.is_server():
-		_update_max_connections()
-		GameManagerSingleton.player_registered.connect(_update_max_connections)
-		GameManagerSingleton.player_deregistered.connect(_update_max_connections)
+		_update_max_players()
+		GameManagerSingleton.player_registered.connect(_update_max_players)
+		GameManagerSingleton.player_deregistered.connect(_update_max_players)
 
 
 func _input(event):
@@ -31,47 +33,61 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 
-func _on_save_button_pressed():	
-	GameManagerSingleton.change_server_settings(max_connections.text.to_int(), max_lecturers.text.to_int(), kill_cooldown.get_selected_id(), sabotage_cooldown.get_selected_id(), kill_radius.get_selected_id(), task_amount.get_selected_id(), emergency_cooldown.get_selected_id(), student_light_radius.get_selected_id(), lecturer_light_radius.get_selected_id(), voting_time.get_selected_id(), discussion_time.get_selected_id())
+func _on_save_button_pressed():
+	GameManagerSingleton.change_server_settings(
+		_max_players.text.to_int(),
+		_max_lecturers.text.to_int(),
+		_kill_cooldown.get_selected_id(),
+		_sabotage_cooldown.get_selected_id(),
+		_kill_radius.get_selected_id(),
+		_task_amount.get_selected_id(),
+		_emergency_cooldown.get_selected_id(),
+		_student_light_radius.get_selected_id(),
+		_lecturer_light_radius.get_selected_id(),
+		_voting_time.get_selected_id(),
+		_discussion_time.get_selected_id()
+	)
 	hide()
 
 
 func _on_visibility_changed():
 	if visible:
 		$WindowOpenSound.play()
-	$SettingsContainer.visible = visible
+	_settings_container.visible = visible
 	var settings = GameManagerSingleton.get_server_settings()
 	if settings["max_players"]:
-		max_connections.selected = max_connections.get_item_index(settings["max_players"])
-		max_lecturers.selected = max_lecturers.get_item_index(settings["max_lecturers"])
-		kill_cooldown.selected = kill_cooldown.get_item_index(settings["kill_cooldown"])
-		sabotage_cooldown.selected = sabotage_cooldown.get_item_index(settings["sabotage_cooldown"])
-		kill_radius.selected = kill_radius.get_item_index(settings["kill_radius"])
-		task_amount.selected = task_amount.get_item_index(settings["task_amount"])
-		emergency_cooldown.selected = emergency_cooldown.get_item_index(settings["emergency_cooldown"])
-		student_light_radius.selected = student_light_radius.get_item_index(settings["student_light_radius"])
-		lecturer_light_radius.selected = lecturer_light_radius.get_item_index(settings["lecturer_light_radius"])
-		voting_time.selected = voting_time.get_item_index(settings["voting_time"])
-		discussion_time.selected = discussion_time.get_item_index(settings["discussion_time"])
-		_on_connections_lecturers_item_selected(max_connections.selected)
+		_max_players.selected = _max_players.get_item_index(settings["max_players"])
+		_max_lecturers.selected = _max_lecturers.get_item_index(settings["max_lecturers"])
+		_kill_cooldown.selected = _kill_cooldown.get_item_index(settings["kill_cooldown"])
+		_sabotage_cooldown.selected = _sabotage_cooldown.get_item_index(settings["sabotage_cooldown"])
+		_kill_radius.selected = _kill_radius.get_item_index(settings["kill_radius"])
+		_task_amount.selected = _task_amount.get_item_index(settings["task_amount"])
+		_emergency_cooldown.selected = _emergency_cooldown.get_item_index(settings["emergency_cooldown"])
+		_student_light_radius.selected = _student_light_radius.get_item_index(settings["student_light_radius"])
+		_lecturer_light_radius.selected = _lecturer_light_radius.get_item_index(settings["lecturer_light_radius"])
+		_voting_time.selected = _voting_time.get_item_index(settings["voting_time"])
+		_discussion_time.selected = _discussion_time.get_item_index(settings["discussion_time"])
+		_on_connections_lecturers_item_selected(_max_players.selected)
 
 
 func _on_connections_lecturers_item_selected(_index: int):
 	# Ustawia widoczność alertu o zbyt dużej ilości wykładowców
-	lecturers_amount_alert.visible = true if ceil(max_connections.text.to_int() / 4.0) < max_lecturers.text.to_int() else false
+	_lecturers_amount_alert.visible = (
+		true if ceil(_max_players.text.to_int() / 4.0) < _max_lecturers.text.to_int() else false
+	)
 
 
 ## Aktualizuje selekcje ilości maksymalnej ilości połączeń
-func _update_max_connections(_id: int = 0, _player: Dictionary = {}):
-	max_connections.clear()
+func _update_max_players(_id: int = 0, _player: Dictionary = {}):
+	_max_players.clear()
 
 	# Dodaje opcje do wyboru
 	var idx = 0
 	for i in range(max(3, GameManagerSingleton.get_registered_players().size()), 11):
-		max_connections.add_item(str(i),i)
+		_max_players.add_item(str(i), i)
 
 		# Ustawia aktualną ilość połączeń jako zaznaczoną
 		if i == GameManagerSingleton.get_server_settings().max_players:
-			max_connections.select(idx)
+			_max_players.select(idx)
 
 		idx += 1

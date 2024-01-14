@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
-[ext_resource type="Script" path="res://scenes/characters/player/skins.gd" id="2_mfjlm"]
+[ext_resource type="Script" path="res://scenes/characters/player/skin_selector.gd" id="2_mfjlm"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
 [ext_resource type="Script" path="res://scenes/characters/player/input.gd" id="4_8ajvt"]
 [ext_resource type="AudioStream" uid="uid://ds10gn6nvty0p" path="res://assets/audio/steps/step01.ogg" id="7_46nd0"]

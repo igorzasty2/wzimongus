@@ -1,8 +1,7 @@
 extends CanvasLayer
 
-
-@onready var skin_texture_rect = $Panel/MarginContainer/VBoxContainer/SkinTextureRect
-@onready var skin_option_button = $Panel/MarginContainer/VBoxContainer/SkinOptionButton
+@onready var _skin_texture_rect = $Panel/MarginContainer/VBoxContainer/SkinTextureRect
+@onready var _skin_option_button = $Panel/MarginContainer/VBoxContainer/SkinOptionButton
 
 
 func _ready():
@@ -34,7 +33,7 @@ func _update_skin_texture_rect(index):
 	var texture = AtlasTexture.new()
 	texture.atlas = load(GameManagerSingleton.SKINS[index]["resource"])
 	texture.region = Rect2(0, 0, 675, 675)
-	skin_texture_rect.texture = texture
+	_skin_texture_rect.texture = texture
 
 
 func _populate_skins(_id: int = -1, _player: Dictionary = {}):
@@ -44,21 +43,21 @@ func _populate_skins(_id: int = -1, _player: Dictionary = {}):
 		if i != GameManagerSingleton.get_current_player_id():
 			available_skins.erase(GameManagerSingleton.get_registered_player_value(i, "skin"))
 
-	skin_option_button.clear()
+	_skin_option_button.clear()
 
 	var idx = 0
 
 	for i in available_skins:
-		skin_option_button.add_item(available_skins[i]["name"], i)
+		_skin_option_button.add_item(available_skins[i]["name"], i)
 
 		if i == GameManagerSingleton.get_current_player_value("skin"):
-			skin_option_button.select(idx)
+			_skin_option_button.select(idx)
 
 		idx += 1
 
 
 func _on_skin_option_button_item_selected(index):
-	GameManagerSingleton.change_skin(skin_option_button.get_item_id(index))
+	GameManagerSingleton.change_skin(_skin_option_button.get_item_id(index))
 
 
 func _on_visibility_changed():

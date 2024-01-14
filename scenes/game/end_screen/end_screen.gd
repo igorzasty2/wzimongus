@@ -1,3 +1,5 @@
+## Klasa odpowiedzialna za wyświetlanie ekranu końcowego.
+class_name EndScreen
 extends CanvasLayer
 
 

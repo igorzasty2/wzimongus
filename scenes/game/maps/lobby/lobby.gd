@@ -1,5 +1,8 @@
+## Klasa mapy lobby.
+class_name Lobby
 extends Node2D
 
+## Emitowany, gdy lobby jest gotowe do gry.
 signal load_finished
 
 @onready var _spawn_points = $SpawnPoints
@@ -7,7 +10,7 @@ signal load_finished
 @onready var _camera = $Camera
 @onready var _server_advertiser = $ServerAdvertiser
 @onready var _chat = $Chat
-@onready var _lobby_ui = $LobbyUi
+@onready var _lobby_ui = $LobbyUI
 @onready var _chat_input = $Chat/ChatContainer/InputText
 @onready var _skin_selector = $SkinSelector
 @onready var _lobby_settings = $LobbySettings
@@ -15,8 +18,8 @@ signal load_finished
 
 func _update_player_input():
 	var is_chat_visible = _chat_input.visible if _chat_input != null else false
-	var is_skin_selector_visible = _skin_selector.visible if _skin_selector != null  else false
-	var is_lobby_settings_visible = _lobby_settings.visible if _lobby_settings != null  else false
+	var is_skin_selector_visible = _skin_selector.visible if _skin_selector != null else false
+	var is_lobby_settings_visible = _lobby_settings.visible if _lobby_settings != null else false
 
 	var is_input_disabled = is_chat_visible || is_skin_selector_visible || is_lobby_settings_visible
 	GameManagerSingleton.set_input_disabled_status(is_input_disabled)

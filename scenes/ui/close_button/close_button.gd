@@ -1,6 +1,10 @@
+## Klasa przycisku zamykającego okno.
+class_name CloseButton
 extends TextureButton
 
-@export var window : Node = null
+## Okno, które ma zostać zamknięte.
+@export var window: Node = null
+
 
 # Obsługuje naciśnięcie, przywraca kolor
 func _on_pressed():

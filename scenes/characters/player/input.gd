@@ -1,14 +1,13 @@
-## Synchronizer wejścia gracza z serwerem.
+## Klasa synchronizera wejścia gracza.
 class_name InputSynchronizer
 extends Node
-
 
 ## Wektor kierunku poruszania się gracza.
 @export var direction: Vector2 = Vector2.ZERO
 
 ## Czy gracz jest sterowany automatycznie.
 var is_walking_to_destination: bool = false
-## Pozycja docelowa do której gracz się automatycznie porusza.
+## Pozycja docelowa do której gracz się automatycznie porusza, w przypadku sterowania automatycznego.
 var destination_position: Vector2 = Vector2.ZERO
 
 ## Czy synchronizacja wejścia jest wyłączona.

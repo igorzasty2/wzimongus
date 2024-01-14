@@ -4,9 +4,10 @@ extends Control
 @onready var _settings: Control = $Settings
 @onready var _credits: Control = $Credits
 
+
 func _ready():
 	# Ustawia minimalną wielkość okna na 800x600
-	DisplayServer.window_set_min_size(Vector2i(800,600))
+	DisplayServer.window_set_min_size(Vector2i(800, 600))
 	_settings.visible = false
 	_credits.visible = false
 

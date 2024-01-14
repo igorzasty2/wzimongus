@@ -1,8 +1,7 @@
-## Skrypt wyboru skórki
 extends Node2D
 
 ## Referencja do sprite'a postaci.
-@onready var player_sprite = $Control/PlayerSprite
+@onready var _player_sprite = $Control/PlayerSprite
 
 
 func _ready():
@@ -21,4 +20,4 @@ func _on_skin_changed(id: int, skin: int):
 
 
 func _update_skin(skin: int):
-	player_sprite.texture = load(GameManagerSingleton.SKINS[skin]["resource"])
+	_player_sprite.texture = load(GameManagerSingleton.SKINS[skin]["resource"])
