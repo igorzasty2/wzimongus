@@ -20,7 +20,7 @@ func _ready():
 	if  most_voted_player == null:
 		ejection_message.text = "[center]Nikt nie został usunięty z grupy[/center]"
 	elif most_voted_player["is_lecturer"]:
-		ejection_message.text = "[center]" + most_voted_player['username'] + " został usunięty z grupy[/center]"
+		ejection_message.text = "[center]" + most_voted_player['username'] + " był wykładowcą[/center]"
 	else:
 		ejection_message.text = "[center]" + most_voted_player['username'] + " nie był wykładowcą[/center]"
 

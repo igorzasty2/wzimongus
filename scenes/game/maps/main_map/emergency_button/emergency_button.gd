@@ -92,6 +92,9 @@ func _on_end_emergency_timer_timeout():
 
 ## Na początku rundy restartuje timer z czasem oczekiwania na aktywację przycisku, przywraca widoczność elementów interfejsu
 func on_next_round_started():
+	if GameManagerSingleton.get_current_player_value("is_dead") && uses_left_label.text != "":
+		uses_left_label.text = ""
+	
 	voting_canvas.get_child(0).queue_free()
 
 	GameManagerSingleton.is_meeting_called = false
