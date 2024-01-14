@@ -26,7 +26,7 @@ func _on_registered_successfully():
 
 
 ## Wysyła wszystkim graczom informacje o roli która wygrała.
-func _on_winner_determined(winning_role: GameManagerSingleton.Role):
+func _on_winner_determined(winning_role: GameManagerSingleton.Role, is_lecturer: bool):
 	display_winner.rpc(winning_role)
 
 

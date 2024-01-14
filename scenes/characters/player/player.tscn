@@ -323,9 +323,6 @@ script = ExtResource("3_l2yj5")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
 
-[node name="AudioListener2D" type="AudioListener2D" parent="."]
-current = true
-
 [node name="PlayerInteractionPlayer" type="AudioStreamPlayer2D" parent="."]
 max_distance = 100.0
 

@@ -45,7 +45,7 @@ signal map_load_finished()
 signal server_settings_changed()
 
 ## Emitowany gdy przynajmniej jeden z warunków zakończenia gry jest spełniony.
-signal winner_determined(winning_role: Role)
+signal winner_determined(winning_role: Role, is_lecturer: bool)
 
 ## Rola gracza
 enum Role {STUDENT, LECTURER}
@@ -781,18 +781,19 @@ func check_winning_conditions():
 	if GameManagerSingleton.get_current_game_value("is_started"):
 		if !multiplayer.is_server():
 			return ERR_UNAUTHORIZED
-
+		print("a")
 		if TaskManagerSingleton.get_tasks_server().is_empty():
 			winner_determined.emit(Role.STUDENT, get_current_game_value("is_lecturer"))
 			return
-
+		print("b")
 		if _count_alive_lecturers() == 0:
 			winner_determined.emit(Role.STUDENT, get_current_game_value("is_lecturer"))
 			return
-
+		print("c")
 		if _count_alive_students() <= _count_alive_lecturers():
 			winner_determined.emit(Role.LECTURER, get_current_game_value("is_lecturer"))
 			return
+		print("d")
 
 
 ## Liczy żyjących wykładowców.

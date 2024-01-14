@@ -246,7 +246,7 @@ libraries = {
 
 [node name="StartRoundSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_enkym")
-volume_db = -17.0
+volume_db = -25.0
 autoplay = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

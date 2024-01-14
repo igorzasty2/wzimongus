@@ -139,6 +139,10 @@ func _ready():
 
 	GameManagerSingleton.map_load_finished.connect(_on_map_load_finished)
 	GameManagerSingleton.next_round_started.connect(_on_next_round_started)
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		var audio_listener = AudioListener2D.new()
+		audio_listener.make_current()
+		add_child(audio_listener)
 
 
 func _process(_delta):
@@ -154,6 +158,8 @@ func _process(_delta):
 	# Aktualizuje czas pozostały do kolejnej możliwości sabotażu.
 	if user_interface!=null && sabotage_timer!=null && sabotage_timer.time_left>0:
 		user_interface.update_time_left("SabotageLabel", str(int(sabotage_timer.time_left)))
+		
+	
 
 
 func _rollback_tick(delta, _tick, is_fresh):
@@ -226,6 +232,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 					_update_highlight(closest_player(GameManagerSingleton.get_current_player_id()))
 				else:
 					_update_highlight(0)
+	
 
 
 ## Sprawdza, czy nie naciśnięto fail button. Jeśli tak to sprawdza, czy jesteśmy lecturerem
