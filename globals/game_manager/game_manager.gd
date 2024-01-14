@@ -738,15 +738,16 @@ func check_winning_conditions():
 			return ERR_UNAUTHORIZED
 		print("a")
 		if TaskManagerSingleton.get_tasks_server().is_empty():
-			winner_determined.emit(Role.STUDENT, get_current_game_value("is_lecturer"))
+			winner_determined.emit(Role.STUDENT, get_current_player_value("is_lecturer"))
 			return
 		print("b")
 		if _count_alive_lecturers() == 0:
-			winner_determined.emit(Role.STUDENT, get_current_game_value("is_lecturer"))
+			winner_determined.emit(Role.STUDENT, get_current_player_value("is_lecturer"))
 			return
 		print("c")
 		if _count_alive_students() <= _count_alive_lecturers():
-			winner_determined.emit(Role.LECTURER, get_current_game_value("is_lecturer"))
+			winner_determined.emit(Role.LECTURER, get_current_player_value("is_lecturer"))
+			print("c")
 			return
 		print("d")
 

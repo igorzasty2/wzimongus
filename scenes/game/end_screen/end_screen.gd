@@ -13,16 +13,20 @@ func set_winning_role(role: GameManagerSingleton.Role, is_lecturer : bool):
 		$Background.texture = load("res://assets/textures/end_screen/lecturers_won_background.png")
 		$WinnerText.text = "Wykładowcy wygrali"
 		if is_lecturer:
-			$VictorySound.play()
+			print("Victoria")
+			#$VictorySound.play()
 		else:
-			$DefeatSound.play()
+			print("Delenda")
+			#$DefeatSound.play()
 	elif role == GameManagerSingleton.Role.STUDENT:
 		$Background.texture = load("res://assets/textures/end_screen/students_won_background.png")
 		$WinnerText.text = "Studenci wygrali"
 		if !is_lecturer:
-			$VictorySound.play()
+			print("Victoria")
+			#$VictorySound.play()
 		else:
-			$DefeatSound.play()
+			print("Delenda")
+			#$DefeatSound.play()
 
 
 func _input(event):

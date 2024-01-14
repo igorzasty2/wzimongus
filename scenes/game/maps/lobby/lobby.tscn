@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://l2mxisy85ciw"]
+[gd_scene load_steps=25 format=3 uid="uid://l2mxisy85ciw"]
 
 [ext_resource type="Script" path="res://scenes/game/maps/lobby/lobby.gd" id="1_dytr5"]
 [ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_kl6mk"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="5_1rfh5"]
 [ext_resource type="PackedScene" uid="uid://dyuj3stgg8wl4" path="res://scenes/game/maps/lobby/lobby_ui/lobby_ui.tscn" id="5_7r85o"]
 [ext_resource type="Texture2D" uid="uid://c7y7ff03ym4j4" path="res://assets/textures/lobby/objects/slupy.png" id="5_cauck"]
-[ext_resource type="Texture2D" uid="uid://fmy66vpvmmra" path="res://assets/textures/main_map/objects/wifi.png" id="7_ddbdn"]
 [ext_resource type="PackedScene" uid="uid://b3e41jcsgj6bl" path="res://scenes/game/maps/lobby/lobby_settings/lobby_settings.tscn" id="7_vdntv"]
 [ext_resource type="PackedScene" uid="uid://rh1o32f8llsb" path="res://scenes/game/maps/lobby/skin_selector/skin_selector.tscn" id="8_hy1jx"]
 [ext_resource type="AudioStream" uid="uid://brj4jdusukvhx" path="res://assets/audio/enter_lobby_sound.ogg" id="15_fgqqq"]
@@ -106,8 +105,6 @@ polygon = PackedVector2Array(-177, -4, -328, 73, 327, 74, 178, -5)
 [node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
 z_index = 4
 position = Vector2(147, -276)
-sprite = ExtResource("7_ddbdn")
-scale_factor = 1.0
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
