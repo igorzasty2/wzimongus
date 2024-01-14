@@ -17,18 +17,20 @@ var _use_button_disabled: bool = true
 @onready var _user_interface = get_parent().get_node("UserInterface")
 
 ## Emitowany, gdy przycisk aktywacji minigry ma być aktywny lub nie.
-signal use_button_active(is_active:bool)
+signal use_button_active(is_active: bool)
 
 
 func _ready():
 	_close_button.pressed.connect(close_minigame)
 	use_button_active.connect(_user_interface.toggle_button_active)
 
+
 ## Aktywuje przycisk aktywacji minigry.
 func show_use_button(minigame):
 	_minigame = minigame
 	emit_signal("use_button_active", "InteractButton", true)
 	_use_button_disabled = false
+
 
 ## Wyłącza przycisk aktywacji minigry.
 func hide_use_button():
@@ -44,7 +46,7 @@ func _on_use_button_pressed():
 
 	if _subviewport.get_child_count() != 0:
 		return
-	
+
 	_summon_window()
 
 
@@ -75,21 +77,23 @@ func _input(event):
 
 		_summon_window()
 
+
 ## Pokazuje okno minigry.
 func _summon_window():
 	show()
 
 	_subviewport.add_child(_minigame.instantiate())
 	_minigame_instance = _subviewport.get_child(0)
-	
+
 	emit_signal("use_button_active", "InteractButton", false)
 	_use_button_disabled = true
 
 	_minigame_instance.minigame_end.connect(_end_minigame)
-	
+
 	if _minigame == load("res://scenes/game/maps/main_map/camera_system/camera_system.tscn"):
 		for camera in get_tree().get_nodes_in_group("SurveillanceCameras"):
 			camera.change_light_visibility()
+
 
 ## Ukrywa okno minigry w chwili jej ukończenia i odznacza zadanie za zakończone.
 func _end_minigame():
@@ -97,8 +101,8 @@ func _end_minigame():
 
 	hide()
 
-
 	TaskManagerSingleton.mark_task_as_complete()
+
 
 ## Ukrywa okno minigry pomimo nie ukończenia jej w chwili wciśnięcia przycisku.
 func close_minigame():
@@ -108,7 +112,7 @@ func close_minigame():
 		hide()
 
 		show_use_button(_minigame)
-	
+
 	if _minigame == load("res://scenes/game/maps/main_map/camera_system/camera_system.tscn"):
 		for camera in get_tree().get_nodes_in_group("SurveillanceCameras"):
 			camera.change_light_visibility()

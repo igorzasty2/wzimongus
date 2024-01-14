@@ -9,6 +9,7 @@ extends HBoxContainer
 ## Referencja do wiadomości
 @onready var _message = get_node("%Message")
 
+
 ## Inicjalizacja wiadomości.
 func init(player: Dictionary, messageText: String, color: Color):
 	_avatar.texture = _get_skin_texture(player.skin)

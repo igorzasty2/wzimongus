@@ -2,7 +2,6 @@
 class_name VotingScreen
 extends Control
 
-
 ## Referencja do kontenera na graczy
 @onready var _players = get_node("%Players")
 ## Referencja do tekstu końca głosowania
@@ -47,6 +46,7 @@ var _user_sett: UserSettingsManager
 ## Początkowa skaka siatki z przyciskami
 var _initial_grid_container_scale
 
+
 func _ready():
 	visible = false
 	_chat.visible = false
@@ -58,6 +58,7 @@ func _ready():
 	GameManagerSingleton.player_deregistered.connect(_on_player_deregistered)
 
 	set_process(false)
+
 
 ## Zaczyna głosowanie.
 func start_voting():
@@ -71,7 +72,6 @@ func start_voting():
 
 	_chat_container.visible = false
 	_skip_button.disabled = true
-
 
 	# END VOTING TIMER
 	add_child(_voting_timer)
@@ -89,7 +89,6 @@ func start_voting():
 	_discussion_timer.one_shot = true
 	_discussion_timer.connect("timeout", _on_discussion_timer_timeout)
 	_discussion_timer.start(_discussion_time)
-
 
 	set_process(true)
 
@@ -109,6 +108,7 @@ func _count_time(delta):
 		var time_remaining = _discussion_time + _voting_time - _time
 		_end_vote_text.text = "[right]Głosowanie kończy się za %02d sekund[/right]" % time_remaining
 
+
 func _on_player_voted(voted_player_key):
 	_skip_button.disabled = true
 	GameManagerSingleton.set_current_game_value("is_voted", true)
@@ -119,11 +119,13 @@ func _on_player_voted(voted_player_key):
 	else:
 		_add_player_vote.rpc_id(1, voted_player_key, GameManagerSingleton.get_current_player_id())
 
+
 func _on_player_deregistered(player_id, _player):
 	_render_player_boxes()
 
 	if multiplayer.is_server():
 		_remove_player_vote(player_id)
+
 
 func _remove_player_vote(player_key):
 	var votes = GameManagerSingleton.get_current_game_value("votes")
@@ -140,6 +142,7 @@ func _remove_player_vote(player_key):
 		_on_end_voting_timer_timeout.rpc()
 		_stop_voting_timer.rpc()
 
+
 @rpc("any_peer", "call_remote", "reliable")
 func _add_player_vote(player_key, voted_by):
 	GameManagerSingleton.add_vote(player_key, voted_by)
@@ -149,12 +152,14 @@ func _add_player_vote(player_key, voted_by):
 			_on_end_voting_timer_timeout.rpc()
 			_stop_voting_timer.rpc()
 
+
 func _count_alive_players():
 	var alive_count = 0
 	for player_key in GameManagerSingleton.get_registered_players().keys():
 		if GameManagerSingleton.get_registered_player_value(player_key, "is_dead") == false:
 			alive_count += 1
 	return alive_count
+
 
 func _count_all_votes():
 	var total_votes = 0
@@ -163,12 +168,17 @@ func _count_all_votes():
 		total_votes += votes[player_key].size()
 	return total_votes
 
+
 @rpc("any_peer", "call_local", "reliable")
 func _stop_voting_timer():
 	_voting_timer.stop()
 
+
 func _on_skip_button_pressed():
-	if GameManagerSingleton.get_current_game_value("is_voted") || GameManagerSingleton.get_current_game_value("is_vote_preselected"):
+	if (
+		GameManagerSingleton.get_current_game_value("is_voted")
+		|| GameManagerSingleton.get_current_game_value("is_vote_preselected")
+	):
 		return
 
 	_skip_decision.visible = true
@@ -222,7 +232,13 @@ func _on_end_voting_timer_timeout():
 
 		_render_player_boxes.rpc()
 
-		GameManagerSingleton.set_most_voted_player.rpc(GameManagerSingleton.get_registered_players()[most_voted_player_id] if most_voted_player_id != null else null)
+		GameManagerSingleton.set_most_voted_player.rpc(
+			(
+				GameManagerSingleton.get_registered_players()[most_voted_player_id]
+				if most_voted_player_id != null
+				else null
+			)
+		)
 
 		GameManagerSingleton.kill_player(most_voted_player_id)
 
@@ -268,7 +284,7 @@ func _on_pause_menu_button_button_down():
 
 
 ## Obsługuje zmianę skali nakładki.
-func _on_interface_scale_changed(value:float):
+func _on_interface_scale_changed(value: float):
 	$GridContainer.scale = _initial_grid_container_scale * value
 
 

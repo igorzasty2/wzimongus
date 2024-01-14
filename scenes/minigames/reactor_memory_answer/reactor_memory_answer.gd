@@ -1,14 +1,12 @@
 ## Klasa reprezentująca instancję gry Reactor Memory Answer.
-class_name ReactorMemoryMinigame	
+class_name ReactorMemoryMinigame
 extends Node2D
 
 ## Emitowany, gdy minigra zostanie ukończona.
 signal minigame_end
 
 ## Polska nazwa minigry.
-@export var polish_name : String
-
-
+@export var polish_name: String
 
 ## Tablica przechowująca sekwencję.
 var _sequence = []
@@ -40,8 +38,9 @@ func _ready():
 	for b in $PlayerButtons.get_children():
 		b.disabled = true
 
+
 func _process(_delta):
-	if (Input.is_action_just_pressed("ui_left")):
+	if Input.is_action_just_pressed("ui_left"):
 		$Grid.visible = !$Grid.visible
 
 
@@ -58,7 +57,7 @@ func _create_sequence():
 
 ## Funkcja obsługująca błyski elementów sekwencji.
 func _flash():
-	if (_current_displayed <= _current_solved):
+	if _current_displayed <= _current_solved:
 		get_node("Console").get_children()[_sequence[_current_displayed]].texture = _flash_texture
 		$FlashTimer.set_wait_time(flash_length)
 		$FlashTimer.start()
@@ -66,20 +65,21 @@ func _flash():
 		for b in $PlayerButtons.get_children():
 			b.disabled = false
 
+
 ## Funkcja wywoływana po naciśnięciu przycisku przez gracza.
 func player_pressed(name):
 	var button_pressed = int(name.replace("Button", "")) - 1
 
-	if (button_pressed == _sequence[_player_button_count]):
+	if button_pressed == _sequence[_player_button_count]:
 		$ButtonIndicators.get_children()[_player_button_count].texture = _lit
 		_player_button_count += 1
 
 		# Sprawdzenie, czy gracz rozwiązał 3 sekwencje (numerowane od 0 do 3)
-		if (_current_solved == 3 and _player_button_count == 4):
+		if _current_solved == 3 and _player_button_count == 4:
 			minigame_end.emit()
 
 		# Sprawdzenie, czy gracz rozwiązał całą sekwencję
-		if (_player_button_count > _current_solved):
+		if _player_button_count > _current_solved:
 			for b in $PlayerButtons.get_children():
 				b.disabled = true
 			_current_displayed = 0
@@ -100,11 +100,11 @@ func player_pressed(name):
 		$FailureTimer.set_wait_time(.5)
 		$FailureTimer.start()
 
+
 ## Funkcja resetująca wskaźniki gracza.
 func _clear_player_indicators():
 	for i in $ButtonIndicators.get_children():
 		i.texture = _unlit
-
 
 
 ## Funkcja zwiększająca liczbę rozwiązanych sekwencji.
@@ -112,11 +112,12 @@ func _increase_solved():
 	$ConsoleIndicators.get_children()[_current_solved].texture = _lit
 	_current_solved += 1
 	# Sprawdzenie, czy gracz rozwiązał wszystkie sekwencje.
-	if (_current_solved >= 4):
+	if _current_solved >= 4:
 		for b in $PlayerButtons.get_children():
 			b.disabled = true
 	else:
 		_flash()
+
 
 ## Obsługa zdarzenia timeout dla timera powtórzenia sekwencji przez gracza.
 func _on_SequencePauseTimer_timeout():
@@ -124,6 +125,8 @@ func _on_SequencePauseTimer_timeout():
 	_current_displayed = 0
 	_player_button_count = 0
 	_flash()
+
+
 ## Obsługa zdarzenia timeout dla timera błysku.
 func _on_FlashTimer_timeout():
 	for c in get_node("Console").get_children():
@@ -132,22 +135,25 @@ func _on_FlashTimer_timeout():
 	$PauseTimer.set_wait_time(flash_pause)
 	$PauseTimer.start()
 
+
 ## Obsługa zdarzenia timeout dla timera przerwy między błyskami.
 func _on_PauseTimer_timeout():
 	_current_displayed += 1
 	_flash()
 
+
 ## Obsługa zdarzenia timeout dla timera startowego.
 func _on_StartTimer_timeout():
 	_flash()
+
 
 ## Obsługa zdarzenia timeout dla timera czyszczenia wskaźników gracza.
 func _on_ClearIndicatorsTimer_timeout():
 	_clear_player_indicators()
 
+
 ## Obsługa zdarzenia timeout dla timera informującego o niepowodzeniu.
 func _on_FailureTimer_timeout():
-
 	for i in $ButtonIndicators.get_children():
 		i.texture = _unlit
 

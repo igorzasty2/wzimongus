@@ -4,20 +4,20 @@ extends Control
 
 @onready var _label = $Panel/MarginContainer/Label
 @onready var _left_button = $Panel/MarginContainer/HBoxContainer/LeftButton
-@onready var _right_button =  $Panel/MarginContainer/HBoxContainer/RightButton
+@onready var _right_button = $Panel/MarginContainer/HBoxContainer/RightButton
 @onready var _middle_button = $Panel/MarginContainer/HBoxContainer/MiddleButton
 
 ## True - jedne przycisk, False - dwa przyciski.
-@export var one_button : bool = false
+@export var one_button: bool = false
 
 ## Wyświetlana informacja.
-@export var information : String = "information"
+@export var information: String = "information"
 ## Tekst na lewym przycisku.
-@export var left_button_text : String = "left"
+@export var left_button_text: String = "left"
 ## Tekst na prawym przycisku.
-@export var right_button_text : String = "right"
+@export var right_button_text: String = "right"
 ## Tekst na środkowym przycisku.
-@export var middle_button_text : String = "middle"
+@export var middle_button_text: String = "middle"
 
 ## Emitowany po naciśnięciu przycisku z lewej strony.
 signal left_pressed
@@ -26,9 +26,10 @@ signal right_pressed
 ## Emitowany po naciśnięciu przycisku na środku.
 signal middle_pressed
 
+
 func _ready():
 	_label.text = information
-	if one_button==true:
+	if one_button == true:
 		_middle_button.text = middle_button_text
 		_left_button.queue_free()
 		_right_button.queue_free()

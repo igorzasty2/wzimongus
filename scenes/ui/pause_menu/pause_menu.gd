@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var _pop_up_window = $PopUpWindow
 @onready var _settings_container = $SettingsContainer
 
+
 func _ready():
 	visible = false
 	_settings_container.visible = false
@@ -51,5 +52,5 @@ func _on_settings_button_rebind(is_rebinded):
 
 ## Wychodzi z menu pauzy gdy naciśnie się poza oknem
 func _on_button_button_down():
-	if $SettingsContainer/Settings.can_close==true:
+	if $SettingsContainer/Settings.can_close == true:
 		_on_back_to_game_button_pressed()

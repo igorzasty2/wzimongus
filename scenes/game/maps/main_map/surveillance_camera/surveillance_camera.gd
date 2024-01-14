@@ -8,6 +8,7 @@ func _ready():
 	$CameraViewport/CameraProper.position = global_position
 	$CameraViewport.world_2d = get_viewport().world_2d
 
+
 ## Zmienia widoczność światła kamery.
 func change_light_visibility():
 	if $Light.visible:

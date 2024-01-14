@@ -2,15 +2,16 @@
 class_name Vent
 extends Node2D
 
-
 ## Lista docelowych ventów.
-@export var vent_target_list : Array[Vent] = []
+@export var vent_target_list: Array[Vent] = []
 ## Dystans przycisku kierunkowego od venta.
 @export var direction_button_distance: int = 60
 ## Czy student może użyć venta.
 @export var allow_student_venting: bool = false
 
-var _vent_direction_button = preload("res://scenes/game/maps/main_map/vent/vent_direction_button/vent_direction_button.tscn")
+var _vent_direction_button = preload(
+	"res://scenes/game/maps/main_map/vent/vent_direction_button/vent_direction_button.tscn"
+)
 var _vent_direction_button_list = []
 
 var _in_range_color = [180, 0, 0, 255]
@@ -21,16 +22,17 @@ var _out_of_range_color = [0, 0, 0, 0]
 ## Referencja do node'a venta.
 @onready var _vent_light_container = $LightsContainer
 ## Referencja do kontenera światła venta.
-@onready var _vent_light = $LightsContainer/Light 
+@onready var _vent_light = $LightsContainer/Light
 
 @onready var _animation_player = $Sprite2D/AnimationPlayer
 
 var _user_interface
 ## Emitowany gdy przycisk ventowania powinien być włączony/wyłączony.
-signal vent_button_active(button_name:String, is_active:bool)
+signal vent_button_active(button_name: String, is_active: bool)
+
 
 ## Ustawia widoczność przycisków kierunkowych.
-func set_direction_buttons_visibility(visibility:bool):
+func set_direction_buttons_visibility(visibility: bool):
 	for dir_butt in _vent_direction_button_list:
 		dir_butt.visible = visibility
 
@@ -38,20 +40,21 @@ func set_direction_buttons_visibility(visibility:bool):
 func _ready():
 	_user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 	vent_button_active.connect(_user_interface.toggle_button_active)
-	
+
 	var idx = 0
 	# Instancjonuje przycisk dla każdego docelowego venta.
 	for target_vent in vent_target_list:
 		# Oblicza kierunek przycisku.
-		var direction_button_pos : Vector2 = (target_vent.global_position - position).normalized()
+		var direction_button_pos: Vector2 = (target_vent.global_position - position).normalized()
 		_instantiante_direction_button(direction_button_pos * direction_button_distance)
 		_vent_direction_button_list[-1].id = idx
 		idx += 1
-	
+
 	_vent_light.texture_scale = GameManagerSingleton.get_server_settings()["lecturer_light_radius"] / global_scale.x
 
+
 ## Instancjonuje przycisk kierunkowy.
-func _instantiante_direction_button(pos : Vector2):
+func _instantiante_direction_button(pos: Vector2):
 	var vent_dir_bttn_instance = _vent_direction_button.instantiate()
 
 	# Łączy instancje przycisku.
@@ -132,7 +135,7 @@ func _on_area_2d_body_exited(body):
 
 ## Zmienia kolor podświetlenia venta.
 func _toggle_highlight(is_on: bool):
-	_sprite_2d.material.set_shader_parameter('line_color', _in_range_color if is_on else _out_of_range_color)
+	_sprite_2d.material.set_shader_parameter("line_color", _in_range_color if is_on else _out_of_range_color)
 	vent_button_active.emit("VentButton", is_on)
 
 

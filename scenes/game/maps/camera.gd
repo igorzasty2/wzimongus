@@ -8,6 +8,7 @@ var target: CharacterBody2D
 var _shake_timer = Timer.new()
 var _shake_amount: float = 0
 
+
 func _ready():
 	NetworkTime.on_tick.connect(_on_tick)
 
@@ -29,7 +30,7 @@ func _on_tick(_delta, _tick):
 
 func _process(_delta):
 	# Dodaje drgania do kamery.
-	offset = Vector2(randf_range(-1, 1) * _shake_amount,randf_range(-1, 1) * _shake_amount)
+	offset = Vector2(randf_range(-1, 1) * _shake_amount, randf_range(-1, 1) * _shake_amount)
 
 
 ## Trząsa kamerą przez określony czas.

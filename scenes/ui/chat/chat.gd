@@ -3,18 +3,13 @@ class_name Chat
 extends CanvasLayer
 
 ## Emitowany, gdy zmieni się widoczność pola tekstowego.
-signal input_visibility_changed()
+signal input_visibility_changed
 
 ## Grupy czatu
 enum Group { GLOBAL, LECTURER, DEAD, SYSTEM }
 
 ## Kolor grupy
-const GROUP_COLORS = {
-	Group.GLOBAL: "white",
-	Group.LECTURER: "red",
-	Group.DEAD: "gray",
-	Group.SYSTEM: "yellow"
-}
+const GROUP_COLORS = {Group.GLOBAL: "white", Group.LECTURER: "red", Group.DEAD: "gray", Group.SYSTEM: "yellow"}
 
 ## Czas po którym czat zniknie
 const FADE_OUT_TIME = 0.25
@@ -99,10 +94,13 @@ func _update_group_label():
 	if GameManagerSingleton.get_current_player_value("is_dead"):
 		_group_label.text = "Uczestniczysz w grupie: Martwi"
 	elif GameManagerSingleton.get_current_player_value("is_lecturer"):
-		_group_label.text = "Uczestniczysz w grupie: Wykładowcy" if _current_group == Group.LECTURER else "Uczestniczysz w grupie: Studenci"
+		_group_label.text = (
+			"Uczestniczysz w grupie: Wykładowcy"
+			if _current_group == Group.LECTURER
+			else "Uczestniczysz w grupie: Studenci"
+		)
 	else:
 		_group_label.text = "Uczestniczysz w grupie: Studenci"
-
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -130,6 +128,7 @@ func _send_message(message, group, id):
 		for peer_id in GameManagerSingleton.get_registered_players().keys():
 			if peer_id != 1:
 				_send_message.rpc_id(peer_id, message, group, id)
+
 
 ## Wysyła wiadomość systemową.
 func send_system_message(message):
@@ -165,7 +164,6 @@ func _on_input_text_text_submitted(submitted_text):
 		close_chat()
 	else:
 		_input_text.text = ""
-
 
 
 func _on_timer_timeout():

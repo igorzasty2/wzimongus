@@ -26,6 +26,7 @@ var _display_tween
 ## Scena z głosującymi.
 var _voted_by_scene = preload("res://scenes/game/maps/main_map/voting_screen/voted_by/voted_by.tscn")
 
+
 ## Funkcja inicjalizująca box gracza.
 func init(player_id: int, voted_by: Array):
 	var player = GameManagerSingleton.get_registered_players()[player_id]
@@ -34,13 +35,13 @@ func init(player_id: int, voted_by: Array):
 		_username.text = "[s]" + player.username + "[/s]"
 	else:
 		_username.text = player.username
-	
+
 	_player_key = player_id
 	_avatar.texture = _get_skin_texture(player.skin)
 
 	for vote in voted_by:
 		var voted_by_instance = _voted_by_scene.instantiate()
-		voted_by_instance.modulate.a = 0;
+		voted_by_instance.modulate.a = 0
 
 		voted_by_instance.texture = _get_skin_texture(GameManagerSingleton.get_registered_player_value(vote, "skin"))
 
@@ -48,7 +49,6 @@ func init(player_id: int, voted_by: Array):
 		_display_tween.tween_property(voted_by_instance, "modulate:a", 1, 0.25)
 
 		_voted_by_container.add_child(voted_by_instance)
-	
 
 
 func _get_skin_texture(skin_id: int) -> AtlasTexture:
@@ -62,14 +62,17 @@ func _on_button_pressed():
 	if GameManagerSingleton.get_registered_player_value(_player_key, "is_dead"):
 		return
 
-	if GameManagerSingleton.get_current_game_value("is_voted") || GameManagerSingleton.get_current_game_value("is_vote_preselected"):
+	if (
+		GameManagerSingleton.get_current_game_value("is_voted")
+		|| GameManagerSingleton.get_current_game_value("is_vote_preselected")
+	):
 		return
-	
+
 	if _decision.visible:
 		_decision.visible = false
 		GameManagerSingleton.set_current_game_value("is_vote_preselected", false)
 		return
-	
+
 	_decision.visible = true
 	GameManagerSingleton.set_current_game_value("is_vote_preselected", true)
 
@@ -82,6 +85,7 @@ func _on_decision_no_pressed():
 func _on_decision_yes_pressed():
 	_decision.visible = false
 	emit_signal("player_voted", _player_key)
+
 
 ## Funkcja ustawiająca status głosowania.
 func set_voting_status(is_voted: bool):

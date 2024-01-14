@@ -6,7 +6,7 @@ extends Control
 signal minigame_end
 
 ## Polska nazwa minigry.
-@export var polish_name : String
+@export var polish_name: String
 
 ## Kontrolka oznaczająca 0%
 @onready var _zero = get_node("%0")
@@ -77,7 +77,6 @@ func _ready():
 
 		switch.position.y = -20
 
-
 		_buttons_container.add_child(check_button)
 		_all_buttons.append(check_button)
 		check_button.pressed.connect(_on_button_toggled)
@@ -112,6 +111,7 @@ func _on_button_toggled():
 
 	_update_indicators()
 
+
 ##Aktualizuje widoczność wskaźników
 func _update_indicators():
 	_zero.visible = _correct_pressed_count >= _zero_threshold
@@ -140,6 +140,7 @@ func _update_indicators():
 		for button in _incorrect_buttons:
 			button.disabled = true
 		minigame_end.emit()
+
 
 func _update_button_sprite():
 	for button in _all_buttons:

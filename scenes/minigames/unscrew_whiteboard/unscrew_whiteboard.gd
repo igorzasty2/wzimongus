@@ -6,7 +6,7 @@ extends Node2D
 signal minigame_end
 
 ## Polska nazwa minigry.
-@export var polish_name : String
+@export var polish_name: String
 
 @onready var _screws = [%Screw, %Screw2, %Screw3, %Screw4, %Screw5, %Screw6, %Screw7, %Screw8]
 @onready var _whiteboard = %Whiteboard
@@ -43,60 +43,78 @@ func _process(delta):
 		_tween.tween_property(_whiteboard, "position:y", 483, 0.2)
 		_tween.finished.connect(_on_tween_completed)
 
-		
+
 func _on_tween_completed():
 	emit_signal("minigame_end")
+
 
 func _on_screw_button_down(index):
 	_is_rotating[index] = true
 
+
 func _on_screw_button_up(index):
 	_is_rotating[index] = false
+
 
 func _on_screw_1_button_down():
 	_on_screw_button_down(0)
 
+
 func _on_screw_1_button_up():
 	_on_screw_button_up(0)
+
 
 func _on_screw_2_button_down():
 	_on_screw_button_down(1)
 
+
 func _on_screw_2_button_up():
 	_on_screw_button_up(1)
+
 
 func _on_screw_3_button_down():
 	_on_screw_button_down(2)
 
+
 func _on_screw_3_button_up():
 	_on_screw_button_up(2)
+
 
 func _on_screw_4_button_down():
 	_on_screw_button_down(3)
 
+
 func _on_screw_4_button_up():
 	_on_screw_button_up(3)
+
 
 func _on_screw_5_button_down():
 	_on_screw_button_down(4)
 
+
 func _on_screw_5_button_up():
 	_on_screw_button_up(4)
+
 
 func _on_screw_6_button_down():
 	_on_screw_button_down(5)
 
+
 func _on_screw_6_button_up():
 	_on_screw_button_up(5)
+
 
 func _on_screw_7_button_down():
 	_on_screw_button_down(6)
 
+
 func _on_screw_7_button_up():
 	_on_screw_button_up(6)
 
+
 func _on_screw_8_button_down():
 	_on_screw_button_down(7)
+
 
 func _on_screw_8_button_up():
 	_on_screw_button_up(7)

@@ -3,7 +3,7 @@ class_name MainMap
 extends Node2D
 
 ## Sygnał emitowany po załadowaniu mapy.
-signal load_finished()
+signal load_finished
 
 @onready var _players = $Players
 @onready var _camera = $Camera
@@ -11,6 +11,7 @@ signal load_finished()
 @onready var _start_positions = $StartPositions.get_children()
 @onready var _minigame_window = $MinigameWindow
 @onready var _voting_canvas = $VotingCanvas
+
 
 func _ready():
 	# Uruchamia synchronizację czasu.
@@ -58,21 +59,21 @@ func _on_loading_screen_finished():
 ## Spawnuje gracza na mapie.
 func _spawn_player(id: int):
 	var player = preload("res://scenes/characters/player/player.tscn").instantiate()
-	
+
 	player.name = str(id)
 
 	# Ustawia startową pozycję gracza.
 	player.position = _start_positions[GameManagerSingleton.get_registered_players().keys().find(id)].position
 
 	_players.add_child(player)
-	
+
 	player.activate_player_shaders()
 
 	if GameManagerSingleton.get_current_player_id() == id:
 		# Ustawia kamerę.
 		_camera.target = player
 		_camera.global_position = player.global_position
-	
+
 		# Włącza światło
 		player.activate_lights()
 
@@ -88,14 +89,18 @@ func _remove_player(id: int, _player: Dictionary = {}):
 
 ## Aktualizuje status wejścia gracza.
 func _update_player_input():
-	var current_player_node = _players.get_node(str(GameManagerSingleton.get_current_player_id())) if _players != null else null
+	var current_player_node = (
+		_players.get_node(str(GameManagerSingleton.get_current_player_id())) if _players != null else null
+	)
 
 	var is_player_in_vent = current_player_node.is_in_vent if current_player_node != null else false
 	var is_minigame_window_visible = _minigame_window.visible if _minigame_window != null else false
 	var is_voting_in_progress = _voting_canvas.get_child_count() > 0 if _voting_canvas != null else false
 	var is_loading_screen_visible = _loading_screen.visible if _loading_screen != null else false
 
-	var is_input_disabled = is_player_in_vent || is_minigame_window_visible || is_voting_in_progress || is_loading_screen_visible
+	var is_input_disabled = (
+		is_player_in_vent || is_minigame_window_visible || is_voting_in_progress || is_loading_screen_visible
+	)
 
 	GameManagerSingleton.set_input_disabled_status(is_input_disabled)
 
@@ -106,4 +111,5 @@ func close_modals():
 	_minigame_window.close_minigame()
 
 	# Zamyka głosowanie.
-	for i in _voting_canvas.get_children(): i.queue_free()
+	for i in _voting_canvas.get_children():
+		i.queue_free()

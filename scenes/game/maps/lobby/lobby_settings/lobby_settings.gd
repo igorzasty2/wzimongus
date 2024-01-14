@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-
 @onready var _settings_container = $SettingsContainer
 @onready var _max_players = %MaxPlayersInput
 @onready var _lecturers_amount_alert = %LecturersAmountAlert
@@ -34,7 +33,19 @@ func _input(event):
 
 
 func _on_save_button_pressed():
-	GameManagerSingleton.change_server_settings(_max_players.text.to_int(), _max_lecturers.text.to_int(), _kill_cooldown.get_selected_id(), _sabotage_cooldown.get_selected_id(), _kill_radius.get_selected_id(), _task_amount.get_selected_id(), _emergency_cooldown.get_selected_id(), _student_light_radius.get_selected_id(), _lecturer_light_radius.get_selected_id(), _voting_time.get_selected_id(), _discussion_time.get_selected_id())
+	GameManagerSingleton.change_server_settings(
+		_max_players.text.to_int(),
+		_max_lecturers.text.to_int(),
+		_kill_cooldown.get_selected_id(),
+		_sabotage_cooldown.get_selected_id(),
+		_kill_radius.get_selected_id(),
+		_task_amount.get_selected_id(),
+		_emergency_cooldown.get_selected_id(),
+		_student_light_radius.get_selected_id(),
+		_lecturer_light_radius.get_selected_id(),
+		_voting_time.get_selected_id(),
+		_discussion_time.get_selected_id()
+	)
 	hide()
 
 
@@ -58,7 +69,9 @@ func _on_visibility_changed():
 
 func _on_connections_lecturers_item_selected(_index: int):
 	# Ustawia widoczność alertu o zbyt dużej ilości wykładowców
-	_lecturers_amount_alert.visible = true if ceil(_max_players.text.to_int() / 4.0) < _max_lecturers.text.to_int() else false
+	_lecturers_amount_alert.visible = (
+		true if ceil(_max_players.text.to_int() / 4.0) < _max_lecturers.text.to_int() else false
+	)
 
 
 ## Aktualizuje selekcje ilości maksymalnej ilości połączeń
@@ -68,7 +81,7 @@ func _update_max_players(_id: int = 0, _player: Dictionary = {}):
 	# Dodaje opcje do wyboru
 	var idx = 0
 	for i in range(max(3, GameManagerSingleton.get_registered_players().size()), 11):
-		_max_players.add_item(str(i),i)
+		_max_players.add_item(str(i), i)
 
 		# Ustawia aktualną ilość połączeń jako zaznaczoną
 		if i == GameManagerSingleton.get_server_settings().max_players:

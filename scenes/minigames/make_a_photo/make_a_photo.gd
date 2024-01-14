@@ -6,4 +6,4 @@ extends Node2D
 signal minigame_end
 
 ## Polska nazwa minigry.
-@export var polish_name : String
+@export var polish_name: String

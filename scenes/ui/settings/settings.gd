@@ -24,46 +24,61 @@ extends Control
 @onready var _key_used_window = $TabContainer/Controls/KeyUsedWindow
 
 ## Przycisk domyślnych ustawień dźwięku.
-@onready var _default_sound_graphics_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton
+@onready
+var _default_sound_graphics_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton
 ## Przycisk domyślnych ustawień sterowania.
-@onready var _default_controls_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2/DefaultControlsButton
+@onready
+var _default_controls_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2/DefaultControlsButton
 
 ## Określa czy można zamknąć.
-@export var can_close:bool = true
+@export var can_close: bool = true
 
 ## Akcje.
-const _ACTIONS = ["pause_menu", "sabotage", "use_vent", "interact", "fail", "report", "move_left", "move_right", "move_up", "move_down", "chat_open", "change_group"]
-
+const _ACTIONS = [
+	"pause_menu",
+	"sabotage",
+	"use_vent",
+	"interact",
+	"fail",
+	"report",
+	"move_left",
+	"move_right",
+	"move_up",
+	"move_down",
+	"chat_open",
+	"change_group"
+]
 
 ## Ustawienia użytkownika.
 var _user_sett: UserSettingsManager
 
 ## Strona przycisku.
-enum _Side {LEFT, RIGHT}
+enum _Side { LEFT, RIGHT }
 
 ## Nazwa akcji w label'u.
-var _action_label_name : String
+var _action_label_name: String
 ## Nazwa akcji w ustawieniach projektu.
-var _action_project_name : String
+var _action_project_name: String
 ## Strona przycisku.
-var _button_side : _Side
+var _button_side: _Side
 ## Lewy przycisk.
-var _left_button : Button
+var _left_button: Button
 ## Prawy przycisk.
-var _right_button : Button
+var _right_button: Button
 
-var _primary_event_storage : InputEventKey
-var _secondary_event_storage : InputEventKey
+var _primary_event_storage: InputEventKey
+var _secondary_event_storage: InputEventKey
 
 # Eventy akcji przed przypisaniem nowych akcji.
-var _primary_event_backup : InputEventKey
-var _secondary_event_backup : InputEventKey
+var _primary_event_backup: InputEventKey
+var _secondary_event_backup: InputEventKey
 
 ## Określa czy zapisywanie jest anulowane.
-var _is_canceled : bool = false
+var _is_canceled: bool = false
 
 ## Emitowane, gdy przypisywanie klawiszy jest włączone/wyłączone.
-signal button_rebind(is_rebinded:bool)
+signal button_rebind(is_rebinded: bool)
+
 
 func _ready():
 	_user_sett = UserSettingsManager.load_or_create()
@@ -78,7 +93,7 @@ func _ready():
 	_on_v_sync_check_box_toggled(_user_sett.v_sync)
 	_interface_scale_slider.value = _user_sett.interface_scale
 	_on_interface_scale_slider_value_changed(_user_sett.interface_scale)
-	
+
 	_key_rebind_window.visible = false
 	_key_used_window.visible = false
 
@@ -139,15 +154,15 @@ func _rebind_key(event, button):
 		return
 	if InputMap.has_action(_action_project_name):
 		var input_actions = InputMap.action_get_events(_action_project_name)
-		var event_key : String = OS.get_keycode_string(event.physical_keycode)
+		var event_key: String = OS.get_keycode_string(event.physical_keycode)
 		var amount = input_actions.size()
-		var primary_event : InputEventKey = null
-		var primary_event_key : String = ""
+		var primary_event: InputEventKey = null
+		var primary_event_key: String = ""
 		if amount > 0:
 			primary_event = input_actions[0]
 			primary_event_key = OS.get_keycode_string(primary_event.physical_keycode)
-		var secondary_event : InputEventKey = null
-		var secondary_event_key : String = ""
+		var secondary_event: InputEventKey = null
+		var secondary_event_key: String = ""
 		if amount > 1:
 			secondary_event = input_actions[1]
 			secondary_event_key = OS.get_keycode_string(secondary_event.physical_keycode)
@@ -178,11 +193,11 @@ func _rebind_key(event, button):
 
 
 ## Zapisuje ustawienia sterowania.
-func save_control_settings(action_name : String, primary_butt : InputEventKey, secondary_butt : InputEventKey):
+func save_control_settings(action_name: String, primary_butt: InputEventKey, secondary_butt: InputEventKey):
 	InputMap.action_erase_events(_action_project_name)
-	if primary_butt!= null:
+	if primary_butt != null:
 		InputMap.action_add_event(_action_project_name, primary_butt)
-	if secondary_butt!= null:
+	if secondary_butt != null:
 		InputMap.action_add_event(_action_project_name, secondary_butt)
 	_set_buttons_names()
 	if primary_butt != null:
@@ -197,9 +212,9 @@ func save_control_settings(action_name : String, primary_butt : InputEventKey, s
 
 
 ## Obsługuje powtarzające się przypisania klawiszy.
-func _is_already_used(event:InputEventKey):
+func _is_already_used(event: InputEventKey):
 	var key = event.physical_keycode
-	for ac in _ACTIONS :
+	for ac in _ACTIONS:
 		if _action_project_name == ac:
 			continue
 		var events = InputMap.action_get_events(ac)
@@ -235,9 +250,9 @@ func _assign(action_label_name, action_project_name, side, left_button, right_bu
 		var input_actions = InputMap.action_get_events(action_project_name)
 		_primary_event_backup = null
 		_secondary_event_backup = null
-		if input_actions.size()>0:
+		if input_actions.size() > 0:
 			_primary_event_backup = input_actions[0]
-		if input_actions.size()>1:
+		if input_actions.size() > 1:
 			_secondary_event_backup = input_actions[1]
 
 	_action_name.text = action_label_name
@@ -249,7 +264,7 @@ func _assign(action_label_name, action_project_name, side, left_button, right_bu
 
 ## Obsługuje ustawienia pełnego ekranu.
 func _on_full_screen_checkbox_toggled(button_pressed):
-	if button_pressed==true:
+	if button_pressed == true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
@@ -259,7 +274,7 @@ func _on_full_screen_checkbox_toggled(button_pressed):
 
 ## Obsługuje ustawienia dźwięku i wyświetlaną wartość.
 func _on_volume_slider_value_changed(value):
-	AudioServer.set_bus_volume_db(0,linear_to_db(value))
+	AudioServer.set_bus_volume_db(0, linear_to_db(value))
 	_volume_output.text = str(value)
 	_user_sett.volume = value
 	_user_sett.save()
@@ -282,40 +297,73 @@ func _on_v_sync_check_box_toggled(button_pressed):
 	_user_sett.save()
 
 
-func _on_sabotage_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+func _on_sabotage_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_use_vent_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_use_vent_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_interact_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_interact_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
+
 
 func _on_fail_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_report_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_report_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_pause_menu_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_pause_menu_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_move_left_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_move_left_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_move_right_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_move_right_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_move_down_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_move_down_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_move_up_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_move_up_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_chat_open_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_chat_open_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
-func _on_change_group_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
+
+func _on_change_group_key_rebind_rebind_button_pressed(
+	action_label_name, action_project_name, side, left_button, right_button
+):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
 

@@ -1,6 +1,5 @@
 extends Control
 
-
 @onready var _username_input = $InputsContainer/UsernameContainer/UsernameInput
 @onready var _address_input = $InputsContainer/AddressContainer/AddressInput
 @onready var _port_input = $InputsContainer/PortContainer/PortInput

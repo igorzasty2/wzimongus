@@ -41,9 +41,9 @@ var _players
 var _is_caller_button: bool
 
 ## Emitowany, gdy zakończy się czas oczekiwania na aktywację przycisku.
-signal emergency_timer_timeout(is_over:bool)
+signal emergency_timer_timeout(is_over: bool)
 ## Emitowany, gdy przycisk interfejsu ma być aktywowany/deaktywowany.
-signal button_active(button_name:String, is_active:bool)
+signal button_active(button_name: String, is_active: bool)
 
 
 func _ready():
@@ -51,13 +51,13 @@ func _ready():
 	GameManagerSingleton.map_load_finished.connect(_on_map_load_finished)
 	GameManagerSingleton.player_killed.connect(_on_player_killed)
 	GameManagerSingleton.sabotage_started.connect(_on_sabotage_started)
-	
+
 	_report_area.toggle_button_highlight.connect(_toggle_button_highlight)
-	
+
 	_uses_left_label.text = "Pozostało użyć: 1"
-	
+
 	_toggle_button_highlight(false)
-	
+
 	button_active.connect(_user_interface.toggle_button_active)
 
 
@@ -97,14 +97,14 @@ func _on_next_round_started():
 	_voting_canvas.get_child(0).queue_free()
 
 	GameManagerSingleton.is_meeting_called = false
-	
+
 	button_active.emit("ReportButton", false)
 	button_active.emit("InteractButton", false)
 	_toggle_button_highlight(false)
-	
+
 	set_process(true)
 	_is_wait_time_over = false
-	
+
 	_emergency_timer.start(_wait_time)
 	emergency_timer_timeout.emit(false)
 
@@ -112,9 +112,9 @@ func _on_next_round_started():
 ## Włącza i wyłącza podświetlenie przycisku awaryjnego
 func _toggle_button_highlight(is_on: bool):
 	if is_on:
-		_sprite_2d.material.set_shader_parameter('line_color', _in_range_color)
+		_sprite_2d.material.set_shader_parameter("line_color", _in_range_color)
 	else:
-		_sprite_2d.material.set_shader_parameter('line_color', _out_of_range_color)
+		_sprite_2d.material.set_shader_parameter("line_color", _out_of_range_color)
 
 
 ## Wywoływane po naciśnięciu przycisku, wyłącza możliwość ponownego użycia
@@ -127,13 +127,13 @@ func _button_used():
 ## Obsługuje report/zebranie awaryjne.
 func handle_report(is_button: bool, body_id):
 	GameManagerSingleton.is_meeting_called = true
-	
+
 	_is_caller_button = is_button
-	
+
 	_update_array()
-	
+
 	_request_displaying_report_screen.rpc_id(1, is_button, body_id)
-	
+
 	if _is_caller_button:
 		_button_used()
 
@@ -147,7 +147,7 @@ func _update_array():
 func _request_displaying_report_screen(is_button: bool, dead_body_id):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-	
+
 	_display_report_screen.rpc(is_button, dead_body_id)
 
 
@@ -179,23 +179,28 @@ func _show_hide_report_screen(is_button: bool, dead_body_id):
 
 	if !is_button && dead_body_id != null:
 		report_screen_instance.body_texture_id = dead_body_id
-	
+
 	_voting_canvas.add_child(report_screen_instance)
-	
+
 	await get_tree().create_timer(1.5).timeout
 	_voting_canvas.get_child(1).queue_free()
-	
+
 	# Rozpoczyna głosowanie
 	_voting_canvas.get_child(0).start_voting()
 
 
 ## Obsługuje rozpoczęcie/zakończenie sabotażu dla przycisku awaryjnego
-func _on_sabotage_started(has_started:bool):
+func _on_sabotage_started(has_started: bool):
 	if _emergency_timer.time_left > 0:
 		return
-	
+
 	var bodies = _report_area.get_overlapping_bodies()
 	for body in bodies:
-		if body.name.to_int()==GameManagerSingleton.get_current_player_id() && !GameManagerSingleton.get_current_player_value("is_dead") && _report_area.monitorable && _report_area.monitoring:
+		if (
+			body.name.to_int() == GameManagerSingleton.get_current_player_id()
+			&& !GameManagerSingleton.get_current_player_value("is_dead")
+			&& _report_area.monitorable
+			&& _report_area.monitoring
+		):
 			_toggle_button_highlight(!has_started)
 			button_active.emit("InteractButton", !has_started)

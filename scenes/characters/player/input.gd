@@ -2,7 +2,6 @@
 class_name InputSynchronizer
 extends Node
 
-
 ## Wektor kierunku poruszania się gracza.
 @export var direction: Vector2 = Vector2.ZERO
 

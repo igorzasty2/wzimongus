@@ -3,7 +3,8 @@ class_name BackgroundButton
 extends Button
 
 ## Okno, które ma być ukrywane.
-@export var window : Node = null
+@export var window: Node = null
+
 
 func _on_button_down():
 	window.visible = false

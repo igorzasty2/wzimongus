@@ -9,6 +9,7 @@ var _role = GameManagerSingleton.get_current_player_value("is_lecturer")
 
 @onready var _animation_player = $AnimationPlayer
 
+
 ## Rozpoczyna wyświetlanie ekranu ładowania.
 func play():
 	_animation_player.play("pop_up")

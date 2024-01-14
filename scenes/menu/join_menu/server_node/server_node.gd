@@ -11,6 +11,7 @@ var _server_info
 @onready var _server_address = $EntryContainer/InfoContainer/ServerAddress
 @onready var _player_count = $EntryContainer/InfoContainer/PlayerCount
 
+
 ## Inicjalizuje wiersz serwera.
 func init(server_info):
 	_server_info = server_info

@@ -3,32 +3,31 @@ class_name ReportArea
 extends Area2D
 
 ## Określa czy jest przyciskiem.
-@export var is_button:bool = false
+@export var is_button: bool = false
 ## Tekstura znalezionego ciała.
-@export var body_texture:Texture
+@export var body_texture: Texture
 
 ## Interfejs.
 @onready var _user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 ## Przycisk alarmowy.
 @onready var _emergency_button = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/EmergencyButton")
 
-
 ## Określa czy gracz jest w zasięgu.
-var _is_player_inside:bool = false
+var _is_player_inside: bool = false
 
 # Określa czy czas oczekiwania na włączenie się przycisku alarmowego się skończył.
-var _is_wait_time_over:bool = false
- 
+var _is_wait_time_over: bool = false
+
 ## Sygnał aktywujący/deaktywujący przyciski w interfejsie.
-signal button_active(button_name:String, is_active:bool)
+signal button_active(button_name: String, is_active: bool)
 ## Sygnał przełączający podświetlenie przycisku awaryjnego.
-signal toggle_button_highlight(is_active:bool)
+signal toggle_button_highlight(is_active: bool)
 
 
 func _ready():
 	if is_button:
 		_emergency_button.emergency_timer_timeout.connect(_on_end_emergency_timer_timeout)
-	
+
 	button_active.connect(_user_interface.toggle_button_active)
 	GameManagerSingleton.next_round_started.connect(_on_next_round_started)
 
@@ -63,7 +62,7 @@ func _input(event):
 
 		if GameManagerSingleton.is_meeting_called:
 			return
-		
+
 		GameManagerSingleton.is_meeting_called = true
 
 		var body_id = null
@@ -77,7 +76,12 @@ func _input(event):
 ## Obsługuje zakończenie emergency timer'a.
 func _on_end_emergency_timer_timeout(is_over: bool):
 	_is_wait_time_over = is_over
-	if _is_player_inside && !GameManagerSingleton.get_registered_player_value(GameManagerSingleton.get_current_player_id(), "is_dead") && !GameManagerSingleton.is_meeting_called && _is_wait_time_over:
+	if (
+		_is_player_inside
+		&& !GameManagerSingleton.get_registered_player_value(GameManagerSingleton.get_current_player_id(), "is_dead")
+		&& !GameManagerSingleton.is_meeting_called
+		&& _is_wait_time_over
+	):
 		button_active.emit("InteractButton", true)
 		toggle_button_highlight.emit(true)
 
@@ -90,7 +94,11 @@ func _on_next_round_started():
 
 ## Obsługuje wejście gracza.
 func _on_body_entered(body):
-	if body.name.to_int() == GameManagerSingleton.get_current_player_id() && !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead") && !body.is_in_vent:
+	if (
+		body.name.to_int() == GameManagerSingleton.get_current_player_id()
+		&& !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead")
+		&& !body.is_in_vent
+	):
 		_is_player_inside = true
 
 		if is_button:
@@ -104,7 +112,11 @@ func _on_body_entered(body):
 
 ## Obsługuje wyjście gracza.
 func _on_body_exited(body):
-	if body.name.to_int() == GameManagerSingleton.get_current_player_id() && !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead") && !body.is_in_vent:
+	if (
+		body.name.to_int() == GameManagerSingleton.get_current_player_id()
+		&& !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead")
+		&& !body.is_in_vent
+	):
 		_is_player_inside = false
 		body.can_report = false
 

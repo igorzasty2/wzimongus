@@ -6,10 +6,11 @@ extends Node2D
 signal minigame_end
 
 ## Polska nazwa minigry.
-@export var polish_name : String
+@export var polish_name: String
 
 var _x_func
 var _y_func
+
 
 func _ready():
 	var x = randi() % 15 - 7
@@ -43,15 +44,15 @@ func _on_v_slider_drag_ended(_value_changed):
 	var new_position = Vector2(632 + $HSlider.value * 41, 410 - $VSlider.value * 40)
 	$Pngegg.position = new_position
 	$TextEdit2.text = "[center]f(x) = sin(x"
-	if($HSlider.value < 0):
+	if $HSlider.value < 0:
 		$TextEdit2.text += " + " + str(abs($HSlider.value))
 	else:
 		$TextEdit2.text += " - " + str(abs($HSlider.value))
-	if($VSlider.value < 0):
-		$TextEdit2.text += ") - "+str(abs($VSlider.value))+"[/center]"
+	if $VSlider.value < 0:
+		$TextEdit2.text += ") - " + str(abs($VSlider.value)) + "[/center]"
 	else:
 		$TextEdit2.text += ") + " + str(abs($VSlider.value))
-		
+
 	_check_if_all_coincidence()
 
 
@@ -60,12 +61,12 @@ func _on_h_slider_drag_ended(_value_changed):
 	var new_position = Vector2(632 + $HSlider.value * 41, 410 - $VSlider.value * 40)
 	$Pngegg.position = new_position
 	$TextEdit2.text = "[center]f(x) = sin(x"
-	if($HSlider.value < 0):
+	if $HSlider.value < 0:
 		$TextEdit2.text += " + " + str(abs($HSlider.value))
 	else:
 		$TextEdit2.text += " - " + str(abs($HSlider.value))
-	if($VSlider.value < 0):
-		$TextEdit2.text += ") - "+str(abs($VSlider.value))+"[/center]"
+	if $VSlider.value < 0:
+		$TextEdit2.text += ") - " + str(abs($VSlider.value)) + "[/center]"
 	else:
 		$TextEdit2.text += ") + " + str(abs($VSlider.value))
 	_check_if_all_coincidence()

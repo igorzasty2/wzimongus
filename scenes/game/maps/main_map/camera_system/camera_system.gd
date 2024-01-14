@@ -2,12 +2,12 @@
 class_name SurveillanceCameraSystem
 extends Control
 
-
 ## Nigdy nie wysyłany, dodany w celu umożliwienia dodania tej klasy do okna minigry.
 signal minigame_end
 
 ## Tablica kamer obecnych na mapie.
 @onready var cameras = get_parent().get_parent().get_tree().get_nodes_in_group("SurveillanceCameras")
+
 
 ## Przyporządkowuje kamery ich wyświetlaczą.
 func _ready():

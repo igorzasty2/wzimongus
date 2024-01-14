@@ -18,8 +18,8 @@ signal load_finished
 
 func _update_player_input():
 	var is_chat_visible = _chat_input.visible if _chat_input != null else false
-	var is_skin_selector_visible = _skin_selector.visible if _skin_selector != null  else false
-	var is_lobby_settings_visible = _lobby_settings.visible if _lobby_settings != null  else false
+	var is_skin_selector_visible = _skin_selector.visible if _skin_selector != null else false
+	var is_lobby_settings_visible = _lobby_settings.visible if _lobby_settings != null else false
 
 	var is_input_disabled = is_chat_visible || is_skin_selector_visible || is_lobby_settings_visible
 	GameManagerSingleton.set_input_disabled_status(is_input_disabled)

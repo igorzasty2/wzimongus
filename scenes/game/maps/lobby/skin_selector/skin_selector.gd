@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-
 @onready var _skin_texture_rect = $Panel/MarginContainer/VBoxContainer/SkinTextureRect
 @onready var _skin_option_button = $Panel/MarginContainer/VBoxContainer/SkinOptionButton
 

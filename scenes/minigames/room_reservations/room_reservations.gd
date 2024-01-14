@@ -6,7 +6,7 @@ extends Control
 signal minigame_end
 
 ## Polska nazwa minigry.
-@export var polish_name : String
+@export var polish_name: String
 
 ## Referencja do kontenera z prowadzącymi.
 @onready var _lecturers_containers = get_node("%Lecturers")
@@ -16,7 +16,22 @@ signal minigame_end
 @onready var _account = get_node("%Account")
 
 ## Lista prowadzących.
-var LECTURERS = ["dr inż. Marcin Bator", "dr Marcin Dudziński", "dr inż. Diana Dziewa-Dawidczyk", "dr inż. Alina Jóźwikowska", "dr hab. inż. Arkadiusz Orłowski", "dr inż. Maciej Pankiewicz", "dr hab. Alexander Prokopenya", "dr Piotr Stachura", "dr inż. Robert Stępień", "dr hab. Aleksander Strasburger", "dr Tomasz Świsłocki", "dr inż. Artur Wiliński", "dr inż. Piotr Wrzeciono", "dr Andrzej Zembrzuski", ]
+var LECTURERS = [
+	"dr inż. Marcin Bator",
+	"dr Marcin Dudziński",
+	"dr inż. Diana Dziewa-Dawidczyk",
+	"dr inż. Alina Jóźwikowska",
+	"dr hab. inż. Arkadiusz Orłowski",
+	"dr inż. Maciej Pankiewicz",
+	"dr hab. Alexander Prokopenya",
+	"dr Piotr Stachura",
+	"dr inż. Robert Stępień",
+	"dr hab. Aleksander Strasburger",
+	"dr Tomasz Świsłocki",
+	"dr inż. Artur Wiliński",
+	"dr inż. Piotr Wrzeciono",
+	"dr Andrzej Zembrzuski",
+]
 ## Lista sal.
 var ROOMS = ["Aula 4", "Aula 3", "Aula 2", "Aula 1", "Sala 3/82", "Sala 3/40", "Sala 3/42", "Sala 3/14", "Sala 3/19"]
 ## Lista kolorów.
@@ -30,8 +45,14 @@ var _assigned_rooms = {}
 ## Przypisane kolory.
 var _assigned_colors = {}
 
+
 func _ready():
-	_account.text = GameManagerSingleton.get_current_player_value("username") + " (" + str(GameManagerSingleton.get_current_player_id()).get_slice("", 6) + ")" 
+	_account.text = (
+		GameManagerSingleton.get_current_player_value("username")
+		+ " ("
+		+ str(GameManagerSingleton.get_current_player_id()).get_slice("", 6)
+		+ ")"
+	)
 
 	LECTURERS.shuffle()
 	ROOMS.shuffle()
@@ -46,14 +67,14 @@ func _ready():
 		var color = COLORS[i]
 		_assigned_rooms[lecturer] = room
 		_assigned_colors[lecturer] = color
-	
+
 	for lecturer in _assigned_rooms.keys():
 		var lecturer_node = RichTextLabel.new()
 		lecturer_node.bbcode_enabled = true
-		lecturer_node.bbcode_text = "[color=\"" + _assigned_colors[lecturer] + "\"]" + lecturer
+		lecturer_node.bbcode_text = '[color="' + _assigned_colors[lecturer] + '"]' + lecturer
 		lecturer_node.fit_content = true
 		_lecturers_containers.add_child(lecturer_node)
-		
+
 	var random_rooms = _assigned_rooms.keys()
 	random_rooms.shuffle()
 	for lecturer in random_rooms:
@@ -63,9 +84,11 @@ func _ready():
 		room_node.button_up.connect(_on_button_up_pressed)
 		room_node.button_down.connect(_on_button_down_pressed)
 
+
 func _on_button_down_pressed(child):
 	if child.get_index() < _rooms_container.get_child_count() - 1:
 		_rooms_container.move_child(child, child.get_index() + 1)
+
 
 func _on_button_up_pressed(child):
 	if child.get_index() > 0:
@@ -81,7 +104,6 @@ func _on_save_button_pressed():
 			return
 	_close()
 
+
 func _close():
 	minigame_end.emit()
-
-
