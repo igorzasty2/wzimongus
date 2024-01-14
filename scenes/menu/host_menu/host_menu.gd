@@ -1,7 +1,4 @@
-## Klasa odpowiedzialna za obsługę menu hosta.
-class_name HostMenu
 extends Control
-
 
 @onready var _lobby_name_input = $InputsContainer/LobbyNameContainer/LobbyNameInput
 @onready var _username_input = $InputsContainer/UsernameContainer/UsernameInput

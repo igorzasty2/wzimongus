@@ -15,16 +15,16 @@ signal skin_changed(id: int, skin: int)
 signal input_status_changed(is_paused: bool)
 
 ## Emitowany u klienta po jego pomyślnej rejestracji.
-signal registered_successfully()
+signal registered_successfully
 
 ## Emitowany po rozpoczęciu gry.
-signal game_started()
+signal game_started
 
 ## Emitowany po zakończeniu gry.
-signal game_ended()
+signal game_ended
 
 ## Emitowany po zaczęciu nowej rundy.
-signal next_round_started()
+signal next_round_started
 
 ## Emitowany po wystąpieniu błędu.
 signal error_occured(message: String)
@@ -33,22 +33,22 @@ signal error_occured(message: String)
 signal player_killed(player_id: int, is_victim: bool)
 
 ## Emitowany po włączeniu sabotażu.
-signal sabotage_occured()
+signal sabotage_occured
 
 ## Emitowany po rozpoczęciu/zakończeniu sabotażu.
-signal sabotage_started(has_started:bool)
+signal sabotage_started(has_started: bool)
 
 ## Emitowany po zakończeniu ładowania mapy głównej.
-signal map_load_finished()
+signal map_load_finished
 
 ## Emitowany po zmianie ustawień serwera.
-signal server_settings_changed()
+signal server_settings_changed
 
 ## Emitowany gdy przynajmniej jeden z warunków zakończenia gry jest spełniony.
 signal winner_determined(winning_role: Role)
 
-## Rola gracza
-enum Role {STUDENT, LECTURER}
+## Rola gracza.
+enum Role { STUDENT, LECTURER }
 
 ## Komunikaty błędów.
 const ERROR_MESSAGES = {
@@ -66,56 +66,19 @@ const ERROR_MESSAGES = {
 
 ## Dostępne skiny.
 const SKINS = {
-	0: {
-		"name": "Alternatywka",
-		"resource": "res://assets/textures/skins/alternatywka_spritesheet.png"
-	},
-	1: {
-		"name": "Barbie",
-		"resource": "res://assets/textures/skins/barbie_spritesheet.png"
-	},
-	2: {
-		"name": "Ecoświr",
-		"resource": "res://assets/textures/skins/ecoswir_spritesheet.png"
-	},
-	3: {
-		"name": "Femboy",
-		"resource": "res://assets/textures/skins/femboy_spritesheet.png"
-	},
-	4: {
-		"name": "Gamer",
-		"resource": "res://assets/textures/skins/gamer_spritesheet.png"
-	},
-	5: {
-		"name": "Gymbro",
-		"resource": "res://assets/textures/skins/gymbro_spritesheet.png"
-	},
-	6: {
-		"name": "Hipster",
-		"resource": "res://assets/textures/skins/hipster_spritesheet.png"
-	},
-	7: {
-		"name": "Nerd",
-		"resource": "res://assets/textures/skins/nerd_spritesheet.png"
-	},
-	8: {
-		"name": "Punk",
-		"resource": "res://assets/textures/skins/punk_spritesheet.png"
-	},
-	9: {
-		"name": "Rasta",
-		"resource": "res://assets/textures/skins/rasta_spritesheet.png"
-	},
-	10: {
-		"name": "TikToker",
-		"resource": "res://assets/textures/skins/tiktoker_spritesheet.png"
-	},
-	11: {
-		"name": "Wixiarz",
-		"resource": "res://assets/textures/skins/wixiarz_spritesheet.png"
-	}
+	0: {"name": "Alternatywka", "resource": "res://assets/textures/skins/alternatywka_spritesheet.png"},
+	1: {"name": "Barbie", "resource": "res://assets/textures/skins/barbie_spritesheet.png"},
+	2: {"name": "Ecoświr", "resource": "res://assets/textures/skins/ecoswir_spritesheet.png"},
+	3: {"name": "Femboy", "resource": "res://assets/textures/skins/femboy_spritesheet.png"},
+	4: {"name": "Gamer", "resource": "res://assets/textures/skins/gamer_spritesheet.png"},
+	5: {"name": "Gymbro", "resource": "res://assets/textures/skins/gymbro_spritesheet.png"},
+	6: {"name": "Hipster", "resource": "res://assets/textures/skins/hipster_spritesheet.png"},
+	7: {"name": "Nerd", "resource": "res://assets/textures/skins/nerd_spritesheet.png"},
+	8: {"name": "Punk", "resource": "res://assets/textures/skins/punk_spritesheet.png"},
+	9: {"name": "Rasta", "resource": "res://assets/textures/skins/rasta_spritesheet.png"},
+	10: {"name": "TikToker", "resource": "res://assets/textures/skins/tiktoker_spritesheet.png"},
+	11: {"name": "Wixiarz", "resource": "res://assets/textures/skins/wixiarz_spritesheet.png"}
 }
-
 
 ## Przechowuje informacje o stanie gotowości sceny gry.
 var is_game_scene_loaded: bool = false
@@ -136,9 +99,7 @@ var _current_game = {
 }
 
 ## Przechowuje zmienialne dane o obecnym graczu.
-var _current_player = {
-	"username": ""
-}
+var _current_player = {"username": ""}
 
 ## Przechowuje ustawienia serwera.
 var _server_settings = {
@@ -151,7 +112,7 @@ var _server_settings = {
 	"kill_radius": 260,
 	"task_amount": 3,
 	"emergency_cooldown": 30,
-	"student_light_radius": 4.0, 
+	"student_light_radius": 4.0,
 	"lecturer_light_radius": 4.0,
 	"voting_time": 60,
 	"discussion_time": 60
@@ -164,33 +125,30 @@ var _player_fillable = ["username"]
 var _player_hidden = ["is_lecturer"]
 
 ## Predefiniowane atrybuty gracza.
-var _player_attributes = {
-	"is_lecturer": false,
-	"is_dead": false
-}
+var _player_attributes = {"is_lecturer": false, "is_dead": false}
 
-## Okrśla czy jest zwołane alarmowe zebranie
+## Okrśla czy jest zwołane alarmowe zebranie.
 var is_meeting_called: bool = false
 
-## Przechowuje infromację o tym czy gra animacja tła
+## Przechowuje informacje o tym czy animacja tła jest w trakcie odtwarzania.
 var is_animation_playing: bool = false
 
-## Przechowuje pozycję animacji tła
+## Przechowuje pozycję animacji tła.
 var animation_position: float
 
-## Przechowuje czas oczekiwania na animację - potrzebny do przejść między scenami
+## Przechowuje czas oczekiwania na animację - potrzebny do przejść między scenami.
 var wait_time
 
-## Przechowuje teksture obecnego tła
+## Przechowuje teksturę obecnego tła.
 var current_background_texture = null
 
-## Przechowuje teksture tła przejścia
+## Przechowuje teksturę tła przejścia.
 var transition_background_texture = null
 
-## Czy scena jest włączana po raz pierwszy
+## Czy scena jest włączana po raz pierwszy.
 var is_first_time: bool = true
 
-## Określa czy właśnie jest sabotaż
+## Określa czy właśnie odbywa się sabotaż.
 var is_sabotage: bool = false
 
 
@@ -204,10 +162,7 @@ func _ready():
 ## Tworzy nowy serwer gry.
 func create_lobby(lobby_name: String, port: int):
 	# Oczekuje na załadowanie sceny gry.
-	await async_condition(
-		func():
-			return is_game_scene_loaded
-	)
+	await async_condition(func(): return is_game_scene_loaded)
 
 	# Weryfikuje długość nazwy lobby.
 	if !_verify_lobby_name_length(lobby_name):
@@ -234,10 +189,7 @@ func create_lobby(lobby_name: String, port: int):
 	multiplayer.multiplayer_peer = peer
 
 	# Oczekuje na wystartowanie serwera.
-	await async_condition(
-		func():
-			return peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTING
-	)
+	await async_condition(func(): return peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTING)
 
 	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
 		_handle_error(ERROR_MESSAGES["ERR_SERVER"])
@@ -249,10 +201,22 @@ func create_lobby(lobby_name: String, port: int):
 
 
 ## Zmienia ustawienia serwera.
-func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown: int, sabotage_cooldown: int, kill_radius: int, task_amount: int, emergency_cooldown: int, student_light_radius: int, lecturer_light_radius: int, voting_time: int, discussion_time: int):
+func change_server_settings(
+	max_players: int,
+	max_lecturers: int,
+	kill_cooldown: int,
+	sabotage_cooldown: int,
+	kill_radius: int,
+	task_amount: int,
+	emergency_cooldown: int,
+	student_light_radius: int,
+	lecturer_light_radius: int,
+	voting_time: int,
+	discussion_time: int
+):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-	
+
 	_server_settings["max_players"] = max_players
 	_server_settings["max_lecturers"] = max_lecturers
 	_server_settings["kill_cooldown"] = kill_cooldown
@@ -276,12 +240,9 @@ func _update_server_settings(server_settings: Dictionary):
 
 
 ## Dołącza do istniejącego serwera gry.
-func join_lobby(address:String, port:int):
+func join_lobby(address: String, port: int):
 	# Oczekuje na załadowanie sceny gry.
-	await async_condition(
-		func():
-			return is_game_scene_loaded
-	)
+	await async_condition(func(): return is_game_scene_loaded)
 
 	# Weryfikuje długość nazwy użytkownika.
 	if !_verify_username_length(_current_player["username"]):
@@ -299,10 +260,7 @@ func join_lobby(address:String, port:int):
 	multiplayer.multiplayer_peer = peer
 
 	# Oczekuje na połączenie z serwerem.
-	await async_condition(
-		func():
-			return peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTING
-	)
+	await async_condition(func(): return peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTING)
 
 	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
 		_handle_error(ERROR_MESSAGES["ERR_CONNECTION"] % (str(address) + ":" + str(port)))
@@ -377,26 +335,26 @@ func reset_game():
 func new_round():
 	# Resetuje system głosowania.
 	_reset_votes()
-	
+
 	next_round_started.emit()
-	
+
 	check_winning_conditions()
 
 
 ## Zwraca informację o grze, która jest przechowywana pod danym kluczem.
-func get_current_game_value(key:String):
+func get_current_game_value(key: String):
 	if _current_game.has(key):
 		return _current_game[key]
 
 
 ## Zmienia informację o grze, która jest przechowywana pod danym kluczem.
-func set_current_game_value(key:String, value):
+func set_current_game_value(key: String, value):
 	if _current_game.has(key):
 		_current_game[key] = value
 
 
 ## Dodaje głos do tablicy głosów.
-func add_vote(id:int, voted_by:int):
+func add_vote(id: int, voted_by: int):
 	if _current_game["votes"].has(id):
 		_current_game["votes"][id].append(voted_by)
 	else:
@@ -423,7 +381,7 @@ func get_registered_players():
 
 
 ## Zwraca informację o danym graczu, która jest przechowywana pod danym kluczem.
-func get_registered_player_value(id:int, key:String):
+func get_registered_player_value(id: int, key: String):
 	if _current_game["registered_players"].has(id) && _current_game["registered_players"][id].has(key):
 		return _current_game["registered_players"][id][key]
 
@@ -437,7 +395,7 @@ func get_current_player_id():
 
 
 ## Zwraca informację o obecnym graczu, która jest przechowywana pod danym kluczem.
-func get_current_player_value(key:String):
+func get_current_player_value(key: String):
 	var id = get_current_player_id()
 
 	if key in _current_game["registered_players"][id]:
@@ -445,7 +403,7 @@ func get_current_player_value(key:String):
 
 
 ## Zmienia informację o obecnym graczu, która jest przechowywana pod danym kluczem.
-func set_current_player_value(key:String, value):
+func set_current_player_value(key: String, value):
 	if not key in _player_fillable:
 		return ERR_UNAUTHORIZED
 
@@ -464,7 +422,7 @@ func set_pause_menu_status(is_paused: bool):
 	emit_input_status()
 
 
-## Umożliwia zmianę statusu sterowania obecnego gracza.
+## Zmienia status sterowania obecnego gracza.
 func set_input_disabled_status(is_input_disabled: bool):
 	_current_game["is_input_disabled"] = is_input_disabled
 	emit_input_status()
@@ -500,8 +458,8 @@ func _request_skin_change(skin: int):
 	_update_skin.rpc(id, skin)
 
 
-## Zmienia skin gracza.
 @rpc("call_local", "reliable")
+## Zmienia skin gracza.
 func _update_skin(id: int, skin: int):
 	_current_game["registered_players"][id]["skin"] = skin
 	skin_changed.emit(id, skin)
@@ -526,7 +484,7 @@ func _on_server_disconnected():
 
 
 ## Filtruje słownik gracza, zostawiając tylko atrybuty, które klient może zmieniać.
-func _filter_fillable(player:Dictionary):
+func _filter_fillable(player: Dictionary):
 	var filtered_player = {}
 
 	for i in _player_fillable:
@@ -537,7 +495,7 @@ func _filter_fillable(player:Dictionary):
 
 
 ## Filtruje słownik gracza, usuwając atrybuty, których klient nie może widzieć.
-func _filter_hidden(player:Dictionary):
+func _filter_hidden(player: Dictionary):
 	var filtered_player = player.duplicate()
 
 	for i in _player_hidden:
@@ -554,7 +512,7 @@ func _handle_error(message: String):
 
 @rpc("any_peer", "reliable")
 ## Rejestruje gracza na serwerze.
-func _register_player(player:Dictionary):
+func _register_player(player: Dictionary):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
@@ -582,10 +540,7 @@ func _register_player(player:Dictionary):
 	for i in get_registered_players():
 		# Pobiera dane gracza z lobby.
 		var player_in_lobby = get_tree().root.get_node("Game/Maps/Lobby/Players/" + str(i))
-		var lobby_data = {
-			"position": player_in_lobby.position,
-			"direction_last_x": player_in_lobby.direction_last_x
-		}
+		var lobby_data = {"position": player_in_lobby.position, "direction_last_x": player_in_lobby.direction_last_x}
 
 		_add_registered_player.rpc_id(id, i, _filter_hidden(get_registered_players()[i]), lobby_data)
 
@@ -606,7 +561,7 @@ func _on_player_registered():
 
 
 ## Tworzy nowego gracza.
-func _create_registered_player(id:int, player:Dictionary) -> Dictionary:
+func _create_registered_player(id: int, player: Dictionary) -> Dictionary:
 	# Zostawia tylko atrybuty, które klient może zmieniać.
 	var filtered_player = _filter_fillable(player)
 
@@ -643,7 +598,7 @@ func _select_skin() -> int:
 
 @rpc("call_local", "reliable")
 ## Dodaje zarejestrowanego gracza.
-func _add_registered_player(id:int, player:Dictionary, lobby_data:Dictionary = {}):
+func _add_registered_player(id: int, player: Dictionary, lobby_data: Dictionary = {}):
 	# Dodaje gracza tylko u klienta, serwer ma go już dodanego.
 	if !multiplayer.is_server():
 		_current_game["registered_players"][id] = player
@@ -662,7 +617,7 @@ func _add_registered_player(id:int, player:Dictionary, lobby_data:Dictionary = {
 
 
 ## Usuwa wyrejestrowanego gracza ze słownika.
-func _delete_deregistered_player(id:int):
+func _delete_deregistered_player(id: int):
 	var registered_players = get_registered_players()
 
 	if registered_players.has(id):
@@ -714,7 +669,7 @@ func _select_lecturers():
 
 @rpc("reliable")
 ## Wysyła informacje o wykładowcach.
-func _send_lecturer_status(lecturers:Array):
+func _send_lecturer_status(lecturers: Array):
 	for i in get_registered_players():
 		_current_game["registered_players"][i]["is_lecturer"] = true if i in lecturers else false
 
@@ -798,7 +753,7 @@ func check_winning_conditions():
 ## Liczy żyjących wykładowców.
 func _count_alive_lecturers():
 	var lecturer_counter = 0
-	
+
 	for i in get_registered_players():
 		if not get_registered_player_value(i, "is_dead") and get_registered_player_value(i, "is_lecturer"):
 			lecturer_counter += 1
@@ -809,7 +764,7 @@ func _count_alive_lecturers():
 ## Liczy żyjących studentów.
 func _count_alive_students():
 	var crewmate_counter = 0
-	
+
 	for i in get_registered_players():
 		if not get_registered_player_value(i, "is_dead") and not get_registered_player_value(i, "is_lecturer"):
 			crewmate_counter += 1
@@ -821,7 +776,7 @@ func _count_alive_students():
 func teleport_players():
 	var players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
 	var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
-	
+
 	for i in range(0, players.size()):
 		if multiplayer.is_server():
 			players[i].is_teleport = true
@@ -838,9 +793,9 @@ func main_map_load_finished():
 func request_light_sabotage():
 	if not multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-	
+
 	var player_id = multiplayer.get_remote_sender_id()
-	
+
 	if !get_registered_player_value(player_id, "is_lecturer"):
 		return ERR_UNAUTHORIZED
 
@@ -854,8 +809,8 @@ func activate_light_sabotage():
 
 
 @rpc("any_peer", "call_local", "reliable")
-## Emituje sygnał informujący o rozpoczeciu/zakończeniu sabotażu.
-func emit_sabotage_started(has_started:bool):
+## Emituje sygnał informujący o rozpoczęciu/zakończeniu sabotażu.
+func emit_sabotage_started(has_started: bool):
 	is_sabotage = has_started
 	sabotage_started.emit(has_started)
 
@@ -874,7 +829,7 @@ func _verify_username(username: String, idx: int = 0) -> String:
 	var username_to_verify = username
 
 	if idx > 0:
-		username_to_verify += " (" + str(idx) +")"
+		username_to_verify += " (" + str(idx) + ")"
 
 	for i in get_registered_players():
 		if get_registered_player_value(i, "username") == username_to_verify:

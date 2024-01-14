@@ -2,7 +2,6 @@
 class_name Game
 extends Control
 
-
 @onready var _connecting = $Connecting
 @onready var _maps = $Maps
 @onready var _error = $Error
@@ -54,7 +53,7 @@ func _on_game_ended():
 func _on_error_occured(message: String):
 	if !_error.visible:
 		_pause_menu.queue_free()
-		
+
 		_connecting.hide()
 		_delete_map()
 		_error_pop_up.set_information(message)

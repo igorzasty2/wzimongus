@@ -50,11 +50,11 @@ layout_mode = 2
 size_flags_horizontal = 6
 theme_override_constants/separation = 25
 
-[node name="MaxConnectionsContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="MaxPlayersContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 dragger_visibility = 1
 
-[node name="MaxConnectionsLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxConnectionsContainer"]
+[node name="MaxPlayersLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxPlayersContainer"]
 custom_minimum_size = Vector2(200, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -62,7 +62,7 @@ size_flags_vertical = 1
 text = "Maksymalna
 liczba graczy"
 
-[node name="MaxConnectionsInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxConnectionsContainer"]
+[node name="MaxPlayersInput" type="OptionButton" parent="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxPlayersContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 2.08165e-12)
 layout_mode = 2
@@ -359,6 +359,6 @@ window = NodePath("../../..")
 [node name="WindowAnimationPlayer" parent="SettingsContainer" instance=ExtResource("4_34t22")]
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxConnectionsContainer/MaxConnectionsInput" to="." method="_on_connections_lecturers_item_selected"]
+[connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxPlayersContainer/MaxPlayersInput" to="." method="_on_connections_lecturers_item_selected"]
 [connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxLecturersContainer/MaxLecturersInput" to="." method="_on_connections_lecturers_item_selected"]
 [connection signal="pressed" from="SettingsContainer/MarginContainer/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]

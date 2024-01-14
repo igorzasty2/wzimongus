@@ -1,5 +1,6 @@
 extends Control
 
+
 func _on_host_button_pressed():
 	get_tree().change_scene_to_file("res://scenes/menu/host_menu/host_menu.tscn")
 

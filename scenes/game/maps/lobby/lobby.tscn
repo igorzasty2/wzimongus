@@ -211,7 +211,7 @@ script = ExtResource("3_4702b")
 unique_name_in_owner = true
 visible = false
 
-[node name="LobbyUi" parent="." instance=ExtResource("5_7r85o")]
+[node name="LobbyUI" parent="." instance=ExtResource("5_7r85o")]
 visible = false
 
 [node name="SkinSelector" parent="." instance=ExtResource("8_hy1jx")]

@@ -1,7 +1,4 @@
-## Klasa odpowiedzialna za menu wyboru serwera.
-class_name JoinMenu
 extends Control
-
 
 @onready var _username_input = $InputsContainer/UsernameContainer/UsernameInput
 @onready var _address_input = $InputsContainer/AddressContainer/AddressInput
