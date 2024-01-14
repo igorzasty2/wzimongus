@@ -22,7 +22,7 @@ func _process(delta):
 	var rotation_speed = 8 * delta
 	for i in range(_screws.size()):
 		if _is_rotating[i]:
-			_screws[i].get_child(0).rotate(rotation_speed)
+			_screws[i].get_child(0).rotate(-rotation_speed)
 			_rotation_angles[i] += rotation_speed
 			if _rotation_angles[i] >= 2 * PI:  # 2*PI radians is 360 degrees
 				_screws[i].visible = false
