@@ -29,8 +29,7 @@ func _ready():
 		GameManagerSingleton.emit_input_status()
 
 func _process(_delta):
-	if direction != Vector2.ZERO:
-		get_parent().get_node("StepSound").play()
+	pass
 
 func _gather():
 	if !is_multiplayer_authority():
@@ -45,6 +44,11 @@ func _gather():
 		return
 
 	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if direction != Vector2.ZERO:
+		if !get_parent().get_node("StepSound").playing:
+			get_parent().get_node("StepSound").play()
+	else:
+		get_parent().get_node("StepSound").stop()
 
 
 func _on_input_status_changed(state: bool):
