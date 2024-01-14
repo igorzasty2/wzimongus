@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://blfakmqxo172y"]
+
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/task_list_display/task_list_display.gd" id="1_dgkoj"]
+
+[node name="TaskListDisplay" type="CanvasLayer"]
+script = ExtResource("1_dgkoj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 531.0
+offset_bottom = 50.0
+theme_override_constants/separation = 15
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
+self_modulate = Color(0.0352941, 1, 0.0235294, 1)
+custom_minimum_size = Vector2(515, 27)
+layout_mode = 2
+show_percentage = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ProgressBar"]
+layout_mode = 2
+offset_left = 13.0
+offset_right = 515.0
+offset_bottom = 26.0
+text = "Zadania skończone"
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TaskList" type="RichTextLabel" parent="VBoxContainer/Control"]
+custom_minimum_size = Vector2(515, 553)
+layout_mode = 1
+offset_right = 515.0
+offset_bottom = 553.0
+mouse_filter = 2
+bbcode_enabled = true
+fit_content = true

@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://clyynf7f5bwqv"]
+
+[ext_resource type="Script" path="res://scenes/game/maps/lobby/skin_selector_point/skin_selector_point.gd" id="1_kee2m"]
+[ext_resource type="Shader" path="res://assets/shaders/outline.gdshader" id="2_1htbf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ykn66"]
+radius = 170.238
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xwbu7"]
+shader = ExtResource("2_1htbf")
+shader_parameter/line_color = Color(1, 1, 1, 0)
+shader_parameter/line_thickness = 0.0
+
+[node name="SkinSelectorPoint" type="Area2D"]
+position = Vector2(-1, 0)
+disable_mode = 2
+collision_mask = 2
+monitorable = false
+priority = 1
+script = ExtResource("1_kee2m")
+scale_factor = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ykn66")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_xwbu7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

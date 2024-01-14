@@ -1,5 +1,6 @@
-extends Node
 ## Klasa odpowiadająca za zarządzanie serwerem, grą i graczami.
+class_name GameManager
+extends Node
 
 ## Emitowany po zarejestrowaniu nowego gracza.
 signal player_registered(id: int, player: Dictionary)
@@ -34,20 +35,23 @@ signal player_killed(player_id: int, is_victim: bool)
 ## Emitowany po włączeniu sabotażu.
 signal sabotage_occured()
 
+## Emitowany po rozpoczęciu/zakończeniu sabotażu.
+signal sabotage_started(has_started:bool)
+
 ## Emitowany po zakończeniu ładowania mapy głównej.
 signal map_load_finished()
 
 ## Emitowany po zmianie ustawień serwera.
 signal server_settings_changed()
 
-## Emitowany kiedy jeden z warunków zakończenia gry jest spełniony(wszystkie zadania są zrobione, wszystkie impostory są wyeliminowane).
+## Emitowany gdy przynajmniej jeden z warunków zakończenia gry jest spełniony.
 signal winner_determined(winning_role: Role)
 
 ## Rola gracza
 enum Role {STUDENT, LECTURER}
 
 ## Komunikaty błędów.
-const error_messages = {
+const ERROR_MESSAGES = {
 	"ERR_LOBBY_NAME_LENGTH": "Nazwa lobby musi mieć od 3 do 16 znaków!",
 	"ERR_USERNAME_LENGTH": "Nazwa użytkownika musi mieć od 3 do 16 znaków!",
 	"ERR_PORT": "Nie udało się nasłuchiwać na porcie %s!",
@@ -61,54 +65,54 @@ const error_messages = {
 }
 
 ## Dostępne skiny.
-const skins = {
+const SKINS = {
 	0: {
 		"name": "Alternatywka",
-		"resource": "res://scenes/player/assets/skins/alt_spritesheet.png"
+		"resource": "res://assets/textures/skins/alternatywka_spritesheet.png"
 	},
 	1: {
 		"name": "Barbie",
-		"resource": "res://scenes/player/assets/skins/barbie_spritesheet.png"
+		"resource": "res://assets/textures/skins/barbie_spritesheet.png"
 	},
 	2: {
 		"name": "Ecoświr",
-		"resource": "res://scenes/player/assets/skins/ecoswir_spritesheet.png"
+		"resource": "res://assets/textures/skins/ecoswir_spritesheet.png"
 	},
 	3: {
 		"name": "Femboy",
-		"resource": "res://scenes/player/assets/skins/femboy_spritesheet.png"
+		"resource": "res://assets/textures/skins/femboy_spritesheet.png"
 	},
 	4: {
 		"name": "Gamer",
-		"resource": "res://scenes/player/assets/skins/gamer_spritesheet.png"
+		"resource": "res://assets/textures/skins/gamer_spritesheet.png"
 	},
 	5: {
 		"name": "Gymbro",
-		"resource": "res://scenes/player/assets/skins/gymbro_spritesheet.png"
+		"resource": "res://assets/textures/skins/gymbro_spritesheet.png"
 	},
 	6: {
 		"name": "Hipster",
-		"resource": "res://scenes/player/assets/skins/hipster_spritesheet.png"
+		"resource": "res://assets/textures/skins/hipster_spritesheet.png"
 	},
 	7: {
 		"name": "Nerd",
-		"resource": "res://scenes/player/assets/skins/nerd_spritesheet.png"
+		"resource": "res://assets/textures/skins/nerd_spritesheet.png"
 	},
 	8: {
 		"name": "Punk",
-		"resource": "res://scenes/player/assets/skins/punk_spritesheet.png"
+		"resource": "res://assets/textures/skins/punk_spritesheet.png"
 	},
 	9: {
 		"name": "Rasta",
-		"resource": "res://scenes/player/assets/skins/rasta_spritesheet.png"
+		"resource": "res://assets/textures/skins/rasta_spritesheet.png"
 	},
 	10: {
 		"name": "TikToker",
-		"resource": "res://scenes/player/assets/skins/tiktoker_spritesheet.png"
+		"resource": "res://assets/textures/skins/tiktoker_spritesheet.png"
 	},
 	11: {
 		"name": "Wixiarz",
-		"resource": "res://scenes/player/assets/skins/wixiarz_spritesheet.png"
+		"resource": "res://assets/textures/skins/wixiarz_spritesheet.png"
 	}
 }
 
@@ -163,18 +167,27 @@ var _player_attributes = {
 
 ## Okrśla czy jest zwołane alarmowe zebranie
 var is_meeting_called: bool = false
+
 ## Przechowuje infromację o tym czy gra animacja tła
 var is_animation_playing: bool = false
+
 ## Przechowuje pozycję animacji tła
 var animation_position: float
+
 ## Przechowuje czas oczekiwania na animację - potrzebny do przejść między scenami
 var wait_time
+
 ## Przechowuje teksture obecnego tła
 var current_background_texture = null
+
 ## Przechowuje teksture tła przejścia
 var transition_background_texture = null
+
 ## Czy scena jest włączana po raz pierwszy
 var is_first_time: bool = true
+
+## Określa czy właśnie jest sabotaż
+var is_sabotage: bool = false
 
 
 func _ready():
@@ -188,12 +201,12 @@ func _ready():
 func create_lobby(lobby_name: String, port: int):
 	# Weryfikuje długość nazwy lobby.
 	if !_verify_lobby_name_length(lobby_name):
-		_handle_error(error_messages["ERR_LOBBY_NAME_LENGTH"])
+		_handle_error(ERROR_MESSAGES["ERR_LOBBY_NAME_LENGTH"])
 		return
 
 	# Weryfikuje długość nazwy użytkownika.
 	if !_verify_username_length(_current_player["username"]):
-		_handle_error(error_messages["ERR_USERNAME_LENGTH"])
+		_handle_error(ERROR_MESSAGES["ERR_USERNAME_LENGTH"])
 		return
 
 	# Ustawia parametry serwera.
@@ -205,7 +218,7 @@ func create_lobby(lobby_name: String, port: int):
 	var status = peer.create_server(_server_settings["port"])
 
 	if status != OK:
-		_handle_error(error_messages["ERR_PORT"] % str(_server_settings["port"]))
+		_handle_error(ERROR_MESSAGES["ERR_PORT"] % str(_server_settings["port"]))
 		return
 
 	multiplayer.multiplayer_peer = peer
@@ -217,7 +230,7 @@ func create_lobby(lobby_name: String, port: int):
 	)
 
 	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
-		_handle_error(error_messages["ERR_SERVER"])
+		_handle_error(ERROR_MESSAGES["ERR_SERVER"])
 		return
 
 	# Rejestruje hosta jako gracza.
@@ -245,8 +258,8 @@ func change_server_settings(max_players: int, max_lecturers: int, kill_cooldown:
 	server_settings_changed.emit()
 
 
-## Wysyła informacje o ustawieniach serwera.
 @rpc("reliable")
+## Wysyła informacje o ustawieniach serwera.
 func _update_server_settings(server_settings: Dictionary):
 	_server_settings = server_settings
 	server_settings_changed.emit()
@@ -254,12 +267,17 @@ func _update_server_settings(server_settings: Dictionary):
 
 ## Dołącza do istniejącego serwera gry.
 func join_lobby(address:String, port:int):
+	# Weryfikuje długość nazwy użytkownika.
+	if !_verify_username_length(_current_player["username"]):
+		_handle_error(ERROR_MESSAGES["ERR_USERNAME_LENGTH"])
+		return
+
 	# Tworzy klienta gry.
 	var peer = ENetMultiplayerPeer.new()
 	var status = peer.create_client(address, port)
 
 	if status != OK:
-		_handle_error(error_messages["ERR_CLIENT"] % error_string(status))
+		_handle_error(ERROR_MESSAGES["ERR_CLIENT"] % error_string(status))
 		return
 
 	multiplayer.multiplayer_peer = peer
@@ -271,7 +289,7 @@ func join_lobby(address:String, port:int):
 	)
 
 	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
-		_handle_error(error_messages["ERR_CONNECTION"] % (str(address) + ":" + str(port)))
+		_handle_error(ERROR_MESSAGES["ERR_CONNECTION"] % (str(address) + ":" + str(port)))
 		return
 
 
@@ -287,7 +305,7 @@ func start_game():
 	_on_game_started.rpc()
 
 	# Przypisuje zadania.
-	TaskManager.assign_tasks(_server_settings["task_amount"])
+	TaskManagerSingleton.assign_tasks(_server_settings["task_amount"])
 
 
 ## Kończy grę.
@@ -308,7 +326,7 @@ func end_game():
 	_reset_votes()
 
 	# Resetuje zadania.
-	TaskManager.reset()
+	TaskManagerSingleton.reset()
 
 	game_ended.emit()
 
@@ -334,7 +352,7 @@ func reset_game():
 	_reset_votes()
 
 	# Resetuje zadania.
-	TaskManager.reset()
+	TaskManagerSingleton.reset()
 
 
 ## Rozpoczyna nową rundę.
@@ -348,18 +366,18 @@ func new_round():
 
 
 ## Zwraca informację o grze, która jest przechowywana pod danym kluczem.
-func get_current_game_key(key:String):
+func get_current_game_value(key:String):
 	if _current_game.has(key):
 		return _current_game[key]
 
 
 ## Zmienia informację o grze, która jest przechowywana pod danym kluczem.
-func set_current_game_key(key:String, value):
+func set_current_game_value(key:String, value):
 	if _current_game.has(key):
 		_current_game[key] = value
 
 
-## Dodaje głos do tablicy głosów
+## Dodaje głos do tablicy głosów.
 func add_vote(id:int, voted_by:int):
 	if _current_game["votes"].has(id):
 		_current_game["votes"][id].append(voted_by)
@@ -368,7 +386,7 @@ func add_vote(id:int, voted_by:int):
 
 
 @rpc("call_local", "reliable")
-## Ustawia gracza z największą ilością głosów
+## Ustawia gracza z największą ilością głosów.
 func set_most_voted_player(player):
 	_current_game["most_voted_player"] = player
 
@@ -383,11 +401,11 @@ func _reset_votes():
 
 ## Zwraca słownik zarejestrowanych graczy.
 func get_registered_players():
-	return get_current_game_key("registered_players")
+	return get_current_game_value("registered_players")
 
 
 ## Zwraca informację o danym graczu, która jest przechowywana pod danym kluczem.
-func get_registered_player_key(id:int, key:String):
+func get_registered_player_value(id:int, key:String):
 	if _current_game["registered_players"].has(id) && _current_game["registered_players"][id].has(key):
 		return _current_game["registered_players"][id][key]
 
@@ -401,16 +419,15 @@ func get_current_player_id():
 
 
 ## Zwraca informację o obecnym graczu, która jest przechowywana pod danym kluczem.
-func get_current_player_key(key:String):
+func get_current_player_value(key:String):
 	var id = get_current_player_id()
 
-	# W przeciwnym wypadku szuka go w słowniku zarejestrowanych graczy.
 	if key in _current_game["registered_players"][id]:
 		return _current_game["registered_players"][id][key]
 
 
 ## Zmienia informację o obecnym graczu, która jest przechowywana pod danym kluczem.
-func set_current_player_key(key:String, value):
+func set_current_player_value(key:String, value):
 	if not key in _player_fillable:
 		return ERR_UNAUTHORIZED
 
@@ -435,8 +452,9 @@ func set_input_disabled_status(is_input_disabled: bool):
 	emit_input_status()
 
 
+## Emituje sygnał informujący o statusie sterowania.
 func emit_input_status():
-	input_status_changed.emit(!get_current_game_key("is_paused") && !get_current_game_key("is_input_disabled"))
+	input_status_changed.emit(!get_current_game_value("is_paused") && !get_current_game_value("is_input_disabled"))
 
 
 ## Zmienia skin obecnego gracza.
@@ -444,19 +462,19 @@ func change_skin(skin: int):
 	_request_skin_change.rpc_id(1, skin)
 
 
-## Przyjmuje prośbę o zmianę skina gracza.
 @rpc("any_peer", "call_local", "reliable")
+## Przyjmuje prośbę o zmianę skina gracza.
 func _request_skin_change(skin: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
 	# Jeśli gra się rozpoczęła, nie można zmienić skina.
-	if get_current_game_key("is_started"):
+	if get_current_game_value("is_started"):
 		return
 
 	# Jeśli skin jest już wykorzystany, nie można go użyć.
 	for i in get_registered_players():
-		if get_registered_player_key(i, "skin") == skin:
+		if get_registered_player_value(i, "skin") == skin:
 			return
 
 	var id = multiplayer.get_remote_sender_id()
@@ -479,13 +497,13 @@ func _on_connected():
 
 ## Obsługuje nieudane połączenie z serwerem.
 func _on_connection_failed():
-	_handle_error(error_messages["ERR_CONNECTION_FAILED"])
+	_handle_error(ERROR_MESSAGES["ERR_CONNECTION_FAILED"])
 	end_game()
 
 
 ## Obsługuje rozłączenie z serwerem u klienta.
 func _on_server_disconnected():
-	_handle_error(error_messages["ERR_CONNECTION_LOST"])
+	_handle_error(ERROR_MESSAGES["ERR_CONNECTION_LOST"])
 	end_game()
 
 
@@ -526,17 +544,17 @@ func _register_player(player:Dictionary):
 
 	# Wyrzuca gracza, jeśli nazwa użytkownika nie ma odpowiedniej długości.
 	if !_verify_username_length(player["username"]):
-		_kick_player.rpc_id(id, error_messages["ERR_USERNAME_LENGTH"])
+		_kick_player.rpc_id(id, ERROR_MESSAGES["ERR_USERNAME_LENGTH"])
 		return
 
 	# Wyrzuca gracza, jeśli gra już się rozpoczęła.
 	if _current_game["is_started"]:
-		_kick_player.rpc_id(id, error_messages["ERR_GAME_STARTED"])
+		_kick_player.rpc_id(id, ERROR_MESSAGES["ERR_GAME_STARTED"])
 		return
 
 	# Wyrzuca gracza, jeśli przekroczono limit graczy.
 	if _current_game["registered_players"].size() >= _server_settings["max_players"]:
-		_kick_player.rpc_id(id, error_messages["ERR_MAX_PLAYERS"])
+		_kick_player.rpc_id(id, ERROR_MESSAGES["ERR_MAX_PLAYERS"])
 		return
 
 	# Informuje gracza o obecnych ustawieniach serwera.
@@ -593,7 +611,7 @@ func _select_skin() -> int:
 	var available_skins = []
 
 	# Dodaje wszystkie skiny.
-	for i in range(0, 12):
+	for i in SKINS:
 		available_skins.append(i)
 
 	# Usuwa skiny, które są już wykorzystane.
@@ -634,7 +652,7 @@ func _delete_deregistered_player(id:int):
 		_current_game["registered_players"].erase(id)
 
 		if multiplayer.is_server():
-			TaskManager.remove_player_tasks(id)
+			TaskManagerSingleton.remove_player_tasks(id)
 
 			check_winning_conditions()
 
@@ -705,13 +723,13 @@ func _request_victim_kill(victim_id: int):
 		return ERR_UNAUTHORIZED
 
 	# Jeśli gra się nie rozpoczęła, nie można zabić gracza.
-	if !get_current_game_key("is_started"):
+	if !get_current_game_value("is_started"):
 		return ERR_UNAVAILABLE
 
 	var me = multiplayer.get_remote_sender_id()
 
 	# Jeśli gracz nie jest wykładowcą, nie może zabić.
-	if !get_registered_player_key(me, "is_lecturer"):
+	if !get_registered_player_value(me, "is_lecturer"):
 		return ERR_UNAUTHORIZED
 
 	# Jeśli gracz nie jest w zasięgu, nie może zabić.
@@ -740,13 +758,13 @@ func _send_player_kill(player_id: int, is_victim: bool = true):
 		check_winning_conditions()
 
 
-## Sprawdza kto wygrał w tym momencie i kończy grę na korzyść wykładowcom lub crewmatom, jeżeli nikt, to nic nie robi.
+## Sprawdza warunki wygranej i emituje sygnał wygranej, jeśli któryś z warunków wygranej jest spełniony.
 func check_winning_conditions():
-	if GameManager.get_current_game_key("is_started"):
+	if GameManagerSingleton.get_current_game_value("is_started"):
 		if !multiplayer.is_server():
 			return ERR_UNAUTHORIZED
 
-		if TaskManager.get_tasks_server().is_empty():
+		if TaskManagerSingleton.get_tasks_server().is_empty():
 			winner_determined.emit(Role.STUDENT)
 			return
 
@@ -754,7 +772,7 @@ func check_winning_conditions():
 			winner_determined.emit(Role.STUDENT)
 			return
 
-		if _count_alive_crewmates() <= _count_alive_lecturers():
+		if _count_alive_students() <= _count_alive_lecturers():
 			winner_determined.emit(Role.LECTURER)
 			return
 
@@ -764,24 +782,24 @@ func _count_alive_lecturers():
 	var lecturer_counter = 0
 	
 	for i in get_registered_players():
-		if not get_registered_player_key(i, "is_dead") and get_registered_player_key(i, "is_lecturer"):
+		if not get_registered_player_value(i, "is_dead") and get_registered_player_value(i, "is_lecturer"):
 			lecturer_counter += 1
 
 	return lecturer_counter
 
 
-## Liczy żyjących crewmatów.
-func _count_alive_crewmates():
+## Liczy żyjących studentów.
+func _count_alive_students():
 	var crewmate_counter = 0
 	
 	for i in get_registered_players():
-		if not get_registered_player_key(i, "is_dead") and not get_registered_player_key(i, "is_lecturer"):
+		if not get_registered_player_value(i, "is_dead") and not get_registered_player_value(i, "is_lecturer"):
 			crewmate_counter += 1
 
 	return crewmate_counter
 
 
-## Teleportuje wszystkich graczy do miejsca spotkania - używane po rozpoczęciu przejścia na ekran ejection_screen
+## Teleportuje wszystkich graczy do miejsca spotkania.
 func teleport_players():
 	var players = get_tree().root.get_node("Game/Maps/MainMap/Players").get_children()
 	var meeting_positions = get_tree().root.get_node("Game/Maps/MainMap/MeetingPositions").get_children()
@@ -792,7 +810,7 @@ func teleport_players():
 			players[i].teleport_position = meeting_positions[i].global_position
 
 
-## Emituje sygnał po zakończeniu wczytywania
+## Emituje sygnał po zakończeniu wczytywania.
 func main_map_load_finished():
 	map_load_finished.emit()
 
@@ -802,10 +820,10 @@ func main_map_load_finished():
 func request_light_sabotage():
 	if not multiplayer.is_server():
 		return ERR_UNAUTHORIZED
-
+	
 	var player_id = multiplayer.get_remote_sender_id()
-
-	if !get_registered_player_key(player_id, "is_lecturer"):
+	
+	if !get_registered_player_value(player_id, "is_lecturer"):
 		return ERR_UNAUTHORIZED
 
 	activate_light_sabotage.rpc()
@@ -815,6 +833,13 @@ func request_light_sabotage():
 ## Emituje sygnał włączenia sabotażu.
 func activate_light_sabotage():
 	sabotage_occured.emit()
+
+
+@rpc("any_peer", "call_local", "reliable")
+## Emituje sygnał informujący o rozpoczeciu/zakończeniu sabotażu.
+func emit_sabotage_started(has_started:bool):
+	is_sabotage = has_started
+	sabotage_started.emit(has_started)
 
 
 ## Symuluje wciśnięcie klawisza w celu wywołania konkretnej akcji.
@@ -834,7 +859,7 @@ func _verify_username(username: String, idx: int = 0) -> String:
 		username_to_verify += " (" + str(idx) +")"
 
 	for i in get_registered_players():
-		if get_registered_player_key(i, "username") == username_to_verify:
+		if get_registered_player_value(i, "username") == username_to_verify:
 			return _verify_username(username, idx + 1)
 
 	return username_to_verify

@@ -115,7 +115,7 @@ func _generate_letters(formula:String):
 			sequence.append(rand)
 	sequence = _add_noise(sequence)
 	for i in range(sequence.size()):
-		var Letter = preload("assets/subscenes/letter.tscn").instantiate()
+		var Letter = preload("letter/letter.tscn").instantiate()
 		# Losowy znak między 'A' i 'z' wykorzystywany jeśli w tym miejscu
 		# sekwencji pojawić ma się hałas
 		var rand_letter = char(randi_range(65, 122))
@@ -169,7 +169,7 @@ func _generate_formula(formula:String):
 		if i % 2 == 0:
 			# W tym fragmencie kodu tworzone jest puste pole reprezentujące
 			# miejsce w którym umieścić należy odpowiednią literę
-			var Space = preload("assets/subscenes/space.tscn").instantiate()
+			var Space = preload("space/space.tscn").instantiate()
 			Space.position = $StartOfFormula.position + X_SHIFT * i + Y_SHIFT * _times_generated
 			Space.wanted_letter = formula[i]
 			add_child(Space)

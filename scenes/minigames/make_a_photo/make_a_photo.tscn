@@ -1,42 +1,236 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmjx2shy2ugc2"]
+[gd_scene load_steps=18 format=3 uid="uid://dmjx2shy2ugc2"]
 
 [ext_resource type="Script" path="res://scenes/minigames/make_a_photo/make_a_photo.gd" id="1_ho2i0"]
-[ext_resource type="Texture2D" uid="uid://bacbpfbdjckd4" path="res://scenes/minigames/make_a_photo/sprites/table.jpg" id="1_uns0w"]
-[ext_resource type="Texture2D" uid="uid://bq4pawvs27u3m" path="res://scenes/minigames/make_a_photo/sprites/papers.png" id="2_t5i8c"]
-[ext_resource type="PackedScene" uid="uid://cr8va0m83uusp" path="res://scenes/minigames/make_a_photo/active_objects/take_the_phone.tscn" id="3_nsmec"]
-[ext_resource type="PackedScene" uid="uid://clh52hsf4nrk5" path="res://scenes/minigames/make_a_photo/active_objects/phone.tscn" id="4_icifk"]
-[ext_resource type="PackedScene" uid="uid://d3t3d48a8862t" path="res://scenes/minigames/make_a_photo/active_objects/to_make_a_photo.tscn" id="5_yej6x"]
+[ext_resource type="Texture2D" uid="uid://bq4pawvs27u3m" path="res://assets/textures/minigames/make_a_photo/papers.png" id="2_t5i8c"]
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/take_the_phone.gd" id="4_4qo1e"]
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/to_make_a_photo.gd" id="5_10m22"]
+[ext_resource type="Texture2D" uid="uid://cyd8kjes00046" path="res://assets/textures/minigames/make_a_photo/phone.png" id="6_4ofwl"]
+[ext_resource type="Script" path="res://scenes/minigames/make_a_photo/phone.gd" id="6_5t864"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j6rht"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6lsw"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hstxu"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_al3a7"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gvs86"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5g0g2"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_187c3"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yuf2i"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ey6i1"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8gwg"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.811765, 0.717647, 0.572549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7v762"]
+size = Vector2(472, 224)
 
 [node name="make_a_photo" type="Node2D"]
 script = ExtResource("1_ho2i0")
 polish_name = "Robienie zdjęcia"
 
-[node name="Table" type="Sprite2D" parent="."]
-position = Vector2(562, 312)
-scale = Vector2(0.96, 0.5225)
-texture = ExtResource("1_uns0w")
-
 [node name="Papers" type="Sprite2D" parent="."]
-position = Vector2(547, 313)
+position = Vector2(625, 313)
 scale = Vector2(0.167991, 0.167483)
 texture = ExtResource("2_t5i8c")
 
-[node name="take_the_phone" parent="." instance=ExtResource("3_nsmec")]
-offset_left = 429.0
-offset_top = 564.0
-offset_right = 664.0
-offset_bottom = 621.0
+[node name="take_the_phone" type="Button" parent="."]
+offset_left = 528.0
+offset_top = 528.0
+offset_right = 752.0
+offset_bottom = 576.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_j6rht")
+theme_override_styles/hover = SubResource("StyleBoxFlat_f6lsw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hstxu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_al3a7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_gvs86")
+text = "Weź telefon"
+script = ExtResource("4_4qo1e")
 
-[node name="Phone" parent="." groups=["phone"] instance=ExtResource("4_icifk")]
+[node name="to_make_a_photo" type="Button" parent="." groups=["to_make_a_photo"]]
 visible = false
-position = Vector2(1151, 646)
+offset_left = 528.0
+offset_top = 528.0
+offset_right = 752.0
+offset_bottom = 576.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_5g0g2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_187c3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yuf2i")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ey6i1")
+theme_override_styles/focus = SubResource("StyleBoxFlat_u8gwg")
+text = "Zrób zdjęcie"
+script = ExtResource("5_10m22")
 
-[node name="to_make_a_photo" parent="." groups=["to_make_a_photo"] instance=ExtResource("5_yej6x")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["phone"]]
 visible = false
-offset_left = 431.0
-offset_top = 565.0
-offset_right = 651.0
-offset_bottom = 612.0
+position = Vector2(1152, 648)
+script = ExtResource("6_5t864")
+metadata/_edit_group_ = true
+
+[node name="Phone" type="Sprite2D" parent="CharacterBody2D"]
+scale = Vector2(0.22, 0.236)
+texture = ExtResource("6_4ofwl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-12, 0)
+shape = SubResource("RectangleShape2D_7v762")
 
 [connection signal="pressed" from="take_the_phone" to="take_the_phone" method="_on_pressed"]
 [connection signal="pressed" from="to_make_a_photo" to="to_make_a_photo" method="_on_pressed"]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dk3g05gq43kad"]
+
+[ext_resource type="Texture2D" uid="uid://bg8u0pe63q3aa" path="res://assets/textures/main_map/rooms/chillroom.png" id="1_yrl5o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ygbty"]
+size = Vector2(739, 59)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yfs06"]
+size = Vector2(618, 250)
+
+[node name="chillroom" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_yrl5o")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(-714, 66, -712, -243, -191, -243, -191, -494, -771, -495, -770, 66)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-403.5, 465)
+shape = SubResource("RectangleShape2D_ygbty")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(464, -369)
+shape = SubResource("RectangleShape2D_yfs06")
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(715, 125, 714, 440, 314, 440, 314, 495, 773, 495, 773, 125)

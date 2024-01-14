@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://uug2yqki41j7"]
+
+[ext_resource type="Script" path="res://scenes/menu/play_menu/play_menu.gd" id="1_lyan3"]
+[ext_resource type="PackedScene" uid="uid://dbggxxcgwkdh5" path="res://scenes/ui/background/background.tscn" id="2_w5u7b"]
+
+[node name="PlayMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lyan3")
+
+[node name="Background2" parent="." instance=ExtResource("2_w5u7b")]
+layout_mode = 1
+
+[node name="StatusBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = 74.0
+grow_horizontal = 2
+
+[node name="TitleContainer" type="CenterContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="StatusBar/TitleContainer"]
+layout_mode = 2
+text = "Graj"
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="StatusBar/ButtonsContainer"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+text = "⬅️ Wróć"
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(500, 2.08165e-12)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -96.0
+offset_right = 250.0
+offset_bottom = 144.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HostLabel" type="Label" parent="ButtonsContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="HostButton" type="Button" parent="ButtonsContainer"]
+custom_minimum_size = Vector2(165, 60)
+layout_mode = 2
+text = "Stwórz lobby"
+
+[node name="Separator" type="HSeparator" parent="ButtonsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="JoinLabel" type="Label" parent="ButtonsContainer"]
+layout_mode = 2
+text = "Gracz"
+
+[node name="JoinButton" type="Button" parent="ButtonsContainer"]
+custom_minimum_size = Vector2(165, 60)
+layout_mode = 2
+text = "Dołącz do lobby"
+
+[connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="ButtonsContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="ButtonsContainer/JoinButton" to="." method="_on_join_button_pressed"]

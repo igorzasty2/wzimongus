@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://buspc3xb5jkoq"]
 
 [ext_resource type="Script" path="res://scenes/minigames/fill_formulas/fill_formulas.gd" id="1_d3uug"]
-[ext_resource type="Texture2D" uid="uid://dk4rshu1db061" path="res://scenes/minigames/fill_formulas/assets/gui_elements/minigame_gui.png" id="2_mk0br"]
+[ext_resource type="Texture2D" uid="uid://dk4rshu1db061" path="res://assets/textures/minigames/fill_formulas/minigame_gui.png" id="2_mk0br"]
 
 [node name="FillFormulas" type="Node2D"]
 script = ExtResource("1_d3uug")

@@ -1,0 +1,180 @@
+[gd_scene load_steps=4 format=3 uid="uid://do0gv7fs1aegr"]
+
+[ext_resource type="Script" path="res://scenes/menu/join_menu/join_menu.gd" id="1_o0flq"]
+[ext_resource type="PackedScene" uid="uid://dbggxxcgwkdh5" path="res://scenes/ui/background/background.tscn" id="2_3dgfg"]
+[ext_resource type="Script" path="res://addons/LANServerBroadcast/server_listener/ServerListener.gd" id="2_07ghn"]
+
+[node name="JoinMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o0flq")
+
+[node name="Background2" parent="." instance=ExtResource("2_3dgfg")]
+layout_mode = 1
+
+[node name="StatusBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = 74.0
+grow_horizontal = 2
+
+[node name="TitleContainer" type="CenterContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="StatusBar/TitleContainer"]
+layout_mode = 2
+text = "Dołącz do lobby"
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="StatusBar/ButtonsContainer"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+text = "⬅️ Wróć"
+
+[node name="ServerPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 96.0
+offset_right = 1248.0
+offset_bottom = 616.0
+
+[node name="Table" type="VBoxContainer" parent="ServerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="Panel" parent="ServerPanel/Table"]
+custom_minimum_size = Vector2(2.08165e-12, 42)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ServerPanel/Table/Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="AttributesContainer" type="HBoxContainer" parent="ServerPanel/Table/Header/MarginContainer"]
+layout_mode = 2
+
+[node name="LobbyName" type="Label" parent="ServerPanel/Table/Header/MarginContainer/AttributesContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Nazwa lobby"
+
+[node name="ServerAddress" type="Label" parent="ServerPanel/Table/Header/MarginContainer/AttributesContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Adres serwera"
+
+[node name="PlayerCount" type="Label" parent="ServerPanel/Table/Header/MarginContainer/AttributesContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Liczba graczy"
+
+[node name="Filler" type="Control" parent="ServerPanel/Table/Header/MarginContainer/AttributesContainer"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+
+[node name="ServerListScroll" type="ScrollContainer" parent="ServerPanel/Table"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ServerList" type="VBoxContainer" parent="ServerPanel/Table/ServerListScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ServerListener" type="Node" parent="."]
+script = ExtResource("2_07ghn")
+
+[node name="InputsContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -87.0
+offset_right = 400.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 25
+
+[node name="UsernameContainer" type="VBoxContainer" parent="InputsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UsernameLabel" type="Label" parent="InputsContainer/UsernameContainer"]
+layout_mode = 2
+text = "Login"
+
+[node name="UsernameInput" type="LineEdit" parent="InputsContainer/UsernameContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 32)
+layout_mode = 2
+max_length = 16
+
+[node name="AddressContainer" type="VBoxContainer" parent="InputsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AddressLabel" type="Label" parent="InputsContainer/AddressContainer"]
+layout_mode = 2
+text = "Adres serwera"
+
+[node name="AddressInput" type="LineEdit" parent="InputsContainer/AddressContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 32)
+layout_mode = 2
+
+[node name="PortContainer" type="VBoxContainer" parent="InputsContainer"]
+custom_minimum_size = Vector2(70, 2.08165e-12)
+layout_mode = 2
+
+[node name="PortLabel" type="Label" parent="InputsContainer/PortContainer"]
+layout_mode = 2
+text = "Port"
+
+[node name="PortInput" type="LineEdit" parent="InputsContainer/PortContainer"]
+layout_mode = 2
+text = "9001"
+
+[node name="JoinButton" type="Button" parent="InputsContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_vertical = 8
+text = "Dołącz do lobby"
+
+[connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="new_server" from="ServerListener" to="." method="_on_server_listener_new_server"]
+[connection signal="remove_server" from="ServerListener" to="." method="_on_server_listener_remove_server"]
+[connection signal="pressed" from="InputsContainer/JoinButton" to="." method="_on_join_button_pressed"]

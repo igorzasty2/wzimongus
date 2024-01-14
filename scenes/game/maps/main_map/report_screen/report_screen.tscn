@@ -1,0 +1,113 @@
+[gd_scene load_steps=7 format=3 uid="uid://djoj4kykfho2y"]
+
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/report_screen/report_screen.gd" id="1_woxjr"]
+[ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://assets/textures/main_map/objects/emergency_meeting.png" id="2_nrmn5"]
+[ext_resource type="Texture2D" uid="uid://dy8j6jl7efkn1" path="res://icon.png" id="2_y8u8h"]
+
+[sub_resource type="Animation" id="Animation_g4k8g"]
+resource_name = "pulse_animation"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4, 0.6, 0.9, 1.1, 1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.05, 1.05), Vector2(1, 1), Vector2(1.05, 1.05), Vector2(1, 1), Vector2(1.05, 1.05), Vector2(1, 1), Vector2(1.05, 1.05)]
+}
+
+[sub_resource type="Animation" id="Animation_oi8ud"]
+resource_name = "shake_animation"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.10472, -0.10472, 0.10472, -0.10472, 0.10472, -0.10472, 0.10472, -0.10472]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mb8t2"]
+_data = {
+"pulse_animation": SubResource("Animation_g4k8g"),
+"shake_animation": SubResource("Animation_oi8ud")
+}
+
+[node name="ReportScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_woxjr")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.188235, 0.188235, 0.188235, 1)
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.292
+anchor_right = 1.0
+anchor_bottom = 0.526
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.705882, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.395
+anchor_right = 0.5
+anchor_bottom = 0.395
+offset_left = -225.0
+offset_top = -225.0
+offset_right = 225.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.10472
+pivot_offset = Vector2(225, 225)
+texture = ExtResource("2_nrmn5")
+
+[node name="BodySprite" type="Sprite2D" parent="."]
+position = Vector2(640, 290)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("2_y8u8h")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.849
+anchor_right = 0.5
+anchor_bottom = 0.849
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 64
+text = "tekst tekst tekst tekst"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mb8t2")
+}

@@ -19,7 +19,7 @@ signal minigame_end
 @onready var hundred = get_node("%100")
 
 ## Tekstura włączonego przełącznika
-@onready var switch_on_sprite = preload("res://scenes/minigames/correct_combination/assets/switch_on.png")
+@onready var switch_on_sprite = preload("res://assets/textures/minigames/correct_combination/switch_on.png")
 
 ## Kontener na przyciski
 @onready var buttons_container = get_node("%Buttons")

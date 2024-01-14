@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://db74hr2yilxel"]
+
+[ext_resource type="Texture2D" uid="uid://dln480b0kephh" path="res://assets/textures/main_map/rooms/aula.png" id="1_q5m8s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wywl7"]
+size = Vector2(60, 344)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rg1l"]
+size = Vector2(1671, 291.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jorn5"]
+size = Vector2(59, 630)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvkgj"]
+size = Vector2(57, 582)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5rs7"]
+size = Vector2(59, 993)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nm7yx"]
+size = Vector2(636, 59)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmw2r"]
+size = Vector2(691, 60)
+
+[node name="aula" type="Node2D"]
+
+[node name="aula" type="Sprite2D" parent="."]
+texture = ExtResource("1_q5m8s")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-806, -680)
+shape = SubResource("RectangleShape2D_wywl7")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-0.5, -705.75)
+shape = SubResource("RectangleShape2D_0rg1l")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(806.5, -394)
+shape = SubResource("RectangleShape2D_jorn5")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(806.5, 561)
+shape = SubResource("RectangleShape2D_kvkgj")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-805.5, 354.5)
+shape = SubResource("RectangleShape2D_l5rs7")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-517, 821.5)
+shape = SubResource("RectangleShape2D_nm7yx")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(489.5, 822)
+shape = SubResource("RectangleShape2D_hmw2r")

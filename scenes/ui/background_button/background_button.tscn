@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://b84ikvrvlejqh"]
+
+[ext_resource type="Script" path="res://scenes/ui/background_button/background_button.gd" id="1_qvmu0"]
+
+[node name="BackgroundButton" type="Button"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qvmu0")
+
+[connection signal="button_down" from="." to="." method="_on_button_down" flags=18]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dj5vjsk8ajqix"]
 
 [ext_resource type="Script" path="res://scenes/minigames/correct_combination/correct_combination.gd" id="1_y2ahe"]
-[ext_resource type="Texture2D" uid="uid://nihx6hrbmjc1" path="res://scenes/minigames/correct_combination/assets/background.png" id="2_rqdsd"]
+[ext_resource type="Texture2D" uid="uid://nihx6hrbmjc1" path="res://assets/textures/minigames/correct_combination/background.png" id="2_rqdsd"]
 
 [node name="CorrectCombination" type="Control"]
 layout_mode = 3
