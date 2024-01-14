@@ -9,4 +9,5 @@ func _on_join_button_pressed():
 
 
 func _on_back_button_pressed():
+	$ButtonPressSound.play()
 	get_tree().change_scene_to_file("res://scenes/menu/start_menu/start_menu.tscn")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://denfqgiat465h"]
+[gd_scene load_steps=3 format=3 uid="uid://denfqgiat465h"]
 
 [ext_resource type="Script" path="res://scenes/menu/join_menu/server_node/server_node.gd" id="1_sm4ug"]
+[ext_resource type="AudioStream" uid="uid://cuoywtj5aix28" path="res://assets/audio/button_sound.ogg" id="2_gkot1"]
 
 [node name="ServerNode" type="MarginContainer"]
 offset_right = 1280.0
@@ -40,5 +41,9 @@ text = "Wybierz"
 [node name="Separator" type="HSeparator" parent="EntryContainer"]
 layout_mode = 2
 theme_override_constants/separation = 4
+
+[node name="ButtonPressSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_gkot1")
+volume_db = -30.0
 
 [connection signal="pressed" from="EntryContainer/InfoContainer/SelectButton" to="." method="_on_button_pressed"]

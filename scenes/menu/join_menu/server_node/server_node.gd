@@ -20,4 +20,5 @@ func get_server_ip():
 
 
 func _on_button_pressed():
+	$ButtonPressSound.play()
 	server_selected.emit(_server_info)

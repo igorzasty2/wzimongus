@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3l6wkk0ahn02"]
+[gd_scene load_steps=6 format=3 uid="uid://c3l6wkk0ahn02"]
 
 [ext_resource type="PackedScene" uid="uid://b2dcvq5rrj3f2" path="res://scenes/game/maps/main_map/minigame_window/close_minigame_button/close_minigame_button.tscn" id="3_4rwmm"]
+[ext_resource type="AudioStream" uid="uid://cmmpncpd1ccw" path="res://assets/audio/window_open_sound.ogg" id="3_gdyhi"]
 [ext_resource type="PackedScene" uid="uid://dnfvmswm3sk7g" path="res://scenes/ui/window_animation_player/window_animation_player.tscn" id="4_0h12e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p0mlm"]
@@ -95,3 +96,7 @@ grow_horizontal = 0
 grow_vertical = 1
 scale = Vector2(0.2, 0.2)
 pivot_offset = Vector2(-90, 0)
+
+[node name="OpenWindowSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_gdyhi")
+volume_db = -25.0

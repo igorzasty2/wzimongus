@@ -20,6 +20,7 @@ func _input(event):
 			return
 
 		hide()
+		$WindowCloseSound.play()
 		get_viewport().set_input_as_handled()
 
 
@@ -61,4 +62,6 @@ func _on_skin_option_button_item_selected(index):
 
 
 func _on_visibility_changed():
+	if visible:
+		$WindowOpenSound.play()
 	$Panel.visible = visible

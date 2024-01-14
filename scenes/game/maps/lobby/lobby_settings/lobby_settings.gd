@@ -27,6 +27,7 @@ func _input(event):
 			return
 
 		hide()
+		$WindowCloseSound.play()
 		get_viewport().set_input_as_handled()
 
 
@@ -36,6 +37,8 @@ func _on_save_button_pressed():
 
 
 func _on_visibility_changed():
+	if visible:
+		$WindowOpenSound.play()
 	$SettingsContainer.visible = visible
 	var settings = GameManagerSingleton.get_server_settings()
 	if settings["max_players"]:

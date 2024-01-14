@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://rh1o32f8llsb"]
+[gd_scene load_steps=7 format=3 uid="uid://rh1o32f8llsb"]
 
 [ext_resource type="Script" path="res://scenes/game/maps/lobby/skin_selector/skin_selector.gd" id="1_m1i30"]
 [ext_resource type="PackedScene" uid="uid://b84ikvrvlejqh" path="res://scenes/ui/background_button/background_button.tscn" id="2_8qf0f"]
 [ext_resource type="PackedScene" uid="uid://b8yh2vysfv24q" path="res://scenes/ui/close_button/close_button.tscn" id="2_ngy30"]
 [ext_resource type="PackedScene" uid="uid://dnfvmswm3sk7g" path="res://scenes/ui/window_animation_player/window_animation_player.tscn" id="4_51umu"]
+[ext_resource type="AudioStream" uid="uid://cmmpncpd1ccw" path="res://assets/audio/window_open_sound.ogg" id="5_f121v"]
+[ext_resource type="AudioStream" uid="uid://ynxw2pohm2pc" path="res://assets/audio/window_close_sound.ogg" id="6_a6pkg"]
 
 [node name="SkinSelector" type="CanvasLayer"]
 script = ExtResource("1_m1i30")
@@ -76,6 +78,14 @@ pivot_offset = Vector2(360, 0)
 window = NodePath("../..")
 
 [node name="WindowAnimationPlayer" parent="Panel" instance=ExtResource("4_51umu")]
+
+[node name="WindowOpenSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_f121v")
+volume_db = -25.0
+
+[node name="WindowCloseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_a6pkg")
+volume_db = -25.0
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="item_selected" from="Panel/MarginContainer/VBoxContainer/SkinOptionButton" to="." method="_on_skin_option_button_item_selected"]

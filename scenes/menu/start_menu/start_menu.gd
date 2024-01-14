@@ -16,26 +16,32 @@ func _on_play_button_pressed():
 
 
 func _on_settings_button_pressed():
+	$ButtonPressSound.play()
 	_toggle_visibility(_settings)
 
 
 func _on_exit_button_pressed():
+	$ButtonPressSound.play()
 	get_tree().quit()
 
 
 func _on_settings_exit_settings():
+	$ButtonPressSound.play()
 	_toggle_visibility(_settings)
 
 
 func _on_settings_back_button_pressed():
+	$ButtonPressSound.play()
 	_toggle_visibility(_settings)
 
 
 func _on_credits_back_button_pressed():
+	$ButtonPressSound.play()
 	_toggle_visibility(_credits)
 
 
 func _on_credits_button_pressed():
+	$ButtonPressSound.play()
 	_toggle_visibility(_credits)
 
 

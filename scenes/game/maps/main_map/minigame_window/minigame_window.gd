@@ -71,13 +71,13 @@ func _input(event):
 
 		if _use_button_disabled:
 			return
-
 		summon_window()
+		
 
 ## Pokazuje okno minigry
 func summon_window():
 	show()
-
+	get_node("OpenWindowSound").play()
 	_subviewport.add_child(_minigame.instantiate())
 	_minigame_instance = _subviewport.get_child(0)
 	

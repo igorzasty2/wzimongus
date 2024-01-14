@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy2ypfn8ixuqx"]
+[gd_scene load_steps=4 format=3 uid="uid://cy2ypfn8ixuqx"]
 
 [ext_resource type="Script" path="res://scenes/menu/host_menu/host_menu.gd" id="1_fm6y5"]
 [ext_resource type="PackedScene" uid="uid://dbggxxcgwkdh5" path="res://scenes/ui/background/background.tscn" id="2_etsx8"]
+[ext_resource type="AudioStream" uid="uid://cuoywtj5aix28" path="res://assets/audio/button_sound.ogg" id="3_cbinl"]
 
 [node name="HostMenu" type="Control"]
 layout_mode = 3
@@ -105,6 +106,11 @@ text = "9001"
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 text = "Stwórz lobby"
+
+[node name="ButtonPressSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_cbinl")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="InputsContainer/HostButton" to="." method="_on_host_button_pressed"]

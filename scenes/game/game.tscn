@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwogo8if36ix7"]
+[gd_scene load_steps=6 format=3 uid="uid://cwogo8if36ix7"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_b20el"]
 [ext_resource type="PackedScene" uid="uid://ctojv5s5r4v3" path="res://scenes/ui/pop_up_window/pop_up_window.tscn" id="2_66ag0"]
 [ext_resource type="PackedScene" uid="uid://dx7vp7ohxvuvd" path="res://scenes/ui/pause_menu/pause_menu.tscn" id="2_knil8"]
-[ext_resource type="Texture2D" uid="uid://bhuxc7bixysra" path="res://scenes/ui/start_menu/background/assets/background2.png" id="3_0vgal"]
+[ext_resource type="Texture2D" uid="uid://bhuxc7bixysra" path="res://assets/textures/background/background2.png" id="3_0vgal"]
+[ext_resource type="AudioStream" uid="uid://cuoywtj5aix28" path="res://assets/audio/button_sound.ogg" id="5_3elh4"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -72,3 +73,8 @@ expand_mode = 5
 layout_mode = 1
 one_button = true
 middle_button_text = "Ok"
+
+[node name="ButtonPressSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_3elh4")
+volume_db = -30.0
+autoplay = true
