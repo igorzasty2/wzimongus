@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://dp2sfegsvyvqy"]
+
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/emergency_button/emergency_button.gd" id="1_48x8y"]
+[ext_resource type="Shader" path="res://assets/shaders/outline.gdshader" id="2_3og5t"]
+[ext_resource type="PackedScene" uid="uid://dposexvk3a7mv" path="res://scenes/game/maps/main_map/report_area/report_area.tscn" id="3_6fy7m"]
+[ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://assets/textures/main_map/objects/emergency_meeting.png" id="3_wkt5k"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eovgj"]
+shader = ExtResource("2_3og5t")
+shader_parameter/line_color = Color(1, 1, 1, 0)
+shader_parameter/line_thickness = 20.0
+
+[node name="EmergencyButton" type="Node2D"]
+script = ExtResource("1_48x8y")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_eovgj")
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_wkt5k")
+
+[node name="ReportArea" parent="." instance=ExtResource("3_6fy7m")]
+scale = Vector2(1.2, 1.2)
+is_button = true
+
+[node name="TimeLeftLabel" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -22.0
+offset_right = 20.0
+offset_bottom = 23.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UsesLeftLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = 43.75
+offset_right = 86.0
+offset_bottom = 75.75
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Pozostało użyć: 1"
+horizontal_alignment = 1
+vertical_alignment = 1

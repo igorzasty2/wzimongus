@@ -1,0 +1,110 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy2ypfn8ixuqx"]
+
+[ext_resource type="Script" path="res://scenes/menu/host_menu/host_menu.gd" id="1_fm6y5"]
+[ext_resource type="PackedScene" uid="uid://dbggxxcgwkdh5" path="res://scenes/ui/background/background.tscn" id="2_etsx8"]
+
+[node name="HostMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fm6y5")
+
+[node name="Background2" parent="." instance=ExtResource("2_etsx8")]
+layout_mode = 1
+
+[node name="StatusBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = 74.0
+grow_horizontal = 2
+
+[node name="TitleContainer" type="CenterContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="StatusBar/TitleContainer"]
+layout_mode = 2
+text = "Stwórz lobby"
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="StatusBar/ButtonsContainer"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+text = "⬅️ Wróć"
+
+[node name="InputsContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -124.0
+offset_right = 125.0
+offset_bottom = 172.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="LobbyNameContainer" type="VBoxContainer" parent="InputsContainer"]
+layout_mode = 2
+
+[node name="LobbyNameLabel" type="Label" parent="InputsContainer/LobbyNameContainer"]
+layout_mode = 2
+text = "Nazwa lobby"
+
+[node name="LobbyNameInput" type="LineEdit" parent="InputsContainer/LobbyNameContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 32)
+layout_mode = 2
+max_length = 16
+
+[node name="UsernameContainer" type="VBoxContainer" parent="InputsContainer"]
+layout_mode = 2
+
+[node name="UsernameLabel" type="Label" parent="InputsContainer/UsernameContainer"]
+layout_mode = 2
+text = "Login"
+
+[node name="UsernameInput" type="LineEdit" parent="InputsContainer/UsernameContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 32)
+layout_mode = 2
+
+[node name="PortContainer" type="HSplitContainer" parent="InputsContainer"]
+layout_mode = 2
+dragger_visibility = 1
+
+[node name="PortLabel" type="Label" parent="InputsContainer/PortContainer"]
+custom_minimum_size = Vector2(170, 2.08165e-12)
+layout_mode = 2
+text = "Port"
+
+[node name="PortInput" type="LineEdit" parent="InputsContainer/PortContainer"]
+layout_mode = 2
+text = "9001"
+
+[node name="HostButton" type="Button" parent="InputsContainer"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "Stwórz lobby"
+
+[connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="InputsContainer/HostButton" to="." method="_on_host_button_pressed"]

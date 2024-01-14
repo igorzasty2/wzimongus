@@ -1,0 +1,187 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfdk7562ehhtp"]
+
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/voting_screen/voting_screen.gd" id="1_kta77"]
+[ext_resource type="PackedScene" uid="uid://c243bu478e0su" path="res://scenes/ui/chat/chat.tscn" id="2_u4dx5"]
+[ext_resource type="Texture2D" uid="uid://x3hb3b3rrfa1" path="res://assets/textures/ui/czat.png" id="3_vad85"]
+[ext_resource type="Texture2D" uid="uid://c3krnig4q8qwh" path="res://assets/textures/ui/menu_settings.png" id="4_k0mfc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d8hpk"]
+bg_color = Color(0.14902, 0.14902, 0.14902, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+
+[node name="VotingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kta77")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14902, 0.14902, 0.14902, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="TextLabel" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -125.0
+offset_top = 32.0
+offset_right = 125.0
+offset_bottom = 72.0
+grow_horizontal = 2
+text = "Kto jest wykładowcą?"
+horizontal_alignment = 1
+
+[node name="Players" type="GridContainer" parent="Background"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.162
+anchor_top = 0.171
+anchor_right = 0.859
+anchor_bottom = 0.676
+offset_left = -15.36
+offset_top = -11.12
+offset_right = -11.52
+offset_bottom = 89.28
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 28
+theme_override_constants/v_separation = 28
+columns = 2
+
+[node name="SkipDecision" type="VBoxContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = -96.0
+offset_right = 291.0
+offset_bottom = -8.0
+grow_vertical = 0
+
+[node name="SkipButton" type="Button" parent="Background/SkipDecision"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(165, 40)
+layout_mode = 2
+text = "Pomiń głos"
+
+[node name="Decision" type="HBoxContainer" parent="Background/SkipDecision"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/SkipDecision/Decision"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+
+[node name="DecisionText" type="Label" parent="Background/SkipDecision/Decision/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Jesteś pewny?"
+vertical_alignment = 1
+
+[node name="DecisionYes" type="Button" parent="Background/SkipDecision/Decision"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 40)
+layout_mode = 2
+text = "Tak"
+
+[node name="DecisionNo" type="Button" parent="Background/SkipDecision/Decision"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 40)
+layout_mode = 2
+text = "Nie"
+
+[node name="EndVoteText" type="RichTextLabel" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.675
+anchor_top = 0.877778
+anchor_right = 0.9625
+anchor_bottom = 0.913889
+grow_horizontal = 0
+grow_vertical = 0
+bbcode_enabled = true
+text = "[right]Głosowanie kończy się za [time] sekund[/right]"
+metadata/_edit_use_anchors_ = true
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -756.0
+offset_top = 8.0
+offset_right = -16.0
+offset_bottom = 368.0
+grow_horizontal = 0
+scale = Vector2(0.18, 0.18)
+pivot_offset = Vector2(740, 0)
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 2
+
+[node name="ChatButton" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_vad85")
+
+[node name="PauseMenuButton" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_k0mfc")
+
+[node name="ChatContainer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ChatBackground" type="Panel" parent="ChatContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 152.0
+offset_top = 24.0
+offset_right = -152.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d8hpk")
+
+[node name="Chat" parent="ChatContainer" instance=ExtResource("2_u4dx5")]
+unique_name_in_owner = true
+layer = 2
+
+[connection signal="pressed" from="Background/SkipDecision/SkipButton" to="." method="_on_skip_button_pressed"]
+[connection signal="pressed" from="Background/SkipDecision/Decision/DecisionYes" to="." method="_on_decision_yes_pressed"]
+[connection signal="pressed" from="Background/SkipDecision/Decision/DecisionNo" to="." method="_on_decision_no_pressed"]
+[connection signal="button_down" from="GridContainer/ChatButton" to="." method="_on_chat_button_button_down"]
+[connection signal="button_down" from="GridContainer/PauseMenuButton" to="." method="_on_pause_menu_button_button_down"]
+[connection signal="input_visibility_changed" from="ChatContainer/Chat" to="." method="_on_chat_input_visibility_changed"]

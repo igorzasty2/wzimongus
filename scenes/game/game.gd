@@ -7,42 +7,42 @@ extends Control
 
 
 func _ready():
-	GameManager.registered_successfully.connect(_on_registered_successfully)
-	GameManager.game_started.connect(_on_game_started)
-	GameManager.game_ended.connect(_on_game_ended)
-	GameManager.error_occured.connect(_on_error_occured)
-	GameManager.winner_determined.connect(_on_winner_determined)
+	GameManagerSingleton.registered_successfully.connect(_on_registered_successfully)
+	GameManagerSingleton.game_started.connect(_on_game_started)
+	GameManagerSingleton.game_ended.connect(_on_game_ended)
+	GameManagerSingleton.error_occured.connect(_on_error_occured)
+	GameManagerSingleton.winner_determined.connect(_on_winner_determined)
 	error_pop_up.middle_pressed.connect(_on_error_pop_up_closed)
 
 
 func _on_registered_successfully():
-	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
+	_change_map.call_deferred(load("res://scenes/game/maps/lobby/lobby.tscn"))
 
 
 ## Wysyła wszystkim graczom informacje o roli która wygrała.
-func _on_winner_determined(winning_role: GameManager.Role):
+func _on_winner_determined(winning_role: GameManagerSingleton.Role):
 	display_winner.rpc(winning_role)
 
 
 @rpc("call_local", "reliable")
 ## Wyświetla ekran zakończenia gry.
-func display_winner(winning_role: GameManager.Role):
-	var ending_scene = preload('res://scenes/ui/end_screen/end_screen.tscn').instantiate()
+func display_winner(winning_role: GameManagerSingleton.Role):
+	var ending_scene = preload('res://scenes/game/end_screen/end_screen.tscn').instantiate()
 	ending_scene.set_winning_role(winning_role)
 	get_tree().get_root().add_child(ending_scene)
 
-	GameManager.reset_game()
+	GameManagerSingleton.reset_game()
 
-	_change_map.call_deferred(load("res://scenes/maps/lobby/lobby.tscn"))
+	_change_map.call_deferred(load("res://scenes/game/maps/lobby/lobby.tscn"))
 
 
 func _on_game_started():
-	_change_map.call_deferred(load("res://scenes/maps/main_map/main_map.tscn"))
+	_change_map.call_deferred(load("res://scenes/game/maps/main_map/main_map.tscn"))
 
 
 func _on_game_ended():
 	if !error.visible:
-		get_tree().change_scene_to_file("res://scenes/ui/start_menu/start_menu.tscn")
+		get_tree().change_scene_to_file("res://scenes/menu/start_menu/start_menu.tscn")
 
 
 func _on_error_occured(message: String):
@@ -56,7 +56,7 @@ func _on_error_occured(message: String):
 
 
 func _on_error_pop_up_closed():
-	get_tree().change_scene_to_file("res://scenes/ui/start_menu/start_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/menu/start_menu/start_menu.tscn")
 
 
 ## Zmienia wyświetlaną globalnie mapę.
