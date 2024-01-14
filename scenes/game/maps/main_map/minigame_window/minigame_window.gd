@@ -74,14 +74,13 @@ func _input(event):
 
 		if _use_button_disabled:
 			return
-
 		_summon_window()
 
 
 ## Pokazuje okno minigry.
 func _summon_window():
 	show()
-
+	get_node("OpenWindowSound").play()
 	_subviewport.add_child(_minigame.instantiate())
 	_minigame_instance = _subviewport.get_child(0)
 
@@ -100,7 +99,7 @@ func _end_minigame():
 	_minigame_instance.queue_free()
 
 	hide()
-
+	get_node("TaskSuccesSound").play()
 	TaskManagerSingleton.mark_task_as_complete()
 
 
@@ -110,7 +109,7 @@ func close_minigame():
 		_minigame_instance.queue_free()
 
 		hide()
-
+		get_node("CloseWindowSound").play()
 		show_use_button(_minigame)
 
 	if _minigame == load("res://scenes/game/maps/main_map/camera_system/camera_system.tscn"):

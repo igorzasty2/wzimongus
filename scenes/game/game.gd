@@ -33,12 +33,10 @@ func _on_winner_determined(winning_role: GameManagerSingleton.Role):
 ## Wyświetla ekran zakończenia gry.
 func display_winner(winning_role: GameManagerSingleton.Role):
 	var ending_scene = preload("res://scenes/game/end_screen/end_screen.tscn").instantiate()
-	ending_scene.set_winning_role(winning_role)
 	get_tree().get_root().add_child(ending_scene)
-
+	ending_scene.set_winning_role.call_deferred(winning_role, GameManagerSingleton.get_current_player_value("is_lecturer"))
 	GameManagerSingleton.reset_game()
-
-	_change_map.call_deferred(load("res://scenes/game/maps/lobby/lobby.tscn"))
+	_change_map.call_deferred(preload("res://scenes/game/maps/lobby/lobby.tscn"))
 
 
 func _on_game_started():

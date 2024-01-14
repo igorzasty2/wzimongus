@@ -66,6 +66,8 @@ var teleport_position = null
 ## Początkowa maska kolizji.
 @onready var _initial_collision_mask: int = collision_mask
 
+@onready var _step_sound_player = $StepSound
+
 ## Interfejs
 var _user_interface
 ## Emitowany, gdy przycisk powinien być włączony/wyłączony.
@@ -137,6 +139,10 @@ func _ready():
 
 	GameManagerSingleton.map_load_finished.connect(_on_map_load_finished)
 	GameManagerSingleton.next_round_started.connect(_on_next_round_started)
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		var audio_listener = AudioListener2D.new()
+		audio_listener.make_current()
+		add_child(audio_listener)
 
 
 func _process(_delta):
@@ -144,14 +150,22 @@ func _process(_delta):
 
 	# Aktualizuje parametry animacji postaci.
 	_update_animation_parameters(direction)
-
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		if direction != Vector2.ZERO:
+			if !_step_sound_player.playing:
+				_step_sound_player.play()
+		else:
+			_step_sound_player.stop()
+	
 	# Aktualizuje czas pozostały do kolejnej możliwości oblania
+
 	if _user_interface != null && _fail_timer != null && _fail_timer.time_left != 0:
 		_user_interface.update_time_left("FailLabel", str(int(_fail_timer.time_left)))
 
 	# Aktualizuje czas pozostały do kolejnej możliwości sabotażu.
 	if _user_interface != null && _sabotage_timer != null && _sabotage_timer.time_left > 0:
 		_user_interface.update_time_left("SabotageLabel", str(int(_sabotage_timer.time_left)))
+
 
 
 func _rollback_tick(delta, _tick, is_fresh):
@@ -228,6 +242,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 					_update_highlight(closest_player(GameManagerSingleton.get_current_player_id()))
 				else:
 					_update_highlight(0)
+	
 
 
 func _input(event):
@@ -275,7 +290,10 @@ func _input(event):
 		if !victim:
 			return
 
+		$PlayerInteractionPlayer.stream = load("res://assets/audio/kill_sound.ogg")
+		$PlayerInteractionPlayer.play()
 		GameManagerSingleton.kill_victim(victim)
+		
 		_handle_kill_timer()
 		button_active.emit("FailButton", false)
 
@@ -588,6 +606,7 @@ func activate_lights():
 	_lights_container.show()
 
 
+
 ## Wyłącza światło graczowi.
 func deactivate_lights():
 	_lights_container.hide()
@@ -603,6 +622,7 @@ func activate_player_shaders():
 	_player_sprite.material.set_shader_parameter("line_thickness", 12.0)
 
 	_username_label.material = load("res://assets/shaders/light.tres")
+
 
 
 ## Wyłącza shadery graczowi.

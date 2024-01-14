@@ -1,11 +1,22 @@
-[gd_scene load_steps=31 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=43 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
 [ext_resource type="Script" path="res://scenes/characters/player/skin_selector.gd" id="2_mfjlm"]
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="3_l2yj5"]
 [ext_resource type="Script" path="res://scenes/characters/player/input.gd" id="4_8ajvt"]
+[ext_resource type="AudioStream" uid="uid://ds10gn6nvty0p" path="res://assets/audio/steps/step01.ogg" id="7_46nd0"]
 [ext_resource type="Texture2D" uid="uid://4edwjsihoi5a" path="res://assets/textures/light/light_circle.png" id="7_188be"]
+[ext_resource type="AudioStream" uid="uid://bgj2epw4he0eh" path="res://assets/audio/steps/step02.ogg" id="8_nijin"]
+[ext_resource type="AudioStream" uid="uid://cefr5kt83qmib" path="res://assets/audio/steps/step11.ogg" id="9_xo750"]
+[ext_resource type="AudioStream" uid="uid://disxyjkghko72" path="res://assets/audio/steps/step03.ogg" id="10_ulyis"]
+[ext_resource type="AudioStream" uid="uid://cyoeux1hvxxpd" path="res://assets/audio/steps/step04.ogg" id="11_rgb6e"]
+[ext_resource type="AudioStream" uid="uid://bja52ug284n6f" path="res://assets/audio/steps/step05.ogg" id="12_i7ibw"]
+[ext_resource type="AudioStream" uid="uid://boip1btyaml4m" path="res://assets/audio/steps/step06.ogg" id="13_5fp00"]
+[ext_resource type="AudioStream" uid="uid://cnhl4ac4i5q00" path="res://assets/audio/steps/step07.ogg" id="14_an21u"]
+[ext_resource type="AudioStream" uid="uid://dpwx4aat1uutt" path="res://assets/audio/steps/step08.ogg" id="15_hfa1v"]
+[ext_resource type="AudioStream" uid="uid://c5vr662254ws4" path="res://assets/audio/steps/step09.ogg" id="16_couiw"]
+[ext_resource type="AudioStream" uid="uid://xlajnu05u4y7" path="res://assets/audio/steps/step10.ogg" id="17_6a42q"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pafr0"]
 
@@ -179,6 +190,32 @@ states/walk/node = SubResource("AnimationNodeBlendSpace2D_fnme7")
 states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xwmwd"]
+playback_mode = 1
+streams_count = 11
+stream_0/stream = ExtResource("7_46nd0")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("8_nijin")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("10_ulyis")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("11_rgb6e")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("12_i7ibw")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("13_5fp00")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("14_an21u")
+stream_6/weight = 1.0
+stream_7/stream = ExtResource("15_hfa1v")
+stream_7/weight = 1.0
+stream_8/stream = ExtResource("16_couiw")
+stream_8/weight = 1.0
+stream_9/stream = ExtResource("17_6a42q")
+stream_9/weight = 1.0
+stream_10/stream = ExtResource("9_xo750")
+stream_10/weight = 1.0
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 y_sort_enabled = true
@@ -238,11 +275,13 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="Skins"]
+callback_mode_process = 0
+libraries = {
+"": SubResource("AnimationLibrary_0ebfx")
+}
 tree_root = SubResource("AnimationNodeStateMachine_gjhch")
-anim_player = NodePath("../AnimationPlayer")
 advance_expression_base_node = NodePath("")
-active = true
-process_callback = 0
+anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/idle = false
 parameters/conditions/is_moving = false
 parameters/idle/blend_position = Vector2(-0.992939, 0.982759)
@@ -283,5 +322,12 @@ input_properties = Array[String](["Input:direction"])
 script = ExtResource("3_l2yj5")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
+
+[node name="PlayerInteractionPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -20.0
+
+[node name="StepSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_xwmwd")
+volume_db = -30.0
 
 [connection signal="animation_finished" from="Skins/Control/PlayerSprite/VentingAnimationPlayer" to="." method="_on_venting_animation_player_animation_finished"]

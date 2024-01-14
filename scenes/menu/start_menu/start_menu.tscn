@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bha1146nfvg6s"]
+[gd_scene load_steps=6 format=3 uid="uid://bha1146nfvg6s"]
 
 [ext_resource type="Script" path="res://scenes/menu/start_menu/start_menu.gd" id="1_kh2k6"]
 [ext_resource type="PackedScene" uid="uid://dbggxxcgwkdh5" path="res://scenes/ui/background/background.tscn" id="2_coia4"]
 [ext_resource type="PackedScene" uid="uid://rv57oeaui5t0" path="res://scenes/menu/start_menu/credits/credits.tscn" id="3_6yiou"]
 [ext_resource type="PackedScene" uid="uid://01iag5x618my" path="res://scenes/ui/settings/settings.tscn" id="3_j535k"]
+[ext_resource type="AudioStream" uid="uid://cuoywtj5aix28" path="res://assets/audio/button_sound.ogg" id="5_id3rb"]
 
 [node name="StartMenu" type="Control"]
 layout_mode = 3
@@ -143,6 +144,10 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Powrót"
+
+[node name="ButtonPressSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_id3rb")
+volume_db = -30.0
 
 [connection signal="pressed" from="Menu/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Menu/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]

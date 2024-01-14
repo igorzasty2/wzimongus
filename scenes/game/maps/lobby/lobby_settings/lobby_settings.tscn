@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3e41jcsgj6bl"]
+[gd_scene load_steps=8 format=3 uid="uid://b3e41jcsgj6bl"]
 
 [ext_resource type="Script" path="res://scenes/game/maps/lobby/lobby_settings/lobby_settings.gd" id="1_h5l7u"]
 [ext_resource type="PackedScene" uid="uid://b84ikvrvlejqh" path="res://scenes/ui/background_button/background_button.tscn" id="2_asrpg"]
 [ext_resource type="PackedScene" uid="uid://b8yh2vysfv24q" path="res://scenes/ui/close_button/close_button.tscn" id="2_sp5jw"]
 [ext_resource type="PackedScene" uid="uid://dnfvmswm3sk7g" path="res://scenes/ui/window_animation_player/window_animation_player.tscn" id="4_34t22"]
+[ext_resource type="AudioStream" uid="uid://ynxw2pohm2pc" path="res://assets/audio/window_close_sound.ogg" id="5_78ho3"]
+[ext_resource type="AudioStream" uid="uid://cmmpncpd1ccw" path="res://assets/audio/window_open_sound.ogg" id="6_bf028"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pyuiv"]
 
@@ -357,6 +359,14 @@ size_flags_vertical = 0
 window = NodePath("../../..")
 
 [node name="WindowAnimationPlayer" parent="SettingsContainer" instance=ExtResource("4_34t22")]
+
+[node name="WindowCloseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_78ho3")
+volume_db = -25.0
+
+[node name="WindowOpenSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_bf028")
+volume_db = -25.0
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxPlayersContainer/MaxPlayersInput" to="." method="_on_connections_lecturers_item_selected"]

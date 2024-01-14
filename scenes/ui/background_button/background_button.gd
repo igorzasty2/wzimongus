@@ -7,4 +7,5 @@ extends Button
 
 
 func _on_button_down():
+	$WindowCloseSound.play()
 	window.visible = false
