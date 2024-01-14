@@ -12,7 +12,7 @@ extends Control
 func _on_join_button_pressed():
 	GameManagerSingleton.set_current_player_value("username", _username_input.text)
 
-	GameManagerSingleton.join_lobby.call_deferred(_address_input.text, _port_input.text.to_int())
+	GameManagerSingleton.join_lobby(_address_input.text, _port_input.text.to_int())
 
 	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 

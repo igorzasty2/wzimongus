@@ -11,7 +11,7 @@ extends Control
 func _on_host_button_pressed():
 	GameManagerSingleton.set_current_player_value("username", _username_input.text)
 
-	GameManagerSingleton.create_lobby.call_deferred(_lobby_name_input.text, _port_input.text.to_int())
+	GameManagerSingleton.create_lobby(_lobby_name_input.text, _port_input.text.to_int())
 
 	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 
