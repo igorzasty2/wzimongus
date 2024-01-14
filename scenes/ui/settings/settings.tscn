@@ -112,6 +112,8 @@ text = "V-Sync"
 
 [node name="VSyncCheckBox" type="CheckBox" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 focus_mode = 0
 
 [node name="Filler2" type="Control" parent="TabContainer/SoundAndGraphics/MarginContainer/GridContainer"]
