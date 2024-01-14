@@ -1,5 +1,5 @@
-## Klasa reprezentująca pojedynczy serwer w liście serwerów.
-class_name JointMenuServerNode
+## Klasa pojedyńczego wiersza serwera w liście serwerów.
+class_name JoinMenuServerNode
 extends MarginContainer
 
 ## Emitowany, gdy gracz wybierze serwer.
@@ -11,7 +11,7 @@ var _server_info
 @onready var _server_address = $EntryContainer/InfoContainer/ServerAddress
 @onready var _player_count = $EntryContainer/InfoContainer/PlayerCount
 
-## Inicjalzuje.
+## Inicjalizuje wiersz serwera.
 func init(server_info):
 	_server_info = server_info
 	_lobby_name.text = server_info["lobby_name"]
@@ -19,6 +19,7 @@ func init(server_info):
 	_player_count.text = str(server_info["player_count"]) + "/" + str(server_info["max_players"])
 
 
+## Zwraca adres IP serwera.
 func get_server_ip():
 	return _server_info["ip"]
 

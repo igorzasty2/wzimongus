@@ -1,17 +1,12 @@
-## Klasa reprezuntuje instancję minigry Fill Formulas
+## Klasa reprezuntuje instancję minigry Fill Formulas.
 class_name FillFormulasMinigame
 extends Node2D
 
 
-## Lista możliwych do wylosowania wzorów
-
-# Scena ta przechowuje główną logikę minigry oraz główne jej skrypty wymagane
-# do jej działania
-
+## Polska nazwa minigry.
 @export var polish_name : String
 
-# FORMULAS przechowuje listę możliwych do wylosowania wzorów do uzupełnienia
-
+## Lista możliwych do wylosowania wzorów
 const FORMULAS = {
 	0:"F=m*v",
 	1:"v=s/t",
@@ -21,25 +16,26 @@ const FORMULAS = {
 	5:"P=π*r²",
 	6:"P=a*h½",
 	}
-@export
+
 ## Ilość losowanych wzorów
-var how_many_formulas = 3
-## Sygnał emitowany w momencie ukończenia minigry
+@export var how_many_formulas = 3
+
+## Emitowany, gdy minigra zostanie ukończona.
 signal minigame_end
 
-## Informacja czy pole jest obecnie przesuwane
+## Informacja czy pole jest obecnie przesuwane.
 var is_moving = false
-## Referencja do przesuwanego pola
+## Referencja do przesuwanego pola.
 var moving
-## Wcześniej wylosowane wzory
+## Wcześniej wylosowane wzory.
 var generated = []
-## Informacja ile wzorów zostało uzupełnionych
+## Informacja ile wzorów zostało uzupełnionych.
 var _times_generated = 0
-## Liczba uzupełnonych luk we wzorze
+## Liczba uzupełnonych luk we wzorze.
 var _point = 0
-## Liczba luk w uzupełnianym wzorze
+## Liczba luk w uzupełnianym wzorze.
 var _wanted_points = 0
-## Informuje czy minigra została ukończona
+## Informuje czy minigra została ukończona.
 var _finished = false
 
 

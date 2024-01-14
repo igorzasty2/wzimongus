@@ -1,11 +1,11 @@
-## Minigra odgadnij hasło.
+## Klasa reprezentująca instancję minigry Find Password.
 class_name FindPasswordMinigame
 extends Node2D
 
-## Sygnał końca minigry
+## Emitowany, gdy minigra zostanie ukończona.
 signal minigame_end
 
-## Nazwa polska minigry
+## Polska nazwa minigry.
 @export var polish_name : String
 ## Referencja do wejścia na hasło
 @onready var _password_input = get_node("%PasswordInput")

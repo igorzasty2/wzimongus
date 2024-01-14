@@ -1,4 +1,4 @@
-## Przycisk zamykający okno.
+## Klasa przycisku zamykającego okno.
 class_name CloseButton
 extends TextureButton
 

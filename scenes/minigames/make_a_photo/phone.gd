@@ -1,3 +1,5 @@
+## Klasa odpowiedzialna za ruch telefonu w scenie.
+class_name MakeAPhotoPhone
 extends CharacterBody2D
 
 var _speed = 0.3
@@ -8,7 +10,8 @@ var _papers_x_right = 780
 var _papers_y_top = 181
 var _papers_y_bottom = 411
 var _make_a_photo: Button
-	
+
+## Pokazuje telefon.
 func show_the_phone_and_start():
 	self.visible = true
 

@@ -1,8 +1,8 @@
-## Zarządza animacją okna.
+## Klasa animacji okna.
 class_name WindowAnimationPlayer
 extends AnimationPlayer
 
-## Okno do animacji
+## Okno do animacji.
 var window : Node
 
 func _ready():

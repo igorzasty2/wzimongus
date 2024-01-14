@@ -1,11 +1,11 @@
-## Główna klasa gracza.
+## Klasa gracza.
 class_name Player
 extends CharacterBody2D
 
 
-## Emitowany gdy gracz wchodzi do venta.
+## Emitowany, gdy gracz wchodzi do venta.
 signal vent_entered()
-## Emitowany gdy gracz wychodzi z venta.
+## Emitowany, gdy gracz wychodzi z venta.
 signal vent_exited()
 
 ## Prędkość poruszania się.
@@ -70,7 +70,7 @@ var teleport_position = null
 
 ## Interfejs
 var _user_interface
-## Emitowany gdy przycisk powinien być włączony/wyłączony
+## Emitowany, gdy przycisk powinien być włączony/wyłączony.
 signal button_active(button_name:String, is_active:bool)
 ## Timer z czasem do oblania
 var _fail_timer

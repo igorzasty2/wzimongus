@@ -1,9 +1,11 @@
-## Minigra polegająca na kopiowaniu plików z jednego folderu do drugiego.
+## Klasa reprezentująca instancję minigry Copying Files.
 class_name CopyingFilesMinigame
 extends Control
 
+## Emitowany po zakończeniu minigry.
 signal minigame_end
 
+## Polska nazwa minigry.
 @export var polish_name : String
 
 func _on_confirm_button_down():

@@ -1,33 +1,33 @@
-## Klasa minigry polegającej na przypisaniu prowadzących do sal.
+## Klasa reprezentująca instancję minigry Room Reservations.
 class_name RoomReservationsMinigame
 extends Control
 
-## Sygnał końca minigry
+## Emitowany, gdy minigra zostanie ukończona.
 signal minigame_end
 
-## Polska nazwa minigry
+## Polska nazwa minigry.
 @export var polish_name : String
 
-## Referencja do kontenera z prowadzącymi
+## Referencja do kontenera z prowadzącymi.
 @onready var _lecturers_containers = get_node("%Lecturers")
-## Referencja do kontenera z salami
+## Referencja do kontenera z salami.
 @onready var _rooms_container = get_node("%Rooms")
-## Referencja do konta
+## Referencja do konta.
 @onready var _account = get_node("%Account")
 
-## Lista prowadzących
+## Lista prowadzących.
 var LECTURERS = ["dr inż. Marcin Bator", "dr Marcin Dudziński", "dr inż. Diana Dziewa-Dawidczyk", "dr inż. Alina Jóźwikowska", "dr hab. inż. Arkadiusz Orłowski", "dr inż. Maciej Pankiewicz", "dr hab. Alexander Prokopenya", "dr Piotr Stachura", "dr inż. Robert Stępień", "dr hab. Aleksander Strasburger", "dr Tomasz Świsłocki", "dr inż. Artur Wiliński", "dr inż. Piotr Wrzeciono", "dr Andrzej Zembrzuski", ]
-## Lista sal
+## Lista sal.
 var ROOMS = ["Aula 4", "Aula 3", "Aula 2", "Aula 1", "Sala 3/82", "Sala 3/40", "Sala 3/42", "Sala 3/14", "Sala 3/19"]
-## Lista kolorów
+## Lista kolorów.
 var COLORS = ["#00a436", "#076db5", "#b80400", "#5e4943"]
 
-## Scena węzła sali
+## Scena węzła sali.
 var _room_node_scene = preload("res://scenes/minigames/room_reservations/room_node/room_node.tscn")
 
-## Przypisane sale
+## Przypisane sale.
 var _assigned_rooms = {}
-## Przypisane kolory
+## Przypisane kolory.
 var _assigned_colors = {}
 
 func _ready():

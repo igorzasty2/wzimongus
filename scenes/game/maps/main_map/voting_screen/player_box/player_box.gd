@@ -2,31 +2,31 @@
 class_name VotingScreenPlayerBox
 extends Control
 
-## Referencja do awatara gracza
+## Referencja do awatara gracza.
 @onready var _avatar = get_node("%Avatar")
-## Referencja do nazwy gracza
+## Referencja do nazwy gracza.
 @onready var _username = get_node("%Username")
-## Referencja do decyzji gracza
+## Referencja do decyzji gracza.
 @onready var _decision = get_node("%Decision")
-## Referencja do kontenera z głosującymi
+## Referencja do kontenera z głosującymi.
 @onready var _voted_by_container = get_node("%VotedBy")
-## Referencja do przycisku odpalającego potwierdzenie głosu
+## Referencja do przycisku odpalającego potwierdzenie głosu.
 @onready var _button = get_node("%Button")
 
-## Sygnał emitowany gdy gracz zagłosuje
+## Sygnał emitowany gdy gracz zagłosuje.
 signal player_voted
-## Sygnał emitowany gdy gracz zostanie wybrany
+## Sygnał emitowany gdy gracz zostanie wybrany.
 signal player_selected
 
-## Klucz gracza
+## Klucz gracza.
 var _player_key
-## Tween do animacji
+## Tween do animacji.
 var _display_tween
 
-## Scena z głosującymi
+## Scena z głosującymi.
 var _voted_by_scene = preload("res://scenes/game/maps/main_map/voting_screen/voted_by/voted_by.tscn")
 
-## Funkcja inicjalizująca box gracza
+## Funkcja inicjalizująca box gracza.
 func init(player_id: int, voted_by: Array):
 	var player = GameManagerSingleton.get_registered_players()[player_id]
 
@@ -83,7 +83,7 @@ func _on_decision_yes_pressed():
 	_decision.visible = false
 	emit_signal("player_voted", _player_key)
 
-## Funkcja ustawiająca status głosowania
+## Funkcja ustawiająca status głosowania.
 func set_voting_status(is_voted: bool):
 	if is_voted:
 		_button.pressed.connect(_on_button_pressed)

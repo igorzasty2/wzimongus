@@ -1,4 +1,3 @@
-## Klasa do wyświetlania listy zadań
 extends CanvasLayer
 
 ## Referencja do node'a przechowującego listę zadań.

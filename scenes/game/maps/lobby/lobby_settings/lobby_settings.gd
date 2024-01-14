@@ -1,4 +1,3 @@
-## Skrypt odpowiadający za obsługę menu ustawień serwera.
 extends CanvasLayer
 
 

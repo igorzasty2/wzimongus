@@ -1,4 +1,3 @@
-## Skrypt wyboru skórki.
 extends Node2D
 
 ## Referencja do sprite'a postaci.

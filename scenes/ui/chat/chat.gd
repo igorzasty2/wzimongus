@@ -1,8 +1,8 @@
-## Czat do porozumiewania się między graczami.
+## Klasa czatu.
 class_name Chat
 extends CanvasLayer
 
-## Emitowany gdy zmieni się widoczność pola tekstowego.
+## Emitowany, gdy zmieni się widoczność pola tekstowego.
 signal input_visibility_changed()
 
 ## Grupy czatu
@@ -106,7 +106,7 @@ func _update_group_label():
 
 
 @rpc("any_peer", "call_local", "reliable")
-## Funkcja wysyłająca wiadomość
+## Wysyła wiadomość do wszystkich graczy.
 func _send_message(message, group, id):
 	match group:
 		Group.DEAD:
@@ -131,7 +131,7 @@ func _send_message(message, group, id):
 			if peer_id != 1:
 				_send_message.rpc_id(peer_id, message, group, id)
 
-## Funkcja wysyłająca wiadomość systemową
+## Wysyła wiadomość systemową.
 func send_system_message(message):
 	const SYSTEM_MESSAGE_ID = 1
 	_send_message(message, Group.SYSTEM, SYSTEM_MESSAGE_ID)
@@ -182,7 +182,7 @@ func _update_scrollbar_position():
 		_chat_logs_scroll_container.scroll_vertical = _last_known_scroll_max
 
 
-## Funkcja otwierająca czat.
+## Otwiera czat.
 func open_chat():
 	_input_text.grab_focus()
 	_input_text.show()
@@ -190,7 +190,7 @@ func open_chat():
 	_chat_logs_scroll_container.modulate.a = 1
 
 
-## Funkcja zamykająca czat.
+## Zamyka czat.
 func close_chat():
 	_input_text.text = ""
 	_input_text.release_focus()

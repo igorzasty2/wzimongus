@@ -1,75 +1,75 @@
-## Klasa ustawień
+## Klasa ustawień.
 class_name Settings
 extends Control
 
-## Slider dźwięku
+## Slider dźwięku.
 @onready var _volume_slider = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VolumeSlider
-## Slider skali interfejsu
+## Slider skali interfejsu.
 @onready var _interface_scale_slider = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/InterfaceScaleSlider
-## Checkbox fullscreen'a
+## Checkbox fullscreen'a.
 @onready var _full_screen_checkbox = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/FullScreenCheckBox
-# Checkbox ustawienia v-sync
+# Checkbox ustawienia v-sync.
 @onready var _v_sync_checkbox = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VSyncCheckBox
 
-## Label skali interfejsu
+## Label skali interfejsu.
 @onready var _interface_scale_output = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/InterfaceScaleOutput
-## Label dźwięku
+## Label dźwięku.
 @onready var _volume_output = $TabContainer/SoundAndGraphics/MarginContainer/GridContainer/VolumeOutput
 
-## Okno przypisywania przycisku
+## Okno przypisywania przycisku.
 @onready var _key_rebind_window = $TabContainer/Controls/KeyRebindWindow
-## Nazwa przypisywanej akcji
+## Nazwa przypisywanej akcji.
 @onready var _action_name = $TabContainer/Controls/KeyRebindWindow/Panel/VBoxContainer/ActionName
-## Okno informujące o tym, że przycisk jest już w użyciu
+## Okno informujące o tym, że przycisk jest już w użyciu.
 @onready var _key_used_window = $TabContainer/Controls/KeyUsedWindow
 
-## Przycisk domyślnych ustawień dźwięku
+## Przycisk domyślnych ustawień dźwięku.
 @onready var _default_sound_graphics_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer/DefaultSoundGraphicsButton
-## Przycisk domyślnych ustawień sterowania
+## Przycisk domyślnych ustawień sterowania.
 @onready var _default_controls_button = $TabContainer/Default/MarginContainer/VBoxContainer/VBoxContainer2/DefaultControlsButton
 
-## Określa czy można zamknąć
+## Określa czy można zamknąć.
 @export var can_close:bool = true
 
-## Akcje
+## Akcje.
 const _ACTIONS = ["pause_menu", "sabotage", "use_vent", "interact", "fail", "report", "move_left", "move_right", "move_up", "move_down", "chat_open", "change_group"]
 
 
-## Ustawienia użytkownika
+## Ustawienia użytkownika.
 var _user_sett: UserSettingsManager
 
-## Strona przycisku
+## Strona przycisku.
 enum _Side {LEFT, RIGHT}
 
-## Nazwa akcji w label'u
+## Nazwa akcji w label'u.
 var _action_label_name : String
-## Nazwa akcji w ustawieniach projektu
+## Nazwa akcji w ustawieniach projektu.
 var _action_project_name : String
-## Strona przycisku
+## Strona przycisku.
 var _button_side : _Side
-## Lewy przycisk
+## Lewy przycisk.
 var _left_button : Button
-## Prawy przycisk
+## Prawy przycisk.
 var _right_button : Button
 
 var _primary_event_storage : InputEventKey
 var _secondary_event_storage : InputEventKey
 
-# Eventy akcji przed przypisaniem nowych akcji
+# Eventy akcji przed przypisaniem nowych akcji.
 var _primary_event_backup : InputEventKey
 var _secondary_event_backup : InputEventKey
 
-## Określa czy zapisywanie jest anulowane
+## Określa czy zapisywanie jest anulowane.
 var _is_canceled : bool = false
 
-## Określa czy obecnie jest zmieniane przypisanie przycisku
+## Emitowane, gdy przypisywanie klawiszy jest włączone/wyłączone.
 signal button_rebind(is_rebinded:bool)
 
 func _ready():
 	_user_sett = UserSettingsManager.load_or_create()
 	set_process_unhandled_key_input(false)
 
-	# Ustawia domyślne/zapisane wartości dla dźwięku i grafiki
+	# Ustawia domyślne/zapisane wartości dla dźwięku i grafiki.
 	_volume_slider.value = _user_sett.volume
 	_on_volume_slider_value_changed(_user_sett.volume)
 	_full_screen_checkbox.button_pressed = _user_sett.full_screen
@@ -83,7 +83,7 @@ func _ready():
 	_key_used_window.visible = false
 
 
-# Obsługuje input z klawiatury podczas przypisywania klawiszy
+# Obsługuje input z klawiatury podczas przypisywania klawiszy.
 func _unhandled_key_input(event):
 	_rebind_key(event, _button_side)
 	if _is_canceled != true:
@@ -93,7 +93,7 @@ func _unhandled_key_input(event):
 	set_process_unhandled_key_input(false)
 
 
-# Obsługuje anulowanie przypisania klawiszy
+# Obsługuje anulowanie przypisania klawiszy.
 func _on_cancel_button_pressed():
 	_is_canceled = true
 	if is_processing_unhandled_key_input():
@@ -102,13 +102,13 @@ func _on_cancel_button_pressed():
 	can_close = true
 
 
-# Obsługuje usuwanie przypisania klawiszy
+# Obsługuje usuwanie przypisania klawiszy.
 func _on_delete_button_pressed():
 	_is_canceled = true
 	if is_processing_unhandled_key_input():
 		_unhandled_key_input(null)
 
-	# Nie pozwala na puste przypisanie klawiszy
+	# Nie pozwala na puste przypisanie klawiszy.
 	if _button_side == _Side.LEFT && _secondary_event_backup != null:
 		save_control_settings(_action_project_name, _secondary_event_backup, null)
 	elif _button_side == _Side.RIGHT && _primary_event_backup != null:
@@ -118,20 +118,20 @@ func _on_delete_button_pressed():
 	can_close = true
 
 
-# Obsługuje przypisanie klawisza podczas gdy przypisane klawisze się powtarzają, a gracz wybierze "tak"
+# Obsługuje przypisanie klawisza podczas gdy przypisane klawisze się powtarzają, a gracz wybierze "tak".
 func _on_yes_button_pressed():
 	_key_used_window.visible = false
 	can_close = true
 
 
-# Obsługuje przypisanie klawisza podczas gdy przypisane klawisze się powtarzają, a gracz wybierze "nie"
+# Obsługuje przypisanie klawisza podczas gdy przypisane klawisze się powtarzają, a gracz wybierze "nie".
 func _on_no_button_pressed():
 	save_control_settings(_action_project_name, _primary_event_backup, _secondary_event_backup)
 	_key_used_window.visible = false
 	can_close = true
 
 
-# Zmienia przypisanie klawisza
+# Zmienia przypisanie klawisza.
 func _rebind_key(event, button):
 	if event == null:
 		return
@@ -177,7 +177,7 @@ func _rebind_key(event, button):
 		can_close = true
 
 
-## Zapisuje ustawienia sterowania
+## Zapisuje ustawienia sterowania.
 func save_control_settings(action_name : String, primary_butt : InputEventKey, secondary_butt : InputEventKey):
 	InputMap.action_erase_events(_action_project_name)
 	if primary_butt!= null:
@@ -196,7 +196,7 @@ func save_control_settings(action_name : String, primary_butt : InputEventKey, s
 	_user_sett.save()
 
 
-## Obsługuje powtarzające się przypisania klawiszy
+## Obsługuje powtarzające się przypisania klawiszy.
 func _is_already_used(event:InputEventKey):
 	var key = event.physical_keycode
 	for ac in _ACTIONS :
@@ -209,7 +209,7 @@ func _is_already_used(event:InputEventKey):
 	return false
 
 
-## Ustawia tekst w przyciskach
+## Ustawia tekst w przyciskach.
 func _set_buttons_names():
 	if InputMap.has_action(_action_project_name) == true:
 		var input_actions = InputMap.action_get_events(_action_project_name)
@@ -223,7 +223,7 @@ func _set_buttons_names():
 			_right_button.text = ""
 
 
-## Ustawia lokalne wartości potrzebne do przypisywania klawiszy
+## Ustawia lokalne wartości potrzebne do przypisywania klawiszy.
 func _assign(action_label_name, action_project_name, side, left_button, right_button):
 	self._action_label_name = action_label_name
 	self._action_project_name = action_project_name
@@ -247,7 +247,7 @@ func _assign(action_label_name, action_project_name, side, left_button, right_bu
 	set_process_unhandled_key_input(true)
 
 
-## Obsługuje ustawienia pełnego ekranu
+## Obsługuje ustawienia pełnego ekranu.
 func _on_full_screen_checkbox_toggled(button_pressed):
 	if button_pressed==true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -257,7 +257,7 @@ func _on_full_screen_checkbox_toggled(button_pressed):
 	_user_sett.save()
 
 
-## Obsługuje ustawienia dźwięku i wyświetlaną wartość
+## Obsługuje ustawienia dźwięku i wyświetlaną wartość.
 func _on_volume_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(0,linear_to_db(value))
 	_volume_output.text = str(value)
@@ -265,14 +265,14 @@ func _on_volume_slider_value_changed(value):
 	_user_sett.save()
 
 
-## Obsługuje ustawienia skali interfejsu i wyświetlaną wartość
+## Obsługuje ustawienia skali interfejsu i wyświetlaną wartość.
 func _on_interface_scale_slider_value_changed(value):
 	_interface_scale_output.text = str(value)
 	_user_sett.change_interface_scale(value)
 	_user_sett.save()
 
 
-## Obsługuje ustawienia v-sync
+## Obsługuje ustawienia v-sync.
 func _on_v_sync_check_box_toggled(button_pressed):
 	if button_pressed == true:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
@@ -282,7 +282,6 @@ func _on_v_sync_check_box_toggled(button_pressed):
 	_user_sett.save()
 
 
-# Obsługuje wciśnięcie przycisku przypisania
 func _on_sabotage_key_rebind_rebind_button_pressed(action_label_name, action_project_name, side, left_button, right_button):
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
@@ -320,19 +319,19 @@ func _on_change_group_key_rebind_rebind_button_pressed(action_label_name, action
 	_assign(action_label_name, action_project_name, side, left_button, right_button)
 
 
-## Obsługuje przywracanie domyślnych ustawień dźwięku i grafiki
+## Obsługuje przywracanie domyślnych ustawień dźwięku i grafiki.
 func _on_default_sound_graphics_button_pressed():
 	_default_sound_graphics_button.release_focus()
 	_user_sett.restore_default_sound_and_graphics()
 	_ready()
 
 
-## Obsługuje przywracanie domyślnych ustawień sterowania
+## Obsługuje przywracanie domyślnych ustawień sterowania.
 func _on_default_controls_button_pressed():
 	_default_controls_button.release_focus()
 	_user_sett.restore_default_controls()
 
-	# Stosuje przywrócone wartości dla każdej akcji
+	# Stosuje przywrócone wartości dla każdej akcji.
 	var parent = find_child("Controls").find_child("MarginContainer").find_child("VBoxContainer")
 	for child in parent.get_children():
 		if !(child is HSeparator):
@@ -340,7 +339,7 @@ func _on_default_controls_button_pressed():
 				child.start()
 
 
-## Zapobiega zmianie zakładki podczas przypisywania klawiszy
+## Zapobiega zmianie zakładki podczas przypisywania klawiszy.
 func _on_tab_container_tab_changed(_tab):
 	if _key_rebind_window.visible || _key_used_window.visible:
 		$TabContainer.current_tab = 1

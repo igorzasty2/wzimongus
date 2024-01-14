@@ -100,13 +100,13 @@ func _on_pause_button_button_down():
 	GameManagerSingleton.execute_action("pause_menu")
 
 
-# Aktywuje i deaktywuje przycisk interakcji
+## Aktywuje/dezaktywuje przycisk interakcji.
 func toggle_interact_button_active(is_active:bool):
 	_interact_button.disabled = !is_active
 	_toggle_button_visual(_interact_button, is_active)
 
 
-# Zmienia wygląd przycisku
+## Zmienia wygląd przycisku interakcji.
 func _toggle_button_visual(button:TextureButton, is_on:bool):
 	if is_on:
 		button.modulate = Color8(255, 255, 255, 255)

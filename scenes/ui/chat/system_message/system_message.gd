@@ -1,4 +1,4 @@
-## Systemowa wiadomość w czacie.
+## Klasa systemowej wiadomości czatu.
 class_name ChatSystemMessage
 extends HBoxContainer
 

@@ -1,4 +1,4 @@
-## Ekran ładowania głównej mapy.
+## Klasa ekranu ładowania głównej mapy.
 class_name LoadingScreen
 extends CanvasLayer
 

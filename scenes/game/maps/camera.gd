@@ -1,8 +1,8 @@
-## Kamera śledząca gracza.
+## Klasa kamery, śledzącej gracza.
 class_name Camera
 extends Camera2D
 
-# Referencja do śledzonego gracza.
+## Referencja do śledzonego gracza.
 var target: CharacterBody2D
 
 var _shake_timer = Timer.new()

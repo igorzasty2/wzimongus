@@ -18,7 +18,7 @@ var _initial_grid_container_2_scale
 
 var _initial_task_list_display_scale
 
-# Na początku gry ustawia odpowiedni interface w zależności czy gracz jest imposotrem czy crewmatem, wyłącza wszystkie przyciski poza ustawieniami
+# Na początku gry ustawia odpowiedni interface w zależności czy gracz jest imposotrem czy crewmatem, wyłącza wszystkie przyciski poza ustawieniami.
 func _ready():
 	_task_list_display = get_parent().get_node("TaskListDisplay")
 	
@@ -30,7 +30,7 @@ func _ready():
 	_user_sett.interface_scale_value_changed.connect(_on_interface_scale_changed)
 	_on_interface_scale_changed(_user_sett.interface_scale)
 	
-	# Gracz jest impostorem
+	# Gracz jest wykładowcą.
 	if GameManagerSingleton.get_current_player_value("is_lecturer"):
 		toggle_button_active("VentButton", false)
 		toggle_button_active("FailButton", false)
@@ -38,7 +38,7 @@ func _ready():
 		
 		update_time_left("FailLabel","")
 		update_time_left("SabotageLabel","")
-	# Gracz jest crewmatem
+	# Gracz jest studentem.
 	else: 
 		_remove_button("VentButton")
 		_remove_button("FailButton")
@@ -55,37 +55,37 @@ func _on_interface_scale_changed(value:float):
 	_task_list_display.scale = _initial_task_list_display_scale * value
 
 
-## Obsługuje naciśnięcie przycisku do reportowania
+## Obsługuje naciśnięcie przycisku do reportowania.
 func _on_report_button_button_down():
 	GameManagerSingleton.execute_action("report")
 
 
-## Obsługuje naciśnięcie przycisku interakcji
+## Obsługuje naciśnięcie przycisku interakcji.
 func _on_interact_button_button_down():
 	GameManagerSingleton.execute_action("interact")
 
 
-## Obsługuje naciśnięcie przycisku do ventowania
+## Obsługuje naciśnięcie przycisku do ventowania.
 func _on_vent_button_button_down():
 	GameManagerSingleton.execute_action("use_vent")
 
 
-## Obsługuje naciśnięcie przycisku do oblewania
+## Obsługuje naciśnięcie przycisku do oblewania.
 func _on_fail_button_button_down():
 	GameManagerSingleton.execute_action("fail")
 
 
-## Obsługuje naciśnięcie przycisku sabotażu
+## Obsługuje naciśnięcie przycisku sabotażu.
 func _on_sabotage_button_button_down():
 	GameManagerSingleton.execute_action("sabotage")
 
 
-## Obsługuje naciśnięcie przycisku do otwierania menu pauzy
+## Obsługuje naciśnięcie przycisku do otwierania menu pauzy.
 func _on_pause_button_button_down():
 	GameManagerSingleton.execute_action("pause_menu")
 
 
-## Aktywuje i deaktywuje przycisk o danej nazwie
+## Aktywuje i deaktywuje przycisk o danej nazwie.
 func toggle_button_active(button_name:String, is_active:bool):
 	var button : TextureButton = get_node("GridContainer").get_node(button_name)
 	if button != null:
@@ -93,7 +93,7 @@ func toggle_button_active(button_name:String, is_active:bool):
 		_toggle_button_visual(button, is_active)
 
 
-## Zmienia wygląd przycisku
+## Zmienia wygląd przycisku.
 func _toggle_button_visual(button:TextureButton, is_on:bool):
 	if is_on:
 		button.modulate = Color8(255, 255, 255, 255)
@@ -101,13 +101,13 @@ func _toggle_button_visual(button:TextureButton, is_on:bool):
 		button.modulate = Color8(130, 130, 130, 100)
 
 
-## Usuwa przycik o danej nazwie
+## Usuwa przycik o danej nazwie.
 func _remove_button(button_name:String):
 	var button : TextureButton = get_node("GridContainer").get_node(button_name)
 	button.queue_free()
 
 
-## Napełnia siatkę daną ilością zapełniaczy
+## Napełnia siatkę daną ilością zapełniaczy.
 func _fill_grid(amount:int):
 	for i in range(0, amount):
 		var filler_duplicate = _filler.duplicate()
@@ -115,7 +115,7 @@ func _fill_grid(amount:int):
 		_grid_container.move_child(filler_duplicate, 0)
 
 
-## Aktualizuje zawartość etykiety
+## Aktualizuje zawartość etykiety.
 func update_time_left(label_name: String , value:String):
 	if label_name == _fail_label.name:
 		_fail_label.text = value

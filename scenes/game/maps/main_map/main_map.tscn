@@ -89,7 +89,7 @@
 [ext_resource type="PackedScene" uid="uid://cqjrgcofdp21m" path="res://scenes/minigames/reactor_memory_answer/reactor_memory_answer.tscn" id="79_xtlh3"]
 [ext_resource type="PackedScene" uid="uid://dj5vjsk8ajqix" path="res://scenes/minigames/correct_combination/correct_combination.tscn" id="80_b7854"]
 [ext_resource type="PackedScene" uid="uid://2cqm2q0xxlpq" path="res://scenes/minigames/room_reservations/room_reservations.tscn" id="80_j2qov"]
-[ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/game/maps/main_map/surveilence_camera/surveilence_camera.tscn" id="81_mexjh"]
+[ext_resource type="PackedScene" uid="uid://bc5wtxku3y4b1" path="res://scenes/game/maps/main_map/surveillance_camera/surveillance_camera.tscn" id="81_mexjh"]
 [ext_resource type="PackedScene" uid="uid://br73d5fyt6ecp" path="res://scenes/minigames/copying_files/copying_files.tscn" id="82_rt2pg"]
 [ext_resource type="Texture2D" uid="uid://fmy66vpvmmra" path="res://assets/textures/main_map/objects/wifi.png" id="83_6xbov"]
 [ext_resource type="PackedScene" uid="uid://dra00by8ikhk4" path="res://scenes/minigames/graph_the_function/graph_the_function.tscn" id="83_7u8vq"]
@@ -1180,21 +1180,21 @@ y_sort_enabled = true
 
 [node name="DeadBodies" type="Node2D" parent="."]
 
-[node name="SurveilenceCameras" type="Node2D" parent="."]
+[node name="SurveillanceCameras" type="Node2D" parent="."]
 
-[node name="SurveilenceCamera1" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+[node name="SurveillanceCamera1" parent="SurveillanceCameras" instance=ExtResource("81_mexjh")]
 position = Vector2(-2602, -277)
 
-[node name="SurveilenceCamera2" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+[node name="SurveillanceCamera2" parent="SurveillanceCameras" instance=ExtResource("81_mexjh")]
 position = Vector2(-1390, -1450)
 
-[node name="SurveilenceCamera3" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+[node name="SurveillanceCamera3" parent="SurveillanceCameras" instance=ExtResource("81_mexjh")]
 position = Vector2(36, 476)
 
-[node name="SurveilenceCamera4" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+[node name="SurveillanceCamera4" parent="SurveillanceCameras" instance=ExtResource("81_mexjh")]
 position = Vector2(3036, 352)
 
-[node name="SurveilenceCamera5" parent="SurveilenceCameras" instance=ExtResource("81_mexjh")]
+[node name="SurveillanceCamera5" parent="SurveillanceCameras" instance=ExtResource("81_mexjh")]
 position = Vector2(2848, -1132)
 
 [node name="Camera" type="Camera2D" parent="."]

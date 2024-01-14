@@ -1,11 +1,11 @@
-## Minigra polegająca na wciśnięciu poprawnych przycisków.
+## Klasa reprezentująca instancję minigry Correct Combination.
 class_name CorrectCombinationMinigame
 extends Control
 
-## Sygnał emitowany, gdy gracz poprawnie rozwiąże minigrę
+## Emitowany po zakończeniu minigry.
 signal minigame_end
 
-## Nazwa polska minigry
+## Polska nazwa minigry.
 @export var polish_name : String
 
 ## Kontrolka oznaczająca 0%

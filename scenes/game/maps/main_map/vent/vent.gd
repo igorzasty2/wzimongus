@@ -25,9 +25,8 @@ var _out_of_range_color = [0, 0, 0, 0]
 
 @onready var _animation_player = $Sprite2D/AnimationPlayer
 
-## Interfejs
-var user_interface
-## Emitowany gdy przycisk ventowania powinien być włączony/wyłączony
+var _user_interface
+## Emitowany gdy przycisk ventowania powinien być włączony/wyłączony.
 signal vent_button_active(button_name:String, is_active:bool)
 
 ## Ustawia widoczność przycisków kierunkowych.
@@ -37,8 +36,8 @@ func set_direction_buttons_visibility(visibility:bool):
 
 
 func _ready():
-	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
-	vent_button_active.connect(user_interface.toggle_button_active)
+	_user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
+	vent_button_active.connect(_user_interface.toggle_button_active)
 	
 	var idx = 0
 	# Instancjonuje przycisk dla każdego docelowego venta.

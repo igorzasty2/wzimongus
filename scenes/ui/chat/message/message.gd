@@ -1,4 +1,4 @@
-## Wiadomość w czacie.
+## Klasa wiadomości czatu.
 class_name ChatMessage
 extends HBoxContainer
 

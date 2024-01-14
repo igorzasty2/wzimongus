@@ -1,4 +1,4 @@
-## Mapa lobby.
+## Klasa mapy lobby.
 class_name Lobby
 extends Node2D
 

@@ -1,5 +1,5 @@
-## Klasa jest reprezentacją okna systemu kamer.
-class_name SurveilenceCameraSystem
+## Klasa jest reprezentacją okna systemu kamer monitoringu.
+class_name SurveillanceCameraSystem
 extends Control
 
 
@@ -7,7 +7,7 @@ extends Control
 signal minigame_end
 
 ## Tablica kamer obecnych na mapie.
-@onready var cameras = get_parent().get_parent().get_tree().get_nodes_in_group("SurveilenceCameras")
+@onready var cameras = get_parent().get_parent().get_tree().get_nodes_in_group("SurveillanceCameras")
 
 ## Przyporządkowuje kamery ich wyświetlaczą.
 func _ready():

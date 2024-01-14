@@ -1,9 +1,11 @@
-## Minigra polegająca na ustawieniu wykresu funkcji sin(x) w odpowiednim miejscu.
+## Klasa reprezentująca instancję minigry Graph the Function.
 class_name GraphTheFunctionMinigame
 extends Node2D
 
+## Emitowany, gdy minigra zostanie ukończona.
 signal minigame_end
 
+## Polska nazwa minigry.
 @export var polish_name : String
 
 var _x_func

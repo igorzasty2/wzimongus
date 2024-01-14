@@ -1,3 +1,5 @@
+## Klasa przycisku awaryjnego spotkania.
+class_name EmergencyButton
 extends Node2D
 
 ## Timer
@@ -38,9 +40,9 @@ var _players
 ## Określa czy przycisk wywołał spotkanie czy ciało
 var _is_caller_button: bool
 
-## Sygnał informujący o zakończeniu czasu oczekiwania na włączenie przycisku alarmowego
+## Emitowany, gdy zakończy się czas oczekiwania na aktywację przycisku.
 signal emergency_timer_timeout(is_over:bool)
-## Sygnał aktywujący/deaktywujący przyciski w interfejsie
+## Emitowany, gdy przycisk interfejsu ma być aktywowany/deaktywowany.
 signal button_active(button_name:String, is_active:bool)
 
 
@@ -122,7 +124,7 @@ func _button_used():
 	_report_area.monitorable = false
 
 
-## Obsługuje report/zebranie awaryjne
+## Obsługuje report/zebranie awaryjne.
 func handle_report(is_button: bool, body_id):
 	GameManagerSingleton.is_meeting_called = true
 	

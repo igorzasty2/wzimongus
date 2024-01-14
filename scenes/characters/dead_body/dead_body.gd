@@ -9,6 +9,7 @@ extends Node2D
 @onready var _label = $DeadBodyLabel
 
 
+## Inicjuje zwłoki gracza.
 func set_dead_player(victim: int) -> void:
 	victim_id = victim
 	var victim_node = get_tree().root.get_node("Game/Maps/MainMap/Players/"+str(victim))

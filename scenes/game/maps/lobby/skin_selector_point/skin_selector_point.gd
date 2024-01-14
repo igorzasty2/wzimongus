@@ -1,3 +1,5 @@
+## Klasa obsługująca punkt wyboru skina gracza.
+class_name SkinSelectorPoint
 extends Area2D
 
 @export var _sprite : Texture2D
@@ -15,6 +17,7 @@ var _is_player_inside: bool = false
 # Zmienne do obsługi interface gracza
 @onready var _user_interface = get_parent().get_node("LobbyUI")
 
+## Emitowany, gdy zmieni się stan przycisku interakcji.
 signal use_button_active(is_active:bool)
 
 func _ready():

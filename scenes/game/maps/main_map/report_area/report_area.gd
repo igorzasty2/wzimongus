@@ -1,27 +1,27 @@
-## Reprezentuje obszar, w którym gracz może zgłosić ciało.
+## Klasa obszaru raportowania.
 class_name ReportArea
 extends Area2D
 
-## Określa czy przycisk
+## Określa czy jest przyciskiem.
 @export var is_button:bool = false
-## Tekstura znalezionego ciała
+## Tekstura znalezionego ciała.
 @export var body_texture:Texture
 
-## Interfejs
+## Interfejs.
 @onready var _user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
-## Przycisk alarmowy
+## Przycisk alarmowy.
 @onready var _emergency_button = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/EmergencyButton")
 
 
-## Określa czy gracz jest w zasięgu
+## Określa czy gracz jest w zasięgu.
 var _is_player_inside:bool = false
 
-# Określa czy czas oczekiwania na włączenie się przycisku alarmowego się skończył
+# Określa czy czas oczekiwania na włączenie się przycisku alarmowego się skończył.
 var _is_wait_time_over:bool = false
  
-## Sygnał aktywujący/deaktywujący przyciski w interfejsie
+## Sygnał aktywujący/deaktywujący przyciski w interfejsie.
 signal button_active(button_name:String, is_active:bool)
-## Sygnał przełączający podświetlenie przycisku awaryjnego
+## Sygnał przełączający podświetlenie przycisku awaryjnego.
 signal toggle_button_highlight(is_active:bool)
 
 
@@ -74,7 +74,7 @@ func _input(event):
 		_emergency_button.handle_report(is_button, body_id)
 
 
-## Obsługuje zakończenie emergeny_timer
+## Obsługuje zakończenie emergency timer'a.
 func _on_end_emergency_timer_timeout(is_over: bool):
 	_is_wait_time_over = is_over
 	if _is_player_inside && !GameManagerSingleton.get_registered_player_value(GameManagerSingleton.get_current_player_id(), "is_dead") && !GameManagerSingleton.is_meeting_called && _is_wait_time_over:
@@ -82,13 +82,13 @@ func _on_end_emergency_timer_timeout(is_over: bool):
 		toggle_button_highlight.emit(true)
 
 
-## Usuwa ciało z mapy
+## Usuwa ciało z mapy.
 func _on_next_round_started():
 	if !is_button:
 		get_parent().queue_free()
 
 
-## Obsługuje wejście gracza
+## Obsługuje wejście gracza.
 func _on_body_entered(body):
 	if body.name.to_int() == GameManagerSingleton.get_current_player_id() && !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead") && !body.is_in_vent:
 		_is_player_inside = true
@@ -102,7 +102,7 @@ func _on_body_entered(body):
 			body.can_report = true
 
 
-## Obsługuje wyjście gracza
+## Obsługuje wyjście gracza.
 func _on_body_exited(body):
 	if body.name.to_int() == GameManagerSingleton.get_current_player_id() && !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead") && !body.is_in_vent:
 		_is_player_inside = false

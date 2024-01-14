@@ -1,8 +1,8 @@
-## Klasa reprezentująca kartę strony z hasłem.
+## Klasa karty strony z hasłem.
 class_name FindPasswordPageNode
 extends Sprite2D		
 
-## Funkcja inicjalizująca scenę strony
+## Inicjalizuje scenę karty strony z hasłem.
 func init(password):
 	$PageText.text = password
 

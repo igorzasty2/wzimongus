@@ -1,14 +1,14 @@
-## Klasa jest reprezentacją kamery w świecie gry
-class_name SurveilenceCamera
+## Klasa jest reprezentacją kamery monitoringu.
+class_name SurveillanceCamera
 extends Node2D
 
-## Dodaje kamerę do grupy cameras umożliwia jej odpowiednie wyświetlanie świata gry
+
 func _ready():
-	add_to_group("SurveilenceCameras")
+	add_to_group("SurveillanceCameras")
 	$CameraViewport/CameraProper.position = global_position
 	$CameraViewport.world_2d = get_viewport().world_2d
 
-## Zmienia widoczność światła kamery aby widać było stojących w jej polu widzenia graczy
+## Zmienia widoczność światła kamery.
 func change_light_visibility():
 	if $Light.visible:
 		$Light.visible = !$Light.visible

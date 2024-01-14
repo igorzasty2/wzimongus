@@ -1,11 +1,11 @@
-## Minigra polegająca na odkręcaniu śrubek tablicy.
+## Klasa reprezentująca instancję minigry Unscrew Whiteboard.
 class_name UnscrewWhiteboardMinigame
 extends Node2D
 
 ## Emitowany, gdy minigra zostanie ukończona.
 signal minigame_end
 
-## Polska nazwa minigry
+## Polska nazwa minigry.
 @export var polish_name : String
 
 @onready var _screws = [%Screw, %Screw2, %Screw3, %Screw4, %Screw5, %Screw6, %Screw7, %Screw8]

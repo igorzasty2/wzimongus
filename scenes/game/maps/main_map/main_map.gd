@@ -1,4 +1,4 @@
-## Główna mapa gry.
+## Klasa głównej mapy gry.
 class_name MainMap
 extends Node2D
 
@@ -100,6 +100,7 @@ func _update_player_input():
 	GameManagerSingleton.set_input_disabled_status(is_input_disabled)
 
 
+## Zamyka wszystkie otwarte okna i głosowanie.
 func close_modals():
 	# Zamyka wszystkie okna.
 	_minigame_window.close_minigame()
