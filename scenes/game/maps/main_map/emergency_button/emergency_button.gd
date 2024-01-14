@@ -96,6 +96,9 @@ func _on_end_emergency_timer_timeout():
 func _on_next_round_started():
 	_voting_canvas.get_child(0).queue_free()
 
+	if GameManagerSingleton.get_current_player_value("is_dead") && _uses_left_label.text != "":
+		_uses_left_label.text = ""
+
 	GameManagerSingleton.is_meeting_called = false
 
 	button_active.emit("ReportButton", false)

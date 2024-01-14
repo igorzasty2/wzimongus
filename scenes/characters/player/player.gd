@@ -263,6 +263,9 @@ func _input(event):
 
 		if !GameManagerSingleton.get_current_player_value("is_lecturer"):
 			return
+		
+		if GameManagerSingleton.get_current_player_value("is_dead"):
+			return
 
 		if !_can_kill_cooldown:
 			return

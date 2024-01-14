@@ -20,9 +20,9 @@ func _ready():
 	if _most_voted_player == null:
 		_ejection_message.text = "[center]Nikt nie został usunięty z grupy[/center]"
 	elif _most_voted_player["is_lecturer"]:
-		_ejection_message.text = "[center]" + _most_voted_player["username"] + " został usunięty z grupy[/center]"
+		_ejection_message.text = "[center]" + _most_voted_player['username'] + " był wykładowcą[/center]"
 	else:
-		_ejection_message.text = "[center]" + _most_voted_player["username"] + " nie był wykładowcą[/center]"
+		_ejection_message.text = "[center]" + _most_voted_player['username'] + " nie był wykładowcą[/center]"
 
 	add_child(_next_round_timer)
 	_next_round_timer.autostart = true
