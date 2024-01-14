@@ -43,11 +43,7 @@ func _gather():
 		return
 
 	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	if direction != Vector2.ZERO:
-		if !get_parent().get_node("StepSound").playing:
-			get_parent().get_node("StepSound").play()
-	else:
-		get_parent().get_node("StepSound").stop()
+	
 
 
 func _on_input_status_changed(state: bool):

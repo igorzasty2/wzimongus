@@ -64,7 +64,6 @@ func _spawn_player(id: int):
 
 	# Ustawia startową pozycję gracza.
 	player.position = _start_positions[GameManagerSingleton.get_registered_players().keys().find(id)].position
-
 	_players.add_child(player)
 
 	player.activate_player_shaders()

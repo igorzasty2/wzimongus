@@ -244,7 +244,7 @@ libraries = {
 "": SubResource("AnimationLibrary_tnq6l")
 }
 
-[node name="StartRoundSound" type="AudioStreamPlayer2D" parent="."]
+[node name="StartRoundSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_enkym")
 volume_db = -25.0
 autoplay = true

@@ -217,8 +217,9 @@ visible = false
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
 
-[node name="EnterLobbySound" type="AudioStreamPlayer2D" parent="."]
+[node name="EnterLobbySound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_fgqqq")
+volume_db = -30.0
 autoplay = true
 
 [connection signal="input_visibility_changed" from="Chat" to="." method="_update_player_input"]

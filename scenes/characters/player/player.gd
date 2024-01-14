@@ -66,6 +66,8 @@ var teleport_position = null
 ## Początkowa maska kolizji.
 @onready var _initial_collision_mask: int = collision_mask
 
+@onready var _step_sound_player = $StepSound
+
 ## Interfejs
 var _user_interface
 ## Emitowany, gdy przycisk powinien być włączony/wyłączony.
@@ -148,7 +150,13 @@ func _process(_delta):
 
 	# Aktualizuje parametry animacji postaci.
 	_update_animation_parameters(direction)
-
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		if direction != Vector2.ZERO:
+			if !_step_sound_player.playing:
+				_step_sound_player.play()
+		else:
+			_step_sound_player.stop()
+	
 	# Aktualizuje czas pozostały do kolejnej możliwości oblania
 
 	if _user_interface != null && _fail_timer != null && _fail_timer.time_left != 0:

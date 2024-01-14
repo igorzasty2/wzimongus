@@ -323,12 +323,11 @@ script = ExtResource("3_l2yj5")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
 
-[node name="PlayerInteractionPlayer" type="AudioStreamPlayer2D" parent="."]
-max_distance = 100.0
+[node name="PlayerInteractionPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -20.0
 
-[node name="StepSound" type="AudioStreamPlayer2D" parent="."]
+[node name="StepSound" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_xwmwd")
 volume_db = -30.0
-max_distance = 30.0
 
 [connection signal="animation_finished" from="Skins/Control/PlayerSprite/VentingAnimationPlayer" to="." method="_on_venting_animation_player_animation_finished"]
