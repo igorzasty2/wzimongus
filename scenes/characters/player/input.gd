@@ -28,6 +28,9 @@ func _ready():
 		GameManagerSingleton.input_status_changed.connect(_on_input_status_changed)
 		GameManagerSingleton.emit_input_status()
 
+func _process(_delta):
+	if direction != Vector2.ZERO:
+		get_parent().get_node("StepSound").play()
 
 func _gather():
 	if !is_multiplayer_authority():
@@ -46,3 +49,4 @@ func _gather():
 
 func _on_input_status_changed(state: bool):
 	_is_disabled = !state
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://sx7ejcssw0xi"]
+[gd_scene load_steps=32 format=3 uid="uid://sx7ejcssw0xi"]
 
 [ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_rovco"]
 [ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_lrt2l"]
@@ -179,6 +179,8 @@ states/walk/node = SubResource("AnimationNodeBlendSpace2D_fnme7")
 states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xwmwd"]
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 y_sort_enabled = true
@@ -291,5 +293,9 @@ current = true
 
 [node name="PlayerInteractionPlayer" type="AudioStreamPlayer2D" parent="."]
 max_distance = 100.0
+
+[node name="StepSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_xwmwd")
+max_distance = 30.0
 
 [connection signal="animation_finished" from="Skins/Control/PlayerSprite/VentingAnimationPlayer" to="." method="_on_venting_animation_player_animation_finished"]

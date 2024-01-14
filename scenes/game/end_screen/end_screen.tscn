@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://blkno546eohsw"]
+[gd_scene load_steps=4 format=3 uid="uid://blkno546eohsw"]
 
 [ext_resource type="Script" path="res://scenes/game/end_screen/end_screen.gd" id="1_1dvol"]
+[ext_resource type="AudioStream" uid="uid://bxupoxdp13gvd" path="res://assets/audio/victory_sound.ogg" id="2_evwc4"]
+[ext_resource type="AudioStream" uid="uid://ca1lly506rd31" path="res://assets/audio/defeat_sound.ogg" id="3_5tcf8"]
 
 [node name="EndScreen" type="CanvasLayer"]
 layer = 6
@@ -50,3 +52,11 @@ theme_override_constants/shadow_outline_size = 10
 theme_override_font_sizes/font_size = 24
 text = "Aby kontynuować, naciśnij dowolny klawisz..."
 horizontal_alignment = 1
+
+[node name="VictorySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_evwc4")
+volume_db = -25.0
+
+[node name="DefeatSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_5tcf8")
+volume_db = -25.0

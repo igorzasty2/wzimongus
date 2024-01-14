@@ -95,7 +95,7 @@ func end_minigame():
 	_minigame_instance.queue_free()
 
 	hide()
-
+	get_node("TaskSuccesSound").play()
 
 	TaskManagerSingleton.mark_task_as_complete()
 
@@ -105,7 +105,7 @@ func close_minigame():
 		_minigame_instance.queue_free()
 
 		hide()
-
+		get_node("CloseWindowSound").play()
 		show_use_button(_minigame)
 	
 	if _minigame == load("res://scenes/game/maps/main_map/camera_system/camera_system.tscn"):

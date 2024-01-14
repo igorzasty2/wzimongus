@@ -6,13 +6,21 @@ func _ready():
 
 
 ## Ustawia tekst wyświetlany na ekranie.
-func set_winning_role(role: GameManagerSingleton.Role):
+func set_winning_role(role: GameManagerSingleton.Role, is_lecturer : bool):
 	if role == GameManagerSingleton.Role.LECTURER:
 		$Background.texture = load("res://assets/textures/end_screen/lecturers_won_background.png")
 		$WinnerText.text = "Wykładowcy wygrali"
+		if is_lecturer:
+			$VictorySound.play()
+		else:
+			$DefeatSound.play()
 	elif role == GameManagerSingleton.Role.STUDENT:
 		$Background.texture = load("res://assets/textures/end_screen/students_won_background.png")
 		$WinnerText.text = "Studenci wygrali"
+		if !is_lecturer:
+			$VictorySound.play()
+		else:
+			$DefeatSound.play()
 
 
 func _input(event):
