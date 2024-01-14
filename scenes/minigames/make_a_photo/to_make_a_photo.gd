@@ -1,3 +1,4 @@
+class_name MakeAPhotoToMakeAPhoto
 extends Button
 
 func _on_pressed():

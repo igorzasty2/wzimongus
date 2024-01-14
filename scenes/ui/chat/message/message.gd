@@ -1,18 +1,19 @@
-class_name Message
+## Wiadomość w czacie.
+class_name ChatMessage
 extends HBoxContainer
 
 ## Referencja do avataru gracza
-@onready var avatar = get_node("%Avatar")
+@onready var _avatar = get_node("%Avatar")
 ## Referencja do nazwy gracza
-@onready var username = get_node("%Username")
+@onready var _username = get_node("%Username")
 ## Referencja do wiadomości
-@onready var message = get_node("%Message")
+@onready var _message = get_node("%Message")
 
-## Inicjalizacja wiadomości
+## Inicjalizacja wiadomości.
 func init(player: Dictionary, messageText: String, color: Color):
-	avatar.texture = _get_skin_texture(player.skin)
-	username.text = "[color=#" + color.to_html(false) + "]" + player.username + "[/color]"
-	message.text = messageText
+	_avatar.texture = _get_skin_texture(player.skin)
+	_username.text = "[color=#" + color.to_html(false) + "]" + player.username + "[/color]"
+	_message.text = messageText
 
 
 func _get_skin_texture(skin_id: int) -> AtlasTexture:

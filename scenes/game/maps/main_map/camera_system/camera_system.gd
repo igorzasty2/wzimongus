@@ -1,15 +1,15 @@
-## Klasa jest reprezentacją okna systemu kamer
-class_name CameraSystem
+## Klasa jest reprezentacją okna systemu kamer.
+class_name SurveilenceCameraSystem
 extends Control
 
 
-## Jego obecność naprawia błąd
+## Nigdy nie wysyłany, dodany w celu umożliwienia dodania tej klasy do okna minigry.
 signal minigame_end
 
-## Tablica kamer obecnych na mapie
-@onready var cameras = get_parent().get_parent().get_tree().get_nodes_in_group("cameras")
+## Tablica kamer obecnych na mapie.
+@onready var cameras = get_parent().get_parent().get_tree().get_nodes_in_group("SurveilenceCameras")
 
-## Przyporządkowuje kamery ich wyświetlaczą
+## Przyporządkowuje kamery ich wyświetlaczą.
 func _ready():
 	$CameraPanel/camera1.texture = cameras[0].get_child(0).get_texture()
 	$CameraPanel/camera2.texture = cameras[1].get_child(0).get_texture()

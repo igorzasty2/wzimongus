@@ -11,4 +11,4 @@ texture_pressed = ExtResource("3")
 texture_disabled = ExtResource("4")
 script = ExtResource("4_2m21x")
 
-[connection signal="pressed" from="." to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="." to="." method="_on_button_pressed"]

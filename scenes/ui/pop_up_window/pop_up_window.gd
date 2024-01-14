@@ -1,3 +1,5 @@
+## Klasa odpowiedzialna za wyświetlanie okienek z informacjami.
+class_name PopUpWindow
 extends Control
 
 @onready var _label = $Panel/MarginContainer/Label

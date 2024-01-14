@@ -1,5 +1,5 @@
 ## Klasa reprezuntuje instancję minigry Fill Formulas
-class_name FillFormulas
+class_name FillFormulasMinigame
 extends Node2D
 
 

@@ -1,3 +1,5 @@
+## Zarządza animacją okna.
+class_name WindowAnimationPlayer
 extends AnimationPlayer
 
 ## Okno do animacji

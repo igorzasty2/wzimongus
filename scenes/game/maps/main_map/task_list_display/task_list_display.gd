@@ -1,5 +1,4 @@
 ## Klasa do wyświetlania listy zadań
-class_name TaskListDisplay
 extends CanvasLayer
 
 ## Referencja do node'a przechowującego listę zadań.

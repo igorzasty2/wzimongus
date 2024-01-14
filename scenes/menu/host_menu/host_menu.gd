@@ -1,5 +1,3 @@
-## Klasa odpowiedzialna za obsługę menu hosta.
-class_name HostMenu
 extends Control
 
 

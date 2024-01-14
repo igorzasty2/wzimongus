@@ -3,8 +3,9 @@ class_name Player
 extends CharacterBody2D
 
 
+## Emitowany gdy gracz wchodzi do venta.
 signal vent_entered()
-
+## Emitowany gdy gracz wychodzi z venta.
 signal vent_exited()
 
 ## Prędkość poruszania się.
@@ -22,62 +23,61 @@ var is_in_vent: bool = false
 ## Czy jest w trakcie poruszania się przez venta lub do venta.
 var is_moving_through_vent: bool = false
 
-## Czy gracz właśnie wszedł do venta
+## Określa czy gracz może reportować
+var can_report: bool = false
+
+## Czy gracz właśnie wszedł do venta.
 var _has_entered_vent: bool = false
 
-## Kolor gracza do zabicia
-var in_range_color = [180, 0, 0, 255]
-## Kolor gracza, którego nie możemy zabić
-var out_of_range_color = [0, 0, 0, 0]
-## Kolor nicku martwego gracza
-var dead_username_color = Color.DARK_GOLDENROD
+## Kolor konturu gracza, którego możemy zabić.
+var _in_range_color = [180, 0, 0, 255]
+## Kolor konturu gracza, którego nie możemy zabić.
+var _out_of_range_color = [0, 0, 0, 0]
+## Kolor nicku martwego gracza.
+var _dead_username_color = Color.DARK_GOLDENROD
 ## Przechowuje informację o możliwości użycia funkcji zabicia.
-var can_kill_cooldown: bool = false
+var _can_kill_cooldown: bool = false
 ## Przechowuje informację o możliwości użycia funkcji sabotage. 
-var can_sabotage_cooldown: bool = false
+var _can_sabotage_cooldown: bool = false
 
-## Czy jest teleport
+## Czy jest w trakcie teleportacji.
 var is_teleport: bool = false
-## Pozycja docelowa teleportacji
+## Pozycja docelowa teleportacji.
 var teleport_position = null
 
 
 ## Referencja do wejścia gracza.
-@onready var input: InputSynchronizer = $Input
+@onready var input_synchronizer: InputSynchronizer = $Input
 ## Referencja do synchronizatora rollbacku.
-@onready var rollback_synchronizer: RollbackSynchronizer = $RollbackSynchronizer
+@onready var _rollback_synchronizer: RollbackSynchronizer = $RollbackSynchronizer
 ## Referencja do etykiety z nazwą gracza.
-@onready var username_label: Label = $UsernameLabel
+@onready var _username_label: Label = $UsernameLabel
 ## Referencja do drzewa animacji postaci.
-@onready var animation_tree: AnimationTree = $Skins/AnimationTree
+@onready var _animation_tree: AnimationTree = $Skins/AnimationTree
 ## Referencja do sprite'a postaci.
-@onready var player_sprite = $Skins/Control/PlayerSprite
-## Referencja do node'a postaci.
-@onready var player_node = $"."
+@onready var _player_sprite = $Skins/Control/PlayerSprite
 
 ## Referencja do node'a światła.
-@onready var light = $LightsContainer/Light
+@onready var _light = $LightsContainer/Light
 ## Referencja do kontenera node'a światła.
-@onready var lights_container = $LightsContainer
+@onready var _lights_container = $LightsContainer
 
-## Player animacji ventowania
-@onready var venting_animation_player = $Skins/Control/PlayerSprite/VentingAnimationPlayer
+## Player animacji ventowania.
+@onready var _venting_animation_player = $Skins/Control/PlayerSprite/VentingAnimationPlayer
 
 ## Początkowa maska kolizji.
-@onready var initial_collision_mask: int = collision_mask
+@onready var _initial_collision_mask: int = collision_mask
 
 ## Interfejs
-var user_interface
+var _user_interface
 ## Emitowany gdy przycisk powinien być włączony/wyłączony
 signal button_active(button_name:String, is_active:bool)
 ## Timer z czasem do oblania
-var timer
+var _fail_timer
 ## Timer z czasem do sabotażu
-var sabotage_timer
+var _sabotage_timer
 ## Timer z czasem do włączenia światła u studenta.
-var no_light_timer
-## Określa czy gracz może reportować
-var can_report: bool = false
+var _no_light_timer
 
 
 ## Zwraca najbliższy vent.
@@ -116,20 +116,20 @@ func _ready():
 	set_multiplayer_authority(1)
 
 	# Wejście gracza jest własnością gracza.
-	input.set_multiplayer_authority(name.to_int())
+	input_synchronizer.set_multiplayer_authority(name.to_int())
 
 	# Konfiguruje synchronizator rollbacku.
-	rollback_synchronizer.process_settings()
+	_rollback_synchronizer.process_settings()
 
 	# Ustawia etykietę z nazwą gracza.
-	username_label.text = GameManagerSingleton.get_registered_player_value(name.to_int(), "username")
+	_username_label.text = GameManagerSingleton.get_registered_player_value(name.to_int(), "username")
 
 	# Aktywuje drzewo animacji postaci.
-	animation_tree.active = true
+	_animation_tree.active = true
 	
 	# Aktualizuje parametry animacji postaci.
-	animation_tree["parameters/idle/blend_position"] = Vector2(direction_last_x, 0)
-	animation_tree["parameters/walk/blend_position"] = Vector2(direction_last_x, 0)
+	_animation_tree["parameters/idle/blend_position"] = Vector2(direction_last_x, 0)
+	_animation_tree["parameters/walk/blend_position"] = Vector2(direction_last_x, 0)
 	
 	# Łączy sygnał zabicia postaci z funkcją _on_killed_player
 	GameManagerSingleton.player_killed.connect(_on_killed_player)
@@ -142,30 +142,30 @@ func _ready():
 
 
 func _process(_delta):
-	var direction = input.direction.normalized()
+	var direction = input_synchronizer.direction.normalized()
 
 	# Aktualizuje parametry animacji postaci.
 	_update_animation_parameters(direction)
 	
 	# Aktualizuje czas pozostały do kolejnej możliwości oblania
-	if user_interface!=null && timer!=null && timer.time_left!=0:
-		user_interface.update_time_left("FailLabel", str(int(timer.time_left)))
+	if _user_interface!=null && _fail_timer!=null && _fail_timer.time_left!=0:
+		_user_interface.update_time_left("FailLabel", str(int(_fail_timer.time_left)))
 		
 	# Aktualizuje czas pozostały do kolejnej możliwości sabotażu.
-	if user_interface!=null && sabotage_timer!=null && sabotage_timer.time_left>0:
-		user_interface.update_time_left("SabotageLabel", str(int(sabotage_timer.time_left)))
+	if _user_interface!=null && _sabotage_timer!=null && _sabotage_timer.time_left>0:
+		_user_interface.update_time_left("SabotageLabel", str(int(_sabotage_timer.time_left)))
 
 
 func _rollback_tick(delta, _tick, is_fresh):
 	# Odpowiada za poruszanie się przez venta.
 	if is_moving_through_vent && is_fresh:
 		# Jeśli gracz wchodzi do venta.
-		if input.is_walking_to_destination:
+		if input_synchronizer.is_walking_to_destination:
 			# Jeśli gracz jest w granicy błędu wejścia do venta.
-			if global_position.distance_to(input.destination_position) <= walking_speed / NetworkTime.tickrate:
+			if global_position.distance_to(input_synchronizer.destination_position) <= walking_speed / NetworkTime.tickrate:
 				# Przesuwa gracza do środka venta.
-				global_position = input.destination_position
-				input.direction = Vector2.ZERO
+				global_position = input_synchronizer.destination_position
+				input_synchronizer.direction = Vector2.ZERO
 
 				_has_entered_vent = true
 
@@ -177,16 +177,16 @@ func _rollback_tick(delta, _tick, is_fresh):
 					if vent != null:
 						vent.play_vent_animation.rpc()
 
-				input.is_walking_to_destination = false
+				input_synchronizer.is_walking_to_destination = false
 				is_moving_through_vent = false
 
 		# Jeśli gracz przemieszcza się między ventami.
 		else:
 			# Przesuwa gracza w kierunku docelowego venta.
-			global_position = global_position.move_toward(input.destination_position, delta * venting_speed * NetworkTime.physics_factor)
+			global_position = global_position.move_toward(input_synchronizer.destination_position, delta * venting_speed * NetworkTime.physics_factor)
 
 			# Jeśli gracz dotarł do docelowego venta.
-			if global_position == input.destination_position:
+			if global_position == input_synchronizer.destination_position:
 				# Włącza widoczność przycisków kierunkowych venta.
 				if name.to_int() == GameManagerSingleton.get_current_player_id():
 					_toggle_vent_buttons(true)
@@ -210,7 +210,7 @@ func _rollback_tick(delta, _tick, is_fresh):
 
 
 	# Oblicza kierunek ruchu na podstawie wejścia użytkownika.
-	velocity = input.direction.normalized() * walking_speed
+	velocity = input_synchronizer.direction.normalized() * walking_speed
 
 	# Porusza postacią i obsługuje kolizje.
 	velocity *= NetworkTime.physics_factor
@@ -222,14 +222,12 @@ func _rollback_tick(delta, _tick, is_fresh):
 	if name.to_int() == GameManagerSingleton.get_current_player_id():
 		if GameManagerSingleton.get_current_player_value("is_lecturer") && !is_in_vent:
 			if !GameManagerSingleton.get_current_player_value("is_dead"):
-				if can_kill_cooldown && !GameManagerSingleton.is_meeting_called:
+				if _can_kill_cooldown && !GameManagerSingleton.is_meeting_called:
 					_update_highlight(closest_player(GameManagerSingleton.get_current_player_id()))
 				else:
 					_update_highlight(0)
 
 
-## Sprawdza, czy nie naciśnięto fail button. Jeśli tak to sprawdza, czy jesteśmy lecturerem
-## i prosi serwer o oblanie najbliższego gracza w promieniu oblania.
 func _input(event):
 	# Obsługuje używanie venta.
 	if event.is_action_pressed("use_vent"):
@@ -245,7 +243,7 @@ func _input(event):
 		if !is_in_vent && GameManagerSingleton.get_current_game_value("is_input_disabled"):
 			return
 		
-		if venting_animation_player.is_playing():
+		if _venting_animation_player.is_playing():
 			return
 
 		_use_vent()
@@ -264,7 +262,7 @@ func _input(event):
 		if !GameManagerSingleton.get_current_player_value("is_lecturer"):
 			return
 
-		if !can_kill_cooldown:
+		if !_can_kill_cooldown:
 			return
 
 		var victim = closest_player(GameManagerSingleton.get_current_player_id())
@@ -290,7 +288,7 @@ func _input(event):
 		if !GameManagerSingleton.get_current_player_value("is_lecturer"):
 			return
 
-		if !can_sabotage_cooldown:
+		if !_can_sabotage_cooldown:
 			return
 		
 		GameManagerSingleton.emit_sabotage_started.rpc(true)
@@ -302,30 +300,30 @@ func _input(event):
 func _update_animation_parameters(direction: Vector2) -> void:
 	# Ustawia parametry animacji w zależności od stanu ruchu.
 	if direction == Vector2.ZERO:
-		animation_tree["parameters/conditions/idle"] = true
-		animation_tree["parameters/conditions/is_moving"] = false
+		_animation_tree["parameters/conditions/idle"] = true
+		_animation_tree["parameters/conditions/is_moving"] = false
 	else:
-		animation_tree["parameters/conditions/idle"] = false
-		animation_tree["parameters/conditions/is_moving"] = true
+		_animation_tree["parameters/conditions/idle"] = false
+		_animation_tree["parameters/conditions/is_moving"] = true
 		if direction.x != 0:
-			animation_tree["parameters/idle/blend_position"] = direction
-			animation_tree["parameters/walk/blend_position"] = direction
+			_animation_tree["parameters/idle/blend_position"] = direction
+			_animation_tree["parameters/walk/blend_position"] = direction
 			direction_last_x = direction.x
 		else:
-			animation_tree["parameters/idle/blend_position"] = Vector2(direction_last_x, direction.y)
-			animation_tree["parameters/walk/blend_position"] = Vector2(direction_last_x, direction.y)
+			_animation_tree["parameters/idle/blend_position"] = Vector2(direction_last_x, direction.y)
+			_animation_tree["parameters/walk/blend_position"] = Vector2(direction_last_x, direction.y)
 
 
-## W momencie zakończenia wczytywania mapyt przypisuje user_interface i łączy sygnał
+## W momencie zakończenia wczytywania mapy przypisuje interfejs i łączy sygnał.
 func _on_map_load_finished():
-	user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
-	button_active.connect(user_interface.toggle_button_active)
+	_user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
+	button_active.connect(_user_interface.toggle_button_active)
 	
 	# Na początku gry po załadowaniu mapy restartuje kill cooldown
 	_on_next_round_started()
 
 
-## W momencie zaczęcia kolejnej rundy restartuje kill cooldown gracza
+## W momencie zaczęcia kolejnej rundy restartuje kill cooldown gracza.
 func _on_next_round_started():
 	if name.to_int() == GameManagerSingleton.get_current_player_id() && GameManagerSingleton.get_registered_player_value(name.to_int(),"is_lecturer"):
 		_handle_kill_timer()
@@ -334,24 +332,24 @@ func _on_next_round_started():
 		button_active.emit("SabotageButton", false)
 
 
-## Obsługuje timer zabicia
+## Obsługuje timer zabicia.
 func _handle_kill_timer():
-	can_kill_cooldown = false
-	timer = Timer.new()
-	timer.set_name("KillCooldownTimer")
-	timer.timeout.connect(_on_timer_timeout)
-	timer.one_shot = true
-	timer.wait_time = GameManagerSingleton.get_server_settings()["kill_cooldown"]
-	add_child(timer)
-	timer.start()
+	_can_kill_cooldown = false
+	_fail_timer = Timer.new()
+	_fail_timer.set_name("KillCooldownTimer")
+	_fail_timer.timeout.connect(_on_timer_timeout)
+	_fail_timer.one_shot = true
+	_fail_timer.wait_time = GameManagerSingleton.get_server_settings()["kill_cooldown"]
+	add_child(_fail_timer)
+	_fail_timer.start()
 
 
-## Włącza i wyłącza podświetlenie możliwości zabicia gracza
+## Włącza i wyłącza podświetlenie możliwości zabicia gracza.
 func _toggle_highlight(player: int, is_on: bool) -> void:
 	var player_material = get_parent().get_node(str(player) + "/Skins/Control/PlayerSprite").material
 	
 	if player_material:
-		player_material.set_shader_parameter('line_color', in_range_color if is_on else out_of_range_color)
+		player_material.set_shader_parameter('line_color', _in_range_color if is_on else _out_of_range_color)
 
 
 func _update_highlight(player: int) -> void:
@@ -426,21 +424,21 @@ func _on_killed_player(player_id: int, is_victim: bool) -> void:
 func _on_timer_timeout() -> void:
 	if name.to_int() == GameManagerSingleton.get_current_player_id():
 		if GameManagerSingleton.get_current_player_value("is_lecturer"):
-			can_kill_cooldown = true
+			_can_kill_cooldown = true
 
-			for i in range(player_node.get_child_count()):
-				var child: Node = player_node.get_child(i)
+			for i in range(self.get_child_count()):
+				var child: Node = self.get_child(i)
 				if child.name == "KillCooldownTimer":
 					child.queue_free()
 
-					user_interface.update_time_left("FailLabel", "")
+					_user_interface.update_time_left("FailLabel", "")
 
 					return
 
 
 func _update_dead_player(player_id: int):
 	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
-	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", dead_username_color)
+	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", _dead_username_color)
 	victim_node.get_node("Skins/Control/PlayerSprite").use_parent_material = true
 	victim_node.get_node("Skins/Control/PlayerSprite").modulate = Color(1,1,1,0.35)
 	victim_node.collision_mask = 8
@@ -491,8 +489,8 @@ func _enter_vent(vent_position):
 	is_in_vent = true
 	collision_mask = 0
 	is_moving_through_vent = true
-	input.destination_position = vent_position
-	input.is_walking_to_destination = true
+	input_synchronizer.destination_position = vent_position
+	input_synchronizer.is_walking_to_destination = true
 	vent_entered.emit()
 
 
@@ -538,7 +536,7 @@ func _exit_vent():
 
 	_has_entered_vent = false
 	is_in_vent = false
-	collision_mask = initial_collision_mask
+	collision_mask = _initial_collision_mask
 
 	if multiplayer.is_server():
 		toggle_visibility.rpc(true)
@@ -573,12 +571,12 @@ func activate_lights():
 	else:
 		set_light_texture_scale(GameManagerSingleton.get_server_settings()["student_light_radius"])
 	
-	lights_container.show()
+	_lights_container.show()
 
 
 ## Wyłącza światło graczowi.
 func deactivate_lights():
-	lights_container.hide()
+	_lights_container.hide()
 
 
 ## Włącza shadery graczowi.
@@ -587,53 +585,53 @@ func activate_player_shaders():
 	var shader_material = ShaderMaterial.new()
 	shader_material.shader = load("res://assets/shaders/outline_light.gdshader")
 	
-	player_sprite.material = shader_material
-	player_sprite.material.set_shader_parameter("line_thickness", 12.0)
+	_player_sprite.material = shader_material
+	_player_sprite.material.set_shader_parameter("line_thickness", 12.0)
 	
-	username_label.material = load("res://assets/shaders/light.tres")
+	_username_label.material = load("res://assets/shaders/light.tres")
 
 
 ## Wyłącza shadery graczowi.
 func deactivate_player_shaders():
-	player_sprite.material = null
-	username_label.material = null
+	_player_sprite.material = null
+	_username_label.material = null
 
 
 ## Ustawia wartość promienia światła graczowi.
 func set_light_texture_scale(texture_scale: float):
-	light.texture_scale = texture_scale / player_node.global_scale.x
+	_light.texture_scale = texture_scale / self.global_scale.x
 
 
-## Obsługuje timer sabotage
+## Obsługuje timer sabotażu.
 func _handle_sabotage_timer():
-	can_sabotage_cooldown = false
-	sabotage_timer = Timer.new()
-	sabotage_timer.set_name("SabotageCooldownTimer")
-	sabotage_timer.timeout.connect(_on_sabotage_timer_timeout)
-	sabotage_timer.one_shot = true
-	sabotage_timer.wait_time = GameManagerSingleton.get_server_settings()["sabotage_cooldown"]
-	add_child(sabotage_timer)
-	sabotage_timer.start()
+	_can_sabotage_cooldown = false
+	_sabotage_timer = Timer.new()
+	_sabotage_timer.set_name("SabotageCooldownTimer")
+	_sabotage_timer.timeout.connect(_on_sabotage_timer_timeout)
+	_sabotage_timer.one_shot = true
+	_sabotage_timer.wait_time = GameManagerSingleton.get_server_settings()["sabotage_cooldown"]
+	add_child(_sabotage_timer)
+	_sabotage_timer.start()
 
 
 ## Usuwa timer sabotażu oraz udostępnia sabotaż u wykładowcy.
 func _on_sabotage_timer_timeout() -> void:
 	if name.to_int() == GameManagerSingleton.get_current_player_id():
 		if GameManagerSingleton.get_current_player_value("is_lecturer"):
-			can_sabotage_cooldown = true
+			_can_sabotage_cooldown = true
 
-			for i in range(player_node.get_child_count()):
-				var child: Node = player_node.get_child(i)
+			for i in range(self.get_child_count()):
+				var child: Node = self.get_child(i)
 				if child.name == "SabotageCooldownTimer":
 					child.queue_free()
 
-					user_interface.update_time_left("SabotageLabel", "")
+					_user_interface.update_time_left("SabotageLabel", "")
 					button_active.emit("SabotageButton", true)
 
 					return
 
 
-## Aktywuje sabotaż u studentów oraz blokuje na jakiś czas przecisk sabotażu u wykładowców.
+## Aktywuje sabotaż u studentów oraz blokuje na jakiś czas przycisk sabotażu u wykładowców.
 func _on_sabotage_occured():
 	if GameManagerSingleton.get_current_player_value("is_lecturer"):
 		button_active.emit("SabotageButton", false)
@@ -641,28 +639,28 @@ func _on_sabotage_occured():
 	else:
 		decrease_light_range_sabotage()
 
-		no_light_timer = Timer.new()
-		no_light_timer.set_name("NoLightTimer")
-		no_light_timer.timeout.connect(cancel_decrease_light_range_sabotage)
-		no_light_timer.one_shot = true
-		no_light_timer.wait_time = GameManagerSingleton.get_server_settings()["sabotage_cooldown"] if GameManagerSingleton.get_server_settings()["sabotage_cooldown"] <= 10 else 10
-		add_child(no_light_timer)
-		no_light_timer.start()
+		_no_light_timer = Timer.new()
+		_no_light_timer.set_name("NoLightTimer")
+		_no_light_timer.timeout.connect(cancel_decrease_light_range_sabotage)
+		_no_light_timer.one_shot = true
+		_no_light_timer.wait_time = GameManagerSingleton.get_server_settings()["sabotage_cooldown"] if GameManagerSingleton.get_server_settings()["sabotage_cooldown"] <= 10 else 10
+		add_child(_no_light_timer)
+		_no_light_timer.start()
 
 
-## Zmniejsza promień swiatła podczas sabotage.
+## Zmniejsza promień swiatła podczas sabotażu.
 func decrease_light_range_sabotage() -> void:
 	if not GameManagerSingleton.get_current_player_value("is_lecturer"):
 		var tween = get_tree().create_tween()
-		tween.tween_property(light, "texture_scale", light.texture_scale / 6, 1).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(_light, "texture_scale", _light.texture_scale / 6, 1).set_trans(Tween.TRANS_CUBIC)
 
 
-## Wraca promień swiatła na normalny po sabotage.
+## Ustawia promień światła na normalny po sabotażu.
 func cancel_decrease_light_range_sabotage() -> void:
 	GameManagerSingleton.emit_sabotage_started.rpc(false)
 	if not GameManagerSingleton.get_current_player_value("is_lecturer"):
 		var tween = get_tree().create_tween()
-		tween.tween_property(light, "texture_scale", light.texture_scale * 6, 1).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(_light, "texture_scale", _light.texture_scale * 6, 1).set_trans(Tween.TRANS_CUBIC)
 
 
 func _on_venting_animation_player_animation_finished(anim_name):
@@ -685,16 +683,16 @@ func _on_venting_animation_player_animation_finished(anim_name):
 			_handle_vent_exit()
 
 
-## Obsługuje wyjście z venta po zakończeniu animacji
+## Obsługuje wyjście z venta po zakończeniu animacji.
 func _handle_vent_exit():
 	_has_entered_vent = false
 	vent_exited.emit()
 
 
 @rpc("call_local", "reliable")
-## Puszcza animacje ventowania
+## Włącza animację ventowania.
 func _play_venting_animation(is_backwards:bool):
 	if !is_backwards:
-		venting_animation_player.play("venting_animation")
+		_venting_animation_player.play("venting_animation")
 	else: 
-		venting_animation_player.play_backwards("venting_animation")
+		_venting_animation_player.play_backwards("venting_animation")

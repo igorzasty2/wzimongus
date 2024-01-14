@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c3krnig4q8qwh" path="res://assets/textures/ui/menu_settings.png" id="4_gjrj2"]
 [ext_resource type="Texture2D" uid="uid://blrk7daia54ig" path="res://assets/textures/ui/game_settings.png" id="5_5m3mp"]
 
-[node name="LobbyUi" type="CanvasLayer"]
+[node name="LobbyUI" type="CanvasLayer"]
 script = ExtResource("1_x2ran")
 
 [node name="GridContainer" type="GridContainer" parent="."]

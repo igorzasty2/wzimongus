@@ -1,5 +1,8 @@
+## Mapa lobby.
+class_name Lobby
 extends Node2D
 
+## Emitowany, gdy lobby jest gotowe do gry.
 signal load_finished
 
 @onready var _spawn_points = $SpawnPoints
@@ -7,7 +10,7 @@ signal load_finished
 @onready var _camera = $Camera
 @onready var _server_advertiser = $ServerAdvertiser
 @onready var _chat = $Chat
-@onready var _lobby_ui = $LobbyUi
+@onready var _lobby_ui = $LobbyUI
 @onready var _chat_input = $Chat/ChatContainer/InputText
 @onready var _skin_selector = $SkinSelector
 @onready var _lobby_settings = $LobbySettings

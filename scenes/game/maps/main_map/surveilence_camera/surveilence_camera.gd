@@ -4,7 +4,7 @@ extends Node2D
 
 ## Dodaje kamerę do grupy cameras umożliwia jej odpowiednie wyświetlanie świata gry
 func _ready():
-	add_to_group("cameras")
+	add_to_group("SurveilenceCameras")
 	$CameraViewport/CameraProper.position = global_position
 	$CameraViewport.world_2d = get_viewport().world_2d
 

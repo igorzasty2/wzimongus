@@ -1,4 +1,4 @@
-## Klasa punkta interakcji z zadaniem.
+## Klasa punktu interakcji z zadaniem.
 class_name TaskButton
 extends Area2D
 
@@ -19,8 +19,6 @@ extends Area2D
 var _in_range_task_color = [0.3, 0.9, 0.5, 1]
 ## Kolor zarysu dostępengo punktu interakcji kiedy znajdzie się on poza zasięgiem gracza.
 var _out_of_range_task_color = [0.5, 0.5, 0.5, 1]
-## Kolor zarysu punktu interakcji który nie jest dostępny przez gracza.
-var _disabled_task_color = [0, 0, 0, 0]
 ## Szerokość zarysu punktu interakcji.
 var _enabled_line_thickness = 10.0
 ## Szerokość zarysu punktu interakcji który nie jest dostępny. 
@@ -29,17 +27,17 @@ var _disabled_line_thickness = 0.0
 var _is_player_inside : bool = false
 
 ## Referecja do node'a sprite'a.
-@onready var sprite_node = get_node("Sprite2D")
+@onready var _sprite_node = get_node("Sprite2D")
 ## Referencja do node'a okna minigry.
-@onready var minigame_window = get_tree().root.get_node("Game/Maps/MainMap/MinigameWindow")
+@onready var _minigame_window = get_tree().root.get_node("Game/Maps/MainMap/MinigameWindow")
 
 func _ready():
-	sprite_node.texture = sprite
-	sprite_node.scale = Vector2(scale_factor, scale_factor)
+	_sprite_node.texture = sprite
+	_sprite_node.scale = Vector2(scale_factor, scale_factor)
 	
 	if not disabled:
-		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
-		sprite_node.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
+		_sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
+		_sprite_node.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
 		
 	if !is_minigame:
 		disabled = false
@@ -49,8 +47,8 @@ func _ready():
 func _on_body_entered(body):
 	if body.name.to_int() == GameManagerSingleton.get_current_player_id() && !disabled && !body.is_in_vent:
 		_is_player_inside = true
-		sprite_node.material.set_shader_parameter('line_color', _in_range_task_color)
-		minigame_window.show_use_button(minigame_scene)
+		_sprite_node.material.set_shader_parameter('line_color', _in_range_task_color)
+		_minigame_window.show_use_button(minigame_scene)
 		TaskManagerSingleton.current_task_id = task_id
 
 
@@ -58,25 +56,21 @@ func _on_body_entered(body):
 func _on_body_exited(body):
 	if body.name.to_int() == GameManagerSingleton.get_current_player_id() && !disabled:
 		_is_player_inside = false
-		sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
-		minigame_window.hide_use_button()
+		_sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
+		_minigame_window.hide_use_button()
 		TaskManagerSingleton.current_task_id = null
 
 
 ## Udostępnia punkt interakcji graczowi.
 func enable_task(server_task_id):
-	sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
-	sprite_node.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
+	_sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
+	_sprite_node.material.set_shader_parameter('line_thickness', _enabled_line_thickness)
 	task_id = server_task_id
 	disabled = false
 	
 
 ## Zamyka dostęp do punktu interakcji.
 func disable_task():
-	sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
-	sprite_node.material.set_shader_parameter('line_thickness', _disabled_line_thickness)
+	_sprite_node.material.set_shader_parameter('line_color', _out_of_range_task_color)
+	_sprite_node.material.set_shader_parameter('line_thickness', _disabled_line_thickness)
 	disabled = true
-
-## Zamyka zadanie, potrzebne do reportowania.
-func close_minigame():
-	minigame_window.close_minigame()

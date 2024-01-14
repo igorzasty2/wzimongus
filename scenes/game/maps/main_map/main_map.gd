@@ -1,5 +1,8 @@
+## Główna mapa gry.
+class_name MainMap
 extends Node2D
 
+## Sygnał emitowany po załadowaniu mapy.
 signal load_finished()
 
 @onready var _players = $Players

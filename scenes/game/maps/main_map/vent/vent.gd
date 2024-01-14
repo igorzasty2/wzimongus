@@ -23,9 +23,6 @@ var _out_of_range_color = [0, 0, 0, 0]
 ## Referencja do kontenera światła venta.
 @onready var _vent_light = $LightsContainer/Light 
 
-## Referencja do node'a venta.
-@onready var _vent_node = $"."
-
 @onready var _animation_player = $Sprite2D/AnimationPlayer
 
 ## Interfejs
@@ -52,7 +49,7 @@ func _ready():
 		_vent_direction_button_list[-1].id = idx
 		idx += 1
 	
-	_vent_light.texture_scale = GameManagerSingleton.get_server_settings()["lecturer_light_radius"] / _vent_node.global_scale.x
+	_vent_light.texture_scale = GameManagerSingleton.get_server_settings()["lecturer_light_radius"] / global_scale.x
 
 ## Instancjonuje przycisk kierunkowy.
 func _instantiante_direction_button(pos : Vector2):
@@ -94,7 +91,7 @@ func _move_to_vent(player_id: int, vent_id: int):
 	var player = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	player.can_use_vent = false
 	player.is_moving_through_vent = true
-	player.input.destination_position = vent_target_list[vent_id].global_position
+	player.input_synchronizer.destination_position = vent_target_list[vent_id].global_position
 
 	# Zmienia widoczność przycisków ventu startowego i docelowego.
 	if player_id == GameManagerSingleton.get_current_player_id():
@@ -147,6 +144,6 @@ func set_vent_light_visibility_for(player_id: int, visibility: bool):
 
 
 @rpc("call_local", "reliable")
-## Puszcza animacje ventowania
+## Odtwarza animację ventowania.
 func play_vent_animation():
 	_animation_player.play("vent_animation")

@@ -47,7 +47,7 @@ signal server_settings_changed()
 ## Emitowany gdy przynajmniej jeden z warunków zakończenia gry jest spełniony.
 signal winner_determined(winning_role: Role)
 
-## Rola gracza
+## Rola gracza.
 enum Role {STUDENT, LECTURER}
 
 ## Komunikaty błędów.
@@ -169,28 +169,28 @@ var _player_attributes = {
 	"is_dead": false
 }
 
-## Okrśla czy jest zwołane alarmowe zebranie
+## Okrśla czy jest zwołane alarmowe zebranie.
 var is_meeting_called: bool = false
 
-## Przechowuje infromację o tym czy gra animacja tła
+## Przechowuje informacje o tym czy animacja tła jest w trakcie odtwarzania.
 var is_animation_playing: bool = false
 
-## Przechowuje pozycję animacji tła
+## Przechowuje pozycję animacji tła.
 var animation_position: float
 
-## Przechowuje czas oczekiwania na animację - potrzebny do przejść między scenami
+## Przechowuje czas oczekiwania na animację - potrzebny do przejść między scenami.
 var wait_time
 
-## Przechowuje teksture obecnego tła
+## Przechowuje teksturę obecnego tła.
 var current_background_texture = null
 
-## Przechowuje teksture tła przejścia
+## Przechowuje teksturę tła przejścia.
 var transition_background_texture = null
 
-## Czy scena jest włączana po raz pierwszy
+## Czy scena jest włączana po raz pierwszy.
 var is_first_time: bool = true
 
-## Określa czy właśnie jest sabotaż
+## Określa czy właśnie odbywa się sabotaż.
 var is_sabotage: bool = false
 
 
@@ -464,7 +464,7 @@ func set_pause_menu_status(is_paused: bool):
 	emit_input_status()
 
 
-## Umożliwia zmianę statusu sterowania obecnego gracza.
+## Zmienia status sterowania obecnego gracza.
 func set_input_disabled_status(is_input_disabled: bool):
 	_current_game["is_input_disabled"] = is_input_disabled
 	emit_input_status()
@@ -500,8 +500,8 @@ func _request_skin_change(skin: int):
 	_update_skin.rpc(id, skin)
 
 
-## Zmienia skin gracza.
 @rpc("call_local", "reliable")
+## Zmienia skin gracza.
 func _update_skin(id: int, skin: int):
 	_current_game["registered_players"][id]["skin"] = skin
 	skin_changed.emit(id, skin)
@@ -854,7 +854,7 @@ func activate_light_sabotage():
 
 
 @rpc("any_peer", "call_local", "reliable")
-## Emituje sygnał informujący o rozpoczeciu/zakończeniu sabotażu.
+## Emituje sygnał informujący o rozpoczęciu/zakończeniu sabotażu.
 func emit_sabotage_started(has_started:bool):
 	is_sabotage = has_started
 	sabotage_started.emit(has_started)

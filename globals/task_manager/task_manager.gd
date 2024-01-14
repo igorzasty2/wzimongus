@@ -89,13 +89,13 @@ func _send_tasks(tasks) -> void:
 
 
 @rpc("call_local", "reliable")
-## Ustawia początkową ilość zadań graczowi.
+## Ustawia początkową ilość zadań.
 func set_global_tasks_amount(amount: int) -> void:
 	global_tasks_amount = amount
 
 
 @rpc("any_peer", "call_local", "reliable")
-## Wysyła infomację do serwera informujące o wykonaniu zadania.
+## Wysyła infomację do serwera informującą o wykonaniu zadania.
 func _send_task_completion(player_id: int, task_id: int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
@@ -126,7 +126,7 @@ func _count_global_completed_tasks_amount():
 
 
 @rpc("call_local", "reliable")
-## Aktualizuje ilość zakończonych tasków i wysyła sygnał o aktualizacji tej wartości.
+## Aktualizuje ilość zakończonych zadań i wysyła sygnał o aktualizacji tej wartości.
 func _update_global_completed_tasks_amount(new_global_completed_tasks_amount) -> void:
 	global_tasks_completed_amount = new_global_completed_tasks_amount
 	global_tasks_completed_amount_change.emit()

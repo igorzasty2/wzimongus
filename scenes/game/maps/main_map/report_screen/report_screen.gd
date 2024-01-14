@@ -1,10 +1,10 @@
-## Ekran reporta
+## Klasa odpowiedzialna za ekran raportu.
 class_name ReportScreen
 extends Control
 
-## Okresla czy spotkanie
+## Określa czy spotkanie.
 @export var is_emergency_meeting:bool = false
-## Id tekstury znalezionego ciała
+## ID tekstury znalezionego ciała.
 @export var body_texture_id: int
 
 ## Odniesienie do Node'a "TextureRect"

@@ -1,45 +1,44 @@
+## Klasa odpowiadająca za interfejs użytkownika w lobby.
+class_name LobbyUserInterface
 extends CanvasLayer
 
-@onready var current_players_counter = $CurrentPlayersCounter
+@onready var _current_players_counter = $CurrentPlayersCounter
 
-@onready var start_game_alert = $StartGameAlert
-@onready var start_game_button = $StartGameButton
+@onready var _start_game_alert = $StartGameAlert
+@onready var _start_game_button = $StartGameButton
 
-@onready var lobby_settings_button = $GridContainer2/LobbySettingsButton
-@onready var interact_button = $GridContainer2/InteractButton
+@onready var _lobby_settings_button = $GridContainer2/LobbySettingsButton
+@onready var _interact_button = $GridContainer2/InteractButton
 
-@onready var pause_button = $GridContainer/PauseButton
-@onready var chat_button = $GridContainer/ChatButton
+@onready var _grid_container = $GridContainer
+@onready var _grid_container_2 = $GridContainer2
 
-@onready var grid_container = $GridContainer
-@onready var grid_container_2 = $GridContainer2
+var _user_sett: UserSettingsManager
 
-var user_sett: UserSettingsManager
+var _initial_start_game_button_scale
 
-var initial_start_game_button_scale
+var _initial_grid_container_scale
 
-var initial_grid_container_scale
+var _initial_grid_container_2_scale
 
-var initial_grid_container_2_scale
-
-var initial_current_players_counter_scale
+var _initial_current_players_counter_scale
 
 func _ready():
-	initial_start_game_button_scale = start_game_button.scale
-	initial_grid_container_scale = grid_container.scale
-	initial_grid_container_2_scale = grid_container_2.scale
-	initial_current_players_counter_scale = current_players_counter.scale
+	_initial_start_game_button_scale = _start_game_button.scale
+	_initial_grid_container_scale = _grid_container.scale
+	_initial_grid_container_2_scale = _grid_container_2.scale
+	_initial_current_players_counter_scale = _current_players_counter.scale
 	
-	user_sett = UserSettingsManager.load_or_create()
-	user_sett.interface_scale_value_changed.connect(on_interface_scale_changed)
-	on_interface_scale_changed(user_sett.interface_scale)
+	_user_sett = UserSettingsManager.load_or_create()
+	_user_sett.interface_scale_value_changed.connect(_on_interface_scale_changed)
+	_on_interface_scale_changed(_user_sett.interface_scale)
 	
 	if !multiplayer.is_server():
-		lobby_settings_button.texture_normal = null
-		lobby_settings_button.disabled = true
+		_lobby_settings_button.texture_normal = null
+		_lobby_settings_button.disabled = true
 
-		start_game_alert.hide()
-		start_game_button.hide()
+		_start_game_alert.hide()
+		_start_game_button.hide()
 	
 	if multiplayer.is_server():
 		_update_start_game_button()
@@ -56,26 +55,26 @@ func _ready():
 	toggle_interact_button_active(false)
 
 
-func on_interface_scale_changed(value:float):
-	start_game_button.scale = initial_start_game_button_scale * value
-	grid_container.scale = initial_grid_container_scale * value
-	grid_container_2.scale = initial_grid_container_2_scale * value
-	current_players_counter.scale = initial_current_players_counter_scale * value
+func _on_interface_scale_changed(value:float):
+	_start_game_button.scale = _initial_start_game_button_scale * value
+	_grid_container.scale = _initial_grid_container_scale * value
+	_grid_container_2.scale = _initial_grid_container_2_scale * value
+	_current_players_counter.scale = _initial_current_players_counter_scale * value
 
 
 func _update_start_game_button(_id: int = 0, _player: Dictionary = {}):
 	if GameManagerSingleton.get_registered_players().size() >= 3:
-		start_game_alert.hide()
-		start_game_button.disabled = false
-		toggle_button_visual(start_game_button, true)
+		_start_game_alert.hide()
+		_start_game_button.disabled = false
+		_toggle_button_visual(_start_game_button, true)
 	else:
-		start_game_alert.show()
-		start_game_button.disabled = true
-		toggle_button_visual(start_game_button, false)
+		_start_game_alert.show()
+		_start_game_button.disabled = true
+		_toggle_button_visual(_start_game_button, false)
 
 
 func _update_current_players_counter(_id: int = 0, _player: Dictionary = {}):
-	current_players_counter.text = str(GameManagerSingleton.get_registered_players().size()) + "/" + str(GameManagerSingleton.get_server_settings().max_players)
+	_current_players_counter.text = str(GameManagerSingleton.get_registered_players().size()) + "/" + str(GameManagerSingleton.get_server_settings().max_players)
 
 
 func _on_lobby_settings_button_button_down():
@@ -103,12 +102,12 @@ func _on_pause_button_button_down():
 
 # Aktywuje i deaktywuje przycisk interakcji
 func toggle_interact_button_active(is_active:bool):
-	interact_button.disabled = !is_active
-	toggle_button_visual(interact_button, is_active)
+	_interact_button.disabled = !is_active
+	_toggle_button_visual(_interact_button, is_active)
 
 
 # Zmienia wygląd przycisku
-func toggle_button_visual(button:TextureButton, is_on:bool):
+func _toggle_button_visual(button:TextureButton, is_on:bool):
 	if is_on:
 		button.modulate = Color8(255, 255, 255, 255)
 	else:

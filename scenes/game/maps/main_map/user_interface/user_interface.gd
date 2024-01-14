@@ -1,3 +1,5 @@
+## Klasa odpowiedzialna za interfejs użytkownika na głównej mapie.
+class_name MainMapUserInterface
 extends CanvasLayer
 
 @onready var _grid_container = $GridContainer
@@ -111,12 +113,6 @@ func _fill_grid(amount:int):
 		var filler_duplicate = _filler.duplicate()
 		_grid_container.add_child(filler_duplicate)
 		_grid_container.move_child(filler_duplicate, 0)
-
-
-@rpc("call_local", "any_peer")
-## Przełącza widoczność interfejsu
-func toggle_visiblity(is_visible:bool):
-	visible = is_visible
 
 
 ## Aktualizuje zawartość etykiety

@@ -1,4 +1,5 @@
-class_name PageNode
+## Klasa reprezentująca kartę strony z hasłem.
+class_name FindPasswordPageNode
 extends Sprite2D		
 
 ## Funkcja inicjalizująca scenę strony

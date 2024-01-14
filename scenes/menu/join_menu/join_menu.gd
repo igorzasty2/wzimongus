@@ -1,5 +1,3 @@
-## Klasa odpowiedzialna za menu wyboru serwera.
-class_name JoinMenu
 extends Control
 
 

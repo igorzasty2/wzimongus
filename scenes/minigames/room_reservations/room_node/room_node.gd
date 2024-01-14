@@ -1,4 +1,5 @@
-class_name RoomNode
+## Klasa reprezentująca pokój w minigrze rezerwacji pokoi.
+class_name RoomReservationsRoomNode
 extends HBoxContainer
 
 ## Sygnał oznaczajacy kliknięcie w przycisk w dół

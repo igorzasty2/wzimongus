@@ -1,3 +1,5 @@
+## Minigra polegająca na kopiowaniu plików z jednego folderu do drugiego.
+class_name CopyingFilesMinigame
 extends Control
 
 signal minigame_end
