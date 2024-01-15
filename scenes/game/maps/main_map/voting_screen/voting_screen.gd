@@ -148,7 +148,6 @@ func _add_player_vote(player_key, voted_by):
 	GameManagerSingleton.add_vote(player_key, voted_by)
 
 	if multiplayer.is_server():
-		print("VOTES: ", GameManagerSingleton.get_current_game_value("votes"))
 		if _count_all_votes() == _count_alive_players():
 			_on_end_voting_timer_timeout.rpc()
 			_stop_voting_timer.rpc()
