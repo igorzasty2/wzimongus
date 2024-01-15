@@ -9,7 +9,7 @@ extends Control
 @onready var _ejection_message = %EjectionMessage
 
 ## Referencja do najczęściej głosowanego gracza
-var _most_voted_player = GameManagerSingleton.get_current_game_value("_most_voted_player")
+var _most_voted_player = GameManagerSingleton.get_current_game_value("most_voted_player")
 ## Timer do następnej rundy
 var _next_round_timer = Timer.new()
 
