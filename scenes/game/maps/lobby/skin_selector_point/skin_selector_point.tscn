@@ -1,10 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://clyynf7f5bwqv"]
+[gd_scene load_steps=6 format=3 uid="uid://clyynf7f5bwqv"]
 
 [ext_resource type="Script" path="res://scenes/game/maps/lobby/skin_selector_point/skin_selector_point.gd" id="1_kee2m"]
 [ext_resource type="Shader" path="res://assets/shaders/outline.gdshader" id="2_1htbf"]
+[ext_resource type="Texture2D" uid="uid://ccpiiwi5tsiuw" path="res://assets/textures/lobby/objects/kamien.png" id="3_loxyp"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ykn66"]
-radius = 170.238
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eohvk"]
+radius = 394.0
+height = 1054.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xwbu7"]
 shader = ExtResource("2_1htbf")
@@ -18,13 +20,16 @@ collision_mask = 2
 monitorable = false
 priority = 1
 script = ExtResource("1_kee2m")
-scale_factor = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_ykn66")
+position = Vector2(-5, -287)
+shape = SubResource("CapsuleShape2D_eohvk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_xwbu7")
+position = Vector2(0, -350)
+scale = Vector2(1.122, 1.055)
+texture = ExtResource("3_loxyp")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

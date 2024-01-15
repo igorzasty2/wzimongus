@@ -22,8 +22,6 @@ signal use_button_active(is_active: bool)
 
 
 func _ready():
-	_sprite_node.texture = _sprite
-	_sprite_node.scale = Vector2(_scale_factor, _scale_factor)
 	_sprite_node.material = _sprite_node.material.duplicate()
 	_sprite_node.material.set_shader_parameter("line_color", _out_of_range_color)
 	_sprite_node.material.set_shader_parameter("line_thickness", _line_thickness)
