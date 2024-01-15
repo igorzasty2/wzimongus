@@ -27,9 +27,10 @@ shape = SubResource("CapsuleShape2D_eohvk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_xwbu7")
-position = Vector2(0, -350)
+position = Vector2(0, 10)
 scale = Vector2(1.122, 1.055)
 texture = ExtResource("3_loxyp")
+offset = Vector2(0, -350)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
