@@ -120,6 +120,20 @@ func _toggle_button_highlight(is_on: bool):
 		_sprite_2d.material.set_shader_parameter("line_color", _out_of_range_color)
 
 
+## Po wejściu do venta wyłącza podświetlenie przycisku awaryjnego
+func on_vent_entered():
+	var bodies = _report_area.get_overlapping_bodies()
+	for body in bodies:
+		if (
+			body.name.to_int() == GameManagerSingleton.get_current_player_id()
+			&& !GameManagerSingleton.get_current_player_value("is_dead")
+			&& _report_area.monitorable
+			&& _report_area.monitoring
+		):
+			_report_area.is_player_inside = false
+			_toggle_button_highlight(false)
+
+
 ## Wywoływane po naciśnięciu przycisku, wyłącza możliwość ponownego użycia
 func _button_used():
 	_uses_left_label.text = "Pozostało użyć: 0"

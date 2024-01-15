@@ -68,6 +68,8 @@ var teleport_position = null
 
 @onready var _step_sound_player = $StepSound
 
+## Przycisk awaryjny
+var _emergency_button
 ## Interfejs
 var _user_interface
 ## Emitowany, gdy przycisk powinien być włączony/wyłączony.
@@ -342,7 +344,10 @@ func _update_animation_parameters(direction: Vector2) -> void:
 func _on_map_load_finished():
 	_user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 	button_active.connect(_user_interface.toggle_button_active)
-
+	
+	_emergency_button = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/EmergencyButton")
+	vent_entered.connect(_emergency_button.on_vent_entered)
+	
 	# Na początku gry po załadowaniu mapy restartuje kill cooldown
 	_on_next_round_started()
 

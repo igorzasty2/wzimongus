@@ -13,7 +13,7 @@ extends Area2D
 @onready var _emergency_button = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/EmergencyButton")
 
 ## Określa czy gracz jest w zasięgu.
-var _is_player_inside: bool = false
+var is_player_inside: bool = false
 
 # Określa czy czas oczekiwania na włączenie się przycisku alarmowego się skończył.
 var _is_wait_time_over: bool = false
@@ -54,7 +54,7 @@ func _input(event):
 			if GameManagerSingleton.is_sabotage:
 				return
 
-		if !_is_player_inside:
+		if !is_player_inside:
 			return
 
 		if GameManagerSingleton.get_current_player_value("is_dead"):
@@ -77,7 +77,7 @@ func _input(event):
 func _on_end_emergency_timer_timeout(is_over: bool):
 	_is_wait_time_over = is_over
 	if (
-		_is_player_inside
+		is_player_inside
 		&& !GameManagerSingleton.get_registered_player_value(GameManagerSingleton.get_current_player_id(), "is_dead")
 		&& !GameManagerSingleton.is_meeting_called
 		&& _is_wait_time_over
@@ -99,7 +99,7 @@ func _on_body_entered(body):
 		&& !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead")
 		&& !body.is_in_vent
 	):
-		_is_player_inside = true
+		is_player_inside = true
 
 		if is_button:
 			if _is_wait_time_over && !GameManagerSingleton.is_meeting_called && !GameManagerSingleton.is_sabotage:
@@ -117,7 +117,7 @@ func _on_body_exited(body):
 		&& !GameManagerSingleton.get_registered_player_value(body.name.to_int(), "is_dead")
 		&& !body.is_in_vent
 	):
-		_is_player_inside = false
+		is_player_inside = false
 		body.can_report = false
 
 		if is_button:
