@@ -47,6 +47,9 @@ signal server_settings_changed
 ## Emitowany gdy przynajmniej jeden z warunków zakończenia gry jest spełniony.
 signal winner_determined(winning_role: Role)
 
+## Emtiowany po wejściu/wyjściu gracza do venta.
+signal vent_entered(is_inside:bool)
+
 ## Rola gracza.
 enum Role { STUDENT, LECTURER }
 
@@ -841,3 +844,8 @@ func _verify_lobby_name_length(lobby_name: String) -> bool:
 ## Weryfikuje długość nazwy użytkownika.
 func _verify_username_length(username: String) -> bool:
 	return username.length() >= 3 && username.length() <= 16
+
+
+## Emituje sygnał vent_entered
+func emit_vent_entered(is_inside:bool):
+	vent_entered.emit(is_inside)
