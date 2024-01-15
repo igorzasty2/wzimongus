@@ -182,7 +182,6 @@ func _rollback_tick(delta, _tick, is_fresh):
 				input_synchronizer.direction = Vector2.ZERO
 
 				_has_entered_vent = true
-				collision_mask = 0
 
 				if multiplayer.is_server():
 					_play_venting_animation.rpc(false)
@@ -519,6 +518,7 @@ func _request_vent_entering():
 ## Wchodzi do venta.
 func _enter_vent(vent_position):
 	is_in_vent = true
+	collision_mask = 0
 	is_moving_through_vent = true
 	input_synchronizer.destination_position = vent_position
 	input_synchronizer.is_walking_to_destination = true
