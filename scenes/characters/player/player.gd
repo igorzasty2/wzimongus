@@ -443,7 +443,7 @@ func _on_killed_player(player_id: int, is_victim: bool) -> void:
 		if GameManagerSingleton.get_current_player_id() != player_id:
 			get_parent().get_node(str(player_id)).visible = false
 
-		# Włącza widoczność wszystkich martwych graczy u marwtch graczy.
+		# Włącza widoczność wszystkich martwych graczy u martwych graczy.
 		if GameManagerSingleton.get_current_player_value("is_dead"):
 			for i in GameManagerSingleton.get_registered_players().keys():
 				get_parent().get_node(str(i)).visible = true
