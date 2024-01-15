@@ -148,6 +148,7 @@ func _add_player_vote(player_key, voted_by):
 	GameManagerSingleton.add_vote(player_key, voted_by)
 
 	if multiplayer.is_server():
+		print("VOTES: ", GameManagerSingleton.get_current_game_value("votes"))
 		if _count_all_votes() == _count_alive_players():
 			_on_end_voting_timer_timeout.rpc()
 			_stop_voting_timer.rpc()
@@ -189,6 +190,9 @@ func _on_decision_yes_pressed():
 	GameManagerSingleton.set_current_game_value("is_voted", true)
 	_skip_decision.visible = false
 	_skip_button.disabled = true
+
+	_on_player_voted(0)
+
 
 
 func _on_decision_no_pressed():
@@ -259,12 +263,13 @@ func _get_most_voted_player_id():
 	var max_vote = 0
 
 	for vote_key in GameManagerSingleton.get_current_game_value("votes").keys():
-		var votes_count = GameManagerSingleton.get_current_game_value("votes")[vote_key].size()
-		if votes_count > max_vote:
-			max_vote = votes_count
-			most_voted_players = [vote_key]
-		elif votes_count == max_vote:
-			most_voted_players.append(vote_key)
+		if vote_key != 0:
+			var votes_count = GameManagerSingleton.get_current_game_value("votes")[vote_key].size()
+			if votes_count > max_vote:
+				max_vote = votes_count
+				most_voted_players = [vote_key]
+			elif votes_count == max_vote:
+				most_voted_players.append(vote_key)
 
 	if most_voted_players.size() > 1 || most_voted_players.size() == 0:
 		return null
