@@ -9,14 +9,27 @@ extends Control
 @onready var _ejection_message = %EjectionMessage
 
 ## Referencja do najczęściej głosowanego gracza
-var _most_voted_player = GameManagerSingleton.get_current_game_value("_most_voted_player")
+var _most_voted_player = GameManagerSingleton.get_current_game_value("most_voted_player")
 ## Timer do następnej rundy
 var _next_round_timer = Timer.new()
 
 
 func _ready():
+	var _ejected_one = Sprite2D.new()
+	
+	var texture = AtlasTexture.new()
+	texture.atlas = load(GameManagerSingleton.SKINS[_most_voted_player["skin"]]["resource"])
+	texture.region = Rect2(0, 0, 675, 675)
+	
+	_ejected_one.texture = texture
+	_ejected_one.position = Vector2(640, 360)
+	
+	texture = Sprite2D.new()
+	texture.texture = load("res://assets/textures/ejection_screen/ejection_emergency_umbrella.png")
+	_ejected_one.add_child(texture)
+	add_child(_ejected_one)
+	
 	GameManagerSingleton.teleport_players()
-
 	if _most_voted_player == null:
 		_ejection_message.text = "[center]Nikt nie został usunięty z grupy[/center]"
 	elif _most_voted_player["is_lecturer"]:
