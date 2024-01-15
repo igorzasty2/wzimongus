@@ -302,8 +302,6 @@ func end_game():
 	# Resetuje zadania.
 	TaskManagerSingleton.reset()
 
-	is_game_scene_loaded = false
-
 	game_ended.emit()
 
 
