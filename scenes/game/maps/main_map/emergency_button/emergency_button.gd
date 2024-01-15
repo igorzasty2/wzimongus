@@ -122,6 +122,9 @@ func _toggle_button_highlight(is_on: bool):
 
 ## Po wejściu do venta wyłącza podświetlenie przycisku awaryjnego
 func on_vent_entered():
+	if !GameManagerSingleton.get_current_player_value("is_lecturer"):
+		return
+	
 	var bodies = _report_area.get_overlapping_bodies()
 	for body in bodies:
 		if (
@@ -132,6 +135,7 @@ func on_vent_entered():
 		):
 			_report_area.is_player_inside = false
 			_toggle_button_highlight(false)
+			return
 
 
 ## Wywoływane po naciśnięciu przycisku, wyłącza możliwość ponownego użycia

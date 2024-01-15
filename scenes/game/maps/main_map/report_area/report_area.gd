@@ -89,17 +89,20 @@ func _on_end_emergency_timer_timeout(is_over: bool):
 
 ## Obsługuje wejście gracza do venta dla ciała
 func _on_vent_entered(is_inside_vent:bool):
+	if !GameManagerSingleton.get_current_player_value("is_lecturer"):
+		return
+
 	var bodies = get_overlapping_bodies()
 
 	for body in bodies:
 		if (
 			body.name.to_int() == GameManagerSingleton.get_current_player_id()
 			&& !GameManagerSingleton.get_current_player_value("is_dead")
-			&& monitorable
-			&& monitoring
+			&& !is_button
 		):
 			is_player_inside = !is_inside_vent
 			button_active.emit("ReportButton", !is_inside_vent)
+			return
 
 
 ## Usuwa ciało z mapy.
