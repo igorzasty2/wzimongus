@@ -93,6 +93,7 @@ offset = Vector2(0, -100)
 position = Vector2(191, 1042)
 
 [node name="Kamien" type="Sprite2D" parent="Objects/Kamien"]
+visible = false
 position = Vector2(0, -350)
 scale = Vector2(1.122, 1.055)
 texture = ExtResource("4_364p8")
@@ -100,11 +101,8 @@ texture = ExtResource("4_364p8")
 [node name="StaticBody2D" type="StaticBody2D" parent="Objects/Kamien"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Kamien/StaticBody2D"]
+position = Vector2(-15, 0)
 polygon = PackedVector2Array(-177, -4, -328, 73, 327, 74, 178, -5)
-
-[node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
-z_index = 4
-position = Vector2(147, -276)
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
@@ -137,6 +135,11 @@ position = Vector2(1050, 2.08165e-12)
 
 [node name="9" type="Node2D" parent="SpawnPoints"]
 position = Vector2(1350, 2.08165e-12)
+
+[node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
+z_index = 5
+y_sort_enabled = true
+position = Vector2(191, 1042)
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true

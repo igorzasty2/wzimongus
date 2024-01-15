@@ -461,6 +461,7 @@ position = Vector2(4023, -1461)
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="Objects/PokojWykladowcowBiurko"]
+visible = false
 texture = ExtResource("43_n4m3t")
 
 [node name="CollisionBox" type="StaticBody2D" parent="Objects/PokojWykladowcowBiurko"]
@@ -1039,7 +1040,8 @@ sprite = ExtResource("31_dhdh4")
 minigame_scene = ExtResource("86_ao4sp")
 
 [node name="CameraSystem" parent="InteractionPoints" instance=ExtResource("3_e0rk4")]
-position = Vector2(4016, -1329)
+position = Vector2(4023, -1461)
+sprite = ExtResource("43_n4m3t")
 is_minigame = false
 minigame_scene = ExtResource("89_58eb3")
 
