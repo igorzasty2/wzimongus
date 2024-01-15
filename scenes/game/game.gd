@@ -33,10 +33,12 @@ func _on_winner_determined(winning_role: GameManagerSingleton.Role):
 ## Wyświetla ekran zakończenia gry.
 func display_winner(winning_role: GameManagerSingleton.Role):
 	var ending_scene = preload("res://scenes/game/end_screen/end_screen.tscn").instantiate()
-	get_tree().get_root().add_child(ending_scene)
+	add_child(ending_scene)
 	ending_scene.set_winning_role.call_deferred(winning_role, GameManagerSingleton.get_current_player_value("is_lecturer"))
+
 	GameManagerSingleton.reset_game()
-	_change_map.call_deferred(preload("res://scenes/game/maps/lobby/lobby.tscn"))
+
+	_change_map.call_deferred(load("res://scenes/game/maps/lobby/lobby.tscn"))
 
 
 func _on_game_started():
@@ -45,20 +47,24 @@ func _on_game_started():
 
 func _on_game_ended():
 	if !_error.visible:
+		GameManagerSingleton.is_game_scene_loaded = false
+
 		get_tree().change_scene_to_file("res://scenes/menu/start_menu/start_menu.tscn")
 
 
 func _on_error_occured(message: String):
 	if !_error.visible:
 		_pause_menu.queue_free()
-
 		_connecting.hide()
 		_delete_map()
+
 		_error_pop_up.set_information(message)
 		_error.show()
 
 
 func _on_error_pop_up_closed():
+	GameManagerSingleton.is_game_scene_loaded = false
+
 	get_tree().change_scene_to_file("res://scenes/menu/start_menu/start_menu.tscn")
 
 
@@ -75,7 +81,6 @@ func _change_map(scene: PackedScene):
 ## Usuwa aktualną mapę.
 func _delete_map():
 	for i in _maps.get_children():
-		i.disconnect("load_finished", _on_load_finished)
 		_maps.remove_child(i)
 		i.queue_free()
 
