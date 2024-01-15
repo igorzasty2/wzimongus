@@ -221,7 +221,6 @@ z_index = 5
 y_sort_enabled = true
 position = Vector2(-1, -47)
 collision_layer = 2
-collision_mask = 9
 motion_mode = 1
 wall_min_slide_angle = 0.0349066
 safe_margin = 5.0

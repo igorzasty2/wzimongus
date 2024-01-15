@@ -116,7 +116,8 @@ change_group={
 2d_physics/layer_1="static_objects"
 2d_physics/layer_2="players"
 2d_physics/layer_3="vents"
-2d_physics/layer_4="kill_radius"
+2d_physics/layer_4="dead_players"
+2d_physics/layer_5="dead_player_map_borders"
 
 [netfox]
 
