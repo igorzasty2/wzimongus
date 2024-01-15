@@ -288,6 +288,9 @@ func _input(event):
 
 		if !victim:
 			return
+		
+		if get_parent().get_node(str(victim)).collision_layer != 2:
+			return
 
 		$PlayerInteractionPlayer.stream = load("res://assets/audio/kill_sound.ogg")
 		$PlayerInteractionPlayer.play()
