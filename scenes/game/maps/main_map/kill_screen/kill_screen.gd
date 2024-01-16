@@ -7,7 +7,7 @@ var victim_id = null
 ## Id oblewającego wykładowcy
 var failer_id = null
 
-var fail_tween: Tween = null
+var _fail_tween: Tween = null
 var _victim = null
 var _failer = null
 
@@ -35,12 +35,12 @@ func _ready():
 	failer_skin.region = Rect2(0, 0, 675, 675)
 	_failer_sprite.texture = failer_skin
 	
-	fail_tween = get_tree().create_tween()
-	fail_tween.tween_property($Fail1, "modulate:a", 1, 0.6)
-	fail_tween.tween_property($Fail2, "modulate:a", 1, 0.6)
-	fail_tween.tween_property($Victim/Sweat, "modulate:a", 1, 0.3)
-	fail_tween.tween_property(_victim_sprite, "rotation", -PI/2, 0.3)
-	fail_tween.tween_property(_victim_sprite, "position:y", 520, 0.2)
+	_fail_tween = get_tree().create_tween()
+	_fail_tween.tween_property($Fail1, "modulate:a", 1, 0.6)
+	_fail_tween.tween_property($Fail2, "modulate:a", 1, 0.6)
+	_fail_tween.tween_property($Victim/Sweat, "modulate:a", 1, 0.3)
+	_fail_tween.tween_property(_victim_sprite, "rotation", -PI/2, 0.3)
+	_fail_tween.tween_property(_victim_sprite, "position:y", 520, 0.2)
 	
 	add_child(_animation_timer)
 	_animation_timer.one_shot = true
@@ -49,7 +49,7 @@ func _ready():
 
 func _process(_delta):
 	if _animation_timer.wait_time > 0.5:
-		fail_tween.play()
+		_fail_tween.play()
 
 func _animation_timer_timeout():
 	self.queue_free()
