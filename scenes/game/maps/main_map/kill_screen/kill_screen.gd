@@ -36,20 +36,19 @@ func _ready():
 	_failer_sprite.texture = failer_skin
 	
 	fail_tween = get_tree().create_tween()
-	fail_tween.tween_property($Fail1, "modulate:a", 1, 1)
-	fail_tween.tween_property($Fail2, "modulate:a", 1, 1)
-	fail_tween.tween_property(_victim_sprite, "rotation", -PI/2, 0.6)
-	fail_tween.tween_property(_victim_sprite, "position:y", 520, 0.4)
+	fail_tween.tween_property($Fail1, "modulate:a", 1, 0.7)
+	fail_tween.tween_property($Fail2, "modulate:a", 1, 0.7)
+	fail_tween.tween_property(_victim_sprite, "rotation", -PI/2, 0.4)
+	fail_tween.tween_property(_victim_sprite, "position:y", 520, 0.2)
 	
 	add_child(_animation_timer)
 	_animation_timer.one_shot = true
 	_animation_timer.connect("timeout", _animation_timer_timeout)
-	_animation_timer.start(5)
+	_animation_timer.start(3)
 
 func _process(_delta):
-	if _animation_timer.time_left < 4:
+	if _animation_timer.wait_time > 0.5:
 		fail_tween.play()
 
 func _animation_timer_timeout():
-	GameManagerSingleton.check_winning_conditions()
 	self.queue_free()

@@ -728,7 +728,7 @@ func _send_player_kill(player_id: int, is_victim: bool = true, killer_id=null):
 	_current_game["registered_players"][player_id]["is_dead"] = true
 	player_killed.emit(player_id, is_victim, killer_id)
 
-	
+	GameManagerSingleton.check_winning_conditions()
 
 
 ## Sprawdza warunki wygranej i emituje sygnał wygranej, jeśli któryś z warunków wygranej jest spełniony.
