@@ -190,6 +190,9 @@ func _on_decision_yes_pressed():
 	_skip_decision.visible = false
 	_skip_button.disabled = true
 
+	_on_player_voted(0)
+
+
 
 func _on_decision_no_pressed():
 	GameManagerSingleton.set_current_game_value("is_vote_preselected", false)
@@ -266,7 +269,7 @@ func _get_most_voted_player_id():
 		elif votes_count == max_vote:
 			most_voted_players.append(vote_key)
 
-	if most_voted_players.size() > 1 || most_voted_players.size() == 0:
+	if most_voted_players.size() > 1 || most_voted_players.size() == 0 || most_voted_players[0] == 0:
 		return null
 	else:
 		return most_voted_players[0]
