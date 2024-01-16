@@ -36,9 +36,10 @@ func _ready():
 	_failer_sprite.texture = failer_skin
 	
 	fail_tween = get_tree().create_tween()
-	fail_tween.tween_property($Fail1, "modulate:a", 1, 0.7)
-	fail_tween.tween_property($Fail2, "modulate:a", 1, 0.7)
-	fail_tween.tween_property(_victim_sprite, "rotation", -PI/2, 0.4)
+	fail_tween.tween_property($Fail1, "modulate:a", 1, 0.6)
+	fail_tween.tween_property($Fail2, "modulate:a", 1, 0.6)
+	fail_tween.tween_property($Victim/Sweat, "modulate:a", 1, 0.3)
+	fail_tween.tween_property(_victim_sprite, "rotation", -PI/2, 0.3)
 	fail_tween.tween_property(_victim_sprite, "position:y", 520, 0.2)
 	
 	add_child(_animation_timer)
