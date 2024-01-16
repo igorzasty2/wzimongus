@@ -1040,6 +1040,7 @@ sprite = ExtResource("31_dhdh4")
 minigame_scene = ExtResource("86_ao4sp")
 
 [node name="CameraSystem" parent="InteractionPoints" instance=ExtResource("3_e0rk4")]
+z_index = 1
 position = Vector2(4023, -1461)
 sprite = ExtResource("43_n4m3t")
 is_minigame = false
