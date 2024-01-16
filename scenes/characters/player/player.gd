@@ -235,9 +235,9 @@ func _rollback_tick(delta, _tick, is_fresh):
 	# Podświetla najbliższego gracza jako potencjalną ofiarę do oblania jeśli jestem impostorem,
 	# żyje i cooldown na funkcji zabij nie jest aktywny.
 	if name.to_int() == GameManagerSingleton.get_current_player_id():
-		if GameManagerSingleton.get_current_player_value("is_lecturer") && !is_in_vent:
+		if GameManagerSingleton.get_current_player_value("is_lecturer"):
 			if !GameManagerSingleton.get_current_player_value("is_dead"):
-				if _can_kill_cooldown && !GameManagerSingleton.is_meeting_called:
+				if _can_kill_cooldown && !GameManagerSingleton.is_meeting_called && !is_in_vent:
 					_update_highlight(closest_player(GameManagerSingleton.get_current_player_id()))
 				else:
 					_update_highlight(0)

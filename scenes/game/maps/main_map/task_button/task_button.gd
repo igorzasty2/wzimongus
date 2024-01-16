@@ -41,6 +41,8 @@ func _ready():
 		_sprite_node.material.set_shader_parameter("line_thickness", _enabled_line_thickness)
 
 	if !is_minigame:
+		_sprite_node.material.set_shader_parameter("line_color", _out_of_range_task_color)
+		_sprite_node.material.set_shader_parameter("line_thickness", _enabled_line_thickness)
 		disabled = false
 
 
