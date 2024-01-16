@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="WZiMong Us"
+config/version="1.0.0"
 run/main_scene="res://scenes/menu/start_menu/start_menu.tscn"
 config/features=PackedStringArray("4.2")
 boot_splash/show_image=false
