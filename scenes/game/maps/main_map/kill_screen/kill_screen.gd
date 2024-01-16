@@ -18,7 +18,7 @@ var _animation_timer = Timer.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	visibility_changed.connect(get_parent()._update_player_input)
 	
 	_victim_sprite = get_node("Victim")
 	_failer_sprite = get_node("Failer")
@@ -52,3 +52,4 @@ func _process(_delta):
 
 func _animation_timer_timeout():
 	self.queue_free()
+	hide()

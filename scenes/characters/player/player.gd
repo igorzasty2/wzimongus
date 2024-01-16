@@ -482,6 +482,8 @@ func _update_dead_player(player_id: int, killer_id):
 		kill_screen.victim_id = player_id
 		kill_screen.name = "KillScreen"
 		get_parent().get_parent().add_child(kill_screen)
+		if get_parent().get_parent().get_node("MinigameWindow").get_children().size() > 0:
+			get_parent().get_parent().close_modals()
 	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", _dead_username_color)
 	victim_node.get_node("Skins/Control/PlayerSprite").use_parent_material = true
