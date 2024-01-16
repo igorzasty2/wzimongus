@@ -18,16 +18,26 @@ func _ready():
 	var _ejected_one = Sprite2D.new()
 	
 	var texture = AtlasTexture.new()
-	texture.atlas = load(GameManagerSingleton.SKINS[_most_voted_player["skin"]]["resource"])
-	texture.region = Rect2(0, 0, 675, 675)
+	if _most_voted_player != null:
+		texture.atlas = load(GameManagerSingleton.SKINS[_most_voted_player["skin"]]["resource"])
+		texture.region = Rect2(0, 0, 675, 675)
+		_ejected_one.texture = texture
 	
-	_ejected_one.texture = texture
-	_ejected_one.position = Vector2(640, 360)
+	_ejected_one.position = Vector2(640, -100)
 	
 	texture = Sprite2D.new()
 	texture.texture = load("res://assets/textures/ejection_screen/ejection_emergency_umbrella.png")
+	texture.z_index = -1
+	texture.position = Vector2(15, -380)
+	texture.rotate(PI/18)
 	_ejected_one.add_child(texture)
+	_ejected_one.z_index = 1
+	_ejected_one.scale = Vector2(0.3, 0.3)
 	add_child(_ejected_one)
+	
+	var fall_tween = get_tree().create_tween()
+	fall_tween.tween_property(_ejected_one, "position:y", 900, 3)
+	fall_tween.play()
 	
 	GameManagerSingleton.teleport_players()
 	if _most_voted_player == null:
