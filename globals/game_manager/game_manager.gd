@@ -47,6 +47,9 @@ signal server_settings_changed
 ## Emitowany gdy przynajmniej jeden z warunków zakończenia gry jest spełniony.
 signal winner_determined(winning_role: Role)
 
+## Emtiowany po wejściu/wyjściu gracza do venta.
+signal vent_entered(is_inside:bool)
+
 ## Rola gracza.
 enum Role { STUDENT, LECTURER }
 
@@ -301,8 +304,6 @@ func end_game():
 
 	# Resetuje zadania.
 	TaskManagerSingleton.reset()
-
-	is_game_scene_loaded = false
 
 	game_ended.emit()
 
@@ -736,15 +737,12 @@ func check_winning_conditions():
 	if GameManagerSingleton.get_current_game_value("is_started"):
 		if !multiplayer.is_server():
 			return ERR_UNAUTHORIZED
-
 		if TaskManagerSingleton.get_tasks_server().is_empty():
 			winner_determined.emit(Role.STUDENT)
 			return
-
 		if _count_alive_lecturers() == 0:
 			winner_determined.emit(Role.STUDENT)
 			return
-
 		if _count_alive_students() <= _count_alive_lecturers():
 			winner_determined.emit(Role.LECTURER)
 			return
@@ -846,3 +844,8 @@ func _verify_lobby_name_length(lobby_name: String) -> bool:
 ## Weryfikuje długość nazwy użytkownika.
 func _verify_username_length(username: String) -> bool:
 	return username.length() >= 3 && username.length() <= 16
+
+
+## Emituje sygnał vent_entered
+func emit_vent_entered(is_inside:bool):
+	vent_entered.emit(is_inside)

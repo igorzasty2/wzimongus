@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b84ikvrvlejqh"]
+[gd_scene load_steps=3 format=3 uid="uid://b84ikvrvlejqh"]
 
 [ext_resource type="Script" path="res://scenes/ui/background_button/background_button.gd" id="1_qvmu0"]
+[ext_resource type="AudioStream" uid="uid://ynxw2pohm2pc" path="res://assets/audio/window_close_sound.ogg" id="2_58k2l"]
 
 [node name="BackgroundButton" type="Button"]
 modulate = Color(1, 1, 1, 0)
@@ -11,4 +12,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qvmu0")
 
-[connection signal="button_down" from="." to="." method="_on_button_down" flags=18]
+[node name="WindowCloseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_58k2l")
+volume_db = -25.0
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

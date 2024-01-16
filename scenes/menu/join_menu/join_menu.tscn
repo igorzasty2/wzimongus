@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://do0gv7fs1aegr"]
+[gd_scene load_steps=5 format=3 uid="uid://do0gv7fs1aegr"]
 
 [ext_resource type="Script" path="res://scenes/menu/join_menu/join_menu.gd" id="1_o0flq"]
 [ext_resource type="PackedScene" uid="uid://dbggxxcgwkdh5" path="res://scenes/ui/background/background.tscn" id="2_3dgfg"]
 [ext_resource type="Script" path="res://addons/LANServerBroadcast/server_listener/ServerListener.gd" id="2_07ghn"]
+[ext_resource type="AudioStream" uid="uid://cuoywtj5aix28" path="res://assets/audio/button_sound.ogg" id="4_ii0sp"]
 
 [node name="JoinMenu" type="Control"]
 layout_mode = 3
@@ -173,6 +174,11 @@ custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 size_flags_vertical = 8
 text = "Dołącz do lobby"
+
+[node name="ButtonPressSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ii0sp")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="new_server" from="ServerListener" to="." method="_on_server_listener_new_server"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://uug2yqki41j7"]
+[gd_scene load_steps=4 format=3 uid="uid://uug2yqki41j7"]
 
 [ext_resource type="Script" path="res://scenes/menu/play_menu/play_menu.gd" id="1_lyan3"]
 [ext_resource type="PackedScene" uid="uid://dbggxxcgwkdh5" path="res://scenes/ui/background/background.tscn" id="2_w5u7b"]
+[ext_resource type="AudioStream" uid="uid://cuoywtj5aix28" path="res://assets/audio/button_sound.ogg" id="3_x50cm"]
 
 [node name="PlayMenu" type="Control"]
 layout_mode = 3
@@ -86,6 +87,11 @@ text = "Gracz"
 custom_minimum_size = Vector2(165, 60)
 layout_mode = 2
 text = "Dołącz do lobby"
+
+[node name="ButtonPressSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_x50cm")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="pressed" from="StatusBar/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="ButtonsContainer/HostButton" to="." method="_on_host_button_pressed"]

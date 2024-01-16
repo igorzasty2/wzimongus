@@ -92,7 +92,7 @@ func _switch_chat_group():
 
 func _update_group_label():
 	if GameManagerSingleton.get_current_player_value("is_dead"):
-		_group_label.text = "Uczestniczysz w grupie: Martwi"
+		_group_label.text = "Uczestniczysz w grupie: Oblani"
 	elif GameManagerSingleton.get_current_player_value("is_lecturer"):
 		_group_label.text = (
 			"Uczestniczysz w grupie: Wykładowcy"

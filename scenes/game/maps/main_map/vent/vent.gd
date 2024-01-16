@@ -27,6 +27,7 @@ var _out_of_range_color = [0, 0, 0, 0]
 @onready var _animation_player = $Sprite2D/AnimationPlayer
 
 var _user_interface
+
 ## Emitowany gdy przycisk ventowania powinien być włączony/wyłączony.
 signal vent_button_active(button_name: String, is_active: bool)
 

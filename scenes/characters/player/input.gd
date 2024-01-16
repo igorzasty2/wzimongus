@@ -27,6 +27,8 @@ func _ready():
 		GameManagerSingleton.input_status_changed.connect(_on_input_status_changed)
 		GameManagerSingleton.emit_input_status()
 
+func _process(_delta):
+	pass
 
 func _gather():
 	if !is_multiplayer_authority():
@@ -41,7 +43,9 @@ func _gather():
 		return
 
 	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	
 
 
 func _on_input_status_changed(state: bool):
 	_is_disabled = !state
+

@@ -11,9 +11,9 @@
 [ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="5_1rfh5"]
 [ext_resource type="PackedScene" uid="uid://dyuj3stgg8wl4" path="res://scenes/game/maps/lobby/lobby_ui/lobby_ui.tscn" id="5_7r85o"]
 [ext_resource type="Texture2D" uid="uid://c7y7ff03ym4j4" path="res://assets/textures/lobby/objects/slupy.png" id="5_cauck"]
-[ext_resource type="Texture2D" uid="uid://fmy66vpvmmra" path="res://assets/textures/main_map/objects/wifi.png" id="7_ddbdn"]
 [ext_resource type="PackedScene" uid="uid://b3e41jcsgj6bl" path="res://scenes/game/maps/lobby/lobby_settings/lobby_settings.tscn" id="7_vdntv"]
 [ext_resource type="PackedScene" uid="uid://rh1o32f8llsb" path="res://scenes/game/maps/lobby/skin_selector/skin_selector.tscn" id="8_hy1jx"]
+[ext_resource type="AudioStream" uid="uid://brj4jdusukvhx" path="res://assets/audio/enter_lobby_sound.ogg" id="15_fgqqq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0cw4k"]
 size = Vector2(962, 16)
@@ -93,6 +93,7 @@ offset = Vector2(0, -100)
 position = Vector2(191, 1042)
 
 [node name="Kamien" type="Sprite2D" parent="Objects/Kamien"]
+visible = false
 position = Vector2(0, -350)
 scale = Vector2(1.122, 1.055)
 texture = ExtResource("4_364p8")
@@ -100,13 +101,8 @@ texture = ExtResource("4_364p8")
 [node name="StaticBody2D" type="StaticBody2D" parent="Objects/Kamien"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Objects/Kamien/StaticBody2D"]
+position = Vector2(-15, 0)
 polygon = PackedVector2Array(-177, -4, -328, 73, 327, 74, 178, -5)
-
-[node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
-z_index = 4
-position = Vector2(147, -276)
-sprite = ExtResource("7_ddbdn")
-scale_factor = 1.0
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
@@ -139,6 +135,11 @@ position = Vector2(1050, 2.08165e-12)
 
 [node name="9" type="Node2D" parent="SpawnPoints"]
 position = Vector2(1350, 2.08165e-12)
+
+[node name="SkinSelectorPoint" parent="." instance=ExtResource("3_xxsdp")]
+z_index = 5
+y_sort_enabled = true
+position = Vector2(191, 1042)
 
 [node name="Players" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -218,6 +219,11 @@ visible = false
 visible = false
 
 [node name="LobbySettings" parent="." instance=ExtResource("7_vdntv")]
+
+[node name="EnterLobbySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_fgqqq")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="input_visibility_changed" from="Chat" to="." method="_update_player_input"]
 [connection signal="visibility_changed" from="SkinSelector" to="." method="_update_player_input"]

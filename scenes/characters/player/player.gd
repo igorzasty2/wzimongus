@@ -22,9 +22,6 @@ var is_in_vent: bool = false
 ## Czy jest w trakcie poruszania się przez venta lub do venta.
 var is_moving_through_vent: bool = false
 
-## Określa czy gracz może reportować
-var can_report: bool = false
-
 ## Czy gracz właśnie wszedł do venta.
 var _has_entered_vent: bool = false
 
@@ -66,6 +63,10 @@ var teleport_position = null
 ## Początkowa maska kolizji.
 @onready var _initial_collision_mask: int = collision_mask
 
+@onready var _step_sound_player = $StepSound
+
+## Przycisk awaryjny
+var _emergency_button
 ## Interfejs
 var _user_interface
 ## Emitowany, gdy przycisk powinien być włączony/wyłączony.
@@ -137,6 +138,10 @@ func _ready():
 
 	GameManagerSingleton.map_load_finished.connect(_on_map_load_finished)
 	GameManagerSingleton.next_round_started.connect(_on_next_round_started)
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		var audio_listener = AudioListener2D.new()
+		audio_listener.make_current()
+		add_child(audio_listener)
 
 
 func _process(_delta):
@@ -144,14 +149,22 @@ func _process(_delta):
 
 	# Aktualizuje parametry animacji postaci.
 	_update_animation_parameters(direction)
-
+	if name.to_int() == GameManagerSingleton.get_current_player_id():
+		if direction != Vector2.ZERO:
+			if !_step_sound_player.playing:
+				_step_sound_player.play()
+		else:
+			_step_sound_player.stop()
+	
 	# Aktualizuje czas pozostały do kolejnej możliwości oblania
+
 	if _user_interface != null && _fail_timer != null && _fail_timer.time_left != 0:
 		_user_interface.update_time_left("FailLabel", str(int(_fail_timer.time_left)))
 
 	# Aktualizuje czas pozostały do kolejnej możliwości sabotażu.
 	if _user_interface != null && _sabotage_timer != null && _sabotage_timer.time_left > 0:
 		_user_interface.update_time_left("SabotageLabel", str(int(_sabotage_timer.time_left)))
+
 
 
 func _rollback_tick(delta, _tick, is_fresh):
@@ -222,12 +235,13 @@ func _rollback_tick(delta, _tick, is_fresh):
 	# Podświetla najbliższego gracza jako potencjalną ofiarę do oblania jeśli jestem impostorem,
 	# żyje i cooldown na funkcji zabij nie jest aktywny.
 	if name.to_int() == GameManagerSingleton.get_current_player_id():
-		if GameManagerSingleton.get_current_player_value("is_lecturer") && !is_in_vent:
+		if GameManagerSingleton.get_current_player_value("is_lecturer"):
 			if !GameManagerSingleton.get_current_player_value("is_dead"):
-				if _can_kill_cooldown && !GameManagerSingleton.is_meeting_called:
+				if _can_kill_cooldown && !GameManagerSingleton.is_meeting_called && !is_in_vent:
 					_update_highlight(closest_player(GameManagerSingleton.get_current_player_id()))
 				else:
 					_update_highlight(0)
+	
 
 
 func _input(event):
@@ -274,8 +288,14 @@ func _input(event):
 
 		if !victim:
 			return
+		
+		if get_parent().get_node(str(victim)).collision_layer != 2:
+			return
 
+		$PlayerInteractionPlayer.stream = load("res://assets/audio/kill_sound.ogg")
+		$PlayerInteractionPlayer.play()
 		GameManagerSingleton.kill_victim(victim)
+		
 		_handle_kill_timer()
 		button_active.emit("FailButton", false)
 
@@ -323,6 +343,9 @@ func _update_animation_parameters(direction: Vector2) -> void:
 func _on_map_load_finished():
 	_user_interface = get_tree().root.get_node("Game/Maps/MainMap/UserInterface")
 	button_active.connect(_user_interface.toggle_button_active)
+
+	_emergency_button = get_tree().root.get_node("Game/Maps/MainMap/InteractionPoints/EmergencyButton")
+	vent_entered.connect(_emergency_button.on_vent_entered)
 
 	# Na początku gry po załadowaniu mapy restartuje kill cooldown
 	_on_next_round_started()
@@ -423,7 +446,7 @@ func _on_killed_player(player_id: int, is_victim: bool) -> void:
 		if GameManagerSingleton.get_current_player_id() != player_id:
 			get_parent().get_node(str(player_id)).visible = false
 
-		# Włącza widoczność wszystkich martwych graczy u marwtch graczy.
+		# Włącza widoczność wszystkich martwych graczy u martwych graczy.
 		if GameManagerSingleton.get_current_player_value("is_dead"):
 			for i in GameManagerSingleton.get_registered_players().keys():
 				get_parent().get_node(str(i)).visible = true
@@ -463,12 +486,10 @@ func _update_dead_player(player_id: int):
 
 ## Używa venta.
 func _use_vent():
-	button_active.emit("ReportButton", !is_in_vent && can_report)
-
 	if !is_in_vent:
 		button_active.emit("FailButton", false)
 		button_active.emit("InteractButton", false)
-
+		
 		_request_vent_entering.rpc_id(1)
 	else:
 		_request_vent_exiting.rpc_id(1)
@@ -588,6 +609,7 @@ func activate_lights():
 	_lights_container.show()
 
 
+
 ## Wyłącza światło graczowi.
 func deactivate_lights():
 	_lights_container.hide()
@@ -603,6 +625,7 @@ func activate_player_shaders():
 	_player_sprite.material.set_shader_parameter("line_thickness", 12.0)
 
 	_username_label.material = load("res://assets/shaders/light.tres")
+
 
 
 ## Wyłącza shadery graczowi.
@@ -685,8 +708,10 @@ func _on_venting_animation_player_animation_finished(anim_name):
 	if anim_name == "venting_animation":
 		# Gracz wchodzi do venta
 		if _has_entered_vent:
-			button_active.emit("ReportButton", !is_in_vent && can_report)
-			button_active.emit("FailButton", !is_in_vent)
+			if GameManagerSingleton.get_current_player_value("is_lecturer"):
+				if name.to_int() == GameManagerSingleton.get_current_player_id():
+					button_active.emit("FailButton", !is_in_vent)
+					GameManagerSingleton.emit_vent_entered(true)
 
 			# Wyłącza widoczność gracza.
 			if multiplayer.is_server():
@@ -705,6 +730,7 @@ func _on_venting_animation_player_animation_finished(anim_name):
 func _handle_vent_exit():
 	_has_entered_vent = false
 	vent_exited.emit()
+	GameManagerSingleton.emit_vent_entered(false)
 
 
 @rpc("call_local", "reliable")

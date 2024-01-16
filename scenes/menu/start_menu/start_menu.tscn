@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bha1146nfvg6s"]
+[gd_scene load_steps=6 format=3 uid="uid://bha1146nfvg6s"]
 
 [ext_resource type="Script" path="res://scenes/menu/start_menu/start_menu.gd" id="1_kh2k6"]
 [ext_resource type="PackedScene" uid="uid://dbggxxcgwkdh5" path="res://scenes/ui/background/background.tscn" id="2_coia4"]
 [ext_resource type="PackedScene" uid="uid://rv57oeaui5t0" path="res://scenes/menu/start_menu/credits/credits.tscn" id="3_6yiou"]
 [ext_resource type="PackedScene" uid="uid://01iag5x618my" path="res://scenes/ui/settings/settings.tscn" id="3_j535k"]
+[ext_resource type="AudioStream" uid="uid://cuoywtj5aix28" path="res://assets/audio/button_sound.ogg" id="5_id3rb"]
 
 [node name="StartMenu" type="Control"]
 layout_mode = 3
@@ -32,13 +33,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -344.5
-offset_top = -326.5
-offset_right = 344.5
-offset_bottom = -169.5
+offset_left = -443.0
+offset_top = -333.0
+offset_right = 444.0
+offset_bottom = -131.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 128
+theme_override_font_sizes/font_size = 165
 text = "WZiMong Us"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -51,14 +52,14 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -175.0
-offset_top = -61.5
+offset_top = -43.0
 offset_right = 175.0
-offset_bottom = 253.5
+offset_bottom = 242.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 25
+theme_override_constants/separation = 15
 
 [node name="PlayButton" type="Button" parent="Menu/ButtonsContainer"]
 custom_minimum_size = Vector2(165, 60)
@@ -143,6 +144,10 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Powrót"
+
+[node name="ButtonPressSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_id3rb")
+volume_db = -30.0
 
 [connection signal="pressed" from="Menu/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Menu/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
