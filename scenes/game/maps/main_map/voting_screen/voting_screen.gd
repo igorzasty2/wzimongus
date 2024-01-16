@@ -262,12 +262,12 @@ func _get_most_voted_player_id():
 	var max_vote = 0
 
 	for vote_key in GameManagerSingleton.get_current_game_value("votes").keys():
-			var votes_count = GameManagerSingleton.get_current_game_value("votes")[vote_key].size()
-			if votes_count > max_vote:
-				max_vote = votes_count
-				most_voted_players = [vote_key]
-			elif votes_count == max_vote:
-				most_voted_players.append(vote_key)
+		var votes_count = GameManagerSingleton.get_current_game_value("votes")[vote_key].size()
+		if votes_count > max_vote:
+			max_vote = votes_count
+			most_voted_players = [vote_key]
+		elif votes_count == max_vote:
+			most_voted_players.append(vote_key)
 
 	if most_voted_players.size() > 1 || most_voted_players.size() == 0 || most_voted_players[0] == 0:
 		return null
