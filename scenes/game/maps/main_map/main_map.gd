@@ -98,9 +98,9 @@ func _update_player_input():
 	var is_loading_screen_visible = _loading_screen.visible if _loading_screen != null else false
 
 	var is_input_disabled = (
-		is_player_in_vent || is_minigame_window_visible || is_voting_in_progress || is_loading_screen_visible
+		is_player_in_vent || is_minigame_window_visible || is_voting_in_progress || is_loading_screen_visible || !$KillScreen == null && $KillScreen.visible == true
 	)
-
+	
 	GameManagerSingleton.set_input_disabled_status(is_input_disabled)
 
 

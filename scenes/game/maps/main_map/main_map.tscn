@@ -1224,6 +1224,7 @@ properties = Array[String]([":global_position"])
 script = ExtResource("92_b2shf")
 
 [node name="VotingCanvas" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="LoadingScreen" parent="." instance=ExtResource("36_4x0df")]
 

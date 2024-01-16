@@ -33,6 +33,7 @@ func init(player_id: int, voted_by: Array):
 
 	if GameManagerSingleton.get_registered_player_value(player_id, "is_dead"):
 		_username.text = "[s]" + player.username + "[/s]"
+		modulate.a8 = 128
 	else:
 		_username.text = player.username
 

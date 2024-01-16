@@ -1,6 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://cf62bvt2j5xy7"]
+[gd_scene load_steps=5 format=3 uid="uid://cf62bvt2j5xy7"]
 
 [ext_resource type="Script" path="res://scenes/game/maps/main_map/ejection_screen/ejection_screen.gd" id="1_101b3"]
+
+[sub_resource type="Gradient" id="Gradient_g3so7"]
+colors = PackedColorArray(0.529412, 0.807843, 0.921569, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_v0v2k"]
+noise_type = 2
+seed = 4
+frequency = 0.0008
+cellular_distance_function = 3
+cellular_return_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1vfjw"]
+color_ramp = SubResource("Gradient_g3so7")
+noise = SubResource("FastNoiseLite_v0v2k")
 
 [node name="ejection_screen" type="Control"]
 layout_mode = 3
@@ -11,14 +25,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_101b3")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="EjectionBackground" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0823529, 0.0823529, 0.0823529, 1)
+texture = SubResource("NoiseTexture2D_1vfjw")
 
 [node name="EjectionMessage" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
@@ -31,6 +45,7 @@ offset_top = -11.5
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/normal_font_size = 26
 bbcode_enabled = true
 fit_content = true

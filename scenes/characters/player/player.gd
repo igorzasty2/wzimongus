@@ -294,7 +294,13 @@ func _input(event):
 
 		$PlayerInteractionPlayer.stream = load("res://assets/audio/kill_sound.ogg")
 		$PlayerInteractionPlayer.play()
-		GameManagerSingleton.kill_victim(victim)
+		GameManagerSingleton.kill_victim(victim, GameManagerSingleton.get_current_player_id())
+		
+		var kill_screen = preload("res://scenes/game/maps/main_map/kill_screen/kill_screen.tscn").instantiate()
+		kill_screen.failer_id = GameManagerSingleton.get_current_player_id()
+		kill_screen.victim_id = victim
+		kill_screen.name = "KillScreen"
+		get_parent().get_parent().add_child(kill_screen)
 		
 		_handle_kill_timer()
 		button_active.emit("FailButton", false)
@@ -438,9 +444,9 @@ func closest_player(to_who: int) -> int:
 	return 0
 
 
-func _on_killed_player(player_id: int, is_victim: bool) -> void:
+func _on_killed_player(player_id: int, is_victim: bool, killer_id) -> void:
 	if name.to_int() == player_id:
-		_update_dead_player(player_id)
+		_update_dead_player(player_id, killer_id)
 
 		# Wyłącza widoczność gracza.
 		if GameManagerSingleton.get_current_player_id() != player_id:
@@ -472,7 +478,15 @@ func _on_timer_timeout() -> void:
 					return
 
 
-func _update_dead_player(player_id: int):
+func _update_dead_player(player_id: int, killer_id):
+	if killer_id != null && player_id == GameManagerSingleton.get_current_player_id():
+		var kill_screen = preload("res://scenes/game/maps/main_map/kill_screen/kill_screen.tscn").instantiate()
+		kill_screen.failer_id = killer_id
+		kill_screen.victim_id = player_id
+		kill_screen.name = "KillScreen"
+		get_parent().get_parent().add_child(kill_screen)
+		if get_parent().get_parent().get_node("MinigameWindow").get_children().size() > 0:
+			get_parent().get_parent().close_modals()
 	var victim_node: CharacterBody2D = get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(player_id))
 	victim_node.get_node("UsernameLabel").add_theme_color_override("font_color", _dead_username_color)
 	victim_node.get_node("Skins/Control/PlayerSprite").use_parent_material = true
