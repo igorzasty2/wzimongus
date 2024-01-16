@@ -30,7 +30,7 @@ signal next_round_started
 signal error_occured(message: String)
 
 ## Emitowany po zabiciu gracza.
-signal player_killed(player_id: int, is_victim: bool)
+signal player_killed(player_id: int, is_victim: bool, killer_id)
 
 ## Emitowany po włączeniu sabotażu.
 signal sabotage_occured
@@ -686,13 +686,13 @@ func async_condition(cond: Callable, timeout: float = 10.0) -> Error:
 
 
 ## Zabija ofiarę.
-func kill_victim(victim_id: int):
-	_request_victim_kill.rpc_id(1, victim_id)
+func kill_victim(victim_id: int, killer_id):
+	_request_victim_kill.rpc_id(1, victim_id, killer_id)
 
 
 @rpc("any_peer", "call_local", "reliable")
 ## Przyjmuje prośbę o zabicie ofiary.
-func _request_victim_kill(victim_id: int):
+func _request_victim_kill(victim_id: int, killer_id):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
@@ -710,7 +710,7 @@ func _request_victim_kill(victim_id: int):
 	if get_tree().root.get_node("Game/Maps/MainMap/Players/" + str(me)).closest_player(me) != victim_id:
 		return ERR_UNAUTHORIZED
 
-	_send_player_kill.rpc(victim_id, true)
+	_send_player_kill.rpc(victim_id, true, killer_id)
 
 
 ## Zabija gracza.
@@ -724,12 +724,11 @@ func kill_player(player_id):
 
 @rpc("call_local", "reliable")
 ## Wysyła informacje o zabiciu gracza.
-func _send_player_kill(player_id: int, is_victim: bool = true):
+func _send_player_kill(player_id: int, is_victim: bool = true, killer_id=null):
 	_current_game["registered_players"][player_id]["is_dead"] = true
-	player_killed.emit(player_id, is_victim)
+	player_killed.emit(player_id, is_victim, killer_id)
 
-	if is_victim:
-		check_winning_conditions()
+	
 
 
 ## Sprawdza warunki wygranej i emituje sygnał wygranej, jeśli któryś z warunków wygranej jest spełniony.

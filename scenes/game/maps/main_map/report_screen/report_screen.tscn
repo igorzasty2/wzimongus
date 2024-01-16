@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://djoj4kykfho2y"]
+[gd_scene load_steps=7 format=3 uid="uid://djoj4kykfho2y"]
 
 [ext_resource type="Script" path="res://scenes/game/maps/main_map/report_screen/report_screen.gd" id="1_woxjr"]
 [ext_resource type="Texture2D" uid="uid://bgxqh33irknuq" path="res://assets/textures/main_map/objects/emergency_meeting.png" id="2_nrmn5"]
-[ext_resource type="Texture2D" uid="uid://dy8j6jl7efkn1" path="res://icon.png" id="2_y8u8h"]
 [ext_resource type="AudioStream" uid="uid://017q1p7ueoh0" path="res://assets/audio/report_sound.ogg" id="4_7asdu"]
 
 [sub_resource type="Animation" id="Animation_g4k8g"]
@@ -91,7 +90,6 @@ texture = ExtResource("2_nrmn5")
 [node name="BodySprite" type="Sprite2D" parent="."]
 position = Vector2(640, 290)
 scale = Vector2(1.05, 1.05)
-texture = ExtResource("2_y8u8h")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1

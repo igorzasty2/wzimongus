@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://iaedp5p0gx07"]
+
+[ext_resource type="Script" path="res://scenes/game/maps/main_map/kill_screen/kill_screen.gd" id="1_utyft"]
+[ext_resource type="Texture2D" uid="uid://dy8j6jl7efkn1" path="res://icon.png" id="2_3uqwx"]
+[ext_resource type="Texture2D" uid="uid://cfygx7gx2v0cr" path="res://assets/textures/kill_screen/fail1.png" id="3_txyg8"]
+[ext_resource type="Texture2D" uid="uid://ccaxysk3rv117" path="res://assets/textures/kill_screen/fail2.png" id="4_k6obs"]
+
+[sub_resource type="Gradient" id="Gradient_2gwhx"]
+colors = PackedColorArray(0.529412, 0.807843, 0.921569, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h0i0o"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bjf68"]
+color_ramp = SubResource("Gradient_2gwhx")
+noise = SubResource("FastNoiseLite_h0i0o")
+
+[node name="KillScreen" type="CanvasLayer"]
+script = ExtResource("1_utyft")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_bjf68")
+
+[node name="Victim" type="Sprite2D" parent="."]
+position = Vector2(326, 500)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_3uqwx")
+
+[node name="Failer" type="Sprite2D" parent="."]
+position = Vector2(953, 500)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_3uqwx")
+
+[node name="Fail1" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(860, 462)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_txyg8")
+
+[node name="Fail2" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(860, 462)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("4_k6obs")

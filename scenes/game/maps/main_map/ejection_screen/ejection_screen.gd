@@ -55,5 +55,6 @@ func _ready():
 
 
 func _on_next_round_timer_timeout():
-	self.queue_free()
 	GameManagerSingleton.new_round()
+	self.queue_free()
+	
