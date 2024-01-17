@@ -296,12 +296,6 @@ func _input(event):
 		$PlayerInteractionPlayer.play()
 		GameManagerSingleton.kill_victim(victim, GameManagerSingleton.get_current_player_id())
 		
-		var kill_screen = preload("res://scenes/game/maps/main_map/kill_screen/kill_screen.tscn").instantiate()
-		kill_screen.failer_id = GameManagerSingleton.get_current_player_id()
-		kill_screen.victim_id = victim
-		kill_screen.name = "KillScreen"
-		get_parent().get_parent().add_child(kill_screen)
-		
 		_handle_kill_timer()
 		button_active.emit("FailButton", false)
 
