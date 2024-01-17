@@ -56,6 +56,11 @@ var _display_tween
 ## Scena z głosującymi.
 var _voted_by_scene = preload("res://scenes/game/maps/main_map/voting_screen/voted_by/voted_by.tscn")
 
+## Id reportującego gracza
+var reporter_id:int
+
+## Określa czy funkcjia jest wywoływana po raz pierwszy
+var _first_call:bool = true
 
 func _ready():
 	visible = false
@@ -247,6 +252,14 @@ func _render_player_boxes():
 		_display_tween.tween_property(voted_by_instance, "modulate:a", 1, 0.25)
 
 		_skipped_players.add_child(voted_by_instance)
+    
+    if i == reporter_id:
+			if _first_call:
+				new_player_box.report.visible = true
+				_first_call = false
+			else: 
+				new_player_box.report.visible = false
+
 
 func _compare_players(a, b):
 	var a_is_dead = GameManagerSingleton.get_registered_player_value(a, "is_dead")
