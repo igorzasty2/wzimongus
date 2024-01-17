@@ -41,7 +41,6 @@ size_flags_vertical = 3
 mouse_filter = 2
 follow_focus = true
 horizontal_scroll_mode = 3
-vertical_scroll_mode = 3
 
 [node name="ChatLogsContainer" type="VBoxContainer" parent="ChatContainer/ChatLogsScrollbar"]
 unique_name_in_owner = true

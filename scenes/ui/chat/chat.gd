@@ -142,6 +142,10 @@ func _create_message(player: Dictionary, message: String, group: Group):
 	var new_message = _message_scene.instantiate()
 	_chat_logs_container.add_child(new_message)
 
+	if _chat_logs_container.get_child_count() > 30:
+		_chat_logs_container.remove_child(_chat_logs_container.get_child(0))
+
+
 	new_message.init(player, message, GROUP_COLORS[group])
 
 
