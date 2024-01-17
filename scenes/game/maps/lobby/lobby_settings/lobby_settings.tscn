@@ -164,14 +164,12 @@ text = "Promień oblania"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-item_count = 3
+item_count = 2
 selected = 0
 popup/item_0/text = "Mniejszy"
 popup/item_0/id = 200
 popup/item_1/text = "Domyślny"
 popup/item_1/id = 260
-popup/item_2/text = "Większy"
-popup/item_2/id = 350
 
 [node name="TaskAmountContainer" type="HSplitContainer" parent="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -362,10 +360,10 @@ stream = ExtResource("6_bf028")
 volume_db = -25.0
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxPlayersContainer/MaxPlayersInput" to="." method="_save_server_settings"]
 [connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxPlayersContainer/MaxPlayersInput" to="." method="_on_connections_lecturers_item_selected"]
-[connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxLecturersContainer/MaxLecturersInput" to="." method="_save_server_settings"]
+[connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxPlayersContainer/MaxPlayersInput" to="." method="_save_server_settings"]
 [connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxLecturersContainer/MaxLecturersInput" to="." method="_on_connections_lecturers_item_selected"]
+[connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MaxLecturersContainer/MaxLecturersInput" to="." method="_save_server_settings"]
 [connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/KillCooldownContainer/KillCooldownInput" to="." method="_save_server_settings"]
 [connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/SabotageCooldownContainer/SabotageCooldownInput" to="." method="_save_server_settings"]
 [connection signal="item_selected" from="SettingsContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/KillRadiusContainer/KillRadiusInput" to="." method="_save_server_settings"]
