@@ -120,6 +120,9 @@ func _ready():
 	# Konfiguruje synchronizator rollbacku.
 	_rollback_synchronizer.process_settings()
 
+	if GameManagerSingleton.get_current_player_value("is_lecturer") && GameManagerSingleton.get_registered_player_value(name.to_int(), "is_lecturer"):
+		_username_label.add_theme_color_override("font_color", Color(1, 0, 0))
+
 	# Ustawia etykietę z nazwą gracza.
 	_username_label.text = GameManagerSingleton.get_registered_player_value(name.to_int(), "username")
 

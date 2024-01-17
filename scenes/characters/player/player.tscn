@@ -191,8 +191,8 @@ states/walk/position = Vector2(463, 57)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pw04e"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_5j7em"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kgh40")]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xwmwd"]
-streams_count = 11
 playback_mode = 1
+streams_count = 11
 stream_0/stream = ExtResource("7_46nd0")
 stream_0/weight = 1.0
 stream_1/stream = ExtResource("8_nijin")
@@ -275,9 +275,12 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="Skins"]
+libraries = {
+"": SubResource("AnimationLibrary_0ebfx")
+}
 tree_root = SubResource("AnimationNodeStateMachine_gjhch")
-anim_player = NodePath("../AnimationPlayer")
 advance_expression_base_node = NodePath("")
+anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/idle = false
 parameters/conditions/is_moving = false
 parameters/idle/blend_position = Vector2(-0.992939, 0.982759)
@@ -300,6 +303,8 @@ offset_right = 42.0
 offset_bottom = -199.0
 grow_horizontal = 2
 size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 vertical_alignment = 1
