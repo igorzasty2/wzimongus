@@ -137,15 +137,10 @@ func send_system_message(message):
 
 
 func _create_message(player: Dictionary, message: String, group: Group):
-	_chat_logs_scroll_container.modulate.a = 1
-
 	var new_message = _message_scene.instantiate()
 	_chat_logs_container.add_child(new_message)
 
 	new_message.init(player, message, GROUP_COLORS[group])
-
-	if get_parent().get_parent().name != "VotingScreen":
-		_timer.start()
 
 
 func _on_input_text_visibility_changed():
