@@ -14,6 +14,10 @@ extends Control
 @onready var _chat_container = get_node("%ChatContainer")
 ## Referencja do czatu
 @onready var _chat = get_node("%Chat")
+## Referencja do kontenera na graczy, którzy pominęli głosowanie
+@onready var _skipped_players = get_node("%SkippedPlayers")
+## Referencja do tekstu kto pominął głosowanie
+@onready var _skipped_players_text = get_node("%SkippedPlayersText")
 
 ## Czas głosowania
 var _voting_time = GameManagerSingleton.get_server_settings()["voting_time"]
@@ -45,6 +49,12 @@ var _user_sett: UserSettingsManager
 
 ## Początkowa skaka siatki z przyciskami
 var _initial_grid_container_scale
+
+## Tween do wyświetlania graczy, którzy pominęli głosowanie
+var _display_tween
+
+## Scena z głosującymi.
+var _voted_by_scene = preload("res://scenes/game/maps/main_map/voting_screen/voted_by/voted_by.tscn")
 
 
 func _ready():
@@ -216,6 +226,21 @@ func _render_player_boxes():
 
 		new_player_box.init(i, votes[i] if i in votes else [])
 		new_player_box.connect("player_voted", _on_player_voted)
+	
+	for vote in votes[0] if 0 in votes else []:
+		var voted_by_instance = _voted_by_scene.instantiate()
+		voted_by_instance.modulate.a = 0
+
+		var texture = AtlasTexture.new()
+		texture.atlas = load(GameManagerSingleton.SKINS[GameManagerSingleton.get_registered_player_value(vote, "skin")]["resource"])
+		texture.region = Rect2(127.5, 0, 420, 420)
+
+		voted_by_instance.texture = texture
+
+		_display_tween = get_tree().create_tween()
+		_display_tween.tween_property(voted_by_instance, "modulate:a", 1, 0.25)
+
+		_skipped_players.add_child(voted_by_instance)
 
 func _compare_players(a, b):
 	var a_is_dead = GameManagerSingleton.get_registered_player_value(a, "is_dead")
@@ -228,12 +253,14 @@ func _compare_players(a, b):
 	else:
 		return 0
 
+
 @rpc("any_peer", "call_local", "reliable")
 func _on_end_voting_timer_timeout():
 	_is_voting_ended = true
 	GameManagerSingleton.set_current_game_value("is_voted", true)
 
 	_end_vote_text.text = "[center]Głosowanie zakończone![/center]"
+	_skipped_players_text.visible = true
 
 	_eject_player_timer.start(_eject_time)
 
