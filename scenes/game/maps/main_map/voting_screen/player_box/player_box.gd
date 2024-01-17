@@ -14,6 +14,8 @@ extends Control
 @onready var _button = get_node("%Button")
 ## Referencja do ikony reporta.
 @onready var report = $VBoxContainer/Panel/Player/Report
+## Referencja do ikony wyboru
+@onready var choose = $VBoxContainer/Panel/Player/Choose
 
 ## Sygnał emitowany gdy gracz zagłosuje.
 signal player_voted
@@ -43,6 +45,7 @@ func init(player_id: int, voted_by: Array):
 	_avatar.texture = _get_skin_texture(player.skin)
 	
 	report.visible = false
+	choose.visible = false
 
 	for vote in voted_by:
 		var voted_by_instance = _voted_by_scene.instantiate()

@@ -128,8 +128,11 @@ func _on_player_voted(voted_player_key):
 	_skip_button.disabled = true
 	GameManagerSingleton.set_current_game_value("is_voted", true)
 
+
 	for player in _players.get_children():
 		player.set_voting_status(false)
+		if player._player_key == voted_player_key:
+			player.choose.visible = true
 
 	# Dodaje głos do listy głosów na serwerze
 	if multiplayer.is_server():
