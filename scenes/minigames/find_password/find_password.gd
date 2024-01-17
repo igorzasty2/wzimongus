@@ -10,7 +10,7 @@ signal minigame_end
 ## Referencja do wejścia na hasło
 @onready var _password_input = get_node("%PasswordInput")
 ## Generuje hasła
-@onready var _passwords = _generate_passwords()
+@onready var _passwords = ["123456", "qwerty", "123456789", "12345", "password", "polska", "12345678", "123qwe", "misiek", "lol123", "mateusz", "marcin", "monika", "lol123", "qwe123", "qwerty123", "qwerty1", "bartek", "damian", "dragon", "karolina", "samsung", "michal", "daniel", "agnieszka", "kacper", "komputer", "kochanie", "matrix", "master", "haslo"]
 ## Referencja do sceny strony
 @onready var _page_scene = preload("res://scenes/minigames/find_password/page_scene/page_scene.tscn")
 
@@ -30,17 +30,6 @@ func _ready():
 		add_child(page_scene_instance)
 		page_scene_instance.visible = false
 		page_scene_instance.position = Vector2(650, 500)
-
-
-func _generate_passwords():
-	var passwords = []
-	for i in range(5):
-		var password = ""
-		for j in range(10):  # Generate a 10-character password
-			var ascii = randi() % 26 + 97  # Generate a random lowercase letter
-			password += char(ascii)
-		passwords.append(password)
-	return passwords
 
 
 func _on_password_input_text_submitted(new_text):
