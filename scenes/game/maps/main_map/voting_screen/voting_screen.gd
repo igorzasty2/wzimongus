@@ -205,8 +205,11 @@ func _render_player_boxes():
 		i.queue_free()
 
 	var votes = GameManagerSingleton.get_current_game_value("votes")
+	var player_keys = GameManagerSingleton.get_registered_players().keys()
+	player_keys.sort_custom(_compare_players)
 
-	for i in GameManagerSingleton.get_registered_players().keys():
+
+	for i in player_keys:
 		var new_player_box = _player_box.instantiate()
 
 		_players.add_child(new_player_box)
@@ -214,6 +217,16 @@ func _render_player_boxes():
 		new_player_box.init(i, votes[i] if i in votes else [])
 		new_player_box.connect("player_voted", _on_player_voted)
 
+func _compare_players(a, b):
+	var a_is_dead = GameManagerSingleton.get_registered_player_value(a, "is_dead")
+	var b_is_dead = GameManagerSingleton.get_registered_player_value(b, "is_dead")
+
+	if a_is_dead and not b_is_dead:
+		return 0
+	elif not a_is_dead and b_is_dead:
+		return 1
+	else:
+		return 0
 
 @rpc("any_peer", "call_local", "reliable")
 func _on_end_voting_timer_timeout():
