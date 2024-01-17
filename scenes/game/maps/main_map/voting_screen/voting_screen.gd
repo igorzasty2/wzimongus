@@ -237,6 +237,13 @@ func _render_player_boxes():
 
 		new_player_box.init(i, votes[i] if i in votes else [])
 		new_player_box.connect("player_voted", _on_player_voted)
+
+		if i == reporter_id:
+			if _first_call:
+				new_player_box.report.visible = true
+				_first_call = false
+			else: 
+				new_player_box.report.visible = false
 	
 	for vote in votes[0] if 0 in votes else []:
 		var voted_by_instance = _voted_by_scene.instantiate()
@@ -252,13 +259,6 @@ func _render_player_boxes():
 		_display_tween.tween_property(voted_by_instance, "modulate:a", 1, 0.25)
 
 		_skipped_players.add_child(voted_by_instance)
-    
-    if i == reporter_id:
-			if _first_call:
-				new_player_box.report.visible = true
-				_first_call = false
-			else: 
-				new_player_box.report.visible = false
 
 
 func _compare_players(a, b):
