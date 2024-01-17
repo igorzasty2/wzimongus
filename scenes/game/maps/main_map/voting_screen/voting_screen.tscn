@@ -126,6 +126,25 @@ bbcode_enabled = true
 text = "[right]Głosowanie kończy się za [time] sekund[/right]"
 metadata/_edit_use_anchors_ = true
 
+[node name="SkippedPlayersText" type="Label" parent="Background"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 1155.0
+offset_top = 481.0
+offset_right = 1230.0
+offset_bottom = 505.0
+text = "Pominęli:"
+
+[node name="SkippedPlayers" type="HBoxContainer" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 981.0
+offset_top = 512.0
+offset_right = 1231.0
+offset_bottom = 552.0
+alignment = 2
+
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = 1
@@ -177,7 +196,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_d8hpk")
 
 [node name="Chat" parent="ChatContainer" instance=ExtResource("2_u4dx5")]
 unique_name_in_owner = true
-layer = 2
+layer = 3
 
 [connection signal="pressed" from="Background/SkipDecision/SkipButton" to="." method="_on_skip_button_pressed"]
 [connection signal="pressed" from="Background/SkipDecision/Decision/DecisionYes" to="." method="_on_decision_yes_pressed"]

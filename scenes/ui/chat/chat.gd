@@ -49,6 +49,8 @@ func _ready():
 	_input_text.hide()
 	_group_container.hide()
 
+	_timer.start()
+
 	if GameManagerSingleton.get_current_player_value("is_dead"):
 		_current_group = Group.DEAD
 
@@ -111,7 +113,7 @@ func _send_message(message, group, id):
 			if _current_group == Group.DEAD:
 				_create_message(GameManagerSingleton.get_registered_players()[id], message, Group.DEAD)
 		Group.LECTURER:
-			if _current_group == Group.LECTURER or _current_group == Group.DEAD:
+			if GameManagerSingleton.get_current_player_value("is_lecturer") or _current_group == Group.DEAD:
 				_create_message(GameManagerSingleton.get_registered_players()[id], message, Group.LECTURER)
 		Group.SYSTEM:
 			var system_message_instance = _system_message_scene.instantiate()
@@ -137,15 +139,14 @@ func send_system_message(message):
 
 
 func _create_message(player: Dictionary, message: String, group: Group):
-	_chat_logs_scroll_container.modulate.a = 1
-
 	var new_message = _message_scene.instantiate()
 	_chat_logs_container.add_child(new_message)
 
-	new_message.init(player, message, GROUP_COLORS[group])
+	if _chat_logs_container.get_child_count() > 30:
+		_chat_logs_container.remove_child(_chat_logs_container.get_child(0))
 
-	if get_parent().get_parent().name != "VotingScreen":
-		_timer.start()
+
+	new_message.init(player, message, GROUP_COLORS[group])
 
 
 func _on_input_text_visibility_changed():

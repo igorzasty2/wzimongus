@@ -96,5 +96,8 @@ func _on_decision_yes_pressed():
 func set_voting_status(is_voted: bool):
 	if is_voted:
 		_button.pressed.connect(_on_button_pressed)
+		if !GameManagerSingleton.get_registered_player_value(_player_key, "is_dead"):
+			modulate.a8 = 255
 	else:
 		_button.pressed.disconnect(_on_button_pressed)
+		modulate.a8 = 128
