@@ -46,6 +46,11 @@ var _user_sett: UserSettingsManager
 ## Początkowa skaka siatki z przyciskami
 var _initial_grid_container_scale
 
+## Id reportującego gracza
+var reporter_id:int
+
+## Określa czy funkcjia jest wywoływana po raz pierwszy
+var _first_call:bool = true
 
 func _ready():
 	visible = false
@@ -213,6 +218,13 @@ func _render_player_boxes():
 
 		new_player_box.init(i, votes[i] if i in votes else [])
 		new_player_box.connect("player_voted", _on_player_voted)
+		
+		if i == reporter_id:
+			if _first_call:
+				new_player_box.report.visible = true
+				_first_call = false
+			else: 
+				new_player_box.report.visible = false
 
 
 @rpc("any_peer", "call_local", "reliable")

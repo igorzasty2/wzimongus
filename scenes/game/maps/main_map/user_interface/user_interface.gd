@@ -30,6 +30,8 @@ func _ready():
 	_user_sett = UserSettingsManager.load_or_create()
 	_user_sett.interface_scale_value_changed.connect(_on_interface_scale_changed)
 	_on_interface_scale_changed(_user_sett.interface_scale)
+	
+	GameManagerSingleton.player_killed.connect(_on_player_killed)
 
 	# Gracz jest wykładowcą.
 	if GameManagerSingleton.get_current_player_value("is_lecturer"):
@@ -48,6 +50,21 @@ func _ready():
 
 	toggle_button_active("ReportButton", false)
 	toggle_button_active("InteractButton", false)
+
+
+## Usuwa niepotrzebne przyciski po śmierci gracza
+func _on_player_killed(player_id:int, is_victim:bool, killer_id):
+	if GameManagerSingleton.get_current_player_id() == player_id:
+		toggle_button_active("ReportButton", false)
+
+		if GameManagerSingleton.get_current_player_value("is_lecturer"):
+			_remove_button("VentButton")
+			_remove_button("FailButton")
+			_remove_button("ReportButton")
+			_fill_grid(3)
+		else:
+			_remove_button("ReportButton")
+			_fill_grid(1)
 
 
 func _on_interface_scale_changed(value: float):
@@ -118,7 +135,7 @@ func _fill_grid(amount: int):
 
 ## Aktualizuje zawartość etykiety.
 func update_time_left(label_name: String, value: String):
-	if label_name == _fail_label.name:
+	if _fail_label!= null && label_name == _fail_label.name:
 		_fail_label.text = value
-	elif label_name == _sabotage_label.name:
+	elif _sabotage_label!= null && label_name == _sabotage_label.name:
 		_sabotage_label.text = value

@@ -467,13 +467,12 @@ func _on_timer_timeout() -> void:
 	if name.to_int() == GameManagerSingleton.get_current_player_id():
 		if GameManagerSingleton.get_current_player_value("is_lecturer"):
 			_can_kill_cooldown = true
+			_user_interface.update_time_left("FailLabel", "")
 
 			for i in range(self.get_child_count()):
 				var child: Node = self.get_child(i)
 				if child.name == "KillCooldownTimer":
 					child.queue_free()
-
-					_user_interface.update_time_left("FailLabel", "")
 
 					return
 
@@ -670,14 +669,13 @@ func _on_sabotage_timer_timeout() -> void:
 	if name.to_int() == GameManagerSingleton.get_current_player_id():
 		if GameManagerSingleton.get_current_player_value("is_lecturer"):
 			_can_sabotage_cooldown = true
-
+			_user_interface.update_time_left("SabotageLabel", "")
+			button_active.emit("SabotageButton", true)
+			
 			for i in range(self.get_child_count()):
 				var child: Node = self.get_child(i)
 				if child.name == "SabotageCooldownTimer":
 					child.queue_free()
-
-					_user_interface.update_time_left("SabotageLabel", "")
-					button_active.emit("SabotageButton", true)
 
 					return
 
