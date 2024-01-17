@@ -33,7 +33,7 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 
-func _on_save_button_pressed():
+func _save_server_settings(_index: int = 0):
 	GameManagerSingleton.change_server_settings(
 		_max_players.text.to_int(),
 		_max_lecturers.text.to_int(),
@@ -47,7 +47,6 @@ func _on_save_button_pressed():
 		_voting_time.get_selected_id(),
 		_discussion_time.get_selected_id()
 	)
-	hide()
 
 
 func _on_visibility_changed():
