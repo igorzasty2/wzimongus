@@ -67,7 +67,7 @@ func _process(_delta):
 
 
 ## Wywoływane w momencie oblania gracza
-func _on_player_killed(id: int, is_victim: bool):
+func _on_player_killed(id: int, is_victim: bool, killer_id):
 	if GameManagerSingleton.get_current_player_id() == id && is_victim:
 		_uses_left_label.text = ""
 		_toggle_button_highlight(false)
