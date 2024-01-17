@@ -111,7 +111,7 @@ func _send_message(message, group, id):
 			if _current_group == Group.DEAD:
 				_create_message(GameManagerSingleton.get_registered_players()[id], message, Group.DEAD)
 		Group.LECTURER:
-			if _current_group == Group.LECTURER or _current_group == Group.DEAD:
+			if GameManagerSingleton.get_current_player_value("is_lecturer") or _current_group == Group.DEAD:
 				_create_message(GameManagerSingleton.get_registered_players()[id], message, Group.LECTURER)
 		Group.SYSTEM:
 			var system_message_instance = _system_message_scene.instantiate()
