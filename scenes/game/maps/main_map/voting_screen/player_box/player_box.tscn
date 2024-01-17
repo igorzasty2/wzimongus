@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://hdbqyphtfste"]
+[gd_scene load_steps=9 format=3 uid="uid://hdbqyphtfste"]
 
 [ext_resource type="Script" path="res://scenes/game/maps/main_map/voting_screen/player_box/player_box.gd" id="1_sv2tq"]
 [ext_resource type="Texture2D" uid="uid://dlfycl2tqr776" path="res://assets/textures/voting_screen/voting_screen_report.png" id="2_bmmwi"]
+[ext_resource type="Texture2D" uid="uid://38jum3o4nyqq" path="res://assets/textures/voting_screen/oblej_bez_napisu.png" id="2_jfahj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_an2b4"]
 
@@ -70,6 +71,13 @@ layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 alignment = 2
+
+[node name="Choose" type="TextureRect" parent="VBoxContainer/Panel/Player"]
+modulate = Color(1, 1, 1, 0.937255)
+layout_mode = 2
+texture = ExtResource("2_jfahj")
+expand_mode = 3
+flip_h = true
 
 [node name="Report" type="TextureRect" parent="VBoxContainer/Panel/Player"]
 modulate = Color(1, 1, 1, 0.937255)
