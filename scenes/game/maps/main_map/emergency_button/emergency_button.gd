@@ -152,8 +152,10 @@ func handle_report(is_button: bool, body_id):
 	_is_caller_button = is_button
 
 	_update_array()
+	
+	var reporter_id = GameManagerSingleton.get_current_player_id()
 
-	_request_displaying_report_screen.rpc_id(1, is_button, body_id)
+	_request_displaying_report_screen.rpc_id(1, is_button, body_id, reporter_id)
 
 	if _is_caller_button:
 		_button_used()
@@ -165,25 +167,27 @@ func _update_array():
 
 
 @rpc("any_peer", "call_local", "reliable")
-func _request_displaying_report_screen(is_button: bool, dead_body_id):
+func _request_displaying_report_screen(is_button: bool, dead_body_id, reporter_id:int):
 	if !multiplayer.is_server():
 		return ERR_UNAUTHORIZED
 
-	_display_report_screen.rpc(is_button, dead_body_id)
+	_display_report_screen.rpc(is_button, dead_body_id, reporter_id)
 
 
 @rpc("call_local", "reliable")
-func _display_report_screen(is_button: bool, dead_body_id):
+func _display_report_screen(is_button: bool, dead_body_id, reporter_id:int):
 	_main_map.close_modals()
 
-	_instantiate_voting_screen()
+	_instantiate_voting_screen(reporter_id)
 
 	_show_hide_report_screen(is_button, dead_body_id)
 
 
 ## Instancjonuje ekran głosowania
-func _instantiate_voting_screen():
+func _instantiate_voting_screen(reporter_id:int):
 	var voting_screen_instance = _voting_screen.instantiate()
+	voting_screen_instance.reporter_id = reporter_id
+	
 	_voting_canvas.add_child(voting_screen_instance)
 
 	GameManagerSingleton.is_meeting_called = true
