@@ -49,6 +49,8 @@ func _ready():
 	_input_text.hide()
 	_group_container.hide()
 
+	_timer.start()
+
 	if GameManagerSingleton.get_current_player_value("is_dead"):
 		_current_group = Group.DEAD
 
