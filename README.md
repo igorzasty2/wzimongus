@@ -49,13 +49,25 @@ open project.godot
 
 ## Zrzuty ekranu 📸
 
-### To do
+### Ekran startowy
 
-Wkrótce.
+![Ekran startowy](https://raw.githubusercontent.com/wzimongus/wzimongus/main/screenshots/start_menu.png)
+
+### Ekran dołączania do poczekalni
+
+![Ekran dołączania do poczekalni](https://raw.githubusercontent.com/wzimongus/wzimongus/main/screenshots/join_menu.png)
+
+### Poczekalnia
+
+![Poczekalnia](https://raw.githubusercontent.com/wzimongus/wzimongus/main/screenshots/lobby.png)
+
+### Rozgrywka
+
+![Rozgrywka](https://raw.githubusercontent.com/wzimongus/wzimongus/main/screenshots/game.png)
 
 ## Autorzy 👥
 
-Projekt **WZiMong Us** jest wynikiem pracy studentów WZiM SGGW. Zespół składał się z:
+Projekt **WZiMong Us** jest wynikiem pracy studentów WZiM SGGW.
 
 - **Mateusz Ługowski** - Project Manager
 - **Igor Osiakowski** - Dev Manager
